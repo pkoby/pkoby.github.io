@@ -2,10 +2,10 @@
 var saved_lat, saved_lon, bbox, bboxOutline;
 var poi_markers = new Array();
 var poi_clusters = new L.markerClusterGroup({
-	disableClusteringAtZoom: 19,
+	disableClusteringAtZoom: 17,
 	spiderfyOnMaxZoom: false,
-	showCoverageOnHover: false,
-	maxClusterRadius: 30,
+	showCoverageOnHover: true,
+	maxClusterRadius: 20,
 });
 
 var church_icon,community_icon,shop_icon,bar_icon,pub_icon,restaurant_icon,cafe_icon,theater_icon,museum_icon,sauna_icon,other_icon;//library,memorial
@@ -21,7 +21,9 @@ var church_icon,community_icon,shop_icon,bar_icon,pub_icon,restaurant_icon,cafe_
 	var CartoDB_DarkMatter = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
 		attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
 		subdomains: 'abcd',
-		maxZoom: 20
+		minZoom: 6,
+		maxZoom: 19,
+		detectRetina: true,
 	});
 
 	var Esri_NatGeoWorldMap = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}', {
@@ -66,7 +68,7 @@ var church_icon,community_icon,shop_icon,bar_icon,pub_icon,restaurant_icon,cafe_
 	})
 	
 	
-	var lc = L.control.locate({inView: 'stop', outOfView: 'setView', inViewNotFollowing: 'inView', locateOptions: {enableHighAccuracy: true}}).addTo(map);
+	var lc = L.control.locate({keepCurrentZoomLevel: true, inView: 'stop', outOfView: 'setView', inViewNotFollowing: 'inView', locateOptions: {enableHighAccuracy: true}}).addTo(map);
 
 
 	document.getElementById('zoomin').addEventListener('click', function () {
@@ -203,15 +205,19 @@ function setPoiMarker(poi_type, icon, lat, lon, tags, osmid, osmtype) {
 	var osmedit = "https://www.openstreetmap.org/edit\?"+osmtype+"="+osmid;
 
 	if (tags.name == undefined) {
-		var popup_content = "<span class='type'>"+poi_type+"</span>";
+		var popup_content = "<span class='type'>"+poi_type+"</span><hr>";
 	} else {
-		var popup_content = "<span class='title'>"+tags.name+"</span><br/><span class='type'>"+poi_type+"</span><hr>";//<br><span class='type'>"+poi_type+"</span>
+		var popup_content = "<span class='title'>"+tags.name+"</span><br/>";
+		if (poi_type == "Shop" && tags.shop != 'yes') {
+			popup_content += "<span class='type'>"+tags.shop+" </span>";
+		}
+		popup_content += "<span class='type'>"+poi_type+"</span><hr>";//<br><span class='type'>"+poi_type+"</span>
 	}
 
 	if (tags.lgbtq == 'only') {
 		popup_content += "🌈 <span class='only'>This location only allows members of the LGBTQ+ community</span><br/>"
 	} else if (tags.lgbtq == 'primary') {
-		popup_content += "<span class='primary'>🌈 This location caters primarily to the LGBTQ+ community</span><br/>"
+		popup_content += "🌈 <span class='primary'>This location caters primarily to the LGBTQ+ community</span><br/>"
 	} else if (tags.lgbtq == 'welcome' || tags.lgbtq == 'friendly') {
 		popup_content += "<span class='welcome'>👍 This location explicitly welcomes members of the LGBTQ+ community</span><br/>"
 	} else if (tags.lgbtq == 'yes') {
@@ -222,6 +228,7 @@ function setPoiMarker(poi_type, icon, lat, lon, tags, osmid, osmtype) {
 
 	popup_content += "<div class='link_text'><a href='"+osmlink+"' target='_blank'>show feature on OSM</a> | <a href='"+osmedit+"' target='_blank'>edit feature on OSM</a></div>";
 
+	mrk.bindTooltip(tags.name,{direction: 'right',offset: [20,10]}).openTooltip();
 	mrk.bindPopup(L.popup({autoPanPaddingTopLeft: [0,50]}).setContent(popup_content));
 	
 	// poi_markers.push(mrk);
