@@ -49,7 +49,7 @@ button {
 	left: 0;
 	font-family: roboto-medium;
 	font-size: 10pt;
-	color: #333;
+	color: #444;
 	background-color: rgba(255,255,255,0.7);
 	padding: 0 5px 0 5px;
 	max-width: 500px;
@@ -162,7 +162,7 @@ button {
 	/*content: attr(title);*/
 	text-align: center;
 	white-space: nowrap;
-	background: #666;
+	background: #444;
 	opacity: 0.8 !important;
 	color: #fff;
 	font-family: roboto-medium;
@@ -176,7 +176,7 @@ button {
 	height: 0;
 	border-top: 17px solid transparent;
 	border-bottom: 17px solid transparent;
-	border-left: 17px solid #666;
+	border-left: 17px solid #444;
 	position: absolute;
 	top: 195px;
 	right: 45px;
@@ -237,6 +237,7 @@ button {
 	position: absolute;
 	width: 100%;
 	height: 100%;
+	background-color: #000;
 }
 
 .leaflet-control-zoom {
@@ -279,7 +280,7 @@ button {
 }
 
 .leaflet-popup-content-wrapper {
-	background-color: #333;
+	background-color: #444;
 }
 
 .leaflet-popup-content img {
@@ -291,7 +292,7 @@ button {
 .leaflet-popup-tip {
 	box-shadow: none;
 	padding: 0;
-	background-color: #333;
+	background-color: #444;
 }
 
 .leaflet-popup-tip-container {
@@ -312,12 +313,14 @@ a, leaflet-control a {
 	max-width: 250px;
 	display: inline-block;
 	color: white;
+	margin-bottom: 5px;
 }
 
 .type {
 	font-weight: bold;
 	font-size: 1.2em;
 	color: white;
+	text-transform: capitalize;
 }
 
 .only {
@@ -328,9 +331,9 @@ a, leaflet-control a {
 }
 
 .primary {
-	/*background-image: linear-gradient(to left, violet, indigo, blue, green, yellow, orange, red);*/
-	/*-webkit-background-clip: text;*/
-	color: violet;
+	background-image: linear-gradient(to right, red, orange, yellow, limegreen, royalblue, mediumvioletred);
+	-webkit-background-clip: text;
+	color: transparent;
 	font-size: 1.2em;
 }
 
@@ -378,9 +381,21 @@ hr {
   cursor: pointer !important;
 }
 
-/*.leaflet-tooltip-pane {
-	z-index: 10000;
-}*/
+.leaflet-tooltip {
+	position: absolute;
+	color: mediumpurple;
+	z-index: 1000;
+	white-space: nowrap;
+	background-color: #444;
+	opacity: 0.8 !important;
+	color: #fff;
+	font-family: roboto-medium;
+	font-size: 1.2em;
+	border-radius: 3px;
+	line-height: 28px;
+	height: 28px;
+	padding: 0 8px 0 8px;
+}
 
 .overlayText {
 	color: white;
@@ -411,7 +426,7 @@ hr {
 	text-decoration: none;
 	font-family: sans-serif;
 	font-size: 11px;
-	color: #333;
+	color: #444;
 	position: fixed;
 	bottom: 0;
 	right: 202px;
