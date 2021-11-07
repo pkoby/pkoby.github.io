@@ -1,0 +1,329 @@
+<meta charset="UTF-8">
+<html>
+<head>
+	<title>Gov. W. Smith Estate Map</title>
+	<link rel="stylesheet" href="style.css"/>
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"/>
+	<script type="text/javascript" src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+	<script type="text/javascript" src="leaflet/leaflet.timeline.js"></script>
+	<script type="text/javascript" src="leaflet/leaflet.pattern-src.js"></script>
+	<script type="text/javascript" src="leaflet/leaflet.groupedlayercontrol.js"></script>
+</head>
+<body>
+	<div id="map"></div>
+	<div id="info">
+		<span class="notesTitle">Notes:</span>
+		<ul id="displayed-list"><!-- <span class="subtle">Placeholder</span> --></ul>
+	</div>
+
+	<!-- <div id="ticks">
+		<span id="t1">| 2017-10-02</span>
+		<span id="t2">| 2018-10-02</span>
+		<span id="t3">| 2019-10-02</span>
+	</div> -->
+
+	<script src="features.geojson"></script>
+	<script>
+		function getColorFor(str) {
+			// java String#hashCode
+			var hash = 0;
+			for (var i = 0; i < str.length; i++) {
+				hash = str.charCodeAt(i) + ((hash << 5) - hash);
+			}
+			var red = (hash >> 24) & 0xff;
+			var grn = (hash >> 16) & 0xff;
+			var blu = (hash >> 8) & 0xff;
+			return "rgb(" + red + "," + grn + "," + blu + ")";
+		}
+
+		var Positron = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+			attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
+			subdomains: 'abcd',
+			maxZoom: 19
+		});
+
+		var PositronNoLabels = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png', {
+			attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+			subdomains: 'abcd',
+			maxZoom: 19
+		});
+
+		var PositronOnlyLabels = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}{r}.png', {
+			attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+			subdomains: 'abcd',
+			maxZoom: 19,
+			opacity: 0.3
+		});
+
+		// var osm = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 18, attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap</a> contributors' });
+
+		// var EVMWICPlat = L.imageOverlay('EVMWIC.jpg', [[38.7132,-77.8099],[38.6936,-77.7852]],{opacity:0.5});
+		var EVMWICPlat2 = L.imageOverlay('EVMWIC_new.jpg', [[38.71338,-77.81019],[38.6934,-77.78489]],{opacity:0.5});
+		var MadduxPlat = L.imageOverlay('MadduxPlat.jpg', [[38.7094,-77.8108],[38.6888,-77.7838]],{opacity:0.7});
+		var VDOT_west = L.imageOverlay('VDOT_west.jpg', [[38.7147,-77.8079],[38.7064,-77.7964]],{opacity:0.7});
+		var VDOT_east = L.imageOverlay('VDOT_east.jpg', [[38.7096,-77.7998],[38.7008,-77.7884]],{opacity:0.7});
+		var overlayOff = new L.LayerGroup();;
+
+		var layerEVMWIC = new L.LayerGroup();
+		var layer8070 = new L.LayerGroup();
+		var layer1861 = new L.LayerGroup();
+		var layer1502 = new L.LayerGroup();
+		var layer8511 = new L.LayerGroup();
+		var layer6126 = new L.LayerGroup();
+		var layer5491 = new L.LayerGroup();
+		var layer7315 = new L.LayerGroup();
+		var layer4162 = new L.LayerGroup();
+		var layerResidue = new L.LayerGroup();
+		// var layerNotes = new L.LayerGroup();
+
+		var bounds = [[38.72556,-77.81889], [38.68556,-77.77889]];
+
+		var map = L.map("map", {
+			layers: [PositronNoLabels,PositronOnlyLabels,layerEVMWIC,layer8070,layer1861,layer1502,layer8511,layer6126,layer5491,layer7315,layer4162,layerResidue],
+			center: [38.70336,-77.79889],
+			zoom: 16,
+			minZoom: 14,
+			zoomControl:false,
+			maxBounds: bounds,
+		});
+
+		var baseLayers={
+
+		};
+		var groupedOverlays={
+			"":{
+				"Original 1890 EVMWIC Purchase":layerEVMWIC,
+			},
+			"<b>Plats</b>":{
+				// "Original 1890 EVMWIC Purchase": layerEVMWIC,
+				"American Legion (8070)": layer8070,
+				"American Legion Sub Lot (1861)": layer1861,
+				"Arlington Ave and Carlton Ave (1502)": layer1502,
+				"Dod Property (8511)": layer8511,
+				"Montarosa Stables (6126)": layer6126,
+				"Muurling Property (5491)": layer5491,
+				"Neptune Lodge (7315)": layer7315,
+				"Warrenton Horse Show Assoc. (4162)": layer4162,
+				"Other Properties": layerResidue,
+			},
+			"<hr><b>Overlays</b>":{
+				// "EVMWIC Plat Map": EVMWICPlat,
+				"EVMWIC Plat Map": EVMWICPlat2,
+				"Maddux Plat Map": MadduxPlat,
+				"VDOT Green St. (W)": VDOT_west,
+				"VDOT Green St. (E)": VDOT_east,
+				"Off": overlayOff,
+			},
+		};
+		var options={exclusiveGroups:["<hr><b>Overlays</b>"],collapsed:true};
+
+		var ordinal = function(d) {
+			if (d > 3 && d < 21) return 'th';
+			switch (d % 10) {
+				case 1:  return "st";
+				case 2:  return "nd";
+				case 3:  return "rd";
+				default: return "th";
+			}
+		}
+		
+		var dateParse = function (date) {
+			var d = new Date(date);
+			var nd = new Date(d.getTime() + 5*60*60*1000);
+			var mo = new Intl.DateTimeFormat('en', { month: 'long' }).format(nd);
+			var da = new Intl.DateTimeFormat('en', { day: 'numeric' }).format(nd);
+			var ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(nd);
+			var nth = ordinal(da);
+			return mo+' '+da+nth+', '+ye;
+		}
+
+		function onEachFeature(feature, layer) {
+			layer.bindTooltip(dateParse(feature.properties.start)+'<br>'+feature.properties.short,{
+				direction:'top',
+				permanent:true
+			});
+			layer.bindPopup('<b>Deed Date:</b> '+dateParse(feature.properties.start)+'<br><b>Deed#:</b> '+feature.properties.deed+', '+feature.properties.page+'<br><b>Property PIN:</b> '+feature.properties.PIN+'<br><b>Grantor(s):</b> '+feature.properties.seller+'<br><b>Grantee(s):</b> '+feature.properties.buyer);
+		}
+
+		function styleFeature(feature) {
+			var colorCheck;
+			if (feature.properties.color) {
+				colorCheck=(feature.properties.color);
+			} else {
+				colorCheck=(getColorFor(feature.properties.start+feature.properties.seller+feature.properties.buyer));
+			}
+			return {
+				stroke: true,
+				weight: 1,
+				color: colorCheck,
+				fillOpacity: 0.8,
+			};
+		}
+
+		var rectPattern = new L.PatternRect({
+			width: 5,
+			height: 5,
+			rx: 0,
+			ry: 0,
+			fill: true,
+			fillOpacity: 1,
+			stroke: false,
+			color: '#000'
+	    });
+
+	    var circlePattern = new L.PatternCircle({
+			x: 2,
+			y: 1,
+			radius: 1,
+			fill: true,
+			fillOpacity: 1,
+			stroke: false,
+			color: '#000'
+	    });
+
+	    var circles = new L.Pattern({width:4, height:4});
+		circles.addShape(circlePattern);
+		circles.addTo(map); 
+
+		var rectangles = new L.Pattern({width:10, height:10});
+		rectangles.addShape(rectPattern);
+		rectangles.addTo(map);
+
+		var stripes = new L.StripePattern({
+			weight: 3,
+			color: '#000',
+			opacity: 1,
+		}).addTo(map); 
+
+//INITIATE TIMELINES
+		var timeline8070 = L.timeline(data8070, {style: styleFeature, onEachFeature: onEachFeature}).addTo(layer8070);
+		var timeline1861 = L.timeline(data1861, {style: styleFeature, onEachFeature: onEachFeature}).addTo(layer1861);
+		var timeline1502 = L.timeline(data1502, {style: styleFeature, onEachFeature: onEachFeature}).addTo(layer1502);
+		var timeline8511 = L.timeline(data8511, {style: styleFeature, onEachFeature: onEachFeature}).addTo(layer8511);
+		var timeline6126 = L.timeline(data6126, {style: styleFeature, onEachFeature: onEachFeature}).addTo(layer6126);
+		var timeline5491 = L.timeline(data5491, {style: styleFeature, onEachFeature: onEachFeature}).addTo(layer5491);
+		var timeline7315 = L.timeline(data7315, {style: styleFeature, onEachFeature: onEachFeature}).addTo(layer7315);
+		var timeline4162 = L.timeline(data4162, {style: styleFeature, onEachFeature: onEachFeature}).addTo(layer4162);
+		
+		var timelineLines = L.timeline(dataWHSLine, {
+			style: function (feature) {
+				return {
+					stroke: true,
+					weight: 3,
+					// opacity: 0.4,
+					color: '#fff',
+					dashArray: '4,4',
+					lineCap: 'flat',
+				};
+			},
+			onEachFeature: function(feature, layer) {
+				layer.bindTooltip(feature.properties.short,{
+					direction:'top',
+					permanent:true
+				});
+				layer.bindPopup('<b>Deed Date:</b> '+feature.properties.short+'<br><b>Deed#:</b> '+feature.properties.deed+', '+feature.properties.page);
+			},
+			showTicks: true
+		}).addTo(layer4162);
+
+		var timelineResidue = L.timeline(dataResidue, {
+			style: function (feature) {
+				return {
+					stroke: true,
+					weight: 1,
+					// opacity: 0.4,
+					color: '#aaa',
+					fillOpacity: 0.2,
+					fillPattern: stripes,
+				};
+			},
+			onEachFeature: function(feature, layer) {
+				layer.bindPopup('<b>Deed Date:</b> '+dateParse(feature.properties.start)+'<br><b>Deed#:</b> '+feature.properties.deed+', '+feature.properties.page+'<br><b>Grantor(s):</b> '+feature.properties.seller+'<br><b>Grantee(s):</b> '+feature.properties.buyer)
+			},
+			showTicks: true
+		}).addTo(layerResidue);
+
+		var timelineEasements = L.timeline(dataEasements, {
+			style: function (feature) {
+				return {
+					stroke: true,
+					weight: 1,
+					// opacity: 0.4,
+					color: '#aaa',
+					fillOpacity: 0.3,
+					fillPattern: circles,
+				};
+			},
+			onEachFeature: function(feature, layer) {
+				layer.bindPopup('<b>Deed Date:</b> '+dateParse(feature.properties.start)+'<br><b>Deed#:</b> '+feature.properties.deed+', '+feature.properties.page+'<br><b>Grantor(s):</b> '+feature.properties.seller+'<br><b>Grantee(s):</b> '+feature.properties.buyer)
+			},
+			showTicks: true
+		}).addTo(layerResidue);
+
+		var timelineNotes = L.timeline(dataNotes);
+
+		var EVMWICFill = L.geoJson(dataEVMWICFill, {
+			style: function (feature) {
+				return {
+					stroke: false,
+					color: '#000',
+					fillOpacity: 0.1,
+					// fillPattern: circles,
+				};
+			},
+		}).addTo(map);
+
+		var EVMWICBoundary = L.geoJson(dataEVMWICBoundary, {
+			style: function (feature) {
+				return {
+					stroke: true,
+					weight: 4,
+					color:"#006",
+					// fillPattern: circles,
+				};
+			},
+		}).addTo(layerEVMWIC);
+
+//INITIATE CONTROLS
+		var timelineControl = L.timelineSliderControl({
+			formatOutput: function (date) {
+				var d = new Date(date);
+				var nd = new Date(d.getTime() + 5*60*60*1000);
+				var ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(nd);
+				return ye;
+			},
+			// formatOutput: function (date) {
+			// 	var d = dateParse(date);
+			// 	return d;
+			// },
+			enableKeyboardControls: true,
+			showTicks: true,
+		});
+
+		function updateList(timeline) {
+			var displayed = timeline.getLayers();
+			var list = document.getElementById("displayed-list");
+			list.innerHTML = "";
+			displayed.forEach(function (info) {
+				var li = document.createElement("li");
+				li.innerHTML = info.feature.properties.notes;
+				list.appendChild(li);
+			});
+		}
+
+		// timelineNotes.addTo(layerNotes);
+
+		timelineControl.addTo(map);
+		timelineControl.addTimelines(timeline8070,timeline1861,timeline1502,timeline8511,timeline6126,timeline5491,timeline7315,timeline4162,timelineLines,timelineNotes,timelineEasements,timelineResidue);
+
+		timelineNotes.on("change", function (e) {
+			updateList(e.target);
+		});
+
+		L.control.groupedLayers(baseLayers,groupedOverlays,options).addTo(map);
+		L.control.zoom({position:'topright'}).addTo(map);
+
+	</script>
+
+</body>
+</html>
