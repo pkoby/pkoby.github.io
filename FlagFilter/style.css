@@ -1,0 +1,98 @@
+body {
+	background-color: #333;
+	color: #eee;
+}
+
+a, a:visited {
+	color: #eee;
+}
+
+h1, h2 {
+	text-align: center;
+	margin-bottom: 0;
+}
+h3 {
+	text-align: left;
+	margin-bottom: 0;
+}
+.container {
+	display: grid;
+	grid-template-columns: 1fr 3fr;
+	font-size: 0.8em;
+}
+aside {
+	padding: 0 1em;
+}
+aside div {
+	margin: .25em 0;
+	display: inline-block;
+}
+input {
+	margin-right: 5px;
+}
+main {
+
+}
+.flag {
+	display: inline-block;
+	padding: 0.5em;
+	margin: 0.5em;
+	vertical-align: top;
+}
+.flag h3 {
+	max-width: 200px;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}
+/*.flag h3:hover {
+	text-overflow: none;
+	overflow: visible;
+	white-space: normal;
+}*/
+p {
+	margin: 0;
+}
+
+a {
+	text-decoration: none;
+}
+label {
+	font-weight: bold;
+}
+.red {
+	color: red;
+}
+.orange {
+	color: orange;
+}
+.yellow {
+	color: yellow;
+}
+.green {
+	color: green;
+}
+.blue {
+	color: royalblue;
+}
+.purple {
+	color: mediumpurple;
+}
+.pink {
+	color: pink;
+}
+.brown {
+	color: saddlebrown;
+}
+.black {
+	color: black;
+}
+.gray {
+	color: gray;
+}
+
+footer {
+	position: absolute;
+	bottom: 0px;
+	font-size: 0.6em;
+}
