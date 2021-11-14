@@ -58,7 +58,7 @@ aside div {
 main {/*
 	height:75%; 
 	width: calc(100% - 155px);*/
-	margin-left: 210px;
+	/*margin-left: 210px;*/
 }
 @media screen and (max-width: 690px){
 	.container {
