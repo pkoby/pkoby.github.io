@@ -7,7 +7,7 @@ a, a:visited {
 	color: #eee;
 }
 
-h1, h2 {
+h1, h2, h4 {
 	text-align: center;
 	margin-bottom: 0;
 }
@@ -33,7 +33,7 @@ aside {
 	background-color: #333;
 	overflow-x: hidden;
 	/*transition: 0.1s;*/
-	box-shadow: 1px 0px 5px 1px #111;
+	box-shadow: 1px 0px 5px 1px #222;
 }
 aside div {
 	margin: .25em 0;
@@ -55,10 +55,15 @@ aside div {
 	text-decoration: none;
 }
 
+img {
+
+	box-shadow: 1px 3px 5px 1px #222;
+}
+
 main {/*
 	height:75%; 
 	width: calc(100% - 155px);*/
-	/*margin-left: 210px;*/
+	margin-left: 210px;
 }
 @media screen and (max-width: 690px){
 	.container {
@@ -91,7 +96,7 @@ input {
 	vertical-align: top;
 }
 .flag h3 {
-	max-width: 200px;
+	max-width: 256px;
 	text-overflow: ellipsis;
 	overflow: hidden;
 	white-space: nowrap;
@@ -103,6 +108,7 @@ input {
 }*/
 p {
 	margin: 0;
+	color: #eee;
 }
 
 a {
@@ -121,7 +127,10 @@ label {
 	color: yellow;
 }
 .green {
-	color: green;
+	color: forestgreen;
+}
+.turquoise {
+	color: turquoise;
 }
 .blue {
 	color: royalblue;
