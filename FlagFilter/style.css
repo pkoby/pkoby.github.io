@@ -25,7 +25,7 @@ aside {
 	padding: 1em;
 	border-right: 1px #444 solid;
 	height:100%;
-	width: 150px;
+	width: 180px;
 	z-index: 1;
 	position: fixed;
 	top: 0;
@@ -44,7 +44,7 @@ aside div {
 	position: fixed;
 	top: 0;
 	left: 0;
-	font-size: 30px;
+	font-size: 2.5em;
 	cursor: pointer;
 	background: none;
 	color: white;
@@ -58,9 +58,14 @@ aside div {
 main {/*
 	height:75%; 
 	width: calc(100% - 155px);*/
-	margin-left: 180px;
+	margin-left: 210px;
 }
 @media screen and (max-width: 690px){
+	.container {
+		/*display: grid;*/
+		/*grid-template-columns: 1fr 2fr;*/
+		font-size: 1em;
+	}
 	aside {
 		/*display: block;*/
 		/*width: 100%;*/
