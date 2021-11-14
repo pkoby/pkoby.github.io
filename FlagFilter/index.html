@@ -9,12 +9,13 @@
 	<title>LGBTQ+ Flag Filter</title>
 </head>
 <body>
-	<header>
-		<h1>LGBTQ+ Flag Filter</h1>
-	</header>
-		<div class="container">
-		<aside>
+	<div class="container">
+		<aside id="filterMenu">
+			<a href="javascript:void(0)" class="menubutton" onclick="closeNav()">&times;</a>
 			<h2>Filters</h2>
+			<div>
+				<button>Reset</button>
+			</div>
 			<h3>Color</h3>
 			<div>
 				<div><input type="checkbox" name="Red" value="red" id="red"><label for="red" class="red">Red</label></div>
@@ -45,12 +46,10 @@
 				<div><input type="checkbox" name="Count" value="eight" id="eight"><label for="eight">8</label></div>
 				<div><input type="checkbox" name="Count" value="nine" id="nine"><label for="nine">9</label></div>
 			</div>
-			<br>
-			<div>
-				<button>Reset</button>
-			</div>
 		</aside>
-		<main>
+		<main id="main">
+			<h1>LGBTQ+ Flag Filter</h1>
+			<button class="menubutton" onclick="openNav()">&#9776;</button><br>
 			<!-- 
 			<div class="flag white stripes">
 				<a href="" target="_blank"><h3>Title</h3></a>
