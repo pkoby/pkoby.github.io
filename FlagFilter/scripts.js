@@ -2,12 +2,12 @@
 
 function openNav() {
 	document.getElementById("filterMenu").style.visibility = "visible";
-	document.getElementById("main").style.marginLeft = "210px";
+	document.getElementById("main").style.marginRight = "210px";
 }
 
 function closeNav() {
 	document.getElementById("filterMenu").style.visibility = "hidden";
-	document.getElementById("main").style.marginLeft = "0";
+	document.getElementById("main").style.marginRight = "0";
 }
 
 var allCheckboxes = document.querySelectorAll('input[type=checkbox]');
