@@ -29,7 +29,7 @@ aside {
 	z-index: 1;
 	position: fixed;
 	top: 0;
-	left: 0;
+	right: 0;
 	background-color: #333;
 	overflow-x: hidden;
 	/*transition: 0.1s;*/
@@ -43,7 +43,7 @@ aside div {
 .menubutton {
 	position: fixed;
 	top: 0;
-	left: 0;
+	right: 0;
 	font-size: 2.5em;
 	cursor: pointer;
 	background: none;
@@ -55,7 +55,7 @@ aside div {
 	text-decoration: none;
 }
 
-img {
+img, svg {
 
 	box-shadow: 1px 3px 5px 1px #222;
 }
@@ -63,7 +63,7 @@ img {
 main {/*
 	height:75%; 
 	width: calc(100% - 155px);*/
-	margin-left: 210px;
+	margin-right: 210px;
 }
 @media screen and (max-width: 690px){
 	.container {
@@ -100,6 +100,7 @@ input {
 	text-overflow: ellipsis;
 	overflow: hidden;
 	white-space: nowrap;
+	margin-top: 0;
 }
 /*.flag h3:hover {
 	text-overflow: none;
