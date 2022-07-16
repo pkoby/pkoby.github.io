@@ -4,8 +4,8 @@ window.onload = function () {
 //Map Setup
 	var bounds = [[38.312, -82.61719], [38.5046, -82.25945]];
 	var map = new L.map('mapid', {
-		maxZoom: 17,
-		minZoom: 5,
+		maxZoom: 16,
+		minZoom: 12,
 		maxBounds: bounds,
 		zoomControl: false,
 		// crs: L.CRS.Simple
