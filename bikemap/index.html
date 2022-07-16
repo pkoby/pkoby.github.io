@@ -1,0 +1,290 @@
+<html>
+<head>
+	<title>Huntington Bike Map</title>
+	<link rel="shortcut icon" type="image/x-icon" href="icons/bicycle.ico">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="leaflet.css">
+
+   <script src="jquery-3.4.1.min.js"></script>
+
+	<script type="text/javascript"  src="leaflet.js"></script>
+	<script type="text/javascript" src="leaflet-hash.js"></script>
+	<!-- <script type="text/javascript" src="leaflet.label.js"></script> -->
+	<script type="text/javascript" src="locate.min.js"></script>
+	<!-- <script type="text/javascript" src="hammer.min.js"></script> -->
+
+	<script type="text/javascript" src="points3.geojson"></script>
+	<script type="text/javascript" src="mapcode.js"></script>
+	<script type="text/javascript" src="bikeRoutes.geojson"></script>
+	<!-- <script type="text/javascript" src="routes.json"></script>
+	<script type="text/javascript" src="highlight.geojson"></script> -->
+
+	<script language="javascript" type="text/javascript">
+		function show(S) {
+			var ls = document.getElementById(S);
+			if (ls) {
+				if (ls.style.display = 'none') {
+					ls.style.display = 'block';
+				}
+			}
+		}
+		function hide(H) {
+			var lh = document.getElementById(H);
+			if (lh) {
+				if (lh.style.display = 'block') {
+					lh.style.display = 'none';
+				}
+			}
+		}
+		// function switchtolayers(S) {
+		// 	var ls = document.getElementById(S);
+		// 	var layers = document.getElementById('layers');
+		// 		if (ls.style.display != 'none') {
+		// 			ls.style.display = 'none';
+		// 			layers.style.display = 'block';
+		// 		}
+		// }
+		function switchtolegend(S) {
+			var ls = document.getElementById(S);
+			var layers = document.getElementById('legend');
+				if (ls.style.display != 'none') {
+					ls.style.display = 'none';
+					layers.style.display = 'block';
+				}
+		}
+	</script>
+
+</head>
+<body>
+	<div id="mapid"></div>
+	<div id="title">Huntington Bike Map</div>
+	<!-- <div id="subtitle">by Peter Koby</div> -->
+
+	<!-- <div id="info"><a href="info.html" target="_blank">info</a></div> -->
+	<!-- <div id="legend"></div> -->
+	<div id="sidebar">
+		<a href="#" class="tooltip" onclick="return false;">
+			<div id="zoomin1" class="zoomin linkbutton show" title="Zoom In"><span>Zoom In</span></div>
+		</a>
+		<a href="#" class="tooltip" onclick="return false;">
+			<div id="zoomout1" class="zoomout linkbutton show" title="Zoom Out"><span>Zoom Out</span></div>
+		</a>
+		<!-- <a href="#" class="tooltip" onclick="show('layers'); return false;">
+			<div class="layers linkbutton show"><span>Layers</span></div>
+		</a> -->
+		<a href="#" class="tooltip" onclick="show('legend'); return false;">
+			<div class="legend linkbutton show" title="Legend"><span>Legend</span></div>
+		</a>
+		<a href="#" class="tooltip" onclick="return false;">
+			<div id="locate1" class="locate linkbutton show" title="Locate Me"><span>Locate</span></div>
+		</a><!-- 
+		<a href="#" class="tooltip" onclick="return false;">
+			<div id="highlight1" class="highlight linkbutton show" title="Toggle Highlight of Suggested Routes"><span>Highlight</span></div>
+		</a> -->
+		<!-- LAYERS -->
+		<!-- <div id="layers" class="more">
+			<a href="#" class="tooltip" onclick="return false;">
+				<div id="zoomin2" class="zoomin linkbutton hide"><span>Zoom In</span></div>
+			</a>
+			<a href="#" class="tooltip" onclick="return false;">
+				<div id="zoomout2" class="zoomout linkbutton hide"><span>Zoom Out</span></div>
+			</a>
+			<a href="#" class="tooltip" onclick="hide('layers'); return false;">
+				<div class="layers linkbutton hide active"><span>Layers</span></div>
+			</a>
+			<a href="#" class="tooltip" onclick="switchtolegend('layers'); return false;">
+				<div class="legend linkbutton hide"><span>Legend</span></div>
+			</a>
+			<a href="#" class="tooltip" onclick="return false;">
+				<div id="locate2" class="locate linkbutton hide"><span>Legend</span></div>
+			</a>
+			<a href="#" class="close" onclick="hide('layers'); return false;"></a>
+			<div class="moreinner">
+				<div class="innertable">
+					<h3>Layers</h3>
+					<form action="">
+						<input type="checkbox" id="pois">Points of Interest<br><br>
+						<input type="checkbox" id="cyclingRoutes">Selected Bike Rides<br><br>
+					</form>
+				</div>
+			</div>
+		</div> -->
+		<!-- LEGEND -->
+		<div id="legend" class="more">
+			<a href="#" class="tooltip" onclick="return false;">
+				<div id="zoomin3" class="zoomin linkbutton hide" title="Zoom In"><span>Zoom In</span></div>
+			</a>
+			<a href="#" class="tooltip" onclick="return false;">
+				<div id="zoomout3" class="zoomout linkbutton hide" title="Zoom Out"><span>Zoom Out</span></div>
+			</a>
+			<!-- <a href="#" class="tooltip" onclick="switchtolayers('legend'); return false;">
+				<div class="layers linkbutton hide"><span>Layers</span></div>
+			</a> -->
+			<a href="#" class="tooltip" onclick="hide('legend'); return false;">
+				<div class="legend linkbutton hide active" title="Legend"><span>Legend</span></div>
+			</a>
+			<a href="#" class="tooltip" onclick="return false;">
+				<div id="locate3" class="locate linkbutton hide" title="Locate Me"><span>Locate</span></div>
+			</a><!-- 
+			<a href="#" class="tooltip" onclick="return false;">
+				<div id="highlight2" class="highlight linkbutton hide" title="Toggle Highlight of Suggested Routes"><span>Highlight</span></div>
+			</a> -->
+			<a href="#" class="close" onclick="hide('legend'); return false;"></a>
+			<div class="moreinner">
+				<div class="innertable">
+					<h3>Legend</h3>
+					<span>All icons represent full zoom</span>
+
+					<!-- <h4>Points</h4> -->
+					<div class="legenditem">
+						<div class="imagecol"><img class="twenty" src="legend/gear.png"></div>
+						<div class="textcol">Bike Shop</div>
+					</div>
+					<div class="legenditem">
+						<div class="imagecol"><img class="twelve" src="legend/drinking_water.png"></div>
+						<div class="textcol">Drinking Fountain</div>
+					</div>
+					<div class="legenditem">
+						<div class="imagecol"><img class="sixteen" src="legend/grocery.png"></div>
+						<div class="textcol">Grocery Store</div>
+					</div>
+					<div class="legenditem">
+						<div class="imagecol"><img class="sixteen" src="legend/convenience.png"></div>
+						<div class="textcol">Convenience Store</div>
+					</div>
+					<div class="legenditem">
+						<div class="imagecol"><img class="sixteen" src="legend/cafe.png"></div>
+						<div class="textcol">Cafe</div>
+					</div>
+					<div class="legenditem">
+						<div class="imagecol"><img src="legend/level_crossing.png"></div>
+						<div class="textcol">Railroad Crossing</div>
+					</div>
+
+					<!-- <h4>Areas</h4> -->
+					<div class="legenditem">
+						<div class="imagecol"><img src="legend/park.png"></div>
+						<div class="textcol">Park</div>
+					</div>
+					<div class="legenditem">
+						<div class="imagecol"><img src="legend/cemetery.png"></div>
+						<div class="textcol">Cemetery</div>
+					</div>
+					<div class="legenditem">
+						<div class="imagecol"><img src="legend/university.png"></div>
+						<div class="textcol">University</div>
+					</div>
+					<div class="legenditem">
+						<div class="imagecol"><img src="legend/waterway.png"></div>
+						<div class="textcol">Water</div>
+					</div>
+
+					<h4>Cycle Infrastructure</h4>
+					<div class="legenditem">
+						<div class="imagecol"><img src="legend/paved_cycleway.png"></div>
+						<div class="textcol">Paved Bike Path</div>
+					</div>
+					<div class="legenditem">
+						<div class="imagecol"><img src="legend/unpaved_cycleway.png"></div>
+						<div class="textcol">Unpaved Bike Path</div>
+					</div>
+					<div class="legenditem">
+						<div class="imagecol"><img src="legend/pedestrian.png"></div>
+						<div class="textcol">Pedestrian Hwy</div>
+					</div>
+					<div class="legenditem">
+						<div class="imagecol"><img src="legend/cyclelane.png"></div>
+						<div class="textcol">Bike Lane</div>
+					</div>
+					<div class="legenditem">
+						<div class="imagecol"><img src="legend/shoulder.png"></div>
+						<div class="textcol">Bikeable Shoulder</div>
+					</div>
+
+					<h4>Road Surface</h4>
+					<div class="legenditem">
+						<div class="imagecol"><img src="legend/nosurf_nospd.png"></div>
+							<div class="textcol">No Surface<span class="superscript" title="These roads have not yet been tagged with a road surface in OpenStreetMap">1</span></div>
+					</div>
+					<div class="legenditem">
+						<div class="imagecol"><img src="legend/paved_nospd.png"></div>
+						<div class="textcol">Paved</div>
+					</div>
+					<div class="legenditem">
+						<div class="imagecol"><img src="legend/paving_nospd.png"></div>
+						<div class="textcol">Brick</div>
+					</div>
+					<div class="legenditem">
+						<div class="imagecol"><img src="legend/unpaved_nospd.png"></div>
+						<div class="textcol">Unpaved</div>
+					</div>
+					<div class="legenditem">
+						<div class="imagecol"><img src="legend/multilane.png"></div>
+						<div class="textcol">Multi-Lane Road<span class="superscript" title="Multi-lane roads have two through lanes in at least one direction">2</span></div>
+					</div>
+
+					<h4>Speed Limits</h4>
+					<div class="legenditem">
+						<div class="imagecol"><img src="legend/paved_nospd.png"></div>
+						<div class="textcol">No Speed Limit<span class="superscript" title="These roads have not yet been tagged with a speed limit in OpenStreetMap">3</span></div>
+					</div>
+					<div class="legenditem">
+						<div class="imagecol"><img src="legend/paved_0_25.png"></div>
+						<div class="textcol">0&ndash;25mph</div>
+					</div>
+					<div class="legenditem">
+						<div class="imagecol"><img src="legend/paved_30_35.png"></div>
+						<div class="textcol">30&ndash;35mph</div>
+					</div>
+					<div class="legenditem">
+						<div class="imagecol"><img src="legend/paved_40_45.png"></div>
+						<div class="textcol">40&ndash;45mph</div>
+					</div>
+					<div class="legenditem">
+						<div class="imagecol"><img src="legend/paved_50_55.png"></div>
+						<div class="textcol">50&ndash;55mph</div>
+					</div>
+
+					<h4>Other Lines</h4>
+					<div class="legenditem">
+						<div class="imagecol"><img src="legend/private.png"></div>
+						<div class="textcol">Private Road</div>
+					</div>
+					<div class="legenditem">
+						<div class="imagecol"><img src="legend/paved_service.png"></div>
+						<div class="textcol">Service Roads<span class="superscript" title="Service roads include alleys and access roads">4</span></div>
+					</div>
+					<div class="legenditem">
+						<div class="imagecol"><img src="legend/small_service.png"></div>
+						<div class="textcol">Minor Service<span class="superscript" title="Minor service roads include driveways and parking aisles">5</span></div>
+					</div>
+					<div class="legenditem">
+						<div class="imagecol"><img src="legend/footway_paved.png"></div>
+						<div class="textcol">Paved Footway</div>
+					</div>
+					<div class="legenditem">
+						<div class="imagecol"><img src="legend/footway_unpaved.png"></div>
+						<div class="textcol">Unpaved Footway</div>
+					</div>
+					<div class="legenditem">
+						<div class="imagecol"><img src="legend/bridge.png"></div>
+						<div class="textcol">Bridge</div>
+					</div>
+					<div class="legenditem">
+						<div class="imagecol"><img src="legend/railway.png"></div>
+						<div class="textcol">Railway</div>
+					</div>
+					<div class="legenditem">
+						<div class="imagecol"><img src="legend/motorway.png"></div>
+						<div class="textcol">Freeway</div>
+					</div>
+					<br>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>
