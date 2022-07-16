@@ -1,0 +1,516 @@
+@font-face {
+	font-family: roboto-medium;
+	src: local(roboto-medium), url('Roboto-Medium.ttf') format('opentype');
+}
+@font-face {
+	font-family: roboto-light;
+	src: local(roboto-light), url('Roboto-Light.ttf') format('opentype');
+}
+@font-face {
+	font-family: Ubuntu	;
+	src: local(Ubuntu), url('Ubuntu-R.ttf') format('opentype');
+}
+
+body {
+	margin: 0px;
+	padding: 0px;
+}
+
+html, body {
+	height: 100%;
+	/*width: 100vw;*/
+	z-index: 0;
+	background-color: #fff;
+}
+
+#mapid {
+	height: 100%;
+	z-index: 0;
+}
+
+h2, h3, h4, h5 {
+	font-family: Ubuntu;
+	font-weight: bold;
+	padding: 0px;
+	margin: 10px 0 4px 0;
+}
+
+#title {
+	position: fixed;
+	top: 0px;
+	font-family: Ubuntu;
+	font-size: 1.8em;
+	/*text-shadow: 0 0 2px white, 0 0 2px white, 0 0 2px white, 0 0 2px white;*/
+	z-index: 1;
+	color: #fff;
+	padding: 0 20px 5px 10px;
+	background: #333;
+	/*border: 2px solid #a6a6aa;*/
+	border-radius: 0 0 8px 0;
+}
+#subtitle {
+	position: absolute;
+	font-family: Ubuntu;
+	font-weight: lighter;
+	font-size: 1.2em;
+	text-shadow: 0 0 2px white, 0 0 2px white, 0 0 2px white, 0 0 2px white;
+	left: 0px;
+	top: 34px;
+	z-index: 1;
+	color: #444;
+	/*background: white;*/
+	padding: 10px;
+	/*border: 2px solid #a6a6aa;*/
+	/*border-radius: 3px;*/
+}
+
+/*#legend {
+	position: absolute;
+	right: 0px;
+	bottom: 30px;
+	z-index: 100;
+	background: white;
+	padding: 10px;
+	border: 2px solid #aaa;
+	border-right: 0;
+	border-radius: 8px 0 0 8px;
+	font-size: 9pt;
+	text-align: justify;
+} #legend:after {
+	content: 'Legend';
+} #legend:hover:after {
+	content: url(legend.png);
+} */
+
+#info {
+	position: absolute;
+	left: 0px;
+	bottom: 0px;
+	padding: 0 5px 0 5px;
+	z-index: 100;
+	background: rgba(255,255,255,0.7);
+
+	/*border: 1px solid #aaa;*/
+	/*font-family: roboto-light;*/
+	font-size: 0.7em;
+	max-width: 100%;
+	text-align: justify;
+} #info a {
+	color: #0078A8;
+	text-decoration: none; 
+}
+
+/*Side Panel*/
+#sidebar {
+	margin: 0 auto;
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	z-index: 100;
+	height: 100%;
+	font-family: Ubuntu;
+	font-weight: lighter;
+	/*font-size: 1em;*/
+}
+.more {
+	display: none; /*Change to block if you want to display the legend on map refresh*/
+	position: absolute;
+	padding: 0 15px 0 15px;
+	top: 0px;
+	right: 0px;
+	height: 100%;
+	width: 170px;
+	background-color: #fff;
+	overflow-y: auto;
+	z-index: 10;
+}
+.moreinner {
+	position: absolute;
+	/*margin: 10px 0;*/
+	/*display: table;*/
+}
+	.innertable {
+		position: relative;
+		margin: 10px 0;
+		/*display: table;*/
+	}.innertable span {
+		font-size: 0.7em;
+	}
+	.legenditem {
+		display: table-row;
+	}
+	.imagecol {
+		width: 40px;
+		height: 20px;
+		vertical-align: middle;
+		text-align: center;
+		display: table-cell;
+		padding-right: 8px;
+	} .imagecol .twenty {
+		max-height: 20px;
+		max-width: 20px;
+	} .imagecol .sixteen {
+		max-height: 16px;
+		max-width: 16px;
+	} .imagecol .twelve {
+		max-height: 12px;
+		max-width: 12px;
+	}
+	.textcol {
+		vertical-align: top;
+		display: table-cell;
+		font-size: .875em;
+	}
+	.legendtable td {
+		width: 25px;
+		padding: 0px;
+		border: none;
+		text-align: center;
+		font-size: .75em;
+	} 
+.zoomin {
+	position: fixed;
+	top: 16px;
+	border-radius: 8px 0 0 0;
+	background-image: url(icons/plus.png);
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+.zoomout {
+	position: absolute;
+	top: 60px;
+	border-radius: 0 0 0 8px;
+	background-image: url(icons/minus.png);
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+.layers {
+	position: absolute;
+	top: 120px;
+	border-radius: 8px 0 0 0;
+	background-image: url(icons/layers.png);
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+.legend {
+	position: absolute;
+	top: 120px;
+	border-radius: 8px 0 0 8px;
+	background-image: url(icons/legend.png);
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+/*.highlight {
+	position: absolute;
+	top: 164px;
+	border-radius: 0 0 0 8px;
+	background-image: url(icons/highlight.png);
+	background-repeat: no-repeat;
+	background-position: center center;
+}*/
+.locate {
+	position: absolute;
+	top: 180px;
+	border-radius: 8px 0 0 8px;
+	background-image: url(icons/locate.png);
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+.linkbutton {
+	width: 44px;
+	height: 44px;
+	background-color: #000;
+	display: inline-block;
+	vertical-align: middle;
+	text-align: center;
+	opacity: 0.7;
+} .linkbutton img {
+	margin-top: 10px;
+} .linkbutton span {
+	box-shadow: 0 0 10px #ccc;
+}
+.show {
+	position: absolute;
+	right: 0px;
+}
+.hide {
+	position: fixed;
+	right: 200px;
+}
+.active {
+	background-color: #000;
+	opacity: 1;
+}
+.close {
+	position: fixed;
+	top: 0px;
+	right: 0px;
+	width: 26px;
+	height: 26px;
+	padding: 10px;
+	background-image: url(icons/close1.png);
+	background-repeat: no-repeat;
+	background-position: center center;
+	z-index: 10;
+} .close:hover {
+	background-image: url(icons/close2.png);
+}
+.linkbutton:hover {
+	background-color: #000;
+	opacity: 1;
+}
+.tooltip {
+  /*text-decoration: ;*/
+}
+.tooltip span {
+	display: none;
+}
+./*tooltip:hover span {
+	display: block;
+	position: absolute;
+	top: 0px;
+	right: 45px;
+	line-height: 34px;
+	height: 34px;
+	padding: 0 10px 0 10px;
+	content: attr(title);
+	text-align: center;
+	white-space: nowrap;
+	background: #fff;
+	opacity: 0.9;  
+	color: #666;
+	font-family: "Helvetica Neue", "Nimbus Sans", sans-serif;
+	font-size: 10pt;
+}
+.tooltip:hover span:after {
+  position: absolute;
+  top: 11px;
+  right: -10px;
+  display: block;
+  content: "";  
+  border-color: transparent transparent transparent #fff;
+  border-style: solid;
+  border-width: 5px;
+  opacity: 0.9;
+  height:0;
+  width:0;
+}*/
+
+.leaflet-control-fullscreen a {
+	background:#fff url(fullscreen.png) no-repeat 0 0;
+	background-size:26px 52px;
+}
+.leaflet-fullscreen-on .leaflet-control-fullscreen a {
+	background-position:0 -26px;
+}
+
+.leaflet-container:-webkit-full-screen {
+	width:100%!important;
+	height:100%!important;
+}
+.leaflet-pseudo-fullscreen {
+	position:fixed!important;
+	width:100%!important;
+	height:100%!important;
+	top:0!important;
+	left:0!important;
+	z-index:99999;
+}
+
+@media
+	(-webkit-min-device-pixel-ratio:2),
+	(min-resolution:192dpi) {
+	.leaflet-control-fullscreen a {
+		background-image:url(fullscreen@2x.png);
+	}
+}
+.legend {
+	line-height: 16px;
+	/*font-size: px;*/
+	font-weight: normal;
+}
+.legend i {
+	width:5px;
+	height: 16px;
+	float: left;
+	margin: 0px 8px 0 0;
+	opacity: .8;
+}
+.info {
+	padding: 6px 7px 6px 6px;
+	font-family: Ubuntu;
+	font-weight: lighter;
+	/*font-size: 10pt;*/
+	background: rgba(0,0,0,0.7);
+	border-radius: 0 5px 5px 0;
+	color: #eee;
+	width: 281px;
+}
+/*.leaflet-left {
+	margin-left: -10px;
+}*/
+.info h4 {
+	margin: 0 0 0 0;
+	font-size: 12pt;
+	color: #eee;
+	font-family: Verdana;
+}
+.info a {
+	color: #fff !important;
+}
+#infocontent img {
+	background: #000;
+	opacity: 1;
+}
+
+.leaflet-popup {
+    pointer-events: none;
+    margin-bottom: -20px !important;
+    max-width: 200px;
+}
+.leaflet-popup-content-wrapper {
+	border: 2px solid #0f7;
+	box-shadow: none !important;
+	/*outline: 2px solid #333;*/
+	/*outline-radius: 2px !important;*/
+}.leaflet-popup-content {
+	margin: 5px !important;
+	text-align: center;
+}.leaflet-popup-close-button, .leaflet-popup-tip-container{
+	visibility: hidden;
+}
+
+.supermarket {
+	width:5px;
+	height:5px;
+	background: url("icons/circle_purple.svg") no-repeat center;
+	background-size: 5px 5px;
+	margin-left: -7px;
+	margin-top: -7px;
+	padding: 4px;
+	-webkit-filter: drop-shadow( 0 0 2px rgba(255, 255, 255, 1.0));
+	filter: drop-shadow( 0 0 2px rgba(255, 255, 255, 1.0));
+}.convenience {
+	width:5px;
+	height:5px;
+	background: url("icons/circle_purple.svg") no-repeat center;
+	background-size: 5px 5px;
+	margin-left: -7px;
+	margin-top: -7px;
+	padding: 4px;
+	-webkit-filter: drop-shadow( 0 0 2px rgba(255, 255, 255, 1.0));
+	filter: drop-shadow( 0 0 2px rgba(255, 255, 255, 1.0));
+}.cafe {
+	width:5px;
+	height:5px;
+	background: url("icons/circle_orange.svg") no-repeat center;
+	background-size: 5px 5px;
+	margin-left: -7px;
+	margin-top: -7px;
+	padding: 4px;
+	-webkit-filter: drop-shadow( 0 0 2px rgba(255, 255, 255, 1.0));
+	filter: drop-shadow( 0 0 2px rgba(255, 255, 255, 1.0));
+}.bar {
+	width:5px;
+	height:5px;
+	background: url("icons/circle_orange.svg") no-repeat center;
+	background-size: 5px 5px;
+	margin-left: -7px;
+	margin-top: -7px;
+	padding: 4px;
+	-webkit-filter: drop-shadow( 0 0 2px rgba(255, 255, 255, 1.0));
+	filter: drop-shadow( 0 0 2px rgba(255, 255, 255, 1.0));
+}.bicycle_shop {
+	width:5px;
+	height:5px;
+	background: url("icons/circle_green.svg") no-repeat center;
+	background-size: 5px 5px;
+	margin-left: -7px;
+	margin-top: -7px;
+	padding: 4px;
+	-webkit-filter: drop-shadow( 0 0 2px rgba(255, 255, 255, 1.0));
+	filter: drop-shadow( 0 0 2px rgba(255, 255, 255, 1.0));
+}.bicycle_parking {
+	width: 5px;
+	height: 5px;
+	background-image: url("icons/circle_green.svg") no-repeat center;
+	background-size:  5px  5px;
+	margin-left: -7px;
+	margin-top: -7px;
+	padding: 4px;
+	-webkit-filter: drop-shadow( 0 0 2px rgba(255, 255, 255, 1.0));
+	filter: drop-shadow( 0 0 2px rgba(255, 255, 255, 1.0));
+}.drinking_water {
+	width: 5px;
+	height: 5px;
+	background: url("icons/circle_blue.svg") no-repeat center;
+	background-size:  5px  5px;
+	margin-left: -7px;
+	margin-top: -7px;
+	padding: 4px;
+	-webkit-filter: drop-shadow( 0 0 2px rgba(255, 255, 255, 1.0));
+	filter: drop-shadow( 0 0 2px rgba(255, 255, 255, 1.0));
+}
+
+
+.leaflet-control-locate {
+  visibility: hidden !important;
+}
+.leaflet-control-locate.active a {
+  color: #2074B6;
+}
+.leaflet-control-locate.active.following a {
+  color: #FC8428;
+}
+
+.leaflet-control-locate-location circle {
+  animation: leaflet-control-locate-throb 4s ease infinite;
+}
+
+@keyframes leaflet-control-locate-throb {
+  0% {
+    r: 9;
+    stroke-width: 1;
+  }
+  50% {
+    r: 7;
+    stroke-width: 3;
+  }
+  100% {
+    r: 9;
+    stroke-width: 1;
+  }
+}
+
+.superscript {
+	vertical-align: super;
+	font-size: 80%;
+	text-decoration: underline dotted;
+}
+
+#infowrapper {
+	width: 740px;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: justify;
+}
+
+code {
+	display: block;
+	color: #fff;
+	background: #756;
+	margin: .5em;
+	padding: 10px;
+	line-height: 20px;
+	box-shadow: inset 1px 1px 3px #312;
+	text-align: left;
+	user-select: all;
+}
+
+.mono {
+	font-family: monospace;
+}
+
+.leaflet-control-attribution {
+	text-align: right;
+}
