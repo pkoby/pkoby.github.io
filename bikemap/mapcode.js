@@ -6,7 +6,7 @@ window.onload = function () {
 	var map = new L.map('mapid', {
 		maxZoom: 17,
 		minZoom: 5,
-		// maxBounds: bounds,
+		maxBounds: bounds,
 		zoomControl: false,
 		// crs: L.CRS.Simple
 	});
@@ -16,7 +16,7 @@ window.onload = function () {
 	var Mapnik=L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
 		maxZoom:19,
 		attribution:'&copy;<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-	}).addTo(map);
+	});
 
 	var tiles = L.tileLayer('tilesjpg/{z}/{x}/{y}.jpg', {
 		attribution: 'Data &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors<br>Map &copy; 2018 Peter Koby | Updated 2020-03-03 | <a href="info.html" target="_blank">Map info</a>',
@@ -26,12 +26,12 @@ window.onload = function () {
 	var tilesKent = L.tileLayer('tilesKent/{z}/{x}/{y}.jpg', {
 		// attribution: 'Map &copy; 2018 Peter Koby | Data &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors| <a href="info.html" target="_blank">Map info</a>'
 		detectRetina: true,
-	}).addTo(map);
+	});
 
 	var tilesBmore = L.tileLayer('tilesBmore/{z}/{x}/{y}.jpg', {
 		// attribution: 'Map &copy; 2018 Peter Koby | Data &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors| <a href="info.html" target="_blank">Map info</a>'
 		detectRetina: true,
-	}).addTo(map);
+	});
 
 	// var cyclingRoutes=new L.LayerGroup();
 	var overlay=new L.LayerGroup();
