@@ -195,7 +195,7 @@ var primary_icon,welcome_icon,no_icon,church_icon,community_icon,shop_icon,bar_i
 	if (saved_lat != undefined) {
 		map.setView([saved_lat, saved_lon], 12)
 	} else {
-		map.setView([-80.80,40.00], 12);
+		map.setView([51.5,-0.1], 12);
 	}
 
 	var mapHash = new L.Hash(map);
@@ -232,7 +232,7 @@ function setPoiMarker(poi_type, icon, lat, lon, tags, osmid, osmtype) {
 	} else if (tags.lgbtq == 'yes') {
 		popup_content += "<span class='welcome'>👍 This location allows members of the LGBTQ+ community</span><br/>"
 	} else if (tags.lgbtq == 'no') {
-		popup_content += "<span class='no'>⛔ This location bans members of the LGBTQ+ community</span><br/>"
+		popup_content += "<span class='no'>⛔ This location does not welcome or prohibits members of the LGBTQ+ community</span><br/>"
 	}
 
 	popup_content += "<div class='link_text'><a href='"+osmlink+"' target='_blank'>show feature on OSM</a> | <a href='"+osmedit+"' target='_blank'>edit feature on OSM</a></div>";
