@@ -34,7 +34,7 @@ aside {
 	top: 0;
 	right: 0;
 	background-color: #333;
-	overflow-x: hidden;
+	overflow-x: scroll;
 	/*transition: 0.1s;*/
 	box-shadow: 1px 0px 5px 1px #222;
 	z-index: 2;
