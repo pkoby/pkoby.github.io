@@ -48,7 +48,7 @@ button {
 	background-repeat: no-repeat;
 	background-position: center center;
 }
-.loadart {
+.loaddata {
 	position: absolute;
 	bottom: 190px !important;
 	border-radius: 8px 0 0 8px;
@@ -91,4 +91,8 @@ button {
 
 .leaflet-control-zoom {
 	display:none;
+}
+
+.leaflet-tooltip {
+	visibility: hidden !important;
 }
