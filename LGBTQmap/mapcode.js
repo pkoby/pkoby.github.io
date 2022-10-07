@@ -15,9 +15,10 @@ var primary_icon,welcome_icon,no_icon,church_icon,community_icon,shop_icon,bar_i
 	var Positron = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
 		attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
 		subdomains: 'abcd',
-		maxZoom: 18,
-		minZoom: 3,
+		minZoom: 6,
+		maxZoom: 19,
 		detectRetina: true,
+		opacity: 0.3,
 	});
 	var CartoDB_DarkMatter = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
 		attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
@@ -38,8 +39,10 @@ var primary_icon,welcome_icon,no_icon,church_icon,community_icon,shop_icon,bar_i
 	var Stamen_TonerLite = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.{ext}', {
 		attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
 		subdomains: 'abcd',
-		minZoom: 0,
-		maxZoom: 20,
+		minZoom: 6,
+		maxZoom: 19,
+		detectRetina: true,
+		opacity: 0.4,
 		ext: 'png'
 	});
 
@@ -65,7 +68,7 @@ var primary_icon,welcome_icon,no_icon,church_icon,community_icon,shop_icon,bar_i
 
 
 	var map = new L.map('bigmap', {
-		layers: [Esri_NatGeoWorldMap],
+		layers: [Stamen_TonerLite],
 		maxBounds: [[90,-180],[-90,180]],
 		zoomControl: false,
 	})
