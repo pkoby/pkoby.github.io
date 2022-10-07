@@ -42,7 +42,7 @@ var primary_icon,welcome_icon,no_icon,church_icon,community_icon,shop_icon,bar_i
 		minZoom: 6,
 		maxZoom: 19,
 		detectRetina: true,
-		opacity: 0.4,
+		opacity: 0.3,
 		ext: 'png'
 	});
 
