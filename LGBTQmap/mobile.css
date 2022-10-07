@@ -96,3 +96,6 @@ button {
 .leaflet-tooltip {
 	visibility: hidden !important;
 }
+
+#tip {
+	line-height: 40px;
