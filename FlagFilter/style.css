@@ -25,10 +25,10 @@ a {
 }
 aside {
 	/*margin: 0 1em;*/
-	padding: 1em;
+	padding: 20px;
 	border-right: 1px #444 solid;
 	height:100%;
-	width: 180px;
+	width: 150px;
 	z-index: 1;
 	position: fixed;
 	top: 0;
@@ -69,7 +69,7 @@ img, svg {
 main {/*
 	height:75%; 
 	width: calc(100% - 155px);*/
-	margin-right: 210px;
+	margin-right: 190px;
 	text-align: center;
 }
 @media screen and (max-width: 690px){

@@ -2,7 +2,7 @@
 
 function openNav() {
 	document.getElementById("filterMenu").style.visibility = "visible";
-	document.getElementById("main").style.marginRight = "210px";
+	document.getElementById("main").style.marginRight = "190px";
 }
 
 function closeNav() {
