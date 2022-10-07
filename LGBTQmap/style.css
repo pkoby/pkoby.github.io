@@ -410,7 +410,7 @@ hr {
 	position: fixed;
 	/*opacity: 0.7;*/
 	/*left: 50%;*/
-	bottom: 0%;
+	bottom: 40%;
 	width: 100%;
 	text-align: center;
 	/*margin-left: -87px !important;*/
@@ -431,6 +431,10 @@ hr {
 
 .overlayText:empty {
 	display: none;
+}
+
+.leaflet-control-attribution {
+	z-index: 1 !important;
 }
 
 .josmtext {
