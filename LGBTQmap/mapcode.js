@@ -29,8 +29,10 @@ var primary_icon,welcome_icon,no_icon,church_icon,community_icon,shop_icon,bar_i
 
 	var Esri_NatGeoWorldMap = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}', {
 		attribution: 'Tiles &copy; Esri &mdash; National Geographic, Esri, DeLorme, NAVTEQ, UNEP-WCMC, USGS, NASA, ESA, METI, NRCAN, GEBCO, NOAA, iPC',
-		maxZoom: 16,
-		opacity: 0.6,
+		minZoom: 6,
+		maxZoom: 19,
+		detectRetina: true,
+		opacity: 0.3,
 	});
 
 	var Stamen_TonerLite = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.{ext}', {
@@ -63,7 +65,7 @@ var primary_icon,welcome_icon,no_icon,church_icon,community_icon,shop_icon,bar_i
 
 
 	var map = new L.map('bigmap', {
-		layers: [CartoDB_DarkMatter],
+		layers: [Esri_NatGeoWorldMap],
 		maxBounds: [[90,-180],[-90,180]],
 		zoomControl: false,
 	})
