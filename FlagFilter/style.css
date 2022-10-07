@@ -37,6 +37,7 @@ aside {
 	overflow-x: hidden;
 	/*transition: 0.1s;*/
 	box-shadow: 1px 0px 5px 1px #222;
+	z-index: 2;
 }
 aside div {
 	margin: .25em 0;
@@ -56,6 +57,7 @@ aside div {
 	color: #818181;
 	padding: 8px 8px 0 20px;
 	text-decoration: none;
+	z-index: 1;
 }
 
 img, svg {
@@ -68,6 +70,7 @@ main {/*
 	height:75%; 
 	width: calc(100% - 155px);*/
 	margin-right: 210px;
+	text-align: center;
 }
 @media screen and (max-width: 690px){
 	.container {

@@ -7,7 +7,7 @@ function openNav() {
 
 function closeNav() {
 	document.getElementById("filterMenu").style.visibility = "hidden";
-	document.getElementById("main").style.marginRight = "0";
+	document.getElementById("main").style.marginRight = "20px";
 }
 
 var allCheckboxes = document.querySelectorAll('input[type=checkbox]');
