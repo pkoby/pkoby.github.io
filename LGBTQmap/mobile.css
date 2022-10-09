@@ -99,3 +99,14 @@ button {
 
 #tip {
 	line-height: 40px;
+}
+
+#infoBox {
+	position: fixed;
+	display: block;
+	top: 0px;
+	left: 0px;
+	width: 96%;
+	height: 96%;
+	transform: translate(2%, 2%);
+}

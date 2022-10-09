@@ -221,23 +221,27 @@ function setPoiMarker(poi_type, icon, lat, lon, tags, osmid, osmtype) {
 	}
 
 	if (tags.lgbtq == 'only') {
-		popup_content += "🌈 <span class='only'>This location only allows members of the LGBTQ+ community</span><br/>"
+		popup_content += "🌈 <span class='only'>This location only allows members of the LGBTQ+ community</span><br/>";
 	} else if (tags.lgbtq == 'primary') {
-		popup_content += "🌈 <span class='primary'>This location caters primarily to the LGBTQ+ community</span><br/>"
+		popup_content += "🌈 <span class='primary'>This location caters primarily to the LGBTQ+ community</span><br/>";
 	} else if (tags.lgbtq == 'welcome' || tags.lgbtq == 'friendly') {
-		popup_content += "<span class='welcome'>👍 This location explicitly welcomes members of the LGBTQ+ community</span><br/>"
+		popup_content += "<span class='welcome'>👍 This location explicitly welcomes members of the LGBTQ+ community</span><br/>";
 		if (tags["source:lgbtq"]) {
-			popup_content += "<a href=\"" + tags["source:lgbtq"] + "\" target=\"_blank\">Source</a>"
+			if (tags["source:lgbtq"].includes('https')) {
+				popup_content += "<span class='source'>Source: <a href=\"" + tags["source:lgbtq"] + "\" target=\"_blank\">website</a></span>";
+			} else {
+				popup_content += "<span class='source'>Source: " + tags["source:lgbtq"] + "</span>";
+			}
 		}
 	} else if (tags.lgbtq == 'yes') {
-		popup_content += "<span class='welcome'>👍 This location allows members of the LGBTQ+ community</span><br/>"
+		popup_content += "<span class='welcome'>👍 This location allows members of the LGBTQ+ community</span><br/>";
 	} else if (tags.lgbtq == 'no') {
-		popup_content += "<span class='no'>⛔ This location does not welcome or prohibits members of the LGBTQ+ community</span><br/>"
+		popup_content += "<span class='no'>⛔ This location does not welcome or prohibits members of the LGBTQ+ community</span><br/>";
 	}
 
 	popup_content += "<div class='link_text'><a href='"+osmlink+"' target='_blank'>show feature on OSM</a> | <a href='"+osmedit+"' target='_blank'>edit feature on OSM</a></div>";
 
-	mrk.bindTooltip(tags.name+"<br/><span class='tiny'>LGBTQ+ "+tags.lgbtq+"</span>",{duration: 0,direction: 'right',offset: [20,10]}).openTooltip();
+	mrk.bindTooltip(tags.name+"<br/><span class='tiny'>LGBTQ+ "+tags.lgbtq+"</span>",{duration: 0,direction: 'right',offset: [20,6]}).openTooltip();
 	mrk.bindPopup(L.popup({autoPanPaddingTopLeft: [0,50]}).setContent(popup_content));
 	
 	poi_markers.push(mrk);
@@ -525,4 +529,9 @@ $(function() {
 			popup.update();
 		}
 	}, true);
+
+	// document.getElementById('infoButton').addEventListener('click', function () {
+	// 	document.getElementById("info").style.visibility = "visible";
+	// });
+
 });
