@@ -107,7 +107,7 @@ button {
 	top: 0px;
 	left: 0px;
 	width: 96%;
-	height: 96%;
-	transform: translate(2%, 2%);
+	height: 94%;
+	transform: translate(2%, 1%);
 	font-size: 0.9em;
 }
