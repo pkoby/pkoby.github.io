@@ -109,4 +109,5 @@ button {
 	width: 96%;
 	height: 96%;
 	transform: translate(2%, 2%);
+	font-size: 0.9em;
 }
