@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏳️‍🌈</text></svg>">
+		<link rel="apple-touch-icon" href="flag.svg">
+		<link rel="stylesheet" href="leaflet.css" />
+		<link rel="stylesheet" href="MarkerCluster.css" />
+		<link rel="stylesheet" href="style.css" />
+		<link rel="stylesheet" href="mobile.css" media="screen and (max-width: 700px)" />
+
+		<title>LGBTQ+map</title>
+
+		<script type="text/javascript">
+			function toggleInfo() {
+				var x = document.getElementById("infoBox");
+				if (x.style.display === "none") {
+					x.style.display = "block";
+				} else {
+					x.style.display = "none";
+				}
+			}
+			function hideInfo() {
+				var x = document.getElementById("infoBox");
+				{
+					x.style.display = "none";
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<div id="sidebar">
+			<a href="#" onclick="return false;">
+				<div id="zoomin" class="linkbutton" title="Zoom In"></div>
+			</a>
+			<a href="#" onclick="return false;">
+				<div id="zoomout" class="linkbutton" title="Zoom Out"></div>
+			</a>
+			<a href="#" onclick="return false;">
+				<div id="locater" class="linkbutton" title="Locate Me"></div>
+			</a>
+			<a href="#" onclick="hideInfo()">
+				<div id="loaddata" class="linkbutton" title="Load Places"></div><span id="tip">Load Places</span><span id="arrow" class="arrowRight"></span>
+			</a>
+		</div>
+
+		<div id="topbar">
+			<span id="logo"><img src="flag.svg"></span>
+			<span id="title">LGBTQ+map</span>
+		</div>
+
+		<a href="#" onclick="toggleInfo()">
+			<div id="infoButton" class="linkbutton" title="Info"></div>
+		</a>
+		<div id="infoBox" onclick="hideInfo()">
+			<div>
+				<h2>Welcome to LGBTQ+map!</h2>
+				<br/>
+				<p>Find places that are for or friendly to the LGBTQ+ community. Use the <img src="locate_info.svg">&nbsp;button to find your location, and click&nbsp;<img src="download_info.svg"> to load places from OpenStreetMap.</p>
+				<p>Places will show as icons:</p>
+				<p>🛐&nbsp;Church, 🏢&nbsp;Office, 🏪&nbsp;Shop, 🍸&nbsp;Bar, 🍺&nbsp;Pub, 🍝&nbsp;Restaurant, ☕&nbsp;Cafe, 🎭&nbsp;Theatre, 🏺&nbsp;Museum, 🧖&nbsp;Sauna, 📚&nbsp;Library, 🪦&nbsp;Memorial, or 🏳️‍🌈&nbsp;Other.</p>
+				<p>Little icons indicate the welcomeness of a place, from 🌈&nbsp;primarily for LGBTQ+, to 👍&nbsp;welcome, to ⛔&nbsp;prohibited.</p>
+				<p>Tap the icons to get more information or to edit a place in OpenStreetMap.</p>
+				<span class="dismiss">Tap this box to dismiss</span>
+			</div>
+		</div>
+
+		<div id="bigmap"></div>
+
+		<script src="leaflet.js"></script>
+		<script src="leaflet-hash.js"></script>
+		<script src="jquery-1.10.2.min.js"></script>	
+		<script src="L.Control.Locate.min.js" charset="utf-8"></script>
+		<script src="leaflet.markercluster.js"></script>
+		<script src="mapcode.js"></script>
+	</body>
+</html>
