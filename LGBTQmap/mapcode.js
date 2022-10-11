@@ -294,6 +294,10 @@ function element_to_map(data) {
 				setPoiMarker("Library", library_icon, el.lat, el.lon, el.tags, el.id, el.type);
 			} else if (el.tags.historic == 'memorial') {
 				setPoiMarker("Memorial", memorial_icon, el.lat, el.lon, el.tags, el.id, el.type);
+			} else if(el.tags.amenity) {
+				setPoiMarker(el.tags.amenity, other_icon, el.lat, el.lon, el.tags, el.id, el.type);
+			} else if(el.tags.shop) {
+				setPoiMarker(el.tags.shop+" Shop", other_icon, el.lat, el.lon, el.tags, el.id, el.type);
 			} else {
 				setPoiMarker("Unknown Type", other_icon, el.lat, el.lon, el.tags, el.id, el.type);
 			}
@@ -471,7 +475,7 @@ $(function() {
 		popupAnchor: [0,-24],
 	});
 	memorial_icon = L.divIcon({
-		html: '🪦',
+		html: '📜',
 		iconSize: [30,30],
 		className: 'pointIcon',
 		iconAnchor: [15,18],
