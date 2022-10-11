@@ -17,7 +17,7 @@ button {
 	border: 1px solid #aaa;
 	/*text-shadow:none;*/
 	background-color: rgba(255, 255, 255, 0.7);
-	color: DarkOrchid;
+	color: mediumpurple;
 	/*box-shadow: 1px 1px 1px #000;*/
 	z-index: 1000;
 	font-weight: bold;
@@ -187,7 +187,7 @@ button {
 .linkbutton {
 	width: 44px;
 	height: 44px;
-	background-color: DarkOrchid;
+	background-color: mediumpurple;
 	display: inline-block;
 	vertical-align: middle;
 	text-align: center;
@@ -203,11 +203,11 @@ button {
 }
 
 .active {
-	background-color: DarkOrchid;
+	background-color: mediumpurple;
 	opacity: 0.9;
 }
 .linkbutton:hover {
-	background-color: DarkOrchid;
+	background-color: mediumpurple;
 	opacity: 1 !important;
 }
 
@@ -277,7 +277,7 @@ button {
 #title {
 	font-family: fontin;
 	font-weight: bold;
-	color: DarkOrchid;
+	color: mediumpurple;
 	font-size: 28pt;
 	vertical-align: middle;
 	margin-left: -2px;
@@ -367,9 +367,8 @@ button {
 	/*box-shadow: none;*/
 }
 
-
-a, leaflet-control a {
-	color: DarkMagenta !important;
+a, leaflet-container a {
+	color: Darkorchid !important;
 }
 
 .title {
@@ -438,7 +437,7 @@ hr {
 
 .link_text a {
 	text-decoration: none;
-	color: DarkOrchid;
+	color: #b298e6!important;
 }
 
 .popup_image {
@@ -452,7 +451,7 @@ hr {
 
 .leaflet-tooltip {
 	position: absolute;
-	color: DarkOrchid;
+	color: mediumpurple;
 	z-index: 1000;
 	white-space: nowrap;
 	background-color: #444;
@@ -486,15 +485,15 @@ hr {
 	/*pointer-events: none;*/
 	cursor: pointer;
 	margin: 0 !important;
-	background-color: DarkOrchid;
+	background-color: mediumpurple;
 	/*background-image: linear-gradient(to right, red, orange, yellow, green, blue, purple);*/
 	padding: 10px 0 10px 0;
 	opacity: 0.6;
-	/*box-shadow: 0 0 10px 10px DarkOrchid;*/
+	/*box-shadow: 0 0 10px 10px mediumpurple;*/
 }
 
 .overlayText:hover {	
-	background-color: DarkOrchid;
+	background-color: mediumpurple;
 	opacity: 1 !important;
 }
 
