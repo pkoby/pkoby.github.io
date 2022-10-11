@@ -1,13 +1,13 @@
 'use strict';
 var saved_lat, saved_lon, bbox, bboxOutline;
 var poi_markers = new Array();
-var poi_clusters = new L.markerClusterGroup({
-	disableClusteringAtZoom: 15,
-	spiderfyOnMaxZoom: false,
-	showCoverageOnHover: true,
-	maxClusterRadius: 20,
-	minClusterRadius: 1,
-});
+// var poi_clusters = new L.markerClusterGroup({
+// 	disableClusteringAtZoom: 15,
+// 	spiderfyOnMaxZoom: false,
+// 	showCoverageOnHover: true,
+// 	maxClusterRadius: 20,
+// 	minClusterRadius: 1,
+// });
 
 var primary_icon,welcome_icon,no_icon,church_icon,community_icon,shop_icon,bar_icon,pub_icon,restaurant_icon,cafe_icon,theater_icon,museum_icon,sauna_icon,library_icon,memorial_icon,other_icon;
 	
