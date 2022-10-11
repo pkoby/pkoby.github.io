@@ -228,7 +228,7 @@ function setPoiMarker(poi_type, icon, lat, lon, tags, osmid, osmtype) {
 		popup_content += "<span class='welcome'>👍 This location explicitly welcomes members of the LGBTQ+ community</span><br/>";
 		if (tags["source:lgbtq"]) {
 			if (tags["source:lgbtq"].includes('https')) {
-				popup_content += "<span class='source'>Source: <a href=\"" + tags["source:lgbtq"] + "\" target=\"_blank\">website</a></span>";
+				popup_content += "<span class='source'>Source: <span class='sourcelink'><a href=\"" + tags["source:lgbtq"] + "\" target=\"_blank\">website</a></span></span>";
 			} else {
 				popup_content += "<span class='source'>Source: " + tags["source:lgbtq"] + "</span>";
 			}
@@ -239,7 +239,7 @@ function setPoiMarker(poi_type, icon, lat, lon, tags, osmid, osmtype) {
 		popup_content += "<span class='no'>⛔ This location does not welcome or prohibits members of the LGBTQ+ community</span><br/>";
 	}
 
-	popup_content += "<div class='link_text'><a href='"+osmlink+"' target='_blank'>show feature on OSM</a> | <a href='"+osmedit+"' target='_blank'>edit feature on OSM</a></div>";
+	popup_content += "<div class='linktext'><a href='"+osmlink+"' target='_blank'>show feature on OSM</a> | <a href='"+osmedit+"' target='_blank'>edit feature on OSM</a></div>";
 
 	mrk.bindTooltip(tags.name+"<br/><span class='tiny'>LGBTQ+ "+tags.lgbtq+"</span>",{duration: 0,direction: 'right',offset: [20,6]}).openTooltip();
 	mrk.bindPopup(L.popup({autoPanPaddingTopLeft: [0,50]}).setContent(popup_content));

@@ -104,7 +104,7 @@ button {
 
 #infoButton {
 	position: fixed;
-	bottom: 30px;
+	bottom: 35px;
 	left: 20px;
 	height: 40px;
 	width: 40px;
@@ -368,7 +368,7 @@ button {
 }
 
 a, leaflet-container a {
-	color: Darkorchid !important;
+	color: mediumpurple !important;
 }
 
 .title {
@@ -430,12 +430,17 @@ hr {
 	/*border-radius: 2px;*/
 }
 
-.link_text {
+.linktext {
 	margin-top: 10px;
 	font-size: 80%;
 }
 
-.link_text a {
+.linktext a {
+	text-decoration: none;
+	color: #b298e6!important;
+}
+
+.sourcelink a {
 	text-decoration: none;
 	color: #b298e6!important;
 }
