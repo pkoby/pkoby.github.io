@@ -42,7 +42,6 @@ var primary_icon,welcome_icon,no_icon,church_icon,community_icon,shop_icon,bar_i
 		minZoom: 6,
 		maxZoom: 19,
 		detectRetina: true,
-		opacity: 0.5,
 		ext: 'png'
 	});
 
@@ -115,7 +114,7 @@ var primary_icon,welcome_icon,no_icon,church_icon,community_icon,shop_icon,bar_i
 		}
 	});
 
-	document.getElementById('loaddata').addEventListener('click', dlObjects);
+	document.getElementById('loaddata').addEventListener('click', downloadData);
 
 	// var toggleLegend  = document.getElementById("openlegend");
 	// var legendContent = document.getElementById("legendbox");
@@ -220,11 +219,11 @@ function setPoiMarker(poi_type, icon, lat, lon, tags, osmid, osmtype) {
 		popup_content += "<span class='type'>"+poi_type+"</span><hr>";//<br><span class='type'>"+poi_type+"</span>
 	}
 
-	if (tags.lgbtq == 'only') {
+	if (tags.lgbtq == 'only' || tags.gay == 'only') {
 		popup_content += "🌈 <span class='only'>This location only allows members of the LGBTQ+ community</span><br/>";
 	} else if (tags.lgbtq == 'primary') {
 		popup_content += "🌈 <span class='primary'>This location caters primarily to the LGBTQ+ community</span><br/>";
-	} else if (tags.lgbtq == 'welcome' || tags.lgbtq == 'friendly') {
+	} else if (tags.lgbtq == 'welcome' || tags.lgbtq == 'friendly' || tags.gay == 'welcome' ) {
 		popup_content += "<span class='welcome'>👍 This location explicitly welcomes members of the LGBTQ+ community</span><br/>";
 		if (tags["source:lgbtq"]) {
 			if (tags["source:lgbtq"].includes('https')) {
@@ -233,9 +232,16 @@ function setPoiMarker(poi_type, icon, lat, lon, tags, osmid, osmtype) {
 				popup_content += "<span class='source'>Source: " + tags["source:lgbtq"] + "</span>";
 			}
 		}
-	} else if (tags.lgbtq == 'yes') {
+		if (tags["source:gay"]) {
+			if (tags["source:gay"].includes('https')) {
+				popup_content += "<span class='source'>Source: <span class='sourcelink'><a href=\"" + tags["source:gay"] + "\" target=\"_blank\">website</a></span></span>";
+			} else {
+				popup_content += "<span class='source'>Source: " + tags["source:gay"] + "</span>";
+			}
+		}
+	} else if (tags.lgbtq == 'yes' || tags.gay == 'yes') {
 		popup_content += "<span class='welcome'>👍 This location allows members of the LGBTQ+ community</span><br/>";
-	} else if (tags.lgbtq == 'no') {
+	} else if (tags.lgbtq == 'no' || tags.gay == 'no') {
 		popup_content += "<span class='no'>⛔ This location does not welcome or prohibits members of the LGBTQ+ community</span><br/>";
 	}
 
@@ -304,17 +310,11 @@ function element_to_map(data) {
 
 			if ('construction:amenity' in el.tags || 'disused:amenity' in el.tags || 'abandoned:amenity' in el.tags || 'construction:tourism' in el.tags || 'disused:tourism' in el.tags || 'abandoned:tourism' in el.tags || 'construction:shop' in el.tags || 'disused:shop' in el.tags || 'abandoned:shop' in el.tags || 'construction:leisure' in el.tags || 'disused:leisure' in el.tags || 'abandoned:leisure' in el.tags) {
 				//Nothing
-			} else if (el.tags.lgbtq == 'primary') {
+			} else if (el.tags.lgbtq == 'primary' || el.tags.lgbtq == 'only' || el.tags.gay == 'only') {
 				setPoiMarker("", primary_icon, el.lat, el.lon, el.tags, el.id, el.type);
-			} else if (el.tags.lgbtq == 'only') {
-				setPoiMarker("", primary_icon, el.lat, el.lon, el.tags, el.id, el.type);
-			} else if (el.tags.lgbtq == 'welcome') {
+			} else if (el.tags.lgbtq == 'welcome' || el.tags.lgbtq == 'friendly' || el.tags.lgbtq == 'yes' || el.tags.gay == 'welcome' || el.tags.gay == 'yes') {
 				setPoiMarker("", welcome_icon, el.lat, el.lon, el.tags, el.id, el.type);
-			} else if (el.tags.lgbtq == 'yes') {
-				setPoiMarker("", welcome_icon, el.lat, el.lon, el.tags, el.id, el.type);
-			} else if (el.tags.lgbtq == 'friendly') {
-				setPoiMarker("", welcome_icon, el.lat, el.lon, el.tags, el.id, el.type);
-			} else if (el.tags.lgbtq == 'no') {
+			} else if (el.tags.lgbtq == 'no' || el.tags.gay == 'no') {
 				setPoiMarker("", no_icon, el.lat, el.lon, el.tags, el.id, el.type);
 			// } else {
 			// 	setPoiMarker("", error_icon, el.lat, el.lon, el.tags, el.id, el.type);
@@ -328,7 +328,7 @@ function element_to_map(data) {
 	loadingText.setContent('');
 }
 
-function dlObjects() {
+function downloadData() {
 	if (map.getZoom() < 12) {
 		var new_span = document.createElement('span');
 		new_span.innerText = "Please Zoom In";
@@ -351,7 +351,7 @@ function dlObjects() {
 	$.ajax({
 		url: "https://z.overpass-api.de/api/interpreter",
 		data: {
-			"data": '[bbox:'+bbox+'][out:json][timeout:25];(nwr[lgbtq];);out body center; >; out skel qt;'/*nwr[historic=memorial];*/
+			"data": '[bbox:'+bbox+'][out:json][timeout:25];(nwr[lgbtq];nwr[gay];);out body center; >; out skel qt;'/*nwr[historic=memorial];*/
 		},
 		success: element_to_map,
 		error: error_function,
