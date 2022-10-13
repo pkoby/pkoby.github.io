@@ -17,22 +17,22 @@
 		<!-- <link rel="stylesheet" href="MarkerCluster.css" /> -->
 		<link rel="stylesheet" href="style.css" />
 		<link rel="stylesheet" href="mobile.css" media="screen and (max-width: 700px)" />
+		<script src="jquery-1.10.2.min.js"></script>	
 
 		<title>LGBTQ+map</title>
 
 		<script type="text/javascript">
-			function toggleInfo() {
-				var x = document.getElementById("infoBox");
-				if (x.style.display === "none") {
-					x.style.display = "block";
-				} else {
-					x.style.display = "none";
-				}
-			}
+
+			jQuery(function($) {
+				$(".profile-toggle").click(function() {
+					$("#infoBox").toggleClass("hidden show")
+					console.log('click');
+				});
+			});
+
 			function hideInfo() {
-				var x = document.getElementById("infoBox");
-				{
-					x.style.display = "none";
+				if ($("#infoBox").hasClass("show")) {
+					$("#infoBox").toggleClass("hidden show")
 				}
 			}
 		</script>
@@ -49,7 +49,7 @@
 				<div id="locater" class="linkbutton" title="Locate Me"></div>
 			</a>
 			<a href="#" onclick="hideInfo()">
-				<div id="loaddata" class="linkbutton" title="Load Places"></div><span id="tip">Load Places</span><span id="arrow" class="arrowRight"></span>
+				<div id="loaddata" class="linkbutton" title="Load Places"></div><span id="tipRight">Load Places</span><span id="arrowRight"></span>
 			</a>
 		</div>
 
@@ -58,16 +58,17 @@
 			<span id="title">LGBTQ+map</span>
 		</div>
 
-		<a href="#" onclick="toggleInfo()">
-			<div id="infoButton" class="linkbutton" title="Info"></div>
-		</a>
-		<div id="infoBox" onclick="hideInfo()">
+		<!-- <a href="#" onclick="toggleInfo()"> -->
+			<div id="infoButton" class="linkbutton profile-toggle" title="Info"></div>
+			<span id="tipLeft">Info</span><span id="arrowLeft"></span>
+		<!-- </a> -->
+		<div id="infoBox" class="hidden" onclick="hideInfo()">
 			<div>
 				<h2>Welcome to LGBTQ+map!</h2>
 				<br/>
 				<p>Find places that are friendly to the LGBTQ+ community. Use the <img src="locate_info.svg">&nbsp;button to find your location, and click&nbsp;<img src="download_info.svg"> to load points of interest that are tagged with <a href="https://wiki.openstreetmap.org/wiki/Key:lgbtq" target="_blank"><span class="code">lgbtq=*</span></a> or <a href="https://wiki.openstreetmap.org/wiki/Key:gay" target="_blank"><span class="code">gay=*</span></a> in <a href="http://www.osm.org" target="_blank">OpenStreetMap</a>.</p>
 				<p>Places will show as icons:</p>
-				<p>🛐&nbsp;Church, 🏢&nbsp;Office, 🏪&nbsp;Shop, 🍸&nbsp;Bar, 🍺&nbsp;Pub, 🍝&nbsp;Restaurant, ☕&nbsp;Cafe, 🎭&nbsp;Theatre, 🏺&nbsp;Museum, 🧖&nbsp;Sauna, 📚&nbsp;Library, 📜&nbsp;Memorial, or 🏳️‍🌈&nbsp;Other.</p>
+				<p>🍸&nbsp;Bar, ☕&nbsp;Cafe, 🛐&nbsp;Church, 🛏️&nbsp;Hotel, 📚&nbsp;Library, 📜&nbsp;Memorial, 🏺&nbsp;Museum, 🏢&nbsp;Office, ⚕️&nbsp;Pharmacy, 🍺&nbsp;Pub, 🍝&nbsp;Restaurant, 🧖&nbsp;Sauna, 🏪&nbsp;Shop, 🎭&nbsp;Theatre, 🐕&nbsp;Veterinarian, or 🏳️‍🌈&nbsp;Other.</p>
 				<p>Little icons indicate the welcomeness of a place, from 🌈&nbsp;primarily for LGBTQ+, to 👍&nbsp;welcome, to ⛔&nbsp;prohibited.</p>
 				<p>Tap the icons to get more information or to edit a place in OpenStreetMap.</p>
 				<p></p>
@@ -79,7 +80,6 @@
 
 		<script src="leaflet.js"></script>
 		<script src="leaflet-hash.js"></script>
-		<script src="jquery-1.10.2.min.js"></script>	
 		<script src="L.Control.Locate.min.js" charset="utf-8"></script>
 		<!-- <script src="leaflet.markercluster.js"></script> -->
 		<script src="mapcode.js"></script>
