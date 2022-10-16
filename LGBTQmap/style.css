@@ -71,7 +71,7 @@ button {
 	position: absolute;
 	top: 26px;
 	border-radius: 8px 0 0 0;
-	background-image: url(plus.png);
+	background-image: url(icons/plus.png);
 	background-repeat: no-repeat;
 	background-position: center center;
 }
@@ -79,7 +79,7 @@ button {
 	position: absolute;
 	top: 70px;
 	border-radius: 0 0 0 8px;
-	background-image: url(minus.png);
+	background-image: url(icons/minus.png);
 	background-repeat: no-repeat;
 	background-position: center center;
 }
@@ -87,7 +87,7 @@ button {
 	position: absolute;
 	top: 130px;
 	border-radius: 8px 0 0 8px;
-	background-image: url(locate.svg);
+	background-image: url(icons/locate.svg);
 	background-repeat: no-repeat;
 	background-position: center center;
 	background-size: 16px;
@@ -96,7 +96,7 @@ button {
 	position: absolute;
 	top: 190px;
 	border-radius: 8px 0 0 8px;
-	background-image: url(download.svg);
+	background-image: url(icons/download.svg);
 	background-repeat: no-repeat;
 	background-position: center center;
 	background-size: 16px;
@@ -109,7 +109,7 @@ button {
 	height: 40px;
 	width: 40px;
 	border-radius: 20px;
-	background-image: url(information.svg);
+	background-image: url(icons/information.svg);
 	background-repeat: no-repeat;
 	background-position: center center;
 	background-size: 16px;
@@ -156,6 +156,7 @@ button {
 	width: 20px;
 	vertical-align: middle;
 	margin-top: 0px;
+	text-shadow: 1px 1px 1px black;
 }
 
 .hidden {
