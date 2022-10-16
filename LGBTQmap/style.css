@@ -156,7 +156,10 @@ button {
 	width: 20px;
 	vertical-align: middle;
 	margin-top: 0px;
-	text-shadow: 1px 1px 1px black;
+}
+
+.infoIcons {
+	white-space: nowrap;
 }
 
 .hidden {
