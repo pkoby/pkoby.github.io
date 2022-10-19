@@ -9,7 +9,7 @@ var poi_markers = new Array();
 // 	minClusterRadius: 1,
 // });
 
-var primary_icon,welcome_icon,no_icon,bar_icon,cafe_icon,library_icon,lodging_icon,memorial_icon,museum_icon,office_icon,pharmacy_icon,placeofworship_icon,pub_icon,restaurant_icon,shop_icon,theater_icon,vet_icon,other_icon;
+var primary_icon,welcome_icon,no_icon,has_source_icon,has_website_icon,no_source_icon,bar_icon,cafe_icon,library_icon,lodging_icon,memorial_icon,museum_icon,office_icon,pharmacy_icon,placeofworship_icon,pub_icon,restaurant_icon,shop_icon,theater_icon,vet_icon,other_icon;
 	
 	// init map
 	var Positron = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
@@ -233,29 +233,33 @@ function setPoiMarker(poi_type, icon, lat, lon, tags, osmid, osmtype) {
 		popup_content += "🌈 <span class='primary'>This location caters primarily to the LGBTQ+ community</span><br/>";
 	} else if (tags.lgbtq == 'welcome' || tags.lgbtq == 'friendly' || tags.gay == 'welcome' ) {
 		popup_content += "<span class='welcome'>👍 This location explicitly welcomes members of the LGBTQ+ community</span><br/>";
-		if (tags["source:lgbtq"]) {
-			if (tags["source:lgbtq"].includes('https')) {
-				popup_content += "<span class='source'>Source: <span class='sourcelink'><a href=\"" + tags["source:lgbtq"] + "\" target=\"_blank\">website</a></span></span>";
-			} else {
-				popup_content += "<span class='source'>Source: " + tags["source:lgbtq"] + "</span>";
-			}
-		}
-		if (tags["source:gay"]) {
-			if (tags["source:gay"].includes('https')) {
-				popup_content += "<span class='source'>Source: <span class='sourcelink'><a href=\"" + tags["source:gay"] + "\" target=\"_blank\">website</a></span></span>";
-			} else {
-				popup_content += "<span class='source'>Source: " + tags["source:gay"] + "</span>";
-			}
-		}
 	} else if (tags.lgbtq == 'yes' || tags.gay == 'yes') {
 		popup_content += "<span class='welcome'>👍 This location allows members of the LGBTQ+ community</span><br/>";
 	} else if (tags.lgbtq == 'no' || tags.gay == 'no') {
 		popup_content += "<span class='no'>⛔ This location does not welcome or prohibits members of the LGBTQ+ community</span><br/>";
 	}
 
+	if (tags["source:lgbtq"]) {
+		if (tags["source:lgbtq"].includes('https')) {
+			popup_content += "<span class='source'>Source: <span class='sourcelink'><a href=\"" + tags["source:lgbtq"] + "\" target=\"_blank\">website</a></span></span>";
+		} else {
+			popup_content += "<span class='source'>Source: " + tags["source:lgbtq"] + "</span>";
+		}
+	} else if (tags["source:gay"]) {
+		if (tags["source:gay"].includes('https')) {
+			popup_content += "<span class='source'>Source: <span class='sourcelink'><a href=\"" + tags["source:gay"] + "\" target=\"_blank\">website</a></span></span>";
+		} else {
+			popup_content += "<span class='source'>Source: " + tags["source:gay"] + "</span>";
+		}
+	} else if (tags.website != undefined) {
+		popup_content += "<span class='source'>Source not tagged&mdash;check <span class='sourcelink'><a href=\"" + tags.website + "\" target=\"_blank\">website</a></span></span>";
+	} else {
+		popup_content += "<span class='source'>Source not tagged</span>";
+	}
+
 	popup_content += "<div class='linktext'><a href='"+osmlink+"' target='_blank'>show feature on OSM</a> | <a href='"+osmedit+"' target='_blank'>edit feature on OSM</a></div>";
 
-	mrk.bindTooltip(tags.name+"<br/><span class='tiny'>LGBTQ+ "+tags.lgbtq+"</span>",{duration: 0,direction: 'right',offset: [20,6]}).openTooltip();
+	// mrk.bindTooltip(tags.name+"<br/><span class='tiny'>LGBTQ+ "+tags.lgbtq+"</span>",{duration: 0,direction: 'right',offset: [20,6]}).openTooltip();
 	mrk.bindPopup(L.popup({autoPanPaddingTopLeft: [0,50]}).setContent(popup_content));
 	
 	poi_markers.push(mrk);
@@ -302,8 +306,8 @@ function element_to_map(data) {
 				setPoiMarker("Theater", theater_icon, el.lat, el.lon, el.tags, el.id, el.type);
 			} else if (el.tags.amenity == 'library') {
 				setPoiMarker("Library", library_icon, el.lat, el.lon, el.tags, el.id, el.type);
-			} else if (el.tags.amenity == 'pharmacy') {
-				setPoiMarker("Pharmacy", pharmacy_icon, el.lat, el.lon, el.tags, el.id, el.type);
+			// } else if (el.tags.amenity == 'pharmacy') {
+			// 	setPoiMarker("Pharmacy", pharmacy_icon, el.lat, el.lon, el.tags, el.id, el.type);
 			} else if (el.tags.amenity == 'veterinary') {
 				setPoiMarker("Veterinarian", vet_icon, el.lat, el.lon, el.tags, el.id, el.type);
 			} else if (el.tags.tourism == 'museum') {
@@ -330,11 +334,21 @@ function element_to_map(data) {
 				setPoiMarker("", welcome_icon, el.lat, el.lon, el.tags, el.id, el.type);
 			} else if (el.tags.lgbtq == 'no' || el.tags.gay == 'no') {
 				setPoiMarker("", no_icon, el.lat, el.lon, el.tags, el.id, el.type);
+			}
+
+			if ('construction:amenity' in el.tags || 'disused:amenity' in el.tags || 'abandoned:amenity' in el.tags || 'construction:tourism' in el.tags || 'disused:tourism' in el.tags || 'abandoned:tourism' in el.tags || 'construction:shop' in el.tags || 'disused:shop' in el.tags || 'abandoned:shop' in el.tags || 'construction:leisure' in el.tags || 'disused:leisure' in el.tags || 'abandoned:leisure' in el.tags) {
+				//Nothing
+			} else if (el.tags["source:lgbtq"] || el.tags["source:gay"]) {
+				setPoiMarker("", has_source_icon, el.lat, el.lon, el.tags, el.id, el.type);
+			} else if (el.tags.website) {
+				setPoiMarker("", has_website_icon, el.lat, el.lon, el.tags, el.id, el.type);
+			} else {
+				setPoiMarker("", no_source_icon, el.lat, el.lon, el.tags, el.id, el.type);
+			}
 			// } else {
 			// 	setPoiMarker("", error_icon, el.lat, el.lon, el.tags, el.id, el.type);
 			// 		error_counter++;
 			// 	}
-			}
 		}
 	});
 	// legend.addTo(map);
@@ -343,6 +357,7 @@ function element_to_map(data) {
 }
 
 function downloadData() {
+	var mapHash = new L.Hash(map);
 	if (map.getZoom() < 12) {
 		var new_span = document.createElement('span');
 		new_span.innerText = "Please Zoom In";
@@ -411,6 +426,27 @@ $(function() {
 		iconSize: [26,26],
 		className: 'welcomeIcon',
 		iconAnchor: [25,25],
+		popupAnchor: [0,-24],
+	});
+	has_source_icon = L.divIcon({
+		html: '🔵',
+		iconSize: [26,26],
+		className: 'sourceIcon',
+		iconAnchor: [-12,-8],
+		popupAnchor: [0,-24],
+	});
+	has_website_icon = L.divIcon({
+		html: '🟠',
+		iconSize: [26,26],
+		className: 'sourceIcon',
+		iconAnchor: [-12,-8],
+		popupAnchor: [0,-24],
+	});
+	no_source_icon = L.divIcon({
+		html: '🔴',
+		iconSize: [26,26],
+		className: 'sourceIcon',
+		iconAnchor: [-12,-8],
 		popupAnchor: [0,-24],
 	});
 	// bar_icon = L.divIcon({
