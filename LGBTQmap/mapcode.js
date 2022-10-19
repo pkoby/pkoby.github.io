@@ -436,7 +436,7 @@ $(function() {
 		popupAnchor: [0,-24],
 	});
 	has_website_icon = L.divIcon({
-		html: '🟠',
+		html: '⚪',
 		iconSize: [26,26],
 		className: 'sourceIcon',
 		iconAnchor: [-12,-8],
