@@ -432,7 +432,6 @@ a, leaflet-container a {
 
 .source {
 	font-size: 1em;
-	text-transform: capitalize;
 }
 
 .only {
@@ -648,5 +647,12 @@ hr {
 	width: 8px;
 	height: 8px;
 	font-size: 15px;
+	pointer-events: none
+}
+.sourceIcon {
+	border: 0;
+	width: 8px;
+	height: 8px;
+	font-size: 5px;
 	pointer-events: none
 }
