@@ -152,14 +152,19 @@ button {
 }
 
 #infoBox img {
-	height: 20px;
-	width: 20px;
+	height: 18px;
+	width: 18px;
 	vertical-align: middle;
 	margin-top: 0px;
 }
 
 .infoIcons {
 	white-space: nowrap;
+}
+
+.tinyIcons img {
+	height: 10px !important;
+	width: 10px !important;
 }
 
 .hidden {
@@ -418,7 +423,7 @@ a, leaflet-container a {
 .title {
 	font-weight: bold;
 	/*font-style: italic;*/
-	font-size: 1.6em;
+	font-size: 1.7em;
 	max-width: 250px;
 	display: inline-block;
 	margin-bottom: 5px;
@@ -432,13 +437,6 @@ a, leaflet-container a {
 
 .source {
 	font-size: 1em;
-}
-
-.only {
-	background-image: linear-gradient(to right, red, orange, yellow, limegreen, royalblue, mediumvioletred);
-	-webkit-background-clip: text;
-	color: transparent;
-	font-size: 1.2em;
 }
 
 .primary {
@@ -458,11 +456,42 @@ a, leaflet-container a {
 	font-size: 1.2em;
 }
 
+.trans {
+	background-image: linear-gradient(to right, #5dc6ff, #fa9eb4, white, #fa9eb4, #5dc6ff);
+	-webkit-background-clip: text;
+	color: transparent;
+	font-size: 1.2em;
+}
+.bi {
+	background-image: linear-gradient(to right, #fd2b98, #fd2b98, #bb7ab7, #0659ff, #0659ff);
+	-webkit-background-clip: text;
+	color: transparent;
+	font-size: 1.2em;
+}
+.men {
+	background-image: linear-gradient(to right, #0bd7ab, #4fdfc0, #afedcf, white, #97bfe9, #7670d6, #5f28b8);
+	-webkit-background-clip: text;
+	color: transparent;
+	font-size: 1.2em;
+}
+.women {
+	background-image: linear-gradient(to right, #ff5628, #f39c63, #ffb685, white, #de8dbd, #c985af, #fc089a);
+	-webkit-background-clip: text;
+	color: transparent;
+	font-size: 1.2em;
+}
+.bears {
+	background-image: linear-gradient(to right, #af7b00, #ff9610, #f2f973, #fdf8c2, white, #757575);
+	-webkit-background-clip: text;
+	color: transparent;
+	font-size: 1.2em;
+}
+
 hr {
 	width: 70%;
-	color: white;
+	color: #555;
 	opacity: 0.6;
-	margin: 8px auto 8px auto;
+	margin: 3px auto 3px auto;
 }
 
 .invalid {
@@ -536,7 +565,7 @@ hr {
 	background-color: mediumpurple;
 	/*background-image: linear-gradient(to right, red, orange, yellow, green, blue, purple);*/
 	padding: 10px 0 10px 0;
-	opacity: 0.6;
+	opacity: 0.7;
 	/*box-shadow: 0 0 10px 10px mediumpurple;*/
 }
 
@@ -651,8 +680,5 @@ hr {
 }
 .sourceIcon {
 	border: 0;
-	width: 8px;
-	height: 8px;
-	font-size: 5px;
 	pointer-events: none
 }
