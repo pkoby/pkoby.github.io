@@ -9,9 +9,9 @@
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    version="1.1"
    id="museum-15"
-   width="15px"
-   height="15px"
-   viewBox="0 0 15 15"
+   width="13"
+   height="13"
+   viewBox="0 0 13 13"
    sodipodi:docname="museum.svg"
    inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)">
   <metadata
@@ -22,6 +22,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -40,15 +41,20 @@
      inkscape:window-height="480"
      id="namedview4"
      showgrid="false"
-     inkscape:zoom="15.733333"
-     inkscape:cx="7.4999998"
-     inkscape:cy="7.4999998"
+     inkscape:zoom="3.9333332"
+     inkscape:cx="-13.390805"
+     inkscape:cy="11.723299"
      inkscape:window-x="0"
      inkscape:window-y="27"
      inkscape:window-maximized="0"
-     inkscape:current-layer="museum-15" />
+     inkscape:current-layer="museum-15"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0" />
   <path
      id="path7509"
-     d="M7.5,0L1,3.4453V4h13V3.4453L7.5,0z M2,5v5l-1,1.5547V13h13v-1.4453L13,10  V5H2z M4.6152,6c0.169-0.0023,0.3318,0.0639,0.4512,0.1836L7.5,8.6172l2.4336-2.4336c0.2445-0.2437,0.6402-0.2432,0.884,0.0013  C10.9341,6.3017,10.9997,6.46,11,6.625v4.2422c0.0049,0.3452-0.271,0.629-0.6162,0.6338c-0.3452,0.0049-0.629-0.271-0.6338-0.6162  c-0.0001-0.0059-0.0001-0.0118,0-0.0177V8.1328L7.9414,9.9414c-0.244,0.2433-0.6388,0.2433-0.8828,0L5.25,8.1328v2.7344  c0.0049,0.3452-0.271,0.629-0.6162,0.6338C4.2887,11.5059,4.0049,11.2301,4,10.8849c-0.0001-0.0059-0.0001-0.0118,0-0.0177V6.625  C4,6.2836,4.2739,6.0054,4.6152,6z"
-     style="fill:#05ff89;fill-opacity:1" />
+     d="M 6.5,0 0,3.4453 V 4 H 13 V 3.4453 Z M 1,5 v 5 L 0,11.5547 V 13 H 13 V 11.5547 L 12,10 V 5 Z M 3.6152,6 C 3.7842,5.9977 3.947,6.0639 4.0664,6.1836 L 6.5,8.6172 8.9336,6.1836 C 9.1781,5.9399 9.5738,5.9404 9.8176,6.1849 9.9341,6.3017 9.9997,6.46 10,6.625 v 4.2422 C 10.0049,11.2124 9.729,11.4962 9.3838,11.501 9.0386,11.5059 8.7548,11.23 8.75,10.8848 8.7499,10.8789 8.7499,10.873 8.75,10.8671 V 8.1328 L 6.9414,9.9414 c -0.244,0.2433 -0.6388,0.2433 -0.8828,0 L 4.25,8.1328 v 2.7344 C 4.2549,11.2124 3.979,11.4962 3.6338,11.501 3.2887,11.5059 3.0049,11.2301 3,10.8849 2.9999,10.879 2.9999,10.8731 3,10.8672 V 6.625 C 3,6.2836 3.2739,6.0054 3.6152,6 Z"
+     style="fill:#3bd9b1;fill-opacity:1"
+     inkscape:connector-curvature="0" />
 </svg>

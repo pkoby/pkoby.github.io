@@ -9,9 +9,9 @@
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    version="1.1"
    id="monument-15"
-   width="15px"
-   height="15px"
-   viewBox="0 0 15 15"
+   width="9"
+   height="15"
+   viewBox="0 0 9 15"
    sodipodi:docname="memorial.svg"
    inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)">
   <metadata
@@ -22,6 +22,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -36,20 +37,24 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="722"
+     inkscape:window-width="724"
      inkscape:window-height="480"
      id="namedview4"
      showgrid="false"
      inkscape:zoom="15.733333"
-     inkscape:cx="7.5"
-     inkscape:cy="7.5"
+     inkscape:cx="-16.919492"
+     inkscape:cy="7.4999994"
      inkscape:window-x="0"
      inkscape:window-y="27"
      inkscape:window-maximized="0"
-     inkscape:current-layer="monument-15" />
+     inkscape:current-layer="monument-15"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0" />
   <path
      id="path11719-7"
-     d="M7.5,0L6,2.5v7h3v-7L7.5,0z M3,11.5
-	L3,15h9v-3.5L10.5,10h-6L3,11.5z"
-     style="fill:#59ff4a;fill-opacity:1" />
+     d="M 4.5,0 3,2.5 v 7 h 3 v -7 z M 0,11.5 V 15 H 9 V 11.5 L 7.5,10 h -6 z"
+     style="fill:#3bd986;fill-opacity:1"
+     inkscape:connector-curvature="0" />
 </svg>

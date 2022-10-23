@@ -9,9 +9,9 @@
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    version="1.1"
    id="lodging-15"
-   width="15px"
-   height="15px"
-   viewBox="0 0 15 15"
+   width="15"
+   height="10.5"
+   viewBox="0 0 15 10.5"
    sodipodi:docname="lodging.svg"
    inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)">
   <metadata
@@ -22,6 +22,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -41,17 +42,19 @@
      id="namedview4"
      showgrid="false"
      inkscape:zoom="15.733333"
-     inkscape:cx="7.5"
-     inkscape:cy="7.5"
+     inkscape:cx="-13.919492"
+     inkscape:cy="5.4999996"
      inkscape:window-x="0"
      inkscape:window-y="27"
      inkscape:window-maximized="1"
-     inkscape:current-layer="lodging-15" />
+     inkscape:current-layer="lodging-15"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0" />
   <path
      id="rect6507"
-     d="M0.5,2.5C0.2,2.5,0,2.7,0,3v7.5v2C0,12.8,0.2,13,0.5,13S1,12.8,1,12.5V11h13v1.5
-	c0,0.3,0.2,0.5,0.5,0.5s0.5-0.2,0.5-0.5v-2c0-0.3-0.2-0.5-0.5-0.5H1V3C1,2.7,0.8,2.5,0.5,2.5z M3.5,3C2.7,3,2,3.7,2,4.5l0,0
-	C2,5.3,2.7,6,3.5,6l0,0C4.3,6,5,5.3,5,4.5l0,0C5,3.7,4.3,3,3.5,3L3.5,3z M7,4C5.5,4,5.5,5.5,5.5,5.5V7h-3C2.2,7,2,7.2,2,7.5v1
-	C2,8.8,2.2,9,2.5,9H6h9V6.5C15,4,12.5,4,12.5,4H7z"
-     style="fill:#b3ff37;fill-opacity:1" />
+     d="M 0.5,0 C 0.2,0 0,0.2 0,0.5 V 8 10 c 0,0.3 0.2,0.5 0.5,0.5 C 0.8,10.5 1,10.3 1,10 V 8.5 H 14 V 10 c 0,0.3 0.2,0.5 0.5,0.5 0.3,0 0.5,-0.2 0.5,-0.5 V 8 C 15,7.7 14.8,7.5 14.5,7.5 H 1 v -7 C 1,0.2 0.8,0 0.5,0 Z m 3,0.5 C 2.7,0.5 2,1.2 2,2 v 0 c 0,0.8 0.7,1.5 1.5,1.5 v 0 C 4.3,3.5 5,2.8 5,2 V 2 C 5,1.2 4.3,0.5 3.5,0.5 Z M 7,1.5 C 5.5,1.5 5.5,3 5.5,3 v 1.5 h -3 C 2.2,4.5 2,4.7 2,5 V 6 C 2,6.3 2.2,6.5 2.5,6.5 H 6 15 V 4 C 15,1.5 12.5,1.5 12.5,1.5 Z"
+     style="fill:#56d948;fill-opacity:1"
+     inkscape:connector-curvature="0" />
 </svg>
