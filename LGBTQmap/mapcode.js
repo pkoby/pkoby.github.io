@@ -9,7 +9,7 @@ var poi_markers = new Array();
 // 	minClusterRadius: 1,
 // });
 
-var primary_icon,welcome_icon,no_icon,has_source_icon,has_website_icon,no_source_icon,bar_icon,cafe_icon,library_icon,lodging_icon,memorial_icon,museum_icon,office_icon,pharmacy_icon,placeofworship_icon,pub_icon,restaurant_icon,shop_icon,theater_icon,vet_icon,other_icon;
+var primary_icon,welcome_icon,no_icon,has_source_icon,has_website_icon,no_source_icon,bar_icon,cafe_icon,library_icon,lodging_icon,memorial_icon,museum_icon,office_icon,pharmacy_icon,placeofworship_icon,pub_icon,restaurant_icon,sauna_icon,shop_icon,theater_icon,vet_icon,other_icon;
 	
 	// init map
 	var Positron = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
@@ -49,7 +49,7 @@ var primary_icon,welcome_icon,no_icon,has_source_icon,has_website_icon,no_source
 	var Stamen_TonerBackground = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-background/{z}/{x}/{y}{r}.{ext}', {
 		attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
 		subdomains: 'abcd',
-		minZoom: 0,
+		minZoom: 3,
 		maxZoom: 19,
 		ext: 'png',
 		opacity: 0.2,
@@ -67,6 +67,7 @@ var primary_icon,welcome_icon,no_icon,has_source_icon,has_website_icon,no_source
 	var CartoDB_PositronOnlyLabels = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}{r}.png', {
 		attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
 		subdomains: 'abcd',
+		minZoom: 3,
 		maxZoom: 19,
 		opacity: 0.7,
 	});
@@ -497,210 +498,217 @@ $(function() {
 	});
 	// bar_icon = L.divIcon({
 	// 	html: '🍸',
-	// 	iconSize: [30,30],
+	// 	iconSize: [26,26],
 	// 	className: 'pointIcon',
 	// 	iconAnchor: [15,18],
 	// 	popupAnchor: [0,-24],
 	// });
 	// cafe_icon = L.divIcon({
 	// 	html: '☕',
-	// 	iconSize: [30,30],
+	// 	iconSize: [26,26],
 	// 	className: 'pointIcon',
 	// 	iconAnchor: [15,18],
 	// 	popupAnchor: [0,-24],
 	// });
 	// placeofworship_icon = L.divIcon({
 	// 	html: '🛐',
-	// 	iconSize: [30,30],
+	// 	iconSize: [26,26],
 	// 	className: 'pointIcon',
 	// 	iconAnchor: [15,18],
 	// 	popupAnchor: [0,-24],
 	// });
 	// lodging_icon = L.divIcon({
 	// 	html: '🛏️',
-	// 	iconSize: [30,30],
+	// 	iconSize: [26,26],
 	// 	className: 'pointIcon',
 	// 	iconAnchor: [15,18],
 	// 	popupAnchor: [0,-24],
 	// });
 	// library_icon = L.divIcon({
 	// 	html: '📚',
-	// 	iconSize: [30,30],
+	// 	iconSize: [26,26],
 	// 	className: 'pointIcon',
 	// 	iconAnchor: [15,18],
 	// 	popupAnchor: [0,-24],
 	// });
 	// memorial_icon = L.divIcon({
 	// 	html: '📜',
-	// 	iconSize: [30,30],
+	// 	iconSize: [26,26],
 	// 	className: 'pointIcon',
 	// 	iconAnchor: [15,18],
 	// 	popupAnchor: [0,-24],
 	// });
 	// museum_icon = L.divIcon({
 	// 	html: '🏺',
-	// 	iconSize: [30,30],
+	// 	iconSize: [26,26],
 	// 	className: 'pointIcon',
 	// 	iconAnchor: [15,18],
 	// 	popupAnchor: [0,-24],
 	// });
 	// office_icon = L.divIcon({
 	// 	html: '🏢',
-	// 	iconSize: [30,30],
+	// 	iconSize: [26,26],
 	// 	className: 'pointIcon',
 	// 	iconAnchor: [15,18],
 	// 	popupAnchor: [0,-24],
 	// });
 	// pharmacy_icon = L.divIcon({
 	// 	html: '⚕️',
-	// 	iconSize: [30,30],
+	// 	iconSize: [26,26],
 	// 	className: 'pointIcon',
 	// 	iconAnchor: [15,18],
 	// 	popupAnchor: [0,-24],
 	// });
 	// pub_icon = L.divIcon({
 	// 	html: '🍺',
-	// 	iconSize: [30,30],
+	// 	iconSize: [26,26],
 	// 	className: 'pointIcon',
 	// 	iconAnchor: [15,18],
 	// 	popupAnchor: [0,-24],
 	// });
 	// restaurant_icon = L.divIcon({
 	// 	html: '🍝',
-	// 	iconSize: [30,30],
+	// 	iconSize: [26,26],
 	// 	className: 'pointIcon',
 	// 	iconAnchor: [15,18],
 	// 	popupAnchor: [0,-24],
 	// });
 	// sauna_icon = L.divIcon({
 	// 	html: '🧖',
-	// 	iconSize: [30,30],
+	// 	iconSize: [26,26],
 	// 	className: 'pointIcon',
 	// 	iconAnchor: [15,18],
 	// 	popupAnchor: [0,-24],
 	// });
 	// shop_icon = L.divIcon({
 	// 	html: '🏪',
-	// 	iconSize: [30,30],
+	// 	iconSize: [26,26],
 	// 	className: 'pointIcon',
 	// 	iconAnchor: [15,18],
 	// 	popupAnchor: [0,-24],
 	// });
 	// theater_icon = L.divIcon({
 	// 	html: '🎭',
-	// 	iconSize: [30,30],
+	// 	iconSize: [26,26],
 	// 	className: 'pointIcon',
 	// 	iconAnchor: [15,18],
 	// 	popupAnchor: [0,-24],
 	// });
 	// vet_icon = L.divIcon({
 	// 	html: '🐕',
-	// 	iconSize: [30,30],
+	// 	iconSize: [26,26],
 	// 	className: 'pointIcon',
 	// 	iconAnchor: [15,18],
 	// 	popupAnchor: [0,-24],
 	// });
 	bar_icon = L.icon({
 		iconUrl: 'icons/bar.svg',
-		iconSize: [30,30],
+		iconSize: [26,26],
 		className: 'pointIcon',
 		iconAnchor: [15,18],
 		popupAnchor: [0,-24],
 	});
 	cafe_icon = L.icon({
 		iconUrl: 'icons/cafe.svg',
-		iconSize: [30,30],
+		iconSize: [26,26],
 		className: 'pointIcon',
 		iconAnchor: [15,18],
 		popupAnchor: [0,-24],
 	});
 	library_icon = L.icon({
 		iconUrl: 'icons/library.svg',
-		iconSize: [30,30],
+		iconSize: [26,26],
 		className: 'pointIcon',
 		iconAnchor: [15,18],
 		popupAnchor: [0,-24],
 	});
 	lodging_icon = L.icon({
 		iconUrl: 'icons/lodging.svg',
-		iconSize: [30,30],
+		iconSize: [26,26],
 		className: 'pointIcon',
 		iconAnchor: [15,18],
 		popupAnchor: [0,-24],
 	});
 	memorial_icon = L.icon({
 		iconUrl: 'icons/memorial.svg',
-		iconSize: [30,30],
+		iconSize: [26,26],
 		className: 'pointIcon',
 		iconAnchor: [15,18],
 		popupAnchor: [0,-24],
 	});
 	museum_icon = L.icon({
 		iconUrl: 'icons/museum.svg',
-		iconSize: [30,30],
+		iconSize: [26,26],
 		className: 'pointIcon',
 		iconAnchor: [15,18],
 		popupAnchor: [0,-24],
 	});
 	office_icon = L.icon({
 		iconUrl: 'icons/office.svg',
-		iconSize: [30,30],
+		iconSize: [26,26],
 		className: 'pointIcon',
 		iconAnchor: [15,18],
 		popupAnchor: [0,-24],
 	});
 	pharmacy_icon = L.icon({
 		iconUrl: 'icons/pharmacy.svg',
-		iconSize: [30,30],
+		iconSize: [26,26],
 		className: 'pointIcon',
 		iconAnchor: [15,18],
 		popupAnchor: [0,-24],
 	});
 	placeofworship_icon = L.icon({
 		iconUrl: 'icons/placeofworship.svg',
-		iconSize: [30,30],
+		iconSize: [26,26],
 		className: 'pointIcon',
 		iconAnchor: [15,18],
 		popupAnchor: [0,-24],
 	});
 	pub_icon = L.icon({
 		iconUrl: 'icons/pub.svg',
-		iconSize: [30,30],
+		iconSize: [26,26],
 		className: 'pointIcon',
 		iconAnchor: [15,18],
 		popupAnchor: [0,-24],
 	});
 	restaurant_icon = L.icon({
 		iconUrl: 'icons/restaurant.svg',
-		iconSize: [30,30],
+		iconSize: [26,26],
+		className: 'pointIcon',
+		iconAnchor: [15,18],
+		popupAnchor: [0,-24],
+	});
+	sauna_icon = L.icon({
+		iconUrl: 'icons/sauna.svg',
+		iconSize: [26,26],
 		className: 'pointIcon',
 		iconAnchor: [15,18],
 		popupAnchor: [0,-24],
 	});
 	shop_icon = L.icon({
 		iconUrl: 'icons/shop.svg',
-		iconSize: [30,30],
+		iconSize: [26,26],
 		className: 'pointIcon',
 		iconAnchor: [15,18],
 		popupAnchor: [0,-24],
 	});
 	theater_icon = L.icon({
 		iconUrl: 'icons/theater.svg',
-		iconSize: [30,30],
+		iconSize: [26,26],
 		className: 'pointIcon',
 		iconAnchor: [15,18],
 		popupAnchor: [0,-24],
 	});
 	vet_icon = L.icon({
 		iconUrl: 'icons/vet.svg',
-		iconSize: [30,30],
+		iconSize: [26,26],
 		className: 'pointIcon',
 		iconAnchor: [15,18],
 		popupAnchor: [0,-24],
 	});
 	other_icon = L.divIcon({
 		html: '🏳️‍🌈',
-		iconSize: [30,30],
+		iconSize: [26,26],
 		className: 'pointIcon',
 		iconAnchor: [15,18],
 		popupAnchor: [0,-24],
