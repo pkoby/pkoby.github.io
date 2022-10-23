@@ -9,9 +9,9 @@
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    version="1.1"
    id="place-of-worship-15"
-   width="15px"
-   height="15px"
-   viewBox="0 0 15 15"
+   width="13"
+   height="13"
+   viewBox="0 0 13 13"
    sodipodi:docname="placeofworship.svg"
    inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)">
   <metadata
@@ -22,6 +22,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -36,21 +37,24 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="722"
+     inkscape:window-width="724"
      inkscape:window-height="480"
      id="namedview4"
      showgrid="false"
      inkscape:zoom="15.733333"
-     inkscape:cx="7.5"
-     inkscape:cy="7.5"
+     inkscape:cx="-14.919492"
+     inkscape:cy="5.4999994"
      inkscape:window-x="0"
      inkscape:window-y="27"
      inkscape:window-maximized="0"
-     inkscape:current-layer="place-of-worship-15" />
+     inkscape:current-layer="place-of-worship-15"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0" />
   <path
      id="path9064"
-     d="M7.5,0l-2,2v2h4V2
-	L7.5,0z M5.5,4.5L4,6h7L9.5,4.5H5.5z M2,6.5c-0.5523,0-1,0.4477-1,1V13h2V7.5C3,6.9477,2.5523,6.5,2,6.5z M4,6.5V13h7V6.5H4z
-	 M13,6.5c-0.5523,0-1,0.4477-1,1V13h2V7.5C14,6.9477,13.5523,6.5,13,6.5z"
-     style="fill:#3a98ff;fill-opacity:1" />
+     d="m 6.5,0 -2,2 v 2 h 4 V 2 Z M 4.5,4.5 3,6 h 7 L 8.5,4.5 Z M 1,6.5 c -0.5523,0 -1,0.4477 -1,1 V 13 H 2 V 7.5 C 2,6.9477 1.5523,6.5 1,6.5 Z m 2,0 V 13 h 7 V 6.5 Z m 9,0 c -0.5523,0 -1,0.4477 -1,1 V 13 h 2 V 7.5 c 0,-0.5523 -0.4477,-1 -1,-1 z"
+     style="fill:#3d84da;fill-opacity:1"
+     inkscape:connector-curvature="0" />
 </svg>

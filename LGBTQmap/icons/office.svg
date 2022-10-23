@@ -9,9 +9,9 @@
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    version="1.1"
    id="building-15"
-   width="15px"
-   height="15px"
-   viewBox="0 0 15 15"
+   width="9"
+   height="11"
+   viewBox="0 0 9 11"
    sodipodi:docname="office.svg"
    inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)">
   <metadata
@@ -22,6 +22,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -41,14 +42,19 @@
      id="namedview5"
      showgrid="false"
      inkscape:zoom="15.733333"
-     inkscape:cx="7.4999998"
-     inkscape:cy="7.4999998"
+     inkscape:cx="-38.338982"
+     inkscape:cy="5.499999"
      inkscape:window-x="0"
      inkscape:window-y="27"
      inkscape:window-maximized="1"
-     inkscape:current-layer="building-15" />
+     inkscape:current-layer="building-15"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0" />
   <path
-     d="M3,2v11h5v-3h3v3h1V2H3z M7,12H4v-2h3V12z M7,9H4V7h3V9z M7,6H4V4h3V6z M11,9H8V7h3V9z M11,6H8V4h3V6z"
+     d="M 0,0 V 11 H 5 V 8 h 3 v 3 H 9 V 0 Z M 4,10 H 1 V 8 H 4 Z M 4,7 H 1 V 5 H 4 Z M 4,4 H 1 V 2 H 4 Z M 8,7 H 5 V 5 H 8 Z M 8,4 H 5 V 2 h 3 z"
      id="path2"
-     style="fill:#05ffd5;fill-opacity:1" />
+     style="fill:#3dc2d7;fill-opacity:1"
+     inkscape:connector-curvature="0" />
 </svg>

@@ -8,11 +8,11 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    version="1.1"
-   id="theatre-15"
-   width="13"
-   height="13"
-   viewBox="0 0 13 13"
-   sodipodi:docname="theater.svg"
+   id="swimming-15"
+   width="15"
+   height="11"
+   viewBox="0 0 15 11"
+   sodipodi:docname="sauna.svg"
    inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)">
   <metadata
      id="metadata8">
@@ -42,19 +42,19 @@
      id="namedview4"
      showgrid="false"
      inkscape:zoom="15.733333"
-     inkscape:cx="-4.2097461"
-     inkscape:cy="6.4999996"
+     inkscape:cx="-3.2097459"
+     inkscape:cy="5.4999998"
      inkscape:window-x="0"
      inkscape:window-y="27"
      inkscape:window-maximized="0"
-     inkscape:current-layer="theatre-15"
+     inkscape:current-layer="swimming-15"
      fit-margin-top="0"
      fit-margin-left="0"
      fit-margin-right="0"
      fit-margin-bottom="0" />
   <path
-     id="path6342-3"
-     d="M 1,0 C 1,0 0,0 0,1 V 6.1582 C 0,7.8885 0.354,10 3.5,10 H 4 V 7 L 1.5,8 C 1.5,8 1.5,5.5 4,5.5 V 4 C 4,3.2922 4.0868,2.6791 4.5,2.2246 4.8815,1.805 5.5046,0.9674 7.1562,1.7539 L 8,2.3027 V 1 C 8,1 8,0 7,0 6.2922,0 5.0224,1 4,1 2.9776,1 1.7865,0 1,0 Z M 2,2 C 2.5523,2 3,2.4477 3,3 3,3.5523 2.5523,4 2,4 1.4477,4 1,3.5523 1,3 1,2.4477 1.4477,2 2,2 Z M 6,3 C 6,3 5,3 5,4 v 5 c 0,2 1,4 4,4 3,0 4,-2 4,-4 V 4 C 13,3 12,3 12,3 11.2922,3 10.0224,4 9,4 7.9776,4 6.7865,3 6,3 Z M 7,5 C 7.5523,5 8,5.4477 8,6 8,6.5523 7.5523,7 7,7 6.4477,7 6,6.5523 6,6 6,5.4477 6.4477,5 7,5 Z m 4,0 c 0.5523,0 1,0.4477 1,1 0,0.5523 -0.4477,1 -1,1 C 10.4477,7 10,6.5523 10,6 10,5.4477 10.4477,5 11,5 Z M 6.5,9 H 9 11.5 c 0,0 0,2.5 -2.5,2.5 C 6.5,11.5 6.5,9 6.5,9 Z"
-     style="fill:#cb3dd8;fill-opacity:1"
+     id="path16388"
+     d="M 10.1113,0 C 9.9989,0 9.6758,0.1465 9.6758,0.1465 L 6.3535,1.8262 C 5.9111,2.0024 5.7358,2.7081 6.002,3.0605 L 6.9727,4.4687 3.002,6.498 5,7.998 l 2.502,-1.5 2.5,1.5 1.002,-1.002 -3,-4 2.5566,-1.5293 C 11.0892,1.2005 11.004,0.7622 11.004,0.496 10.9999,0.2861 10.6437,0 10.1113,0 Z M 12.252,3 C 11.2847,3 10.5,3.7827 10.5,4.75 c 0,0.9673 0.7847,1.752 1.752,1.752 0.9673,0 1.75,-0.7847 1.75,-1.752 C 14.002,3.7827 13.2192,3 12.252,3 Z M 2.5,8 0,9.5 V 11 L 2.5,9.5 5,11 7.502,9.5 10.002,11 12,9.5 15,11 V 9.5 L 12,8 10.002,9.5 7.502,8 5,9.5 Z"
+     style="fill:#484ada;fill-opacity:1"
      inkscape:connector-curvature="0" />
 </svg>
