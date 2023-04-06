@@ -16,7 +16,7 @@ var primary_icon,welcome_icon,no_icon,has_source_icon,has_website_icon,no_source
 		attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
 		subdomains: 'abcd',
 		minZoom: 6,
-		maxZoom: 19,
+		maxZoom: 20,
 		detectRetina: true,
 		// opacity: 0.3,
 	});
@@ -50,7 +50,7 @@ var primary_icon,welcome_icon,no_icon,has_source_icon,has_website_icon,no_source
 		attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
 		subdomains: 'abcd',
 		minZoom: 3,
-		maxZoom: 19,
+		maxZoom: 20,
 		ext: 'png',
 		opacity: 0.2,
 	});
@@ -68,7 +68,7 @@ var primary_icon,welcome_icon,no_icon,has_source_icon,has_website_icon,no_source
 		attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
 		subdomains: 'abcd',
 		minZoom: 3,
-		maxZoom: 19,
+		maxZoom: 20,
 		opacity: 0.7,
 	});
 
@@ -430,7 +430,7 @@ function downloadData() {
 	localStorage.setItem("pos_lat", map.getCenter().lat)
 	localStorage.setItem("pos_lon", map.getCenter().lng)
 	$.ajax({
-		url: "https://z.overpass-api.de/api/interpreter",
+		url: "https://overpass-api.de/api/interpreter",
 		data: {
 			"data": '[bbox:'+bbox+'][out:json][timeout:25];(nwr[lgbtq];nwr[gay];);out body center; >; out skel qt;'/*nwr[historic=memorial];*/
 		},
@@ -732,12 +732,16 @@ $(function() {
 	// });
 
 	map.on('zoomend', function () {
-		// if (map.getZoom() >= 18) {
-		// 	josmText.setContent('<a href="http://localhost:8111/load_and_zoom?left='+map.getBounds().getWest()+'&right='+map.getBounds().getEast()+'&top='+map.getBounds().getNorth()+'&bottom='+map.getBounds().getSouth()+'" target=\"\_blank\">Edit loaded area in JOSM</a> |');
-		// }
-		// if (map.getZoom() < 18) {
-		// 	josmText.setContent('');
-		// }
+		if (map.getZoom() > 18) {
+			map.addLayer(Positron);
+			map.removeLayer(Stamen_TonerBackground);
+			map.removeLayer(CartoDB_PositronOnlyLabels);
+		}
+		if (map.getZoom() <= 18) {
+			map.removeLayer(Positron);
+			map.addLayer(Stamen_TonerBackground);
+			map.addLayer(CartoDB_PositronOnlyLabels);
+		}
 		if (map.getZoom() >= 12) {
 			map.removeLayer(overlay);
 			zoomText.setContent('');
