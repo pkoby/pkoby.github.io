@@ -20,36 +20,31 @@ var Positron = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/
 	detectRetina: true,
 	// opacity: 0.3,
 });
+
 var CartoDB_PositronNoLabels = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png', {
 	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
 	subdomains: 'abcd',
 	maxZoom: 20,
 	detectRetina: true,
 });
+
 var CartoDB_DarkMatter = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
 	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
 	subdomains: 'abcd',
 	minZoom: 6,
 	maxZoom: 19,
 	detectRetina: true,
+	contrast: 1.5,
 });
 
-var Esri_NatGeoWorldMap = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}', {
-	attribution: 'Tiles &copy; Esri &mdash; National Geographic, Esri, DeLorme, NAVTEQ, UNEP-WCMC, USGS, NASA, ESA, METI, NRCAN, GEBCO, NOAA, iPC',
-	minZoom: 6,
-	maxZoom: 19,
-	detectRetina: true,
-	opacity: 0.3,
-});
-
-var Stamen_TonerLite = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.{ext}', {
+var Stamen_Toner = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}{r}.{ext}', {
 	attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
 	subdomains: 'abcd',
-	minZoom: 6,
-	maxZoom: 19,
-	detectRetina: true,
+	minZoom: 0,
+	maxZoom: 20,
 	ext: 'png',
-	opacity: 0.8,
+	opacity: 0.2,
+	detectRetina: true,
 });
 
 var Stamen_TonerBackground = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-background/{z}/{x}/{y}{r}.{ext}', {
@@ -67,7 +62,7 @@ var Stamen_TonerLabels = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/
 	minZoom: 0,
 	maxZoom: 20,
 	ext: 'png',
-	opacity: 0.4,
+	opacity: 1.0,
 });
 
 var CartoDB_PositronOnlyLabels = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}{r}.png', {
@@ -76,12 +71,6 @@ var CartoDB_PositronOnlyLabels = L.tileLayer('https://{s}.basemaps.cartocdn.com/
 	minZoom: 3,
 	maxZoom: 20,
 	opacity: 0.7,
-});
-
-var CartoDB_Voyager = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-	subdomains: 'abcd',
-	maxZoom: 18,
 });
 
 var overlay = L.polygon([
@@ -100,7 +89,7 @@ var loadingOverlay = L.polygon([
 
 
 var map = new L.map('bigmap', {
-	layers: [CartoDB_DarkMatter],
+	layers: [Stamen_Toner],
 	maxBounds: [[90,-180],[-90,180]],
 	zoomControl: false,
 })
