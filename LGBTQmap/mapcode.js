@@ -11,225 +11,225 @@ var poi_markers = new Array();
 
 var primary_icon,welcome_icon,no_icon,has_source_icon,has_website_icon,no_source_icon,bar_icon,cafe_icon,library_icon,lodging_icon,memorial_icon,museum_icon,office_icon,pharmacy_icon,placeofworship_icon,pub_icon,restaurant_icon,sauna_icon,shop_icon,theater_icon,vet_icon,other_icon;
 	
-	// init map
-	var Positron = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
-		attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
-		subdomains: 'abcd',
-		minZoom: 6,
-		maxZoom: 20,
-		detectRetina: true,
-		// opacity: 0.3,
-	});
-	var CartoDB_DarkMatter = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-		attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-		subdomains: 'abcd',
-		minZoom: 6,
-		maxZoom: 19,
-		detectRetina: true,
-	});
+// init map
+var Positron = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+	attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
+	subdomains: 'abcd',
+	minZoom: 6,
+	maxZoom: 20,
+	detectRetina: true,
+	// opacity: 0.3,
+});
+var CartoDB_DarkMatter = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+	subdomains: 'abcd',
+	minZoom: 6,
+	maxZoom: 19,
+	detectRetina: true,
+});
 
-	var Esri_NatGeoWorldMap = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}', {
-		attribution: 'Tiles &copy; Esri &mdash; National Geographic, Esri, DeLorme, NAVTEQ, UNEP-WCMC, USGS, NASA, ESA, METI, NRCAN, GEBCO, NOAA, iPC',
-		minZoom: 6,
-		maxZoom: 19,
-		detectRetina: true,
-		opacity: 0.3,
-	});
+var Esri_NatGeoWorldMap = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}', {
+	attribution: 'Tiles &copy; Esri &mdash; National Geographic, Esri, DeLorme, NAVTEQ, UNEP-WCMC, USGS, NASA, ESA, METI, NRCAN, GEBCO, NOAA, iPC',
+	minZoom: 6,
+	maxZoom: 19,
+	detectRetina: true,
+	opacity: 0.3,
+});
 
-	var Stamen_TonerLite = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.{ext}', {
-		attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-		subdomains: 'abcd',
-		minZoom: 6,
-		maxZoom: 19,
-		detectRetina: true,
-		ext: 'png',
-		opacity: 0.8,
-	});
+var Stamen_TonerLite = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.{ext}', {
+	attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+	subdomains: 'abcd',
+	minZoom: 6,
+	maxZoom: 19,
+	detectRetina: true,
+	ext: 'png',
+	opacity: 0.8,
+});
 
-	var Stamen_TonerBackground = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-background/{z}/{x}/{y}{r}.{ext}', {
-		attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-		subdomains: 'abcd',
-		minZoom: 3,
-		maxZoom: 20,
-		ext: 'png',
-		opacity: 0.2,
-	});
+var Stamen_TonerBackground = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-background/{z}/{x}/{y}{r}.{ext}', {
+	attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+	subdomains: 'abcd',
+	minZoom: 3,
+	maxZoom: 20,
+	ext: 'png',
+	opacity: 0.2,
+});
 
-	var Stamen_TonerLabels = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-labels/{z}/{x}/{y}{r}.{ext}', {
-		attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-		subdomains: 'abcd',
-		minZoom: 0,
-		maxZoom: 20,
-		ext: 'png',
-		opacity: 0.4,
-	});
+var Stamen_TonerLabels = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-labels/{z}/{x}/{y}{r}.{ext}', {
+	attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+	subdomains: 'abcd',
+	minZoom: 0,
+	maxZoom: 20,
+	ext: 'png',
+	opacity: 0.4,
+});
 
-	var CartoDB_PositronOnlyLabels = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}{r}.png', {
-		attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-		subdomains: 'abcd',
-		minZoom: 3,
-		maxZoom: 20,
-		opacity: 0.7,
-	});
+var CartoDB_PositronOnlyLabels = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}{r}.png', {
+	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+	subdomains: 'abcd',
+	minZoom: 3,
+	maxZoom: 20,
+	opacity: 0.7,
+});
 
-	var CartoDB_Voyager = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-		attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-		subdomains: 'abcd',
-		maxZoom: 18,
-	});
+var CartoDB_Voyager = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+	subdomains: 'abcd',
+	maxZoom: 18,
+});
 
-	var overlay = L.polygon([
-		[90, -180],
-		[90, 180],
-		[-90, 180],
-		[-90, -180]
-	], {color: 'black', opacity: 1, weight: 0, fillColor: 'white', fillOpacity: 0});
+var overlay = L.polygon([
+	[90, -180],
+	[90, 180],
+	[-90, 180],
+	[-90, -180]
+], {color: 'black', opacity: 1, weight: 0, fillColor: 'white', fillOpacity: 0});
 
-	var loadingOverlay = L.polygon([
-		[90, -180],
-		[90, 180],
-		[-90, 180],
-		[-90, -180]
-	], {color: 'black', opacity: 1, weight: 0, fillColor: 'black', fillOpacity: 0});
-
-
-	var map = new L.map('bigmap', {
-		layers: [Stamen_TonerBackground, CartoDB_PositronOnlyLabels],
-		maxBounds: [[90,-180],[-90,180]],
-		zoomControl: false,
-	})
-	
-	
-	var lc = L.control.locate({keepCurrentZoomLevel: true, inView: 'stop', outOfView: 'setView', inViewNotFollowing: 'inView', locateOptions: {enableHighAccuracy: true}}).addTo(map);
+var loadingOverlay = L.polygon([
+	[90, -180],
+	[90, 180],
+	[-90, 180],
+	[-90, -180]
+], {color: 'black', opacity: 1, weight: 0, fillColor: 'black', fillOpacity: 0});
 
 
-	document.getElementById('zoomin').addEventListener('click', function () {
-		map.zoomIn();
-	});
-	document.getElementById('zoomout').addEventListener('click', function () {
-		map.zoomOut();
-	});
+var map = new L.map('bigmap', {
+	layers: [CartoDB_DarkMatter],
+	maxBounds: [[90,-180],[-90,180]],
+	zoomControl: false,
+})
 
-	var currentLoc = null;
-	var state = null;
 
-	function onLocationFound(e) {
-		currentLoc=e.latlng;
-		state="On";
-	}
+var lc = L.control.locate({keepCurrentZoomLevel: true, inView: 'stop', outOfView: 'setView', inViewNotFollowing: 'inView', locateOptions: {enableHighAccuracy: true}}).addTo(map);
 
-	document.getElementById('locater').addEventListener('click', function () {
-		if (currentLoc==null && state==null) {
-			state="Started";
-			lc.start();
-			map.on('locationfound', onLocationFound);
-	  		locater.style.opacity = "0.9";
-		} else if (currentLoc==null && state=="Started") {
-			lc.stop();
-			state=null;
-	  		locater.style.opacity = "0.7";
-			// map.on('locationfound', onLocationFound);ike
-		} else if (currentLoc!==null && map.getBounds().contains(currentLoc)) {
-			lc.stop();
-			currentLoc=null;
-			state=null;
-	  		locater.style.opacity = "0.7";
-		} else {
-			map.setView(currentLoc);
-			state="On";
-	  		locater.style.opacity = "0.9";
-		}
-	});
 
-	document.getElementById('loaddata').addEventListener('click', downloadData);
+document.getElementById('zoomin').addEventListener('click', function () {
+	map.zoomIn();
+});
+document.getElementById('zoomout').addEventListener('click', function () {
+	map.zoomOut();
+});
 
-	// var toggleLegend  = document.getElementById("openlegend");
-	// var legendContent = document.getElementById("legendbox");
+var currentLoc = null;
+var state = null;
 
-	// openlegend.addEventListener("click", function() {
-	//   legendbox.style.display = (legendbox.dataset.toggled ^= 1) ? "block" : "none";
-	//   openlegend.style.opacity = (openlegend.dataset.toggled ^= 1) ? "0.9" : "0.6";
-	// });
+function onLocationFound(e) {
+	currentLoc=e.latlng;
+	state="On";
+}
 
-	// new L.Control.Zoom({ position: 'bottomright' }).addTo(map);
-
-	// var legend = L.control({ position: 'bottomleft' });
-	// legend.onAdd = function (map) {
-	// 	var div = L.DomUtil.create('div', 'legend'), icons = ['unknown','Bar','Restaurant','Pub','Cafe','Museum','Community Centre','Shop','Place of Worship'], labels = ['Unknown Type','Bar','Restaurant','Pub','Cafe','Museum','Community Centre','Shop','Place of Worship'];
-	// 	// div.innerHTML =	'<span>Port of Passage</span><br><i class="points" style="color:">&#8226;</i>Bristol<br><i class="points" style="color:">&#8226;</i>Middlesex<br><i class="points" style="color:">&#8226;</i>London<br><br><span>Date of Indenture</span><br>';
-	// 	for (var i = 0; i < icons.length; i++) {
-	// 		div.innerHTML += '<img src="' + icons[i]+'.svg" class="legendicon"">'+labels[i]+'<br>';
-	// 	}
-	// 	return div;
-	// };
-
-	var zoomText = L.Control.extend({
-		options: {
-			position: 'bottomleft'
-		},
-		onAdd: function (map) {
-			return L.DomUtil.create('div', 'overlayText');
-		},
-		setContent: function (content) {
-			this.getContainer().innerHTML = content;
-		}
-	});
-	var zoomText =  new zoomText().addTo(map);
-
-	document.getElementsByClassName('overlayText')[0].addEventListener('click', function () {
-		map.zoomIn(1);
-	});
-
-	var loadingText = L.Control.extend({
-		options: {
-			position: 'bottomleft'
-		},
-		onAdd: function (map) {
-			return L.DomUtil.create('div', 'overlayText');
-		},
-		setContent: function (content) {
-			this.getContainer().innerHTML = content;
-		}
-	});
-	var loadingText =  new loadingText().addTo(map);
-
-	var josmText = L.Control.extend({
-		options: {
-			position: 'bottomright'
-		},
-		onAdd: function (map) {
-			return L.DomUtil.create('div', 'josmtext');
-		},
-		setContent: function (content) {
-			this.getContainer().innerHTML = content;
-		}
-	});
-	var josmText =  new josmText().addTo(map);
-
-	map.on('load', function () {
-		if (map.getZoom() < 12) {
-			map.addLayer(overlay);
-			zoomText.setContent('Please Zoom In');
-		}
-	});
-
-	// map = L.map('bigmap');
-
-	saved_lat = localStorage.getItem("pos_lat")
-	saved_lon = localStorage.getItem("pos_lon")
-
-	if (saved_lat != undefined) {
-		map.setView([saved_lat, saved_lon], 12)
+document.getElementById('locater').addEventListener('click', function () {
+	if (currentLoc==null && state==null) {
+		state="Started";
+		lc.start();
+		map.on('locationfound', onLocationFound);
+  		locater.style.opacity = "0.9";
+	} else if (currentLoc==null && state=="Started") {
+		lc.stop();
+		state=null;
+  		locater.style.opacity = "0.7";
+		// map.on('locationfound', onLocationFound);ike
+	} else if (currentLoc!==null && map.getBounds().contains(currentLoc)) {
+		lc.stop();
+		currentLoc=null;
+		state=null;
+  		locater.style.opacity = "0.7";
 	} else {
-		map.setView([51.5,-0.1], 12);
+		map.setView(currentLoc);
+		state="On";
+  		locater.style.opacity = "0.9";
 	}
+});
 
-	var mapHash = new L.Hash(map);
+document.getElementById('loaddata').addEventListener('click', downloadData);
 
-	if (L.Browser.retina) var tp = "lr";
-	else var tp = "ls";
+// var toggleLegend  = document.getElementById("openlegend");
+// var legendContent = document.getElementById("legendbox");
 
-	// L.control.scale().addTo(map);
+// openlegend.addEventListener("click", function() {
+//   legendbox.style.display = (legendbox.dataset.toggled ^= 1) ? "block" : "none";
+//   openlegend.style.opacity = (openlegend.dataset.toggled ^= 1) ? "0.9" : "0.6";
+// });
+
+// new L.Control.Zoom({ position: 'bottomright' }).addTo(map);
+
+// var legend = L.control({ position: 'bottomleft' });
+// legend.onAdd = function (map) {
+// 	var div = L.DomUtil.create('div', 'legend'), icons = ['unknown','Bar','Restaurant','Pub','Cafe','Museum','Community Centre','Shop','Place of Worship'], labels = ['Unknown Type','Bar','Restaurant','Pub','Cafe','Museum','Community Centre','Shop','Place of Worship'];
+// 	// div.innerHTML =	'<span>Port of Passage</span><br><i class="points" style="color:">&#8226;</i>Bristol<br><i class="points" style="color:">&#8226;</i>Middlesex<br><i class="points" style="color:">&#8226;</i>London<br><br><span>Date of Indenture</span><br>';
+// 	for (var i = 0; i < icons.length; i++) {
+// 		div.innerHTML += '<img src="' + icons[i]+'.svg" class="legendicon"">'+labels[i]+'<br>';
+// 	}
+// 	return div;
+// };
+
+var zoomText = L.Control.extend({
+	options: {
+		position: 'bottomleft'
+	},
+	onAdd: function (map) {
+		return L.DomUtil.create('div', 'overlayText');
+	},
+	setContent: function (content) {
+		this.getContainer().innerHTML = content;
+	}
+});
+var zoomText =  new zoomText().addTo(map);
+
+document.getElementsByClassName('overlayText')[0].addEventListener('click', function () {
+	map.zoomIn(1);
+});
+
+var loadingText = L.Control.extend({
+	options: {
+		position: 'bottomleft'
+	},
+	onAdd: function (map) {
+		return L.DomUtil.create('div', 'overlayText');
+	},
+	setContent: function (content) {
+		this.getContainer().innerHTML = content;
+	}
+});
+var loadingText =  new loadingText().addTo(map);
+
+var josmText = L.Control.extend({
+	options: {
+		position: 'bottomright'
+	},
+	onAdd: function (map) {
+		return L.DomUtil.create('div', 'josmtext');
+	},
+	setContent: function (content) {
+		this.getContainer().innerHTML = content;
+	}
+});
+var josmText =  new josmText().addTo(map);
+
+map.on('load', function () {
+	if (map.getZoom() < 12) {
+		map.addLayer(overlay);
+		zoomText.setContent('Please Zoom In');
+	}
+});
+
+// map = L.map('bigmap');
+
+saved_lat = localStorage.getItem("pos_lat")
+saved_lon = localStorage.getItem("pos_lon")
+
+if (saved_lat != undefined) {
+	map.setView([saved_lat, saved_lon], 12)
+} else {
+	map.setView([51.5,-0.1], 12);
+}
+
+var mapHash = new L.Hash(map);
+
+if (L.Browser.retina) var tp = "lr";
+else var tp = "ls";
+
+// L.control.scale().addTo(map);
 
 function setPoiMarker(poi_type, icon, lat, lon, tags, osmid, osmtype) {
 	var mrk = L.marker([lat, lon], {icon: icon});
@@ -732,16 +732,16 @@ $(function() {
 	// });
 
 	map.on('zoomend', function () {
-		if (map.getZoom() > 18) {
-			map.addLayer(Positron);
-			map.removeLayer(Stamen_TonerBackground);
-			map.removeLayer(CartoDB_PositronOnlyLabels);
-		}
-		if (map.getZoom() <= 18) {
-			map.removeLayer(Positron);
-			map.addLayer(Stamen_TonerBackground);
-			map.addLayer(CartoDB_PositronOnlyLabels);
-		}
+		// if (map.getZoom() > 18) {
+		// 	map.addLayer(Positron);
+		// 	map.removeLayer(Stamen_TonerBackground);
+		// 	map.removeLayer(CartoDB_PositronOnlyLabels);
+		// }
+		// if (map.getZoom() <= 18) {
+		// 	map.removeLayer(Positron);
+		// 	map.addLayer(Stamen_TonerBackground);
+		// 	map.addLayer(CartoDB_PositronOnlyLabels);
+		// }
 		if (map.getZoom() >= 12) {
 			map.removeLayer(overlay);
 			zoomText.setContent('');
