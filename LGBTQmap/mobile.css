@@ -107,3 +107,16 @@ button {
 	transform: translate(2%, 2%);
 	font-size: 0.8em;
 }
+
+#arrowRight {
+	width: 0;
+	height: 0;
+	border-top: 17px solid transparent;
+	border-bottom: 17px solid transparent;
+	border-left: 17px solid #777;
+	position: absolute;
+	top: 195px;
+	right: 46px;
+	opacity: 0.8 !important;
+	pointer-events: none;
+}

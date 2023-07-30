@@ -100,7 +100,7 @@ var loadingOverlay = L.polygon([
 
 
 var map = new L.map('bigmap', {
-	layers: [CartoDB_PositronNoLabels,CartoDB_PositronOnlyLabels],
+	layers: [CartoDB_DarkMatter],
 	maxBounds: [[90,-180],[-90,180]],
 	zoomControl: false,
 })
