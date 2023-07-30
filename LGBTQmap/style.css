@@ -128,8 +128,8 @@ button {
 	/*padding: 2em;*/
 	/*height: 80%;*/
 	z-index: 10000;
-	background-color: #ccc;
-	color: #222;
+	background-color: #222;
+	color: #ccc;
 	border-radius: 15px;
 	opacity: 0.9;
 	font-family: roboto-medium;
@@ -293,9 +293,9 @@ button {
 	z-index: 100;
 }
 
-.leaflet-tile {
+/*.leaflet-tile {
 	filter: invert(100%);
-}
+}*/
 
 #topbar {
 	z-index: 2;
