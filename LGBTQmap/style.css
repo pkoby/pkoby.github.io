@@ -294,7 +294,7 @@ button {
 }
 
 .leaflet-tile {
-	filter: invert(100%);
+	filter: brightness(0.8) contrast(150%) invert(10%);
 }
 
 #topbar {
