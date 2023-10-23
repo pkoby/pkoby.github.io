@@ -293,10 +293,6 @@ button {
 	z-index: 100;
 }
 
-/*.leaflet-tile {
-	filter: brightness(0.7) contrast(250%) invert(100%);
-}*/
-
 #topbar {
 	z-index: 2;
 	position: absolute;
