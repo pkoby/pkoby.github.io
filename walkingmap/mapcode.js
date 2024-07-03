@@ -31,6 +31,41 @@ window.onload=function(){
 	map.getPane('fillPane').style.zIndex = 400;
 	map.getPane('linePane').style.zIndex = 500;
 
+	var lc = L.control.locate({position: "topright"}).addTo(map);
+
+	// var lc = L.control.locate({keepCurrentZoomLevel: true, inView: 'stop', outOfView: 'setView', inViewNotFollowing: 'inView', locateOptions: {enableHighAccuracy: true}}).addTo(map);
+
+	// var currentLoc = null;
+	// var state = null;
+
+	// function onLocationFound(e) {
+	// 	currentLoc=e.latlng;
+	// 	state="On";
+	// }
+
+	// // document.getElementById('locater').addEventListener('click', function () {
+	// 	if (currentLoc==null && state==null) {
+	// 		state="Started";
+	// 		lc.start();
+	// 		map.on('locationfound', onLocationFound);
+	//   		// locater.style.opacity = "0.9";
+	// 	} else if (currentLoc==null && state=="Started") {
+	// 		lc.stop();
+	// 		state=null;
+	//   		// locater.style.opacity = "0.7";
+	// 		// map.on('locationfound', onLocationFound);ike
+	// 	} else if (currentLoc!==null && map.getBounds().contains(currentLoc)) {
+	// 		lc.stop();
+	// 		currentLoc=null;
+	// 		state=null;
+	//   		// locater.style.opacity = "0.7";
+	// 	} else {
+	// 		map.setView(currentLoc);
+	// 		state="On";
+	//   		// locater.style.opacity = "0.9";
+	// 	}
+	// });
+
 /*-----------------------------------------Layer Content-----------------------------------------*/
 
 	var timeFrame='2419200000';//Time in milliseconds, 15778800000 is 6 months, 777600000 is 9 days, 2419200000 is 28 days
