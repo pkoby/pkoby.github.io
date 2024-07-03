@@ -222,3 +222,7 @@ h3 {
 .addition {
     mix-blend-mode: screen;
 }
+
+.filled {
+    pointer-events: none;
+}
