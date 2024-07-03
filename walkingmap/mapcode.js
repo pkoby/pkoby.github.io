@@ -20,24 +20,20 @@ window.onload=function(){
 	});
 
 	var hash=new L.Hash(map);
-	var baseLayers={
+	var baseMaps={
 		"Dark Matter":DarkMatterNoLabels,
 		"Mapnik":Mapnik,
 		"Blank":NoMap,
-		};
-	var groupedOverlays={
-		"":{
-			// "Map Labels":DarkMatterOnlyLabels,
-		},
-		// "Categories":{
-			// "Foot Activities":feetAll,
-		// }
 	};
-	var options={exclusiveGroups:["Categories"]};
+
+	map.createPane('fillPane');
+	map.createPane('linePane');
+	map.getPane('fillPane').style.zIndex = 400;
+	map.getPane('linePane').style.zIndex = 500;
 
 /*-----------------------------------------Layer Content-----------------------------------------*/
 
-	var timeFrame='777600000';//Time in milliseconds, 15778800000 is 6 months, 777600000 is 9 days, 2419200000 is 28 days
+	var timeFrame='2419200000';//Time in milliseconds, 15778800000 is 6 months, 777600000 is 9 days, 2419200000 is 28 days
 	function getColorFeet(d) {
 		var today = new Date();
 		var date = new Date(d);
@@ -49,18 +45,28 @@ window.onload=function(){
 	}
 
 	function styleFeatureFeet(feature){
-		if (feature.properties.walkeddate != 'older') {
-			return{
-				color:getColorFeet(feature.properties.walkeddate),
-				weight:5,
-				opacity:1,
-			}
-		} else {
+		if (feature.properties.walked == 'older') {
 			return{
 				color:'#4d0046',
 				weight:5,
 				opacity:1,
 				dashArray: '2,8',
+				pane:'linePane',
+			}
+		} else if (feature.properties.walked == 'filled') {
+			return{
+				weight:0,
+				fillColor:'teal',
+				fillOpacity:0.5,
+				interactive:false,
+				pane:'fillPane',
+			}
+		} else {
+			return{
+				color:getColorFeet(feature.properties.walked),
+				weight:5,
+				opacity:1,
+				pane:'linePane',
 			}
 		};
 	}
@@ -74,12 +80,6 @@ window.onload=function(){
 	}
 
 	function highlightSelection(layer){
-		// layer.setStyle({
-			// color:"#05f",
-			// weight:10,
-			// opacity:1,
-		// });
-		// info.update(layer.feature.properties);
 		if(!L.Browser.ie && !L.Browser.opera){
 			layer.bringToFront();
 		}
@@ -111,7 +111,9 @@ window.onload=function(){
 		layer.on({
 			'mouseover':function(e){
 				highlightFeature(e.target);
-				layer.bindTooltip(feature.properties.name+':</br>'+feature.properties.highway+'</br>'+feature.properties.walkeddate,{sticky:true,className:'popupClass'}).openTooltip();
+				if (feature.properties.walked != 'filled') {
+					layer.bindTooltip(feature.properties.name+':</br>'+feature.properties.highway+'</br>'+feature.properties.walked,{sticky:true,className:'popupClass'}).openTooltip();
+				}
 			},
 			'mouseout':function(e){
 				resetHighlightFeet(e.target);
@@ -123,7 +125,7 @@ window.onload=function(){
 	}
 
 /*-----------------------------------------Controls-----------------------------------------*/
-	var layerControl=new L.control.groupedLayers(baseLayers,groupedOverlays,options);
+	var layerControl=new L.control.layers(baseMaps);
 
 	L.control.scale().addTo(map);
 	var feetLegend=L.control({position:'bottomright'});
@@ -145,7 +147,6 @@ window.onload=function(){
 			earliestsegment.getFullYear() + "-" + 
 		    ("00" + (earliestsegment.getMonth() + 1)).slice(-2) + "-" + 
 		    ("00" + earliestsegment.getDate()).slice(-2)
-
 
 		var div=L.DomUtil.create('div','info legend'),
 			grades=[today,today-(ninth+1),today-(ninth*2+1),today-(ninth*3+1),today-(ninth*4+1),today-(ninth*5+1),today-(ninth*6+1),today-(ninth*7+1),today-(ninth*8+1),today-(ninth*9+1)],
