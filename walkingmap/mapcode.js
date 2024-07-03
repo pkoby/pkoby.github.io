@@ -31,7 +31,7 @@ window.onload=function(){
 	map.getPane('fillPane').style.zIndex = 400;
 	map.getPane('linePane').style.zIndex = 500;
 
-	var lc = L.control.locate({position: "topright"}).addTo(map);
+	var lc = L.control.locate({position: "topright",keepCurrentZoomLevel: true, inView: 'stop', outOfView: 'setView', inViewNotFollowing: 'inView', locateOptions: {enableHighAccuracy: true}}).addTo(map);
 
 	// var lc = L.control.locate({keepCurrentZoomLevel: true, inView: 'stop', outOfView: 'setView', inViewNotFollowing: 'inView', locateOptions: {enableHighAccuracy: true}}).addTo(map);
 
