@@ -60,20 +60,32 @@ h3 {
     opacity: 1;
 }
 
-.popupClass, .leaflet-control-layers, .leaflet-control-locate {
-    background-color: rgba(255, 255, 255, 1) !important;
+.popupClass, .leaflet-control-layers {
+    background: rgba(255, 255, 255, 0.8) !important;
     border: 0px !important;
     /*box-shadow: 0 0 15px rgba(0,0,0,0.3) !important;*/
-    border-radius: 8px !important;
+/*    border-radius: 8px !important;*/
     color: #222 !important;
     font-weight: bold !important;
+}
+.leaflet-control-layers:hover {
+    background: rgba(255, 255, 255, 1) !important;
+}
+
+.leaflet-control-zoom-in {
+    line-height: 36px !important;
 }
 
 .leaflet-bar a {
     width: 36px !important;
     height: 36px !important;
-    border-radius: 8px !important;
-    background-color: #fff !important;}
+/*    border-radius: 8px !important;*/
+    background: rgba(255, 255, 255, 0.8) !important;
+}
+
+.leaflet-bar a:hover {
+    background: rgba(255, 255, 255, 1) !important;
+}
 
 .leaflet-control-layers-toggle {
     width: 36px !important;
