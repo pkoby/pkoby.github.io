@@ -4,7 +4,7 @@ window.onload=function(){
 //Base Layers
 	var DarkMatterNoLabels=L.tileLayer('http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png',{attribution:'&copy;<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy;<a href="http://cartodb.com/attributions">CartoDB</a>',subdomains:'abcd',maxZoom:19});
 	var DarkMatterOnlyLabels=L.tileLayer('http://{s}.basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}.png',{attribution:'&copy;<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy;<a href="http://cartodb.com/attributions">CartoDB</a>',subdomains:'abcd',maxZoom:19});
-	var Mapnik=L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,opacity:0.9,attribution:'&copy;<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'});
+	var Mapnik=L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,opacity:1,attribution:'&copy;<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'});
 	var NoMap=L.tileLayer('https://{s}.tile.no.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy;<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'});
 	
 //Overlays
@@ -16,7 +16,7 @@ window.onload=function(){
 		zoom:14,
 		zoomControl:false,
 		maxBounds:[[90,-180],[90,180],[-90,180],[-90,-180]],
-		layers:[DarkMatterNoLabels,feetAll]
+		layers:[Mapnik,feetAll]
 	});
 
 	var hash=new L.Hash(map);
@@ -32,7 +32,7 @@ window.onload=function(){
 	map.getPane('linePane').style.zIndex = 500;
 
 	new L.Control.Zoom({ position: 'bottomright' }).addTo(map);
-	var lc = L.control.locate({position: "topright",keepCurrentZoomLevel: true, inView: 'stop', outOfView: 'setView', inViewNotFollowing: 'inView', locateOptions: {enableHighAccuracy: true}}).addTo(map);
+	var lc = L.control.locate({position: 'topright',keepCurrentZoomLevel: true, locateOptions: {enableHighAccuracy: true}}).addTo(map);
 
 /*-----------------------------------------Layer Content-----------------------------------------*/
 
@@ -115,7 +115,7 @@ window.onload=function(){
 			'mouseover':function(e){
 				highlightFeature(e.target);
 				if (feature.properties.walked != 'filled') {
-					layer.bindTooltip(feature.properties.name+':</br>'+feature.properties.highway+'</br>'+feature.properties.walked,{sticky:true,className:'popupClass'}).openTooltip();
+					layer.bindTooltip(feature.properties.highway+'</br>'+feature.properties.walked,{sticky:true,className:'popupClass'}).openTooltip();
 				}
 			},
 			'mouseout':function(e){
