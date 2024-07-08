@@ -48,7 +48,7 @@ window.onload=function(){
 	}
 
 	function styleFeatureFeet(feature){
-		if (feature.properties.walked == 'older') {
+		if (feature.properties.trodden == 'older') {
 			return{
 				color:'#4d0046',
 				weight:5,
@@ -56,7 +56,7 @@ window.onload=function(){
 				dashArray: '2,8',
 				pane:'linePane',
 			}
-		} else if (feature.properties.walked == 'filled') {
+		} else if (feature.properties.trodden == 'filled') {
 			return{
 				weight:0,
 				fillColor:'teal',
@@ -66,7 +66,7 @@ window.onload=function(){
 			}
 		} else {
 			return{
-				color:getColorFeet(feature.properties.walked),
+				color:getColorFeet(feature.properties.trodden),
 				weight:5,
 				opacity:1,
 				pane:'linePane',
@@ -88,7 +88,7 @@ window.onload=function(){
 		}
 	}
 
-	var feet=L.geoJson(walks,{style:styleFeatureFeet,onEachFeature:onEachFeatureFeet,smoothFactor:2}).addTo(feetAll);
+	var feet=L.geoJson(foot,{style:styleFeatureFeet,onEachFeature:onEachFeatureFeet,smoothFactor:2}).addTo(feetAll);
 
 	var selected=null;
 
@@ -114,8 +114,8 @@ window.onload=function(){
 		layer.on({
 			'mouseover':function(e){
 				highlightFeature(e.target);
-				if (feature.properties.walked != 'filled') {
-					layer.bindTooltip(feature.properties.highway+'</br>'+feature.properties.walked,{sticky:true,className:'popupClass'}).openTooltip();
+				if (feature.properties.trodden != 'filled') {
+					layer.bindTooltip(feature.properties.highway+'</br>'+feature.properties.trodden,{sticky:true,className:'popupClass'}).openTooltip();
 				}
 			},
 			'mouseout':function(e){
