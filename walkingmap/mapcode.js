@@ -32,7 +32,7 @@ window.onload=function(){
 	map.getPane('linePane').style.zIndex = 500;
 
 	new L.Control.Zoom({ position: 'bottomright' }).addTo(map);
-	var lc = L.control.locate({position: 'topright',keepCurrentZoomLevel: true, locateOptions: {enableHighAccuracy: true}}).addTo(map);
+	var lc = L.control.locate({position: 'topright',keepCurrentZoomLevel: true, initialZoomLevel: 16, locateOptions: {enableHighAccuracy: true}}).addTo(map);
 
 /*-----------------------------------------Layer Content-----------------------------------------*/
 
