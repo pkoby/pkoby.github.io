@@ -2,9 +2,8 @@ window.onload=function(){
 
 /*-----------------------------------------Layers-----------------------------------------*/
 //Base Layers
-	var DarkMatterNoLabels=L.tileLayer('http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png',{attribution:'&copy;<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy;<a href="http://cartodb.com/attributions">CartoDB</a>',subdomains:'abcd',maxZoom:19});
-	var DarkMatterOnlyLabels=L.tileLayer('http://{s}.basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}.png',{attribution:'&copy;<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy;<a href="http://cartodb.com/attributions">CartoDB</a>',subdomains:'abcd',maxZoom:19});
 	var Mapnik=L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,opacity:1,attribution:'&copy;<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'});
+	var DarkMatter=L.tileLayer('http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png',{attribution:'&copy;<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy;<a href="http://cartodb.com/attributions">CartoDB</a>',subdomains:'abcd',maxZoom:19});
 	var NoMap=L.tileLayer('https://{s}.tile.no.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy;<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'});
 	
 //Overlays
@@ -21,8 +20,8 @@ window.onload=function(){
 
 	var hash=new L.Hash(map);
 	var baseMaps={
-		"Dark Matter":DarkMatterNoLabels,
 		"Mapnik":Mapnik,
+		"Dark":DarkMatter,
 		"Blank":NoMap,
 	};
 
@@ -41,7 +40,7 @@ window.onload=function(){
 		var today = new Date();
 		var date = new Date(d);
 		var age = today-date;
-		const scale = chroma.scale(['#4d0046','#b01a00','#fdf600']).domain([timeFrame, 0]);
+		const scale = chroma.scale(['#4d0046','#ffff00']).mode('hsl').domain([timeFrame, 0]);
 		if (d != null) {
 			return scale(age).hex();
 		}
@@ -63,6 +62,14 @@ window.onload=function(){
 				fillOpacity:0.5,
 				interactive:false,
 				pane:'fillPane',
+			}
+		} else if (feature.properties.informal == 'yes') {
+			return{
+				color:getColorFeet(feature.properties.trodden),
+				weight:5,
+				opacity:1,
+				dashArray: '2,7',
+				pane:'linePane',
 			}
 		} else {
 			return{
@@ -115,7 +122,7 @@ window.onload=function(){
 			'mouseover':function(e){
 				highlightFeature(e.target);
 				if (feature.properties.trodden != 'filled') {
-					layer.bindTooltip(feature.properties.highway+'</br>'+feature.properties.trodden,{sticky:true,className:'popupClass'}).openTooltip();
+					layer.bindTooltip('Type: '+feature.properties.highway+'</br>Visited: '+feature.properties.trodden,{sticky:true,className:'popupClass'}).openTooltip();
 				}
 			},
 			'mouseout':function(e){
@@ -131,7 +138,7 @@ window.onload=function(){
 	var layerControl=new L.control.layers(baseMaps);
 
 	// L.control.scale().addTo(map);
-	var feetLegend=L.control({position:'bottomright'});
+	var feetLegend=L.control({position:'bottomleft'});
 
 	feetLegend.onAdd=function(map){
 		var today = new Date();
@@ -141,26 +148,26 @@ window.onload=function(){
 		oldest = new Date(oldest)
 		var oldstr = '';
 		oldstr += 
-			oldest.getFullYear() + "-" + 
-		    ("00" + (oldest.getMonth() + 1)).slice(-2) + "-" + 
+			// oldest.getFullYear() + "-" + 
+		    ("00" + (oldest.getMonth() + 1)).slice(-2) + "/" + 
 		    ("00" + oldest.getDate()).slice(-2)
 		earliestsegment = new Date(earliestsegment)
 		var sixstr = '';
 		sixstr += 
-			earliestsegment.getFullYear() + "-" + 
-		    ("00" + (earliestsegment.getMonth() + 1)).slice(-2) + "-" + 
+			// earliestsegment.getFullYear() + "-" + 
+		    ("00" + (earliestsegment.getMonth() + 1)).slice(-2) + "/" + 
 		    ("00" + earliestsegment.getDate()).slice(-2)
 
 		var div=L.DomUtil.create('div','info legend'),
 			grades=[today,today-(ninth+1),today-(ninth*2+1),today-(ninth*3+1),today-(ninth*4+1),today-(ninth*5+1),today-(ninth*6+1),today-(ninth*7+1),today-(ninth*8+1),today-(ninth*9+1)],
-			labels=[sixstr+"&ndash;Today"," "," "," ",/*"<font color=\"#666\" size=\"1\">2 Month</font>"*/" ",/*"<font color=\"#666\" size=\"1\">increments</font>"*/" "," "," "," ","Before "+oldstr,""];
+			labels=[sixstr+"&ndash;Now"," "," "," "," "," "," "," "," ","Pre "+oldstr,""];
 		for(var i=0;i<grades.length;i++){
 			div.innerHTML+='<i style="background:'+getColorFeet(grades[i])+'"></i>'+(labels[i]?labels[i]+'<br>':'Other\/No Data');
 		}	
 		return div;
 	};
 
-	// feetLegend.addTo(map);
+	feetLegend.addTo(map);
 	map.addControl(layerControl);
 
 };
