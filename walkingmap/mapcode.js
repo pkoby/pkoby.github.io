@@ -40,7 +40,7 @@ window.onload=function(){
 		var today = new Date();
 		var date = new Date(d);
 		var age = today-date;
-		const scale = chroma.scale(['#4d0046','#ffff00']).mode('hsl').domain([timeFrame, 0]);
+		const scale = chroma.scale(['#404','#f30','#ff0']).mode('hsl').domain([timeFrame, 0]);
 		if (d != null) {
 			return scale(age).hex();
 		}
@@ -83,9 +83,9 @@ window.onload=function(){
 
 	function highlightFeature(layer){
 		layer.setStyle({
-			// weight:5,
+			weight:7,
 			// opacity:1,
-			color: "#fff",
+			color: "#cff",
 		});
 	}
 
