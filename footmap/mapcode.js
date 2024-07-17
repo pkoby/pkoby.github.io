@@ -15,7 +15,7 @@ window.onload=function(){
 		zoom:14,
 		zoomControl:false,
 		maxBounds:[[90,-180],[90,180],[-90,180],[-90,-180]],
-		layers:[DarkMatter,feetAll]
+		layers:[Mapnik,feetAll]
 	});
 
 	var hash=new L.Hash(map);
