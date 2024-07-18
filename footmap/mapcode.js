@@ -31,7 +31,7 @@ window.onload=function(){
 	map.getPane('linePane').style.zIndex = 500;
 
 	new L.Control.Zoom({ position: 'bottomright' }).addTo(map);
-	var lc = L.control.locate({position: 'topright', keepCurrentZoomLevel: true, initialZoomLevel: 17, clickBehavior: {inView: 'stop', outOfView: 'setView', inViewNotFollowing: 'setView'}, locateOptions: {enableHighAccuracy: true}}).addTo(map);
+	var lc = L.control.locate({position: 'topright', keepCurrentZoomLevel: true, clickBehavior: {inView: 'stop', outOfView: 'setView', inViewNotFollowing: 'setView'}, locateOptions: {enableHighAccuracy: true}}).addTo(map);
 
 /*-----------------------------------------Layer Content-----------------------------------------*/
 
@@ -85,7 +85,7 @@ window.onload=function(){
 		layer.setStyle({
 			weight:7,
 			// opacity:1,
-			color: "#cff",
+			color: "#fff",
 		});
 	}
 
