@@ -3,7 +3,7 @@ window.onload=function(){
 /*-----------------------------------------Layers-----------------------------------------*/
 //Base Layers
 	var Mapnik=L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,opacity:1,attribution:'&copy;<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'});
-	var DarkMatter=L.tileLayer('http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png',{attribution:'&copy;<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy;<a href="http://cartodb.com/attributions">CartoDB</a>',subdomains:'abcd',maxZoom:19});
+	var DarkMatter=L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png',{attribution:'&copy;<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy;<a href="http://cartodb.com/attributions">CartoDB</a>',subdomains:'abcd',maxZoom:19});
 	var NoMap=L.tileLayer('https://{s}.tile.no.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy;<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'});
 	
 //Overlays
@@ -12,7 +12,7 @@ window.onload=function(){
 //Initialize Map
 	var map=new L.map('map',{
 		center:[40.0390,-75.2122],
-		zoom:14,
+		zoom:16,
 		zoomControl:false,
 		maxBounds:[[90,-180],[90,180],[-90,180],[-90,-180]],
 		layers:[Mapnik,feetAll]
@@ -31,7 +31,7 @@ window.onload=function(){
 	map.getPane('linePane').style.zIndex = 500;
 
 	new L.Control.Zoom({ position: 'bottomright' }).addTo(map);
-	var lc = L.control.locate({position: 'topright', keepCurrentZoomLevel: true, clickBehavior: {inView: 'stop', outOfView: 'setView', inViewNotFollowing: 'setView'}, locateOptions: {enableHighAccuracy: true}}).addTo(map);
+	var lc = L.control.locate({strings:{title:''}, position: 'topright', keepCurrentZoomLevel: true, clickBehavior: {inView: 'stop', outOfView: 'setView', inViewNotFollowing: 'setView'}, locateOptions: {enableHighAccuracy: true}}).addTo(map);
 
 /*-----------------------------------------Layer Content-----------------------------------------*/
 
@@ -48,7 +48,7 @@ window.onload=function(){
 
 	function styleFeatureFeet(feature){
 		if (feature.properties.trodden == 'older') {
-			return{
+			return {
 				color:'#4d0046',
 				weight:5,
 				opacity:1,
@@ -56,23 +56,15 @@ window.onload=function(){
 				pane:'linePane',
 			}
 		} else if (feature.properties.trodden == 'filled') {
-			return{
+			return {
 				weight:0,
 				fillColor:'teal',
 				fillOpacity:0.5,
 				interactive:false,
 				pane:'fillPane',
 			}
-		// } else if (feature.properties.informal == 'yes') {
-		// 	return{
-		// 		color:getColorFeet(feature.properties.trodden),
-		// 		weight:5,
-		// 		opacity:1,
-		// 		dashArray: '2,7',
-		// 		pane:'linePane',
-		// 	}
 		} else {
-			return{
+			return {
 				color:getColorFeet(feature.properties.trodden),
 				weight:5,
 				opacity:1,
