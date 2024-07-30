@@ -40,7 +40,7 @@ window.onload=function(){
 		var today = new Date();
 		var date = new Date(d);
 		var age = today-date;
-		const scale = chroma.scale(['#404','#f30','#ff0']).mode('hsl').domain([timeFrame, 0]);
+		const scale = chroma.scale(['#605','#f30','#ff0']).mode('hsl').domain([timeFrame, 0]);
 		if (d != null) {
 			return scale(age).hex();
 		}
@@ -76,7 +76,6 @@ window.onload=function(){
 	function highlightFeature(layer){
 		layer.setStyle({
 			weight:7,
-			// opacity:1,
 			color: "#fff",
 		});
 	}
@@ -127,39 +126,25 @@ window.onload=function(){
 	}
 
 /*-----------------------------------------Controls-----------------------------------------*/
-	var layerControl=new L.control.layers(baseMaps);
+	var layerControl=new L.control.layers(baseMaps).addTo(map);
 
 	// L.control.scale().addTo(map);
 	var feetLegend=L.control({position:'bottomleft'});
 
 	feetLegend.onAdd=function(map){
 		var today = new Date();
-		var ninth = (timeFrame/9)
-		var earliestsegment = today-(ninth);
-		var oldest = today-timeFrame;
-		oldest = new Date(oldest)
-		var oldstr = '';
-		oldstr += 
-			// oldest.getFullYear() + "-" + 
-		    ("00" + (oldest.getMonth() + 1)).slice(-2) + "/" + 
-		    ("00" + oldest.getDate()).slice(-2)
-		earliestsegment = new Date(earliestsegment)
-		var sixstr = '';
-		sixstr += 
-			// earliestsegment.getFullYear() + "-" + 
-		    ("00" + (earliestsegment.getMonth() + 1)).slice(-2) + "/" + 
-		    ("00" + earliestsegment.getDate()).slice(-2)
-
+		var ninth = (timeFrame/9);
+		var oldest = new Date(today-timeFrame);
+		var oldstr = ("00" + (oldest.getMonth() + 1)).slice(-2) + "/" + ("00" + oldest.getDate()).slice(-2);
+		var earlyseg = new Date(today-(ninth));
 		var div=L.DomUtil.create('div','info legend'),
 			grades=[today,today-(ninth+1),today-(ninth*2+1),today-(ninth*3+1),today-(ninth*4+1),today-(ninth*5+1),today-(ninth*6+1),today-(ninth*7+1),today-(ninth*8+1),today-(ninth*9+1)],
-			labels=[sixstr+"&ndash;Now"," "," "," "," "," "," "," "," ","Pre "+oldstr,""];
-		for(var i=0;i<grades.length;i++){
+			labels=["Now"," "," "," "," "," "," "," "," ","<"+oldstr,""];
+		for (var i=0; i<grades.length; i++){
 			div.innerHTML+='<i style="background:'+getColorFeet(grades[i])+'"></i>'+(labels[i]?labels[i]+'<br>':'Other\/No Data');
 		}	
 		return div;
 	};
 
 	feetLegend.addTo(map);
-	map.addControl(layerControl);
-
 };
