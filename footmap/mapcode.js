@@ -16,7 +16,7 @@ window.onload=function(){
 		zoom:16,
 		zoomControl:false,
 		maxBounds:[[90,-180],[90,180],[-90,180],[-90,-180]],
-		layers:[Mapnik,footLayer]
+		layers:[DarkMatter,footLayer]
 	});
 
 	var hash=new L.Hash(map);
@@ -145,6 +145,7 @@ window.onload=function(){
 		pointToLayer: function (feature, latlng) {
 			return L.marker(latlng, {
 				icon: homeIcon,
+				minZoom: 16,
 			});
 		},
 	    style:styleFeatureFeet,onEachFeature:onEachFeatureFeet,smoothFactor:2
@@ -181,6 +182,9 @@ window.onload=function(){
 				'mouseout':function(e){
 					resetHighlightFeet(e.target);
 				},
+				'click':function(e){
+					map.fitBounds(layer.getBounds());
+				}
 			});
 		}
 	}
@@ -194,6 +198,9 @@ window.onload=function(){
 			'mouseout':function(e){
 				resetHighlightRuns(e.target);
 			},
+			'click':function(e){
+				map.fitBounds(layer.getBounds());
+			}
 		});
 	}
 
