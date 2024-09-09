@@ -96,12 +96,11 @@ button {
 	position: absolute;
 	top: 190px;
 	border-radius: 8px 0 0 8px;
-	background-image: url(icons/download.svg);
+	background-image: url(icons/refresh.svg);
 	background-repeat: no-repeat;
 	background-position: center center;
 	background-size: 16px;
 }
-
 #infoButton {
 	position: fixed;
 	bottom: 35px;

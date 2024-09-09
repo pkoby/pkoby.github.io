@@ -52,7 +52,7 @@ button {
 	position: absolute;
 	bottom: 190px !important;
 	border-radius: 8px 0 0 8px;
-	background-image: url(download.png);
+	background-image: url(refresh.svg);
 	background-repeat: no-repeat;
 	background-position: center center;
 }
@@ -115,7 +115,7 @@ button {
 	display: block;
 	position: absolute;
 	top: 195px;
-	right: 61.5px;
+	right: 62px;
 	line-height: 34px;
 	height: 34px;
 	padding: 0 10px 0 10px;
