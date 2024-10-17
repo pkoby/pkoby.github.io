@@ -232,33 +232,63 @@ function setPoiMarker(poi_type, icon, lat, lon, tags, osmid, osmtype) {
 	} else if (tags.lgbtq == 'no') {
 		popup_content += "<span class='no'>⛔ This location does not welcome or prohibits members of the LGBTQ+ community</span><br/>";
 	}
-	if (tags["lgbtq:trans"] || tags["lgbtq:bi"] || tags["lgbtq:men"] || tags["lgbtq:women"] || tags["lgbtq:bears"]) {
+	if (tags["lgbtq:lesbian"] || tags["lgbtq:gay"] || tags["lgbtq:bi"] || tags["lgbtq:trans"] || tags["lgbtq:non_binary"] || tags["lgbtq:queer"] || tags["lgbtq:inter"] || tags["lgbtq:bears"] || tags["lgbtq:cruising"] || tags["lgbtq:men"] || tags["lgbtq:women"]) {
 		popup_content += "<hr/>";
 	}
-	if (tags["lgbtq:trans"] == 'primary') {
-		popup_content += "<span class='trans'>Transgender-specific (non-exclusive)</span><br/>";
-	} else if (tags["lgbtq:trans"] == 'only') {
-		popup_content += "<span class='trans'>Transgender only</span><br/>";
+	if (tags["lgbtq:lesbian"] == 'primary' || tags["lgbtq:lesbian"] == 'welcome') {
+		popup_content += "<span class='lesbian'>Lesbian specifically welcome</span><br/>";
+	} else if (tags["lgbtq:lesbian"] == 'only') {
+		popup_content += "<span class='lesbian'>Lesbian only</span><br/>";
 	}
-	if (tags["lgbtq:bi"] == 'primary') {
-		popup_content += "<span class='bi'>Bi-specific (non-exclusive)</span><br/>";
+	if (tags["lgbtq:gay"] == 'primary' || tags["lgbtq:gay"] == 'welcome') {
+		popup_content += "<span class='gay'>Gay specifically welcome</span><br/>";
+	} else if (tags["lgbtq:gay"] == 'only') {
+		popup_content += "<span class='gay'>Gay only</span><br/>";
+	}
+	if (tags["lgbtq:bi"] == 'primary' || tags["lgbtq:bi"] == 'welcome') {
+		popup_content += "<span class='bi'>Bi specifically welcome</span><br/>";
 	} else if (tags["lgbtq:bi"] == 'only') {
 		popup_content += "<span class='bi'>Bi only</span><br/>";
 	}
-	if (tags["lgbtq:men"] == 'primary') {
-		popup_content += "<span class='men'>Men-specific (non-exclusive)</span><br/>";
+	if (tags["lgbtq:trans"] == 'primary' || tags["lgbtq:trans"] == 'welcome') {
+		popup_content += "<span class='trans'>Transgender specifically welcome</span><br/>";
+	} else if (tags["lgbtq:trans"] == 'only') {
+		popup_content += "<span class='trans'>Transgender only</span><br/>";
+	}
+	if (tags["lgbtq:non_binary"] == 'primary' || tags["lgbtq:non_binary"] == 'welcome') {
+		popup_content += "<span class='nonbinary'>Non-binary specifically welcome</span><br/>";
+	} else if (tags["lgbtq:non_binary"] == 'only') {
+		popup_content += "<span class='nonbinary'>Non-binary only</span><br/>";
+	}
+	if (tags["lgbtq:queer"] == 'primary' || tags["lgbtq:queer"] == 'welcome') {
+		popup_content += "<span class='queer'>Queer specifically welcome</span><br/>";
+	} else if (tags["lgbtq:queer"] == 'only') {
+		popup_content += "<span class='queer'>Queer only</span><br/>";
+	}
+	if (tags["lgbtq:inter"] == 'primary' || tags["lgbtq:inter"] == 'welcome') {
+		popup_content += "<span class='inter'>Intersex specifically welcome</span><br/>";
+	} else if (tags["lgbtq:inter"] == 'only') {
+		popup_content += "<span class='inter'>Intersex only</span><br/>";
+	}
+	if (tags["lgbtq:bears"] == 'primary' || tags["lgbtq:bears"] == 'welcome') {
+		popup_content += "<span class='bears'>Bears specifically welcome</span><br/>";
+	} else if (tags["lgbtq:bears"] == 'only') {
+		popup_content += "<span class='bears'>Bears only</span><br/>";
+	}
+	if (tags["lgbtq:cruising"] == 'primary' || tags["lgbtq:cruising"] == 'welcome') {
+		popup_content += "<span class='cruising'>Cruising specifically welcome</span><br/>";
+	} else if (tags["lgbtq:cruising"] == 'only') {
+		popup_content += "<span class='cruising'>Cruising only</span><br/>";
+	}
+	if (tags["lgbtq:men"] == 'primary' || tags["lgbtq:men"] == 'welcome') {
+		popup_content += "<span class='men'>Men specifically welcome</span><br/>";
 	} else if (tags["lgbtq:men"] == 'only') {
 		popup_content += "<span class='men'>Men only</span><br/>";
 	}
-	if (tags["lgbtq:women"] == 'primary') {
-		popup_content += "<span class='women'>Women-specific (non-exclusive)</span><br/>";
+	if (tags["lgbtq:women"] == 'primary' || tags["lgbtq:women"] == 'welcome') {
+		popup_content += "<span class='women'>Women specifically welcome</span><br/>";
 	} else if (tags["lgbtq:women"] == 'only') {
 		popup_content += "<span class='women'>Women only</span><br/>";
-	}
-	if (tags["lgbtq:bears"] == 'primary') {
-		popup_content += "<span class='bears'>Bears-specific (non-exclusive)</span><br/>";
-	} else if (tags["lgbtq:bears"] == 'only') {
-		popup_content += "<span class='bears'>Bears only</span><br/>";
 	}
 	popup_content += "<hr/>";
 	if (tags["source:lgbtq"]) {

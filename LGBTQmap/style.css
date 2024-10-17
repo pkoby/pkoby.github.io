@@ -451,34 +451,59 @@ a, leaflet-container a {
 	font-size: 1.2em;
 }
 
-.trans {
-	background-image: linear-gradient(to right, #5dc6ff, #fa9eb4, white, #fa9eb4, #5dc6ff);
+
+.lesbian {
+	background-image: linear-gradient(to right, #ff5628,#f39c63,#ffb685,white,#de8dbd,#c985af,#fc089a);
+	-webkit-background-clip: text;
+	color: transparent;
+	font-size: 1.2em;
+}
+.gay {
+	background-image: linear-gradient(to right, #0bd7ab,#4fdfc0,#afedcf,white,#97bfe9,#7670d6,#5f28b8);
 	-webkit-background-clip: text;
 	color: transparent;
 	font-size: 1.2em;
 }
 .bi {
-	background-image: linear-gradient(to right, #fd2b98, #fd2b98, #bb7ab7, #0659ff, #0659ff);
+	background-image: linear-gradient(to right, #fd2b98,#fd2b98,#bb7ab7,#0659ff,#0659ff);
 	-webkit-background-clip: text;
 	color: transparent;
 	font-size: 1.2em;
 }
-.men {
-	background-image: linear-gradient(to right, #0bd7ab, #4fdfc0, #afedcf, white, #97bfe9, #7670d6, #5f28b8);
+.trans {
+	background-image: linear-gradient(to right, #5dc6ff,#fa9eb4,white,#fa9eb4,#5dc6ff);
 	-webkit-background-clip: text;
 	color: transparent;
 	font-size: 1.2em;
 }
-.women {
-	background-image: linear-gradient(to right, #ff5628, #f39c63, #ffb685, white, #de8dbd, #c985af, #fc089a);
+.nonbinary {
+	background-image: linear-gradient(to right, #f5ff00, #ffffff, #a900d1, #757575);
+	-webkit-background-clip: text;
+	color: transparent;
+	font-size: 1.2em;
+}
+.queer {
+	background-image: linear-gradient(to right, red,orange,yellow,limegreen,royalblue,mediumvioletred);
+	-webkit-background-clip: text;
+	color: transparent;
+	font-size: 1.2em;
+}
+.inter {
+	background-image: linear-gradient(to right, #f9ed00,#f9ed00,#8700ab,#f9ed00,#f9ed00);
 	-webkit-background-clip: text;
 	color: transparent;
 	font-size: 1.2em;
 }
 .bears {
-	background-image: linear-gradient(to right, #af7b00, #ff9610, #f2f973, #fdf8c2, white, #757575);
+	background-image: linear-gradient(to right, #af7b00,#ff9610,#f2f973,#fdf8c2,white,#757575);
 	-webkit-background-clip: text;
 	color: transparent;
+	font-size: 1.2em;
+}
+.men, .women, .cruising {
+/*	background-image: linear-gradient(to right, #af7b00,#ff9610,#f2f973,#fdf8c2,white,#757575);*/
+/*	-webkit-background-clip: text;*/
+/*	color: transparent;*/
 	font-size: 1.2em;
 }
 
