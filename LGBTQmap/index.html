@@ -66,10 +66,11 @@
 			<div>
 				<h2>Welcome to LGBTQ+map!</h2>
 				<br/>
-				<p>Find places that are friendly to the LGBTQ+ community. Use the <img src="icons/locate_info.svg">&nbsp;button to find your location, and click&nbsp;<img src="icons/download_info.svg"> to load points of interest that are tagged with <a href="https://wiki.openstreetmap.org/wiki/Key:lgbtq" target="_blank"><span class="code">lgbtq=*</span></a> or <a href="https://wiki.openstreetmap.org/wiki/Key:gay" target="_blank"><span class="code">gay=*</span></a> in <a href="http://www.osm.org" target="_blank">OpenStreetMap</a>.</p>
+				<p>Find places that are friendly to the LGBTQ+ community. Use the <img src="icons/locate.svg">&nbsp;button to find your location, and click&nbsp;<img src="icons/refresh.svg"> to load points of interest that are tagged with <a href="https://wiki.openstreetmap.org/wiki/Key:lgbtq" target="_blank"><span class="code">lgbtq=*</span></a> in <a href="http://www.osm.org" target="_blank">OpenStreetMap</a>.</p>
 				<p>Places will show as icons:</p>
 				<p><span class="infoIcons"><img src="icons/bar.svg" alt="bar icon"/>&nbsp;Bar</span>, 
 					<span class="infoIcons"><img src="icons/cafe.svg" alt="cafe icon"/>&nbsp;Cafe</span>, 
+					<span class="infoIcons"><img src="icons/fitness-centre.svg" alt="fitness centre icon"/>&nbsp;Fitness Centre</span>, 
 					<span class="infoIcons"><img src="icons/library.svg" alt="library icon"/>&nbsp;Library</span>, 
 					<span class="infoIcons"><img src="icons/lodging.svg" alt="lodging icon"/>&nbsp;Lodging</span>, 
 					<span class="infoIcons"><img src="icons/memorial.svg" alt="memorial icon"/>&nbsp;Memorial</span>, 
@@ -90,11 +91,11 @@
 				</p>
 				<p>Tap the icons to get more information or to edit a place in OpenStreetMap. </p>
 				<p></p>
-				<span class="dismiss">Tap this box to dismiss</span>
+				<span class="dismiss">Tap to dismiss</span>
 			</div>
 		</div>
 
-		<div id="bigmap"></div>
+		<div id="bigmap" onclick="hideInfo()"></div>
 
 		<script src="leaflet.js"></script>
 		<script src="leaflet-hash.js"></script>

@@ -9,7 +9,7 @@ var poi_markers = new Array();
 // 	minClusterRadius: 1,
 // });
 
-var primary_icon,welcome_icon,no_icon,has_source_icon,has_website_icon,no_source_icon,bar_icon,cafe_icon,library_icon,lodging_icon,memorial_icon,museum_icon,office_icon,pharmacy_icon,placeofworship_icon,pub_icon,restaurant_icon,sauna_icon,shop_icon,theater_icon,vet_icon,other_icon;
+var primary_icon,welcome_icon,no_icon,has_source_icon,has_website_icon,no_source_icon,bar_icon,cafe_icon,fitness_icon,library_icon,lodging_icon,memorial_icon,museum_icon,office_icon,pharmacy_icon,placeofworship_icon,pub_icon,restaurant_icon,sauna_icon,shop_icon,theater_icon,vet_icon,other_icon;
 	
 // init map
 var Positron = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
@@ -120,15 +120,15 @@ document.getElementById('loaddata').addEventListener('click', downloadData);
 
 // new L.Control.Zoom({ position: 'bottomright' }).addTo(map);
 
-// var legend = L.control({ position: 'bottomleft' });
-// legend.onAdd = function (map) {
-// 	var div = L.DomUtil.create('div', 'legend'), icons = ['unknown','Bar','Restaurant','Pub','Cafe','Museum','Community Centre','Shop','Place of Worship'], labels = ['Unknown Type','Bar','Restaurant','Pub','Cafe','Museum','Community Centre','Shop','Place of Worship'];
-// 	// div.innerHTML =	'<span>Port of Passage</span><br><i class="points" style="color:">&#8226;</i>Bristol<br><i class="points" style="color:">&#8226;</i>Middlesex<br><i class="points" style="color:">&#8226;</i>London<br><br><span>Date of Indenture</span><br>';
-// 	for (var i = 0; i < icons.length; i++) {
-// 		div.innerHTML += '<img src="' + icons[i]+'.svg" class="legendicon"">'+labels[i]+'<br>';
-// 	}
-// 	return div;
-// };
+var legend = L.control({ position: 'bottomleft' });
+legend.onAdd = function (map) {
+	var div = L.DomUtil.create('div', 'legend'), icons = ['unknown','Bar','Restaurant','Pub','Cafe','Museum','Community Centre','Shop','Place of Worship'], labels = ['Unknown Type','Bar','Restaurant','Pub','Cafe','Museum','Community Centre','Shop','Place of Worship'];
+	// div.innerHTML =	'<span>Port of Passage</span><br><i class="points" style="color:">&#8226;</i>Bristol<br><i class="points" style="color:">&#8226;</i>Middlesex<br><i class="points" style="color:">&#8226;</i>London<br><br><span>Date of Indenture</span><br>';
+	for (var i = 0; i < icons.length; i++) {
+		div.innerHTML += '<img src="' + icons[i]+'.svg" class="legendicon"">'+labels[i]+'<br>';
+	}
+	return div;
+};
 
 var zoomText = L.Control.extend({
 	options: {
@@ -160,18 +160,21 @@ var loadingText = L.Control.extend({
 });
 var loadingText =  new loadingText().addTo(map);
 
-var josmText = L.Control.extend({
+var githubText = L.Control.extend({
 	options: {
-		position: 'bottomright'
+		position: 'bottomleft'
 	},
 	onAdd: function (map) {
-		return L.DomUtil.create('div', 'josmtext');
+		return L.DomUtil.create('div', 'githubtext');
 	},
 	setContent: function (content) {
 		this.getContainer().innerHTML = content;
 	}
 });
-var josmText =  new josmText().addTo(map);
+var githubText =  new githubText().addTo(map);
+	githubText.setContent('<a href="https://github.com/pkoby/pkoby.github.io/issues" target=\"\_blank\">Report issue on Github</a>');
+
+
 
 map.on('load', function () {
 	if (map.getZoom() < 12) {
@@ -218,15 +221,15 @@ function setPoiMarker(poi_type, icon, lat, lon, tags, osmid, osmtype) {
 		}
 	}
 
-	if (tags.lgbtq == 'only' || tags.gay == 'only') {
+	if (tags.lgbtq == 'only') {
 		popup_content += "🌈 <span class='primary'>This location only allows members of the LGBTQ+ community</span><br/>";
 	} else if (tags.lgbtq == 'primary') {
 		popup_content += "🌈 <span class='primary'>This location caters primarily to the LGBTQ+ community</span><br/>";
-	} else if (tags.lgbtq == 'welcome' || tags.lgbtq == 'friendly' || tags.gay == 'welcome' ) {
+	} else if (tags.lgbtq == 'welcome' || tags.lgbtq == 'friendly') {
 		popup_content += "<span class='welcome'>💗 This location explicitly welcomes members of the LGBTQ+ community</span><br/>";
-	} else if (tags.lgbtq == 'yes' || tags.gay == 'yes') {
+	} else if (tags.lgbtq == 'yes') {
 		popup_content += "<span class='welcome'>💗 This location allows members of the LGBTQ+ community</span><br/>";
-	} else if (tags.lgbtq == 'no' || tags.gay == 'no') {
+	} else if (tags.lgbtq == 'no') {
 		popup_content += "<span class='no'>⛔ This location does not welcome or prohibits members of the LGBTQ+ community</span><br/>";
 	}
 	if (tags["lgbtq:trans"] || tags["lgbtq:bi"] || tags["lgbtq:men"] || tags["lgbtq:women"] || tags["lgbtq:bears"]) {
@@ -263,12 +266,6 @@ function setPoiMarker(poi_type, icon, lat, lon, tags, osmid, osmtype) {
 			popup_content += "<span class='source'>Source: <span class='sourcelink'><a href=\"" + tags["source:lgbtq"] + "\" target=\"_blank\">website</a></span></span>";
 		} else {
 			popup_content += "<span class='source'>Source: " + tags["source:lgbtq"] + "</span>";
-		}
-	} else if (tags["source:gay"]) {
-		if (tags["source:gay"].includes('https')) {
-			popup_content += "<span class='source'>Source: <span class='sourcelink'><a href=\"" + tags["source:gay"] + "\" target=\"_blank\">website</a></span></span>";
-		} else {
-			popup_content += "<span class='source'>Source: " + tags["source:gay"] + "</span>";
 		}
 	} else if (tags.website != undefined) {
 		popup_content += "<span class='source'>Source not tagged&mdash;check <span class='sourcelink'><a href=\"" + tags.website + "\" target=\"_blank\">website</a></span></span>";
@@ -321,6 +318,8 @@ function element_to_map(data) {
 				setPoiMarker("Restaurant/Fast Food", restaurant_icon, el.lat, el.lon, el.tags, el.id, el.type);
 			} else if (el.tags.amenity == 'cafe') {
 				setPoiMarker("Cafe", cafe_icon, el.lat, el.lon, el.tags, el.id, el.type);
+			} else if (el.tags.leisure == 'fitness_centre') {
+				setPoiMarker("Fitness Centre", fitness_icon, el.lat, el.lon, el.tags, el.id, el.type);
 			} else if (el.tags.amenity == 'theatre' || el.tags.amenity == 'cinema') {
 				setPoiMarker("Theater/Cinema", theater_icon, el.lat, el.lon, el.tags, el.id, el.type);
 			} else if (el.tags.amenity == 'library') {
@@ -345,17 +344,17 @@ function element_to_map(data) {
 
 			if ('construction:amenity' in el.tags || 'disused:amenity' in el.tags || 'abandoned:amenity' in el.tags || 'construction:tourism' in el.tags || 'disused:tourism' in el.tags || 'abandoned:tourism' in el.tags || 'construction:shop' in el.tags || 'disused:shop' in el.tags || 'abandoned:shop' in el.tags || 'construction:leisure' in el.tags || 'disused:leisure' in el.tags || 'abandoned:leisure' in el.tags) {
 				//Nothing
-			} else if (el.tags.lgbtq == 'primary' || el.tags.lgbtq == 'only' || el.tags.gay == 'only') {
+			} else if (el.tags.lgbtq == 'primary' || el.tags.lgbtq == 'only') {
 				setPoiMarker("", primary_icon, el.lat, el.lon, el.tags, el.id, el.type);
-			} else if (el.tags.lgbtq == 'welcome' || el.tags.lgbtq == 'friendly' || el.tags.lgbtq == 'yes' || el.tags.gay == 'welcome' || el.tags.gay == 'yes') {
+			} else if (el.tags.lgbtq == 'welcome' || el.tags.lgbtq == 'friendly' || el.tags.lgbtq == 'yes') {
 				setPoiMarker("", welcome_icon, el.lat, el.lon, el.tags, el.id, el.type);
-			} else if (el.tags.lgbtq == 'no' || el.tags.gay == 'no') {
+			} else if (el.tags.lgbtq == 'no') {
 				setPoiMarker("", no_icon, el.lat, el.lon, el.tags, el.id, el.type);
 			}
 
 			if ('construction:amenity' in el.tags || 'disused:amenity' in el.tags || 'abandoned:amenity' in el.tags || 'construction:tourism' in el.tags || 'disused:tourism' in el.tags || 'abandoned:tourism' in el.tags || 'construction:shop' in el.tags || 'disused:shop' in el.tags || 'abandoned:shop' in el.tags || 'construction:leisure' in el.tags || 'disused:leisure' in el.tags || 'abandoned:leisure' in el.tags) {
 				//Nothing
-			} else if (el.tags["source:lgbtq"] || el.tags["source:gay"]) {
+			} else if (el.tags["source:lgbtq"]) {
 				setPoiMarker("", has_source_icon, el.lat, el.lon, el.tags, el.id, el.type);
 			} else if (el.tags.website) {
 				setPoiMarker("", has_website_icon, el.lat, el.lon, el.tags, el.id, el.type);
@@ -399,7 +398,7 @@ function downloadData() {
 	$.ajax({
 		url: "https://overpass-api.de/api/interpreter",
 		data: {
-			"data": '[bbox:'+bbox+'][out:json][timeout:25];(nwr[lgbtq];nwr[gay];);out body center; >; out skel qt;'/*nwr[historic=memorial];*/
+			"data": '[bbox:'+bbox+'][out:json][timeout:25];(nwr[lgbtq];);out body center; >; out skel qt;'/*nwr[historic=memorial];*/
 		},
 		success: element_to_map,
 		error: error_function,
@@ -582,6 +581,13 @@ $(function() {
 		iconAnchor: [15,18],
 		popupAnchor: [0,-24],
 	});
+	fitness_icon = L.icon({
+		iconUrl: 'icons/fitness-centre.svg',
+		iconSize: [26,26],
+		className: 'pointIcon',
+		iconAnchor: [15,18],
+		popupAnchor: [0,-24],
+	});
 	library_icon = L.icon({
 		iconUrl: 'icons/library.svg',
 		iconSize: [26,26],
@@ -688,16 +694,6 @@ $(function() {
 // 		map.setView([pos.coords.latitude, pos.coords.longitude], 12);
 // 	});
 // }
-
-	// map.on('moveend', function () {
-	// 	if (map.getZoom() >= 18) {
-	// 		josmText.setContent('<a href="http://localhost:8111/load_and_zoom?left='+map.getBounds().getWest()+'&right='+map.getBounds().getEast()+'&top='+map.getBounds().getNorth()+'&bottom='+map.getBounds().getSouth()+'" target=\"\_blank\">Edit loaded area in JOSM</a> |');
-	// 	}
-	// 	if (map.getZoom() < 18) {
-	// 		josmText.setContent('');
-	// 	}
-	// });
-
 	map.on('zoomend', function () {
 		// if (map.getZoom() > 18) {
 		// 	map.addLayer(Positron);

@@ -162,8 +162,8 @@ button {
 }
 
 .tinyIcons img {
-	height: 10px !important;
-	width: 10px !important;
+	height: 6px !important;
+	width: 6px !important;
 }
 
 .hidden {
@@ -175,7 +175,7 @@ button {
 	text-align: center;
 	color: #666;
 	position: absolute;
-	left: 40%;
+	left: 44%;
 	bottom: 10px;
 }
 
@@ -575,25 +575,27 @@ hr {
 
 .leaflet-control-attribution {
 	z-index: 1 !important;
+	background-color: #333 !important;
+	color: #ccc;
+	border-radius: 3px 0 0 0;
 }
 
-.josmtext {
+.githubtext {
 	text-decoration: none;
 	font-family: sans-serif;
 	font-size: 11px;
-	color: #444;
-	position: fixed;
-	bottom: 0;
-	right: 202px;
-	padding: 0 0 0 5px;
+	color: #666;
+	padding: 0 5px 0 5px;
 	margin: 0 !important;
-	background-color: rgba(255,255,255,0.7);
+	background-color: #333;
+	color: #ccc;
+	border-radius: 0 3px 0 0;
 }
-.josmtext a {
+.githubtext a {
 	text-decoration: none;
 }
 
-.josmtext:empty {
+.githubtext:empty {
 	display: none;
 }
 
