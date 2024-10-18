@@ -433,6 +433,12 @@ a, leaflet-container a {
 .source {
 	font-size: 1em;
 }
+.editdate {
+	font-size: 0.8em;
+	opacity: 0.3;
+	position: relative;
+	top: -5px;
+}
 
 .primary {
 	background-image: linear-gradient(to right, red, orange, yellow, limegreen, royalblue, mediumvioletred);
@@ -523,7 +529,7 @@ hr {
 }
 
 .linktext {
-	margin-top: 10px;
+	margin-top: 6px;
 	font-size: 80%;
 }
 

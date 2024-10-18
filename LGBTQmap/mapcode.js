@@ -201,7 +201,11 @@ else var tp = "ls";
 
 // L.control.scale().addTo(map);
 
-function setPoiMarker(poi_type, icon, lat, lon, tags, osmid, osmtype) {
+function setPoiMarker(poi_type, icon, lat, lon, tags, osmid, osmtype, timestamp) {
+	var editDate = new Date(timestamp);
+	const month = editDate.toLocaleString('default',{ month:'long' });
+	var dateStr = (month + " " + ("00" + editDate.getDate()).slice(-2)+", "+editDate.getFullYear());
+	console.log(dateStr);
 	var mrk = L.marker([lat, lon], {icon: icon});
 	var osmlink = "https://www.openstreetmap.org/"+osmtype+"/"+osmid;
 	var osmedit = "https://www.openstreetmap.org/edit\?"+osmtype+"="+osmid;
@@ -226,11 +230,11 @@ function setPoiMarker(poi_type, icon, lat, lon, tags, osmid, osmtype) {
 	} else if (tags.lgbtq == 'primary') {
 		popup_content += "🌈 <span class='primary'>This location caters primarily to the LGBTQ+ community</span><br/>";
 	} else if (tags.lgbtq == 'welcome' || tags.lgbtq == 'friendly') {
-		popup_content += "<span class='welcome'>💗 This location explicitly welcomes members of the LGBTQ+ community</span><br/>";
+		popup_content += "💗 <span class='welcome'>This location explicitly welcomes members of the LGBTQ+ community</span><br/>";
 	} else if (tags.lgbtq == 'yes') {
-		popup_content += "<span class='welcome'>💗 This location allows members of the LGBTQ+ community</span><br/>";
+		popup_content += "💗 <span class='welcome'>This location allows members of the LGBTQ+ community</span><br/>";
 	} else if (tags.lgbtq == 'no') {
-		popup_content += "<span class='no'>⛔ This location does not welcome or prohibits members of the LGBTQ+ community</span><br/>";
+		popup_content += "⛔ <span class='no'>This location does not welcome or prohibits members of the LGBTQ+ community</span><br/>";
 	}
 	if (tags["lgbtq:lesbian"] || tags["lgbtq:gay"] || tags["lgbtq:bi"] || tags["lgbtq:trans"] || tags["lgbtq:non_binary"] || tags["lgbtq:queer"] || tags["lgbtq:inter"] || tags["lgbtq:bears"] || tags["lgbtq:cruising"] || tags["lgbtq:men"] || tags["lgbtq:women"]) {
 		popup_content += "<hr/>";
@@ -303,7 +307,10 @@ function setPoiMarker(poi_type, icon, lat, lon, tags, osmid, osmtype) {
 		popup_content += "<span class='source'>Source not tagged</span>";
 	}
 
-	popup_content += "<div class='linktext'><a href='"+osmlink+"' target='_blank'>show feature on OSM</a> | <a href='"+osmedit+"' target='_blank'>edit feature on OSM</a></div>";
+	popup_content += "<div class='linktext'><a href='"+osmlink+"' target='_blank'>show on OSM</a> | <a href='"+osmedit+"' target='_blank'>edit feature</a></div>";
+	if (timestamp) {
+		popup_content += "<span class='editdate'>Last edited: "+dateStr+"</span>";
+	}
 
 	// mrk.bindTooltip(tags.name+"<br/><span class='tiny'>LGBTQ+ "+tags.lgbtq+"</span>",{duration: 0,direction: 'right',offset: [20,6]}).openTooltip();
 	mrk.bindPopup(L.popup({autoPanPaddingTopLeft: [0,50]}).setContent(popup_content));
@@ -335,64 +342,64 @@ function element_to_map(data) {
 			if ('construction:amenity' in el.tags || 'disused:amenity' in el.tags || 'abandoned:amenity' in el.tags || 'construction:tourism' in el.tags || 'disused:tourism' in el.tags || 'abandoned:tourism' in el.tags || 'construction:shop' in el.tags || 'disused:shop' in el.tags || 'abandoned:shop' in el.tags || 'construction:leisure' in el.tags || 'disused:leisure' in el.tags || 'abandoned:leisure' in el.tags) {
 				//Nothing
 			} else if (el.tags.amenity == "place_of_worship") {
-				setPoiMarker("Place of Worship", placeofworship_icon, el.lat, el.lon, el.tags, el.id, el.type);
+				setPoiMarker("Place of Worship", placeofworship_icon, el.lat, el.lon, el.tags, el.id, el.type, el.timestamp);
 			} else if (el.tags.amenity == "community_centre" || el.tags.amenity == "social_facility" || el.tags.office) {
-				setPoiMarker("Center/Association", office_icon, el.lat, el.lon, el.tags, el.id, el.type);
+				setPoiMarker("Center/Association", office_icon, el.lat, el.lon, el.tags, el.id, el.type, el.timestamp);
 			} else if(el.tags.shop) {
-				setPoiMarker(el.tags.shop, shop_icon, el.lat, el.lon, el.tags, el.id, el.type);
+				setPoiMarker(el.tags.shop, shop_icon, el.lat, el.lon, el.tags, el.id, el.type, el.timestamp);
 			} else if (el.tags.amenity == 'bar' || el.tags.amenity == 'nightclub' || el.tags.amenity == 'swingerclub') {
-				setPoiMarker("Bar/Club", bar_icon, el.lat, el.lon, el.tags, el.id, el.type);
+				setPoiMarker("Bar/Club", bar_icon, el.lat, el.lon, el.tags, el.id, el.type, el.timestamp);
 			} else if (el.tags.amenity == 'pub') {
-				setPoiMarker("Pub", pub_icon, el.lat, el.lon, el.tags, el.id, el.type);
+				setPoiMarker("Pub", pub_icon, el.lat, el.lon, el.tags, el.id, el.type, el.timestamp);
 			} else if (el.tags.amenity == 'restaurant' || el.tags.amenity == 'fast_food') {
-				setPoiMarker("Restaurant/Fast Food", restaurant_icon, el.lat, el.lon, el.tags, el.id, el.type);
+				setPoiMarker("Restaurant/Fast Food", restaurant_icon, el.lat, el.lon, el.tags, el.id, el.type, el.timestamp);
 			} else if (el.tags.amenity == 'cafe') {
-				setPoiMarker("Cafe", cafe_icon, el.lat, el.lon, el.tags, el.id, el.type);
+				setPoiMarker("Cafe", cafe_icon, el.lat, el.lon, el.tags, el.id, el.type, el.timestamp);
 			} else if (el.tags.leisure == 'fitness_centre') {
-				setPoiMarker("Fitness Centre", fitness_icon, el.lat, el.lon, el.tags, el.id, el.type);
+				setPoiMarker("Fitness Centre", fitness_icon, el.lat, el.lon, el.tags, el.id, el.type, el.timestamp);
 			} else if (el.tags.amenity == 'theatre' || el.tags.amenity == 'cinema') {
-				setPoiMarker("Theater/Cinema", theater_icon, el.lat, el.lon, el.tags, el.id, el.type);
+				setPoiMarker("Theater/Cinema", theater_icon, el.lat, el.lon, el.tags, el.id, el.type, el.timestamp);
 			} else if (el.tags.amenity == 'library') {
-				setPoiMarker("Library", library_icon, el.lat, el.lon, el.tags, el.id, el.type);
+				setPoiMarker("Library", library_icon, el.lat, el.lon, el.tags, el.id, el.type, el.timestamp);
 			// } else if (el.tags.amenity == 'pharmacy') {
-			// 	setPoiMarker("Pharmacy", pharmacy_icon, el.lat, el.lon, el.tags, el.id, el.type);
+			// 	setPoiMarker("Pharmacy", pharmacy_icon, el.lat, el.lon, el.tags, el.id, el.type, el.timestamp);
 			} else if (el.tags.amenity == 'veterinary') {
-				setPoiMarker("Veterinarian", vet_icon, el.lat, el.lon, el.tags, el.id, el.type);
+				setPoiMarker("Veterinarian", vet_icon, el.lat, el.lon, el.tags, el.id, el.type, el.timestamp);
 			} else if (el.tags.tourism == 'museum') {
-				setPoiMarker("Museum", museum_icon, el.lat, el.lon, el.tags, el.id, el.type);
+				setPoiMarker("Museum", museum_icon, el.lat, el.lon, el.tags, el.id, el.type, el.timestamp);
 			} else if (el.tags.tourism == 'hotel' || el.tags.tourism == 'guest_house' || el.tags.tourism == 'hostel' || el.tags.tourism == 'motel') {
-				setPoiMarker("Lodging", lodging_icon, el.lat, el.lon, el.tags, el.id, el.type);
+				setPoiMarker("Lodging", lodging_icon, el.lat, el.lon, el.tags, el.id, el.type, el.timestamp);
 			} else if (el.tags.leisure == 'sauna') {
-				setPoiMarker("Sauna/Steam Baths", sauna_icon, el.lat, el.lon, el.tags, el.id, el.type);
+				setPoiMarker("Sauna/Steam Baths", sauna_icon, el.lat, el.lon, el.tags, el.id, el.type, el.timestamp);
 			} else if (el.tags.historic == 'memorial') {
-				setPoiMarker("Memorial", memorial_icon, el.lat, el.lon, el.tags, el.id, el.type);
+				setPoiMarker("Memorial", memorial_icon, el.lat, el.lon, el.tags, el.id, el.type, el.timestamp);
 			} else if(el.tags.amenity) {
-				setPoiMarker(el.tags.amenity, other_icon, el.lat, el.lon, el.tags, el.id, el.type);
+				setPoiMarker(el.tags.amenity, other_icon, el.lat, el.lon, el.tags, el.id, el.type, el.timestamp);
 			} else {
-				setPoiMarker("Unknown Type", other_icon, el.lat, el.lon, el.tags, el.id, el.type);
+				setPoiMarker("Unknown Type", other_icon, el.lat, el.lon, el.tags, el.id, el.type, el.timestamp);
 			}
 
 			if ('construction:amenity' in el.tags || 'disused:amenity' in el.tags || 'abandoned:amenity' in el.tags || 'construction:tourism' in el.tags || 'disused:tourism' in el.tags || 'abandoned:tourism' in el.tags || 'construction:shop' in el.tags || 'disused:shop' in el.tags || 'abandoned:shop' in el.tags || 'construction:leisure' in el.tags || 'disused:leisure' in el.tags || 'abandoned:leisure' in el.tags) {
 				//Nothing
 			} else if (el.tags.lgbtq == 'primary' || el.tags.lgbtq == 'only') {
-				setPoiMarker("", primary_icon, el.lat, el.lon, el.tags, el.id, el.type);
+				setPoiMarker("", primary_icon, el.lat, el.lon, el.tags, el.id, el.type, el.timestamp);
 			} else if (el.tags.lgbtq == 'welcome' || el.tags.lgbtq == 'friendly' || el.tags.lgbtq == 'yes') {
-				setPoiMarker("", welcome_icon, el.lat, el.lon, el.tags, el.id, el.type);
+				setPoiMarker("", welcome_icon, el.lat, el.lon, el.tags, el.id, el.type, el.timestamp);
 			} else if (el.tags.lgbtq == 'no') {
-				setPoiMarker("", no_icon, el.lat, el.lon, el.tags, el.id, el.type);
+				setPoiMarker("", no_icon, el.lat, el.lon, el.tags, el.id, el.type, el.timestamp);
 			}
 
 			if ('construction:amenity' in el.tags || 'disused:amenity' in el.tags || 'abandoned:amenity' in el.tags || 'construction:tourism' in el.tags || 'disused:tourism' in el.tags || 'abandoned:tourism' in el.tags || 'construction:shop' in el.tags || 'disused:shop' in el.tags || 'abandoned:shop' in el.tags || 'construction:leisure' in el.tags || 'disused:leisure' in el.tags || 'abandoned:leisure' in el.tags) {
 				//Nothing
 			} else if (el.tags["source:lgbtq"]) {
-				setPoiMarker("", has_source_icon, el.lat, el.lon, el.tags, el.id, el.type);
+				setPoiMarker("", has_source_icon, el.lat, el.lon, el.tags, el.id, el.type, el.timestamp);
 			} else if (el.tags.website) {
-				setPoiMarker("", has_website_icon, el.lat, el.lon, el.tags, el.id, el.type);
+				setPoiMarker("", has_website_icon, el.lat, el.lon, el.tags, el.id, el.type, el.timestamp);
 			} else {
-				setPoiMarker("", no_source_icon, el.lat, el.lon, el.tags, el.id, el.type);
+				setPoiMarker("", no_source_icon, el.lat, el.lon, el.tags, el.id, el.type, el.timestamp);
 			}
 			// } else {
-			// 	setPoiMarker("", error_icon, el.lat, el.lon, el.tags, el.id, el.type);
+			// 	setPoiMarker("", error_icon, el.lat, el.lon, el.tags, el.id, el.type, el.timestamp);
 			// 		error_counter++;
 			// 	}
 		}
@@ -428,7 +435,7 @@ function downloadData() {
 	$.ajax({
 		url: "https://overpass-api.de/api/interpreter",
 		data: {
-			"data": '[bbox:'+bbox+'][out:json][timeout:25];(nwr[lgbtq];);out body center; >; out skel qt;'/*nwr[historic=memorial];*/
+			"data": '[bbox:'+bbox+'][out:json][timeout:25];(nwr[lgbtq];);out meta center; >; out skel qt;'/*nwr[historic=memorial];*/
 		},
 		success: element_to_map,
 		error: error_function,
