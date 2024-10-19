@@ -167,6 +167,15 @@
 	display: none;
 }
 
+.dismiss {
+	font-size: 0.7em;
+	text-align: center;
+	color: #666;
+	position: absolute;
+	left: 44%;
+	bottom: 10px;
+}
+
 .code {
 	font-family: monospace;
 	font-weight: bold;
