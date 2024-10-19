@@ -1,48 +1,25 @@
 'use strict';
-var saved_lat, saved_lon, bbox, bboxOutline;
+var bbox, bboxOutline;
 var poi_markers = new Array();
-// var poi_clusters = new L.markerClusterGroup({
-// 	disableClusteringAtZoom: 15,
-// 	spiderfyOnMaxZoom: false,
-// 	showCoverageOnHover: true,
-// 	maxClusterRadius: 20,
-// 	minClusterRadius: 1,
-// });
 
 var primary_icon,welcome_icon,no_icon,has_source_icon,has_website_icon,no_source_icon,bar_icon,cafe_icon,fitness_icon,library_icon,lodging_icon,memorial_icon,museum_icon,office_icon,pharmacy_icon,placeofworship_icon,pub_icon,restaurant_icon,sauna_icon,shop_icon,theater_icon,vet_icon,other_icon;
 	
 // init map
-var Positron = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+let Positron = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
 	attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
 	subdomains: 'abcd',
 	minZoom: 6,
 	maxZoom: 20,
-	detectRetina: true,
-	// opacity: 0.3,
-});
-
-var CartoDB_PositronNoLabels = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png', {
-	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-	subdomains: 'abcd',
-	maxZoom: 20,
+	opacity:0.8,
 	detectRetina: true,
 });
 
-var CartoDB_DarkMatter = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+let CartoDB_DarkMatter = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
 	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
 	subdomains: 'abcd',
 	minZoom: 6,
 	maxZoom: 19,
 	detectRetina: true,
-	contrast: 1.5,
-});
-
-var CartoDB_PositronOnlyLabels = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}{r}.png', {
-	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-	subdomains: 'abcd',
-	minZoom: 3,
-	maxZoom: 20,
-	opacity: 0.7,
 });
 
 var overlay = L.polygon([
@@ -64,8 +41,11 @@ var map = new L.map('bigmap', {
 	layers: [CartoDB_DarkMatter],
 	maxBounds: [[90,-180],[-90,180]],
 	zoomControl: false,
+	center: [51.5,-0.1],
+	zoom: 12,
 })
 
+let hash=new L.Hash(map);
 
 var lc = L.control.locate({keepCurrentZoomLevel: true, inView: 'stop', outOfView: 'setView', inViewNotFollowing: 'inView', locateOptions: {enableHighAccuracy: true}}).addTo(map);
 
@@ -108,17 +88,9 @@ document.getElementById('locater').addEventListener('click', function () {
 	}
 });
 
+document.getElementById('background').addEventListener('click', toggleBackground);
+
 document.getElementById('loaddata').addEventListener('click', downloadData);
-
-// var toggleLegend  = document.getElementById("openlegend");
-// var legendContent = document.getElementById("legendbox");
-
-// openlegend.addEventListener("click", function() {
-//   legendbox.style.display = (legendbox.dataset.toggled ^= 1) ? "block" : "none";
-//   openlegend.style.opacity = (openlegend.dataset.toggled ^= 1) ? "0.9" : "0.6";
-// });
-
-// new L.Control.Zoom({ position: 'bottomright' }).addTo(map);
 
 var legend = L.control({ position: 'bottomleft' });
 legend.onAdd = function (map) {
@@ -183,25 +155,12 @@ map.on('load', function () {
 	}
 });
 
-// map = L.map('bigmap');
-
-saved_lat = localStorage.getItem("pos_lat")
-saved_lon = localStorage.getItem("pos_lon")
-
-if (saved_lat != undefined) {
-	map.setView([saved_lat, saved_lon], 12)
-} else {
-	map.setView([51.5,-0.1], 12);
-}
-
-var mapHash = new L.Hash(map);
-
 if (L.Browser.retina) var tp = "lr";
 else var tp = "ls";
 
 // L.control.scale().addTo(map);
 
-function convertMilliseconds(ms) {
+function millToDays(ms) {
 	const millisecondsInYear = 1000 * 60 * 60 * 24 * 365;
 	const millisecondsInMonth = 1000 * 60 * 60 * 24 * 30;
 	const millisecondsInDay = 1000 * 60 * 60 * 24;
@@ -276,9 +235,9 @@ function convertMilliseconds(ms) {
 			}
 		} else if (months == 1) {
 			if (days > 1) {
-				return "<span class='months'>"+months+" month, "+days+" days ago</span>";
+				return "<span class='onemonth'>"+months+" month, "+days+" days ago</span>";
 			} else if (days == 1) {
-				return "<span class='months'>"+months+" month, "+days+" day ago</span>";
+				return "<span class='onemonth'>"+months+" month, "+days+" day ago</span>";
 			} else {
 				return "<span class='onemonth'>"+months+" month ago</span>";
 			}
@@ -296,14 +255,8 @@ function setPoiMarker(poi_type, icon, lat, lon, tags, osmid, osmtype, timestamp)
 	var editDate = new Date(timestamp);
 	var today = new Date();
 	var daysSince = today-editDate;
-	// if (daysSince > 2592000000) {
-	// 	var dateStr = ("~"+(daysSince/2592000000).toFixed(0)+" months ago");
-	// } else {
-	// 	var dateStr = ("~"+(daysSince/86400000).toFixed(0)+" days ago");
-	// }
-	var dateStr = convertMilliseconds(daysSince);
+	var dateStr = millToDays(daysSince);
 	const month = daysSince.toLocaleString('default',{ month:'long' });
-	// var dateStr = (month + " " + ("00" + daysSince.getDate()).slice(-2)+", "+daysSince.getFullYear());
 	var mrk = L.marker([lat, lon], {icon: icon});
 	var osmlink = "https://www.openstreetmap.org/"+osmtype+"/"+osmid;
 	var osmedit = "https://www.openstreetmap.org/edit\?"+osmtype+"="+osmid;
@@ -474,7 +427,7 @@ function element_to_map(data) {
 			} else if(el.tags.amenity) {
 				setPoiMarker(el.tags.amenity, other_icon, el.lat, el.lon, el.tags, el.id, el.type, el.timestamp);
 			} else {
-				setPoiMarker("Unknown Type", other_icon, el.lat, el.lon, el.tags, el.id, el.type, el.timestamp);
+				setPoiMarker("Other/Unknown", other_icon, el.lat, el.lon, el.tags, el.id, el.type, el.timestamp);
 			}
 
 			if ('construction:amenity' in el.tags || 'disused:amenity' in el.tags || 'abandoned:amenity' in el.tags || 'construction:tourism' in el.tags || 'disused:tourism' in el.tags || 'abandoned:tourism' in el.tags || 'construction:shop' in el.tags || 'disused:shop' in el.tags || 'abandoned:shop' in el.tags || 'construction:leisure' in el.tags || 'disused:leisure' in el.tags || 'abandoned:leisure' in el.tags) {
@@ -508,7 +461,7 @@ function element_to_map(data) {
 }
 
 function downloadData() {
-	var mapHash = new L.Hash(map);
+	// var mapHash = new L.Hash(map);
 	if (map.getZoom() < 12) {
 		var new_span = document.createElement('span');
 		new_span.innerText = "Please Zoom In";
@@ -547,9 +500,17 @@ function downloadData() {
 	// console.log(whatarebounds);
 	var northWest = bounds.getNorthWest(),northEast = bounds.getNorthEast(),southWest = bounds.getSouthWest(),southEast = bounds.getSouthEast();
 
-	bboxOutline = L.polygon([[[90, -180],[90, 180],[-90, 180],[-90, -180]],[[northWest.lat,northWest.lng],[northEast.lat,northEast.lng],[southEast.lat,southEast.lng],[southWest.lat,southWest.lng]]],{color: '#aaaaaa', fillColor: '#aaaaaa', fillOpacity: 0.3, weight: 1, dashArray: '1,3',}).addTo(map);
+	bboxOutline = L.polygon([[[90, -180],[90, 180],[-90, 180],[-90, -180]],[[northWest.lat,northWest.lng],[northEast.lat,northEast.lng],[southEast.lat,southEast.lng],[southWest.lat,southWest.lng]]],{color: '#333', fillColor: '#333', fillOpacity: 0.5, weight: 1, dashArray: '1,3',}).addTo(map);
+}
 
-	
+function toggleBackground() {
+	if (map.hasLayer(CartoDB_DarkMatter)) {
+		map.removeLayer(CartoDB_DarkMatter);
+		map.addLayer(Positron);	
+	} else if (map.hasLayer(Positron)) {
+		map.removeLayer(Positron);
+		map.addLayer(CartoDB_DarkMatter);	
+	}
 }
 
 function error_function() {
@@ -843,10 +804,16 @@ $(function() {
 		if (map.getZoom() >= 12) {
 			map.removeLayer(overlay);
 			zoomText.setContent('');
+			document.getElementById('loaddata').style.visibility = "visible";
+			document.getElementById('arrowRight').style.visibility = "visible";
+			document.getElementById('tipRight').style.visibility = "visible";
 		}
 		if (map.getZoom() < 12) {
 			map.addLayer(overlay);
 			zoomText.setContent('Please Zoom In');
+			document.getElementById('loaddata').style.visibility = "hidden";
+			document.getElementById('arrowRight').style.visibility = "hidden";
+			document.getElementById('tipRight').style.visibility = "hidden";
 		}
 	});
 

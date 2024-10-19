@@ -36,6 +36,10 @@
 				}
 			}
 		</script>
+		<!-- 
+		Reload icon source: https://commons.wikimedia.org/wiki/File:Refresh_(259956)_-_The_Noun_Project.svg
+		Lightbulb icon source: https://commons.wikimedia.org/wiki/File:Lightbulb-solid.svg
+		 -->
 	</head>
 	<body>
 		<div id="sidebar">
@@ -47,6 +51,9 @@
 			</a>
 			<a href="#" onclick="return false;">
 				<div id="locater" class="linkbutton" title="Locate Me"></div>
+			</a>
+			<a href="#" onclick="return false;">
+				<div id="background" class="togglebutton" title="Toggle Background"><img id="lighticon" class="light" src="icons/lightbulb-light.svg" onclick="toggle()"></div>
 			</a>
 			<a href="#" onclick="hideInfo()">
 				<div id="loaddata" class="loadbutton" title="Search for Places in View"><img id="loadicon" src="icons/refresh.svg"></div><span id="tipRight">Search for Places in View</span><span id="arrowRight"></span>
@@ -103,5 +110,11 @@
 		<script src="L.Control.Locate.min.js" charset="utf-8"></script>
 		<!-- <script src="leaflet.markercluster.js"></script> -->
 		<script src="mapcode.js"></script>
+		<script>
+		//onclick code
+		function toggle() {
+			$('img.light').toggleClass('dark');
+		}
+		</script>
 	</body>
 </html>
