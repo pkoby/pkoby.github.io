@@ -96,10 +96,24 @@ button {
 	position: absolute;
 	top: 190px;
 	border-radius: 8px 0 0 8px;
-	background-image: url(icons/refresh.svg);
+	/*background-image: url(icons/refresh.svg);
 	background-repeat: no-repeat;
 	background-position: center center;
-	background-size: 16px;
+	background-size: 16px;*/
+}
+#loadicon {
+	padding: 13px;
+  transform: rotate(360deg);
+  transition: transform 1s;
+  position: relative;
+}
+#loadicon:active {
+  transform: rotate(0deg);
+  transition:  0s;
+}
+.loadbutton img {
+	height: 19px;
+	width: 19px;
 }
 #infoButton {
 	position: fixed;
@@ -197,7 +211,7 @@ button {
 	font-size: 20px;
 }*/
 
-.linkbutton {
+.linkbutton, .loadbutton {
 	width: 44px;
 	height: 44px;
 	background-color: mediumpurple;
@@ -214,7 +228,6 @@ button {
 } .linkbutton span {
 	box-shadow: 0 0 10px #ccc;
 }
-
 .active {
 	background-color: mediumpurple;
 	opacity: 0.9;
