@@ -447,10 +447,12 @@ a, leaflet-container a {
 	font-size: 1em;
 }
 .editdate {
-	font-size: 0.8em;
-	opacity: 0.3;
+	color:#999;
+/*	opacity: 0.7;*/
+	font-size: 0.9em;
+/*	opacity: 0.3;*/
 	position: relative;
-	top: -5px;
+	top: -3px;
 }
 
 .primary {
@@ -543,7 +545,7 @@ hr {
 
 .linktext {
 	margin-top: 6px;
-	font-size: 80%;
+	font-size: 0.9em;
 }
 
 .linktext a {
@@ -582,7 +584,7 @@ hr {
 }
 
 .tiny {
-	font-size: 0.8em;
+	font-size: 0.9em;
 	position: relative;
 	top: -3px;
 }
@@ -602,7 +604,7 @@ hr {
 	cursor: pointer;
 	margin: 0 !important;
 	background-color: mediumpurple;
-	/*background-image: linear-gradient(to right, red, orange, yellow, green, blue, purple);*/
+/*	background-image: linear-gradient(to right, red, orange, yellow, green, blue, purple);*/
 	padding: 10px 0 10px 0;
 	opacity: 0.7;
 	/*box-shadow: 0 0 10px 10px mediumpurple;*/
@@ -722,4 +724,20 @@ hr {
 .sourceIcon {
 	border: 0;
 	pointer-events: none
+}
+
+.days {
+	color: #91bfdb;
+}
+.onemonth {
+	color: #e0f3f8;
+}
+.months {
+	color: #fee090;
+}
+.oneyear {
+	color: #fc8d59;
+}
+.years {
+	color: #d73027;
 }

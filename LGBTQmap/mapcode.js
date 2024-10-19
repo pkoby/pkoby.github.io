@@ -216,77 +216,77 @@ function convertMilliseconds(ms) {
 	if (years > 1) {
 		if (months > 1) {
 			if (days > 1) {
-				return years+" years, "+months+" months, "+days+" days ago";
+				return "<span class='years'>"+years+" years, "+months+" months, "+days+" days ago</span>";
 			} else if (days == 1) {
-				return years+" years, "+months+" months, "+days+" day ago";
+				return "<span class='years'>"+years+" years, "+months+" months, "+days+" day ago</span>";
 			} else {
-				return years+" years, "+months+" months ago";
+				return "<span class='years'>"+years+" years, "+months+" months ago</span>";
 			}
 		} else if (months == 1) {
 			if (days > 1) {
-				return years+" years, "+months+" month, "+days+" days ago";
+				return "<span class='years'>"+years+" years, "+months+" month, "+days+" days ago</span>";
 			} else if (days == 1) {
-				return years+" years, "+months+" month, "+days+" day ago";
+				return "<span class='years'>"+years+" years, "+months+" month, "+days+" day ago</span>";
 			} else {
-				return years+" years, "+months+" month ago";
+				return "<span class='years'>"+years+" years, "+months+" month ago</span>";
 			}
 		} else {
 			if (days > 1) {
-				return years+" years, "+days+" days ago";
+				return "<span class='years'>"+years+" years, "+days+" days ago</span>";
 			} else if (days == 1) {
-				return years+" years, "+days+" day ago";
+				return "<span class='years'>"+years+" years, "+days+" day ago</span>";
 			} else {
-				return years+" years ago";
+				return "<span class='years'>"+years+" years ago</span>";
 			}
 		}
 	} else if (years == 1) {
 		if (months > 1) {
 			if (days > 1) {
-				return years+" year, "+months+" months, "+days+" days ago";
+				return "<span class='oneyear'>"+years+" year, "+months+" months, "+days+" days ago</span>";
 			} else if (days == 1) {
-				return years+" year, "+months+" months, "+days+" day ago";
+				return "<span class='oneyear'>"+years+" year, "+months+" months, "+days+" day ago</span>";
 			} else {
-				return years+" year, "+months+" months ago";
+				return "<span class='oneyear'>"+years+" year, "+months+" months ago</span>";
 			}
 		} else if (months == 1) {
 			if (days > 1) {
-				return years+" year, "+months+" month, "+days+" days ago";
+				return "<span class='oneyear'>"+years+" year, "+months+" month, "+days+" days ago</span>";
 			} else if (days == 1) {
-				return years+" year, "+months+" month, "+days+" day ago";
+				return "<span class='oneyear'>"+years+" year, "+months+" month, "+days+" day ago</span>";
 			} else {
-				return years+" year, "+months+" month ago";
+				return "<span class='oneyear'>"+years+" year, "+months+" month ago</span>";
 			}
 		} else {
 			if (days > 1) {
-				return years+" year, "+days+" days ago";
+				return "<span class='oneyear'>"+years+" year, "+days+" days ago</span>";
 			} else if (days == 1) {
-				return years+" year, "+days+" day ago";
+				return "<span class='oneyear'>"+years+" year, "+days+" day ago</span>";
 			} else {
-				return years+" year ago";
+				return "<span class='oneyear'>"+years+" year ago</span>";
 			}
 		}
 	} else {
 		if (months > 1) {
 			if (days > 1) {
-				return months+" months, "+days+" days ago";
+				return "<span class='months'>"+months+" months, "+days+" days ago</span>";
 			} else if (days == 1) {
-				return months+" months, "+days+" day ago";
+				return "<span class='months'>"+months+" months, "+days+" day ago</span>";
 			} else {
-				return months+" months ago";
+				return "<span class='months'>"+months+" months ago</span>";
 			}
 		} else if (months == 1) {
 			if (days > 1) {
-				return months+" month, "+days+" days ago";
+				return "<span class='months'>"+months+" month, "+days+" days ago</span>";
 			} else if (days == 1) {
-				return months+" month, "+days+" day ago";
+				return "<span class='months'>"+months+" month, "+days+" day ago</span>";
 			} else {
-				return months+" month ago";
+				return "<span class='onemonth'>"+months+" month ago</span>";
 			}
 		} else {
 			if (days > 1) {
-				return days+" days ago";
+				return "<span class='days'>"+days+" days ago</span>";
 			} else if (days == 1) {
-				return days+" day ago";
+				return "<span class='days'>"+days+" day ago</span>";
 			}
 		}
 	}
@@ -487,15 +487,15 @@ function element_to_map(data) {
 				setPoiMarker("", no_icon, el.lat, el.lon, el.tags, el.id, el.type, el.timestamp);
 			}
 
-			if ('construction:amenity' in el.tags || 'disused:amenity' in el.tags || 'abandoned:amenity' in el.tags || 'construction:tourism' in el.tags || 'disused:tourism' in el.tags || 'abandoned:tourism' in el.tags || 'construction:shop' in el.tags || 'disused:shop' in el.tags || 'abandoned:shop' in el.tags || 'construction:leisure' in el.tags || 'disused:leisure' in el.tags || 'abandoned:leisure' in el.tags) {
-				//Nothing
-			} else if (el.tags["source:lgbtq"]) {
-				setPoiMarker("", has_source_icon, el.lat, el.lon, el.tags, el.id, el.type, el.timestamp);
-			} else if (el.tags.website) {
-				setPoiMarker("", has_website_icon, el.lat, el.lon, el.tags, el.id, el.type, el.timestamp);
-			} else {
-				setPoiMarker("", no_source_icon, el.lat, el.lon, el.tags, el.id, el.type, el.timestamp);
-			}
+			// if ('construction:amenity' in el.tags || 'disused:amenity' in el.tags || 'abandoned:amenity' in el.tags || 'construction:tourism' in el.tags || 'disused:tourism' in el.tags || 'abandoned:tourism' in el.tags || 'construction:shop' in el.tags || 'disused:shop' in el.tags || 'abandoned:shop' in el.tags || 'construction:leisure' in el.tags || 'disused:leisure' in el.tags || 'abandoned:leisure' in el.tags) {
+			// 	//Nothing
+			// } else if (el.tags["source:lgbtq"]) {
+			// 	setPoiMarker("", has_source_icon, el.lat, el.lon, el.tags, el.id, el.type, el.timestamp);
+			// } else if (el.tags.website) {
+			// 	setPoiMarker("", has_website_icon, el.lat, el.lon, el.tags, el.id, el.type, el.timestamp);
+			// } else {
+			// 	setPoiMarker("", no_source_icon, el.lat, el.lon, el.tags, el.id, el.type, el.timestamp);
+			// }
 			// } else {
 			// 	setPoiMarker("", error_icon, el.lat, el.lon, el.tags, el.id, el.type, el.timestamp);
 			// 		error_counter++;
