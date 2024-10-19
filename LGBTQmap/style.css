@@ -181,14 +181,24 @@ button {
 }
 
 #infoBox img {
-	height: 18px;
-	width: 18px;
 	vertical-align: middle;
 	margin-top: 0px;
+}
+.image18 {
+	width: 18px;
+	height: 18px;
+}
+.image19 {
+	width: 19px;
+	height: 19px;
 }
 
 .infoIcons {
 	white-space: nowrap;
+}
+.infoIcons img {
+	width: 18px;
+	height: 18px;
 }
 
 .tinyIcons img {
