@@ -144,7 +144,7 @@ var zoomText = L.Control.extend({
 var zoomText =  new zoomText().addTo(map);
 
 document.getElementsByClassName('overlayText')[0].addEventListener('click', function () {
-	map.zoomIn(1);
+	map.setZoom(12);
 });
 
 var loadingText = L.Control.extend({
@@ -201,11 +201,109 @@ else var tp = "ls";
 
 // L.control.scale().addTo(map);
 
+function convertMilliseconds(ms) {
+	const millisecondsInYear = 1000 * 60 * 60 * 24 * 365;
+	const millisecondsInMonth = 1000 * 60 * 60 * 24 * 30;
+	const millisecondsInDay = 1000 * 60 * 60 * 24;
+
+	let years = Math.floor(ms / millisecondsInYear);
+	ms = ms % millisecondsInYear;
+	let months = Math.floor(ms / millisecondsInMonth);
+	ms = ms % millisecondsInMonth;
+	let days = Math.floor(ms / millisecondsInDay);
+
+	console.log(years);
+	if (years > 1) {
+		if (months > 1) {
+			if (days > 1) {
+				return years+" years, "+months+" months, "+days+" days ago";
+			} else if (days == 1) {
+				return years+" years, "+months+" months, "+days+" day ago";
+			} else {
+				return years+" years, "+months+" months ago";
+			}
+		} else if (months == 1) {
+			if (days > 1) {
+				return years+" years, "+months+" month, "+days+" days ago";
+			} else if (days == 1) {
+				return years+" years, "+months+" month, "+days+" day ago";
+			} else {
+				return years+" years, "+months+" month ago";
+			}
+		} else {
+			if (days > 1) {
+				return years+" years, "+days+" days ago";
+			} else if (days == 1) {
+				return years+" years, "+days+" day ago";
+			} else {
+				return years+" years ago";
+			}
+		}
+	} else if (years == 1) {
+		if (months > 1) {
+			if (days > 1) {
+				return years+" year, "+months+" months, "+days+" days ago";
+			} else if (days == 1) {
+				return years+" year, "+months+" months, "+days+" day ago";
+			} else {
+				return years+" year, "+months+" months ago";
+			}
+		} else if (months == 1) {
+			if (days > 1) {
+				return years+" year, "+months+" month, "+days+" days ago";
+			} else if (days == 1) {
+				return years+" year, "+months+" month, "+days+" day ago";
+			} else {
+				return years+" year, "+months+" month ago";
+			}
+		} else {
+			if (days > 1) {
+				return years+" year, "+days+" days ago";
+			} else if (days == 1) {
+				return years+" year, "+days+" day ago";
+			} else {
+				return years+" year ago";
+			}
+		}
+	} else {
+		if (months > 1) {
+			if (days > 1) {
+				return months+" months, "+days+" days ago";
+			} else if (days == 1) {
+				return months+" months, "+days+" day ago";
+			} else {
+				return months+" months ago";
+			}
+		} else if (months == 1) {
+			if (days > 1) {
+				return months+" month, "+days+" days ago";
+			} else if (days == 1) {
+				return months+" month, "+days+" day ago";
+			} else {
+				return months+" month ago";
+			}
+		} else {
+			if (days > 1) {
+				return days+" days ago";
+			} else if (days == 1) {
+				return days+" day ago";
+			}
+		}
+	}
+}
+
 function setPoiMarker(poi_type, icon, lat, lon, tags, osmid, osmtype, timestamp) {
 	var editDate = new Date(timestamp);
-	const month = editDate.toLocaleString('default',{ month:'long' });
-	var dateStr = (month + " " + ("00" + editDate.getDate()).slice(-2)+", "+editDate.getFullYear());
-	console.log(dateStr);
+	var today = new Date();
+	var daysSince = today-editDate;
+	// if (daysSince > 2592000000) {
+	// 	var dateStr = ("~"+(daysSince/2592000000).toFixed(0)+" months ago");
+	// } else {
+	// 	var dateStr = ("~"+(daysSince/86400000).toFixed(0)+" days ago");
+	// }
+	var dateStr = convertMilliseconds(daysSince);
+	const month = daysSince.toLocaleString('default',{ month:'long' });
+	// var dateStr = (month + " " + ("00" + daysSince.getDate()).slice(-2)+", "+daysSince.getFullYear());
 	var mrk = L.marker([lat, lon], {icon: icon});
 	var osmlink = "https://www.openstreetmap.org/"+osmtype+"/"+osmid;
 	var osmedit = "https://www.openstreetmap.org/edit\?"+osmtype+"="+osmid;
@@ -309,7 +407,7 @@ function setPoiMarker(poi_type, icon, lat, lon, tags, osmid, osmtype, timestamp)
 
 	popup_content += "<div class='linktext'><a href='"+osmlink+"' target='_blank'>show on OSM</a> | <a href='"+osmedit+"' target='_blank'>edit feature</a></div>";
 	if (timestamp) {
-		popup_content += "<span class='editdate'>Last edited: "+dateStr+"</span>";
+		popup_content += "<span class='editdate'>Last updated: "+dateStr+"</span>";
 	}
 
 	// mrk.bindTooltip(tags.name+"<br/><span class='tiny'>LGBTQ+ "+tags.lgbtq+"</span>",{duration: 0,direction: 'right',offset: [20,6]}).openTooltip();
