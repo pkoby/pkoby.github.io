@@ -21,7 +21,7 @@ html, body, #bigmap {
 #infoBox {
 	position: fixed;
 	/*display: block;*/
-	top: 0px;
+	top: 70px;
 	left: 0px;
 	width: 96%;
 	/*height: 92%;*/

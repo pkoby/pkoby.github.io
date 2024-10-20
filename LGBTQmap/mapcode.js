@@ -2,7 +2,7 @@
 var bbox, bboxOutline;
 var poi_markers = new Array();
 
-var primary_icon,welcome_icon,no_icon,has_source_icon,has_website_icon,no_source_icon,bar_icon,cafe_icon,fitness_icon,library_icon,lodging_icon,memorial_icon,museum_icon,office_icon,pharmacy_icon,placeofworship_icon,pub_icon,restaurant_icon,sauna_icon,shop_icon,theater_icon,vet_icon,other_icon;
+var primary_icon,welcome_icon,no_icon,has_source_icon,has_website_icon,no_source_icon,bar_icon,cafe_icon,fitness_icon,gallery_icon,healthcare_icon,heart_icon,library_icon,lodging_icon,memorial_icon,museum_icon,office_icon,pharmacy_icon,placeofworship_icon,pub_icon,restaurant_icon,sauna_icon,shop_icon,theater_icon,vet_icon,other_icon;
 	
 // init map
 let Positron = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
@@ -92,15 +92,15 @@ document.getElementById('background').addEventListener('click', toggleBackground
 
 document.getElementById('loaddata').addEventListener('click', downloadData);
 
-var legend = L.control({ position: 'bottomleft' });
-legend.onAdd = function (map) {
-	var div = L.DomUtil.create('div', 'legend'), icons = ['unknown','Bar','Restaurant','Pub','Cafe','Museum','Community Centre','Shop','Place of Worship'], labels = ['Unknown Type','Bar','Restaurant','Pub','Cafe','Museum','Community Centre','Shop','Place of Worship'];
-	// div.innerHTML =	'<span>Port of Passage</span><br><i class="points" style="color:">&#8226;</i>Bristol<br><i class="points" style="color:">&#8226;</i>Middlesex<br><i class="points" style="color:">&#8226;</i>London<br><br><span>Date of Indenture</span><br>';
-	for (var i = 0; i < icons.length; i++) {
-		div.innerHTML += '<img src="' + icons[i]+'.svg" class="legendicon"">'+labels[i]+'<br>';
-	}
-	return div;
-};
+// var legend = L.control({ position: 'bottomleft' });
+// legend.onAdd = function (map) {
+// 	var div = L.DomUtil.create('div', 'legend'), icons = ['unknown','Bar','Restaurant','Pub','Cafe','Museum','Community Centre','Shop','Place of Worship'], labels = ['Unknown Type','Bar','Restaurant','Pub','Cafe','Museum','Community Centre','Shop','Place of Worship'];
+// 	// div.innerHTML =	'<span>Port of Passage</span><br><i class="points" style="color:">&#8226;</i>Bristol<br><i class="points" style="color:">&#8226;</i>Middlesex<br><i class="points" style="color:">&#8226;</i>London<br><br><span>Date of Indenture</span><br>';
+// 	for (var i = 0; i < icons.length; i++) {
+// 		div.innerHTML += '<img src="' + icons[i]+'.svg" class="legendicon"">'+labels[i]+'<br>';
+// 	}
+// 	return div;
+// };
 
 var zoomText = L.Control.extend({
 	options: {
@@ -171,7 +171,6 @@ function millToDays(ms) {
 	ms = ms % millisecondsInMonth;
 	let days = Math.floor(ms / millisecondsInDay);
 
-	console.log(years);
 	if (years > 1) {
 		if (months > 1) {
 			if (days > 1) {
@@ -389,7 +388,6 @@ function element_to_map(data) {
 
 		if (el.tags != undefined) {
 			var mrk;
-			// console.log('disused:amenity' in el.tags || 'construction:amenity' in el.tags);
 			if ('construction:amenity' in el.tags || 'disused:amenity' in el.tags || 'abandoned:amenity' in el.tags || 'construction:tourism' in el.tags || 'disused:tourism' in el.tags || 'abandoned:tourism' in el.tags || 'construction:shop' in el.tags || 'disused:shop' in el.tags || 'abandoned:shop' in el.tags || 'construction:leisure' in el.tags || 'disused:leisure' in el.tags || 'abandoned:leisure' in el.tags) {
 				//Nothing
 			} else if (el.tags.amenity == "place_of_worship") {
@@ -420,10 +418,18 @@ function element_to_map(data) {
 				setPoiMarker("Museum", museum_icon, el.lat, el.lon, el.tags, el.id, el.type, el.timestamp);
 			} else if (el.tags.tourism == 'hotel' || el.tags.tourism == 'guest_house' || el.tags.tourism == 'hostel' || el.tags.tourism == 'motel') {
 				setPoiMarker("Lodging", lodging_icon, el.lat, el.lon, el.tags, el.id, el.type, el.timestamp);
+			} else if (el.tags.amenity == 'love_hotel') {
+				setPoiMarker("Love Hotel", heart_icon, el.lat, el.lon, el.tags, el.id, el.type, el.timestamp);
 			} else if (el.tags.leisure == 'sauna') {
 				setPoiMarker("Sauna/Steam Baths", sauna_icon, el.lat, el.lon, el.tags, el.id, el.type, el.timestamp);
 			} else if (el.tags.historic == 'memorial') {
 				setPoiMarker("Memorial", memorial_icon, el.lat, el.lon, el.tags, el.id, el.type, el.timestamp);
+			} else if (el.tags.tourism == 'gallery') {
+				setPoiMarker("Gallery", gallery_icon, el.lat, el.lon, el.tags, el.id, el.type, el.timestamp);
+			} else if (el.tags.amenity == 'arts_centre') {
+				setPoiMarker("Arts Centre", gallery_icon, el.lat, el.lon, el.tags, el.id, el.type, el.timestamp);
+			} else if (el.tags.amenity == 'clinic' || el.tags.amenity == 'doctors' || el.tags.amenity == 'hospital' || el.tags.healthcare == 'clinic' || el.tags.healthcare == 'doctor' || el.tags.healthcare == 'hospital') {
+				setPoiMarker("Healthcare", healthcare_icon, el.lat, el.lon, el.tags, el.id, el.type, el.timestamp);
 			} else if(el.tags.amenity) {
 				setPoiMarker(el.tags.amenity, other_icon, el.lat, el.lon, el.tags, el.id, el.type, el.timestamp);
 			} else {
@@ -497,7 +503,6 @@ function downloadData() {
 	}
 
 	var bounds = map.getBounds();
-	// console.log(whatarebounds);
 	var northWest = bounds.getNorthWest(),northEast = bounds.getNorthEast(),southWest = bounds.getSouthWest(),southEast = bounds.getSouthEast();
 
 	bboxOutline = L.polygon([[[90, -180],[90, 180],[-90, 180],[-90, -180]],[[northWest.lat,northWest.lng],[northEast.lat,northEast.lng],[southEast.lat,southEast.lng],[southWest.lat,southWest.lng]]],{color: '#333', fillColor: '#333', fillOpacity: 0.5, weight: 1, dashArray: '1,3',}).addTo(map);
@@ -558,111 +563,6 @@ $(function() {
 		className: 'sourceIcon',
 		iconAnchor: [-12,-9],
 	});
-	// bar_icon = L.divIcon({
-	// 	html: '🍸',
-	// 	iconSize: [26,26],
-	// 	className: 'pointIcon',
-	// 	iconAnchor: [15,18],
-	// 	popupAnchor: [0,-24],
-	// });
-	// cafe_icon = L.divIcon({
-	// 	html: '☕',
-	// 	iconSize: [26,26],
-	// 	className: 'pointIcon',
-	// 	iconAnchor: [15,18],
-	// 	popupAnchor: [0,-24],
-	// });
-	// placeofworship_icon = L.divIcon({
-	// 	html: '🛐',
-	// 	iconSize: [26,26],
-	// 	className: 'pointIcon',
-	// 	iconAnchor: [15,18],
-	// 	popupAnchor: [0,-24],
-	// });
-	// lodging_icon = L.divIcon({
-	// 	html: '🛏️',
-	// 	iconSize: [26,26],
-	// 	className: 'pointIcon',
-	// 	iconAnchor: [15,18],
-	// 	popupAnchor: [0,-24],
-	// });
-	// library_icon = L.divIcon({
-	// 	html: '📚',
-	// 	iconSize: [26,26],
-	// 	className: 'pointIcon',
-	// 	iconAnchor: [15,18],
-	// 	popupAnchor: [0,-24],
-	// });
-	// memorial_icon = L.divIcon({
-	// 	html: '📜',
-	// 	iconSize: [26,26],
-	// 	className: 'pointIcon',
-	// 	iconAnchor: [15,18],
-	// 	popupAnchor: [0,-24],
-	// });
-	// museum_icon = L.divIcon({
-	// 	html: '🏺',
-	// 	iconSize: [26,26],
-	// 	className: 'pointIcon',
-	// 	iconAnchor: [15,18],
-	// 	popupAnchor: [0,-24],
-	// });
-	// office_icon = L.divIcon({
-	// 	html: '🏢',
-	// 	iconSize: [26,26],
-	// 	className: 'pointIcon',
-	// 	iconAnchor: [15,18],
-	// 	popupAnchor: [0,-24],
-	// });
-	// pharmacy_icon = L.divIcon({
-	// 	html: '⚕️',
-	// 	iconSize: [26,26],
-	// 	className: 'pointIcon',
-	// 	iconAnchor: [15,18],
-	// 	popupAnchor: [0,-24],
-	// });
-	// pub_icon = L.divIcon({
-	// 	html: '🍺',
-	// 	iconSize: [26,26],
-	// 	className: 'pointIcon',
-	// 	iconAnchor: [15,18],
-	// 	popupAnchor: [0,-24],
-	// });
-	// restaurant_icon = L.divIcon({
-	// 	html: '🍝',
-	// 	iconSize: [26,26],
-	// 	className: 'pointIcon',
-	// 	iconAnchor: [15,18],
-	// 	popupAnchor: [0,-24],
-	// });
-	// sauna_icon = L.divIcon({
-	// 	html: '🧖',
-	// 	iconSize: [26,26],
-	// 	className: 'pointIcon',
-	// 	iconAnchor: [15,18],
-	// 	popupAnchor: [0,-24],
-	// });
-	// shop_icon = L.divIcon({
-	// 	html: '🏪',
-	// 	iconSize: [26,26],
-	// 	className: 'pointIcon',
-	// 	iconAnchor: [15,18],
-	// 	popupAnchor: [0,-24],
-	// });
-	// theater_icon = L.divIcon({
-	// 	html: '🎭',
-	// 	iconSize: [26,26],
-	// 	className: 'pointIcon',
-	// 	iconAnchor: [15,18],
-	// 	popupAnchor: [0,-24],
-	// });
-	// vet_icon = L.divIcon({
-	// 	html: '🐕',
-	// 	iconSize: [26,26],
-	// 	className: 'pointIcon',
-	// 	iconAnchor: [15,18],
-	// 	popupAnchor: [0,-24],
-	// });
 	bar_icon = L.icon({
 		iconUrl: 'icons/bar.svg',
 		iconSize: [26,26],
@@ -679,6 +579,27 @@ $(function() {
 	});
 	fitness_icon = L.icon({
 		iconUrl: 'icons/fitness-centre.svg',
+		iconSize: [26,26],
+		className: 'pointIcon',
+		iconAnchor: [15,18],
+		popupAnchor: [0,-24],
+	});
+	gallery_icon = L.icon({
+		iconUrl: 'icons/gallery.svg',
+		iconSize: [26,26],
+		className: 'pointIcon',
+		iconAnchor: [15,18],
+		popupAnchor: [0,-24],
+	});
+	healthcare_icon = L.icon({
+		iconUrl: 'icons/clinic.svg',
+		iconSize: [26,26],
+		className: 'pointIcon',
+		iconAnchor: [15,18],
+		popupAnchor: [0,-24],
+	});
+	heart_icon = L.icon({
+		iconUrl: 'icons/heart.svg',
 		iconSize: [26,26],
 		className: 'pointIcon',
 		iconAnchor: [15,18],
