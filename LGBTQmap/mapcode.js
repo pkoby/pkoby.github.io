@@ -696,8 +696,8 @@ $(function() {
 		iconAnchor: [15,18],
 		popupAnchor: [0,-24],
 	});
-	other_icon = L.divIcon({
-		html: '🏳️‍🌈',
+	other_icon = L.icon({
+		iconUrl: 'icons/flag.svg',
 		iconSize: [26,26],
 		className: 'pointIcon',
 		iconAnchor: [15,18],
