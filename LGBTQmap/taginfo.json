@@ -1,0 +1,18 @@
+{
+	"data_format": 1,
+	"data_url": "https://pkoby.github.io/LGBTQmap/TI_ProjectFile.json",
+	"data_updated": "20241020T093200Z",
+	"project": {
+		"name": "LGBTQ+map",
+		"description": "A map for exploring POIs that are friendly to the LGBTQ+ community, tagged with lgbtq=*.",
+		"project_url": "https://pkoby.github.io/LGBTQmap/",
+		"icon_url": "https://pkoby.github.io/LGBTQmap/icons/globeicon192.png",
+		"contact_name": "Peter Koby",
+		"contact_email": "peterjkoby@protonmail.com"
+	},
+	"tags":  [
+		{
+			"key": "lgbtq",
+		}
+	]
+}
