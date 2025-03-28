@@ -1,6 +1,7 @@
 body {
 	background-color: #333;
 	color: #eee;
+	font-variant-caps: small-caps;
 }
 
 a, a:visited {
@@ -46,7 +47,7 @@ aside div {
 
 .menubutton {
 	position: fixed;
-	bottom: 0;
+	top: -15px;
 	right: 0;
 	font-size: 2.8em;
 	cursor: pointer;
@@ -163,4 +164,26 @@ footer {
 	position: absolute;
 	bottom: 0px;
 	font-size: 0.6em;
+}
+
+#reset {
+	background-color: teal;
+	color: white;
+	padding: 10px 40px 10px 40px;
+	border-radius: 5px;
+	border: 0;
+	font-variant-caps: small-caps;
+}
+#reset:active {
+	background-color: #006666;
+	transform: translateY(1px);
+}
+
+#countbox {
+	position: fixed;
+	top: 10px;
+	left: 10px;
+	writing-mode: vertical-lr;
+/*	-webkit-text-stroke: 2px #333;*/
+	text-shadow: -1px -1px 1px #333, 1px -1px 1px #333, -1px 1px 1px #333, 1px 1px 1px #333;
 }

@@ -4,18 +4,18 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 	<!-- <link rel="stylesheet" href="normalize.css" /> -->
-	<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏳️‍🌈</text></svg>">
+	<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏳️</text></svg>">
 	<link rel="stylesheet" href="style.css" />
-	<title>LGBTQ+ Flag Filter</title>
+	<title>Flag Filter</title>
 </head>
 <body>
-			<h1>LGBTQ+ Flag Filter</h1>
-			<h4>Click names for more info, click flags to go to the original image</h4>
+	<h1>Flag Filter</h1>
+	<!-- <h4>Click names for more info, click flags to go to the original image</h4> -->
 	<div class="container">
 		<aside id="filterMenu">
 			<a href="javascript:void(0)" class="menubutton" onclick="closeNav()">&times;</a>
 			<h2>Filters</h2>
-			<h3>Color</h3>
+			<!-- <h3>Color</h3> -->
 			<div>
 				<div><input type="checkbox" name="Red" value="red" id="red"><label for="red" class="red">Red</label></div>
 				<div><input type="checkbox" name="Orange" value="orange" id="orange"><label for="orange" class="orange">Orange</label></div><br/>
@@ -32,16 +32,19 @@
 			</div>
 			<h3>Features</h3>
 			<div>
+				<div><input type="checkbox" name="Chevron" value="chevron" id="chevron"><label for="chevron">Chevrons</label></div><br/>
+				<div><input type="checkbox" name="Cross" value="cross" id="cross"><label for="cross">Cross</label></div><br/>
+				<div><input type="checkbox" name="Stars" value="stars" id="stars"><label for="stars">Stars</label></div>
 				<div><input type="checkbox" name="Stripes" value="stripes" id="stripes"><label for="stripes">Stripes</label></div><br/>
-				<div><input type="checkbox" name="Chevrons" value="chevrons" id="chevrons"><label for="chevrons">Chevrons</label></div><br/>
-				<div><input type="checkbox" name="Symbols" value="symbols" id="symbols"><label for="symbols">Symbols</label></div>
+				<div><input type="checkbox" name="Symbols" value="symbols" id="symbols"><label for="symbols">Other Symbols</label></div>
 			</div>
 			<h3>Stripe Count</h3>
 			<div>
 				<div><input type="checkbox" name="Count" value="one" id="one"><label for="three">1</label></div>
+				<div><input type="checkbox" name="Count" value="two" id="two"><label for="two">2</label></div>
 				<div><input type="checkbox" name="Count" value="three" id="three"><label for="three">3</label></div>
 				<div><input type="checkbox" name="Count" value="four" id="four"><label for="four">4</label></div>
-				<div><input type="checkbox" name="Count" value="five" id="five"><label for="five">5</label></div><br/>
+				<div><input type="checkbox" name="Count" value="five" id="five"><label for="five">5</label></div>
 				<div><input type="checkbox" name="Count" value="six" id="six"><label for="six">6</label></div>
 				<div><input type="checkbox" name="Count" value="seven" id="seven"><label for="seven">7</label></div>
 				<div><input type="checkbox" name="Count" value="eight" id="eight"><label for="eight">8</label></div>
@@ -49,10 +52,17 @@
 			</div>
 			<h3></h3>
 			<div>
-				<button>Reset</button>
+				<div><input type="checkbox" name="Attraction" value="attraction" id="attraction"><label for="attraction">Attraction</label></div><br/>
+				<div><input type="checkbox" name="Country" value="country" id="country"><label for="country">Country</label></div>
+				<div><input type="checkbox" name="Identity" value="identity" id="identity"><label for="identity">Identity</label></div><br/>
+				<div><input type="checkbox" name="Other" value="other" id="other"><label for="other">Other</label></div>
+			</div><br/>
+			<div>
+				<button id="reset">Reset</button>
 			</div>
 		</aside>
 		<main id="main">
+			<div id="countbox"></div>
 			<button class="menubutton" onclick="openNav()">&#9776;</button><br/>
 			<!-- 
 			<div class="flag white stripes">
@@ -60,179 +70,311 @@
 				
 			</div>
 			-->
-<!-- A -->
-			<div class="flag black gray white green stripes seven">
+<!-- A -->	<div class="flag black red green white symbols stripes three country">
+				<a href="" target="_blank"><h3>Afghanistan</h3></a>
+				<a title="See File history below for details., Public domain, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Flag_of_Afghanistan_(2013%E2%80%932021).svg" target="_blank"><img alt="Flag of Afghanistan" src="https://upload.wikimedia.org/wikipedia/commons/c/cd/Flag_of_Afghanistan_%282013%E2%80%932021%29.svg"></a>
+			</div>
+			<div class="flag black gray white green stripes seven identity">
 				<a href="https://en.wikipedia.org/wiki/Non-binary_gender#Agender" target="_blank"><h3>Agender</h3></a>
 				<a title="Salem Fontana, CC BY-SA 4.0 &lt;https://creativecommons.org/licenses/by-sa/4.0&gt;, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Agender_pride_flag.svg" target="_blank"><img alt="Agender pride flag" src="https://upload.wikimedia.org/wikipedia/commons/e/ed/Agender_pride_flag.svg"></a>
 			</div>
-			<div class="flag red orange yellow green blue purple black white stripes chevrons six">
+			<div class="flag blue yellow red cross country">
+				<a href="" target="_blank"><h3>&Aring;land Islands</h3></a>
+				<a title="created by Zscout370, Public domain, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Flag_of_%C3%85land.svg" target="_blank"><img alt="Ålands flagga" src="https://upload.wikimedia.org/wikipedia/commons/5/52/Flag_of_%C3%85land.svg"></a>
+			</div>
+			<div class="flag red black symbols country">
+				<a href="" target="_blank"><h3>Albania</h3></a>
+				<a title="Sadik Kaceli, Public domain, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Flag_of_Albania.svg" target="_blank"><img alt="Flag of Albania" src="https://upload.wikimedia.org/wikipedia/commons/3/36/Flag_of_Albania.svg"></a>
+			</div>
+			<div class="flag green white red stars symbols stripes two country">
+				<a href="" target="_blank"><h3>Algeria</h3></a>
+				<a title="This graphic was originaly Vectorization:  User:SKopp., Public domain, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Flag_of_Algeria.svg" target="_blank"><img alt="Flag of Algeria" src="https://upload.wikimedia.org/wikipedia/commons/7/77/Flag_of_Algeria.svg"></a>
+			</div>
+			<!-- <div class="flag red orange yellow green blue purple black white stripes chevron six">
 				<a href="https://en.wikipedia.org/wiki/Straight_ally" target="_blank"><h3>Ally</h3></a>
 				<a title="SVG file authored by AnonMoos, abstract flag design by http://straight-allies-for-equality.tumblr.com/, Public domain, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Straight_Ally_flag.svg" target="_blank"><img alt="Straight Ally flag" src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Straight_Ally_flag.svg"></a>
 				</a>
+			</div> -->
+			<div class="flag blue red white brown yellow symbols chevron country">
+				<a href="" target="_blank"><h3>American Samoa</h3></a>
+				<a title="by Tobias Jakobs, Public domain, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Flag_of_American_Samoa.svg" target="_blank"><img alt="Flag of American Samoa" src="https://upload.wikimedia.org/wikipedia/commons/8/87/Flag_of_American_Samoa.svg"></a>
 			</div>
-			<div class="flag black gray white green stripes five">
+			<div class="flag blue yellow red symbols country">
+				<a href="" target="_blank"><h3>Andorra</h3></a>
+				<a title="See page for author, Public domain, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Flag_of_Andorra.svg" target="_blank"><img alt="Flag of Andorra" src="https://upload.wikimedia.org/wikipedia/commons//1/19/Flag_of_Andorra.svg"></a>
+			</div>
+			<div class="flag red black yellow stars symbols stripes two country">
+				<a href="" target="_blank"><h3>Angola</h3></a>
+				<a title="User:SKopp, Public domain, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Flag_of_Angola.svg" target="_blank"><img alt="Flag of Angola" src="https://upload.wikimedia.org/wikipedia/commons/9/9d/Flag_of_Angola.svg"></a>
+			</div>
+			<div class="flag blue red white yellow symbols cross country">
+				<a href="" target="_blank"><h3>Anguilla</h3></a>
+				<a title="Dbenbenn; Vectorization:  Froztbyte This file is from the Open Clip Art Library, which released it explicitly into the public domain (see here). This file is made available under the Creative Commons CC0 1.0 Universal Public Domain Dedication. CC0, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Flag_of_Anguilla.svg" target="_blank"><img alt="Flag of Anguilla" src="https://upload.wikimedia.org/wikipedia/commons/b/b4/Flag_of_Anguilla.svg"></a>
+			</div>
+			<div class="flag blue white symbols country">
+				<a href="" target="_blank"><h3>Antarctica</h3></a>
+				<a title="Tobias Jakobs (in the public domain)., CC0, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Proposed_flag_of_Antarctica_(Graham_Bartram).svg" target="_blank"><img alt="Proposed flag of Antarctica (Graham Bartram)" src="https://upload.wikimedia.org/wikipedia/commons/b/bb/Proposed_flag_of_Antarctica_%28Graham_Bartram%29.svg"></a>
+			</div>
+			<div class="flag red black white blue yellow chevron stars country">
+				<a href="" target="_blank"><h3>Antigua and Barbuda</h3></a>
+				<a title="Sir Reginald Samuel (original); David Benbennick (vector), Public domain, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Flag_of_Antigua_and_Barbuda.svg" target="_blank"><img alt="Flag of Antigua and Barbuda" src="https://upload.wikimedia.org/wikipedia/commons/8/89/Flag_of_Antigua_and_Barbuda.svg"></a>
+			</div>
+			<div class="flag blue white yellow stripes three symbols country">
+				<a href="" target="_blank"><h3>Argentina</h3></a>
+				<a title="See File history below for details., Public domain, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Flag_of_Argentina.svg" target="_blank"><img alt="Flag of Argentina" src="https://upload.wikimedia.org/wikipedia/commons/1/1a/Flag_of_Argentina.svg"></a>
+			</div>
+			<div class="flag red blue yellow orange stripes three country">
+				<a href="" target="_blank"><h3>Armenia</h3></a>
+				<a title="SKopp, Public domain, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Flag_of_Armenia.svg" target="_blank"><img width="512" alt="Flag of Armenia" src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Flag_of_Armenia.svg"></a>
+			</div>
+			<div class="flag black gray white green stripes five attraction">
 				<a href="https://en.wikipedia.org/wiki/Romantic_orientation#Aromanticism" target="_blank"><h3>Aromantic</h3></a>
 				<a title="Cameron Whimsey, Public domain, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Aromantic_Pride_Flag.svg" target="_blank"><img alt="Aromantic Pride Flag" src="https://upload.wikimedia.org/wikipedia/commons/a/ad/Aromantic_Pride_Flag.svg"></a>
 			</div>
-			<div class="flag black gray white purple stripes four">
+			<div class="flag blue yellow red stripes two three stars symbols country">
+				<a href="" target="_blank"><h3>Aruba</h3></a>
+				<a title="Wester, Public domain, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Flag_of_Aruba.svg" target="_blank"><img alt="Flag of Aruba" src="https://upload.wikimedia.org/wikipedia/commons/f/f6/Flag_of_Aruba.svg"></a>
+			</div>
+			<div class="flag black gray white purple stripes four attraction">
 				<a href="https://en.wikipedia.org/wiki/Asexuality" target="_blank"><h3>Asexual</h3></a>
 				<a title="AnonMoos (SVG file); AVEN (flag design), Public domain, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Asexual_Pride_Flag.svg" target="_blank"><img alt="Asexual Pride Flag" src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Asexual_Pride_Flag.svg"></a>
 				</a>
 			</div>
+			<div class="flag blue red white stars cross country">
+				<a href="" target="_blank"><h3>Australia</h3></a>
+				<a title="Ian Fieggen Public domain, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Flag_of_Australia.svg" target="_blank"><img alt="Flag of Australia" src="https://upload.wikimedia.org/wikipedia/commons/b/b9/Flag_of_Australia.svg"></a>
+			</div>
+			<div class="flag red white stripes three country">
+				<a href="" target="_blank"><h3>Austria</h3></a>
+				<a title="Bundesministerium für Landesverteidigung, Public domain, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Flag_of_Austria.svg" target="_blank"><img alt="Flag of Austria" src="https://upload.wikimedia.org/wikipedia/commons/4/41/Flag_of_Austria.svg"></a>
+			</div>
+			<div class="flag blue red green white stars symbols stripes three country">
+				<a href="" target="_blank"><h3>Azerbaijan</h3></a>
+				<a title="SKopp and others, Public domain, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Flag_of_Azerbaijan.svg" target="_blank"><img alt="Flag of Azerbaijan" src="https://upload.wikimedia.org/wikipedia/commons/d/dd/Flag_of_Azerbaijan.svg"></a>
+			</div>
 <!-- B -->
-			<div class="flag brown orange yellow white gray black stripes symbols seven">
+			<div class="flag black blue yellow stripes three chevron country">
+				<a href="" target="_blank"><h3>Bahamas</h3></a>
+				<a title="Government of Bahamas, Public domain, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Flag_of_the_Bahamas.svg" target="_blank"><img alt="Flag of the Bahamas" src="https://upload.wikimedia.org/wikipedia/commons/9/93/Flag_of_the_Bahamas.svg"></a>
+			</div>
+			<div class="flag white red country">
+				<a href="" target="_blank"><h3>Bahrain</h3></a>
+				<a title="Source: Drawn by SKopp, rewritten by Zscout370, Public domain, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Flag_of_Bahrain.svg" target="_blank"><img alt="Flag of Bahrain" src="https://upload.wikimedia.org/wikipedia/commons/2/2c/Flag_of_Bahrain.svg"></a>
+			</div>
+			<div class="flag green red symbols country">
+				<a href="" target="_blank"><h3>Bangladesh</h3></a>
+				<a title="See File history below for details., Public domain, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Flag_of_Bangladesh.svg" target="_blank"><img alt="Flag of the People&#039;s Republic of Bangladesh" src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Flag_of_Bangladesh.svg"></a>
+			</div>
+			<div class="flag blue yellow black symbols stripes three country">
+				<a href="" target="_blank"><h3>Barbados</h3></a>
+				<a title="User:Denelson83, Public domain, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Flag_of_Barbados.svg" target="_blank"><img alt="Flag of Barbados" src="https://upload.wikimedia.org/wikipedia/commons/e/ef/Flag_of_Barbados.svg"></a>
+			</div>
+			<div class="flag brown orange yellow white gray black stripes symbols seven attraction">
 				<a href="https://en.wikipedia.org/wiki/Bear_flag_(gay_culture)" target="_blank"><h3>Bear</h3></a>
 				<a title="Fibonacci., CC BY-SA 3.0 &lt;http://creativecommons.org/licenses/by-sa/3.0/&gt;, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Bear_Brotherhood_flag.svg" target="_blank"><img alt="Bear Brotherhood flag" src="https://upload.wikimedia.org/wikipedia/commons/c/c2/Bear_Brotherhood_flag.svg"></a>
 			</div>
-			<div class="flag purple pink white turquoise blue stripes seven">
+			<div class="flag red white green stripes two country">
+				<a href="" target="_blank"><h3>Belarus</h3></a>
+				<a title="See File history below for details., Public domain, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Flag_of_Belarus.svg" target="_blank"><img alt="Flag of Belarus" src="https://upload.wikimedia.org/wikipedia/commons/8/85/Flag_of_Belarus.svg"></a>
+			</div>
+			<div class="flag black yellow red stripes three country">
+				<a href="" target="_blank"><h3>Belgium</h3></a>
+				<a title="Dbenbenn and others, Public domain, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Flag_of_Belgium.svg" target="_blank"><img alt="Flag of Belgium and Belgium colonial empire." src="https://upload.wikimedia.org/wikipedia/commons/6/65/Flag_of_Belgium.svg"></a>
+			</div>
+			<div class="flag red blue stripes three symbols country">
+				<a href="" target="_blank"><h3>Belize</h3></a>
+				<a title="Caleb Moore, Public domain, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Flag_of_Belize.svg" target="_blank"><img alt="Flag of Belize" src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Flag_of_Belize.svg"></a>
+			</div>
+			<div class="flag green yellow red stripes two three country">
+				<a href="" target="_blank"><h3>Benin</h3></a>
+				<a title="Drawn by User:SKopp, rewritten by User:Gabbe, Public domain, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Flag_of_Benin.svg" target="_blank"><img alt="Flag of Benin" src="https://upload.wikimedia.org/wikipedia/commons/0/0a/Flag_of_Benin.svg"></a>
+			</div>
+			<div class="flag red white blue symbols cross country">
+				<a href="" target="_blank"><h3>Bermuda</h3></a>
+				<a title="Version 1: Made by Caleb Moore  from the Open Clip Art website and uploaded by Nightstallion; Version 2: Made by Nameneko from version 1 of File:Flag of Bermuda.svg and version 2 of File:Coat of arms of Bermuda.svg by Cronholm144., Public domain, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Flag_of_Bermuda.svg" target="_blank"><img alt="Flag of Bermuda" src="https://upload.wikimedia.org/wikipedia/commons/b/bf/Flag_of_Bermuda.svg"></a>
+			</div>
+			<div class="flag yellow orange white symbols country">
+				<a href="" target="_blank"><h3>Bhutan</h3></a>
+				<a title="See File history below for details., Public domain, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Flag_of_Bhutan.svg" target="_blank"><img alt="Flag of Bhutan" src="https://upload.wikimedia.org/wikipedia/commons/9/91/Flag_of_Bhutan.svg"></a>
+			</div>
+			<div class="flag purple pink white turquoise blue stripes seven identity">
 				<a href="https://en.wikipedia.org/wiki/Non-binary_gender#Bigender" target="_blank"><h3>Bigender</h3></a>
 				<a title="JavacBenny, Public domain, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Bigender_Flag.svg" target="_blank"><img alt="Bigender Flag" src="https://upload.wikimedia.org/wikipedia/commons/9/92/Bigender_Flag.svg"></a>
 			</div>
-			<div class="flag blue purple pink stripes three">
+			<div class="flag blue purple pink stripes three attraction">
 				<a href="https://en.wikipedia.org/wiki/Bisexual_pride_flag" target="_blank"><h3>Bisexual (1998)</h3></a>
 				<a title="" href="https://en.wikipedia.org/wiki/File:Bisexual_Pride_Flag.svg" target="_blank"><img alt="Demisexual Pride Flag" src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Bisexual_Pride_Flag.svg"></a>
 				<p>🧠 Michael Page</p>
 			</div>
+			<div class="flag country">
+				<a href="" target="_blank"><h3>Bolivia</h3></a>
+			</div>
+			<div class="flag country">
+				<a href="" target="_blank"><h3>Bosnia and Herzegovina</h3></a>
+			</div>
+			<div class="flag country">
+				<a href="" target="_blank"><h3>Botswana</h3></a>
+			</div>
+			<div class="flag country">
+				<a href="" target="_blank"><h3>Brazil</h3></a>
+			</div>
+			<div class="flag country">
+				<a href="" target="_blank"><h3>British Indian Ocean Territory</h3></a>
+			</div>
+			<div class="flag country">
+				<a href="" target="_blank"><h3>Brunei</h3></a>
+			</div>
+			<div class="flag country">
+				<a href="" target="_blank"><h3>Bulgaria</h3></a>
+			</div>
+			<div class="flag country">
+				<a href="" target="_blank"><h3>Burkina Faso</h3></a>
+			</div>
+			<div class="flag country">
+				<a href="" target="_blank"><h3>Burundi</h3></a>
+			</div>
 <!-- C -->
 <!-- D -->
-			<div class="flag black white purple gray stripes chevrons three">
+			<div class="flag black white purple gray stripes chevron three attraction">
 				<a href="https://en.wikipedia.org/wiki/Gray_asexuality#Demisexuality" target="_blank"><h3>Demisexual</h3></a>
 				<a title="Original: Vimopu Vector: AnonMoos, Public domain, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Demisexual_Pride_Flag.svg" target="_blank"><img alt="Demisexual Pride Flag" src="https://upload.wikimedia.org/wikipedia/commons/a/a7/Demisexual_Pride_Flag.svg"></a>
 			</div>
 <!-- E -->
 <!-- F -->
 <!-- G -->
-			<div class="flag turquoise white blue purple stripes seven">
+			<div class="flag turquoise white blue purple stripes seven attraction">
 				<a href="https://en.wikipedia.org/wiki/Gay_men" target="_blank"><h3>Gay</h3></a>
 				<a title="gayflagblog, CC BY-SA 4.0 &lt;https://creativecommons.org/licenses/by-sa/4.0&gt;, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Gay_Men_Pride_Flag.svg" target="_blank"><img alt="Gay Men Pride Flag" src="https://upload.wikimedia.org/wikipedia/commons/0/0a/Gay_Men_Pride_Flag.svg"></a>
 			</div>
-			<div class="flag pink white purple black blue stripes five">
+			<div class="flag pink white purple black blue stripes five identity">
 				<a href="https://en.wikipedia.org/wiki/Non-binary_gender#Genderfluid" target="_blank"><h3>Genderfluid</h3></a>
 				<a title="JJ Pole. McLennonSon, CC BY-SA 4.0 &lt;https://creativecommons.org/licenses/by-sa/4.0&gt;, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Genderfluidity_Pride-Flag.svg" target="_blank"><img alt="Genderfluidity Pride-Flag" src="https://upload.wikimedia.org/wikipedia/commons/b/b8/Genderfluidity_Pride-Flag.svg"></a>
 			</div>
-			<div class="flag purple white green stripes three">
+			<div class="flag purple white green stripes three identity">
 				<a href="https://en.wikipedia.org/wiki/Non-binary_gender#Symbols_and_observances" target="_blank"><h3>Genderqueer</h3></a>
 				<a title="Marilyn Roxie, McLennonSon, Public domain, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Genderqueer_Pride_Flag.svg" target="_blank"><img alt="Genderqueer Pride Flag" src="https://upload.wikimedia.org/wikipedia/commons/1/1f/Genderqueer_Pride_Flag.svg"></a>
 			</div>
 <!-- H -->
 <!-- I -->
-			<div class="flag yellow purple symbols one">
+			<div class="flag yellow purple symbols one other">
 				<a href="https://en.wikipedia.org/wiki/Intersex_flag" target="_blank"><h3>Intersex (2013)</h3></a>
 				<a title="Morgan Carpenter (SVG file simplification by AnonMoos), CC0, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Intersex_Pride_Flag.svg" target="_blank"><img alt="Intersex Pride Flag" src="https://upload.wikimedia.org/wikipedia/commons/3/38/Intersex_Pride_Flag.svg"></a>
 			</div>
-			<div title="Intersex-Inclusive Progress Pride (2018)" class="flag red orange yellow green blue purple turquoise pink brown black white stripes chevrons symbols six">
+			<div title="Intersex-Inclusive Progress Pride (2018)" class="flag red orange yellow green blue purple turquoise pink brown black white stripes chevron symbols six attraction identity other">
 				<a href="https://en.wikipedia.org/wiki/Rainbow_flag_(LGBT)#Variations" target="_blank"><h3>Intersex-Inclusive Progress Pride (2018)</h3></a>
 				<a title="Nikki, CC0, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Intersex-inclusive_pride_flag.svg" target="_blank"><img alt="Intersex-inclusive pride flag" src="https://upload.wikimedia.org/wikipedia/commons/6/60/Intersex-inclusive_pride_flag.svg"></a>
 			</div>
 <!-- J -->
 <!-- K -->
 <!-- L -->
-			<div class="flag black purple white stripes symbols nine">
+			<div class="flag black red blue white stripes symbols nine attraction">
 				<a href="https://en.wikipedia.org/wiki/Leather_Pride_flag" target="_blank"><h3>Leather (1989)</h3></a>
 				<a title="Icey at English Wikipedia, Public domain, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Leather,_Latex,_and_BDSM_pride_-_Light.svg" target="_blank"><img alt="Leather, Latex, and BDSM pride - Light" src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Leather%2C_Latex%2C_and_BDSM_pride_-_Light.svg"></a>
 				<p>🧠 Tony DeBlase</p>
 			</div>
-			<div class="flag purple black white symbols one">
+			<div class="flag purple black white symbols one attraction">
 				<a href="https://en.wikipedia.org/wiki/Lesbian_feminism" target="_blank"><h3>Labrys Lesbian</h3></a>
 				<a title="Thespoondragon, CC0, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Labrys_Lesbian_Flag.svg" target="_blank"><img alt="Labrys Lesbian Flag" src="https://upload.wikimedia.org/wikipedia/commons/d/dd/Labrys_Lesbian_Flag.svg"></a>
 			</div>
-			<div class="flag purple pink white red stripes symbols seven">
+			<div class="flag purple pink white red stripes symbols seven attraction">
 				<a href="https://en.wikipedia.org/wiki/Lipstick_lesbian" target="_blank"><h3>Lipstick Lesbian (2010)</h3></a>
 				<a title="xles (SVG file), CC BY-SA 4.0 &lt;https://creativecommons.org/licenses/by-sa/4.0&gt;, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Lipstick_lesbian_Pride_Flag.svg" target="_blank"><img alt="Lipstick lesbian Pride Flag" src="https://upload.wikimedia.org/wikipedia/commons/0/06/Lipstick_lesbian_Pride_Flag.svg"></a>
 			</div>
-			<div class="flag purple pink white red stripes seven">
+			<div class="flag purple pink white red stripes seven attraction">
 				<a href="https://en.wikipedia.org/wiki/Lesbian" target="_blank"><h3>Lesbian</h3></a>
 				<a title="AnonMoos (SVG file), Public domain, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Lesbian_Pride_pink_flag.svg" target="_blank"><img alt="Lesbian Pride pink flag" src="https://upload.wikimedia.org/wikipedia/commons/8/84/Lesbian_Pride_pink_flag.svg"></a>
 			</div>
-			<div class="flag red orange white pink purple stripes seven">
+			<div class="flag red orange white pink purple stripes seven attraction">
 				<a href="https://en.wikipedia.org/wiki/Lesbian" target="_blank"><h3>Lesbian (2018)</h3></a>
 				<a title="SVG file by L ke in Inkscape, CC0, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Lesbian_pride_flag_2018.svg" target="_blank"><img alt="Lesbian pride flag 2018" src="https://upload.wikimedia.org/wikipedia/commons/f/f8/Lesbian_pride_flag_2018.svg"></a>
 			</div>
-			<div class="flag red orange white pink purple stripes five">
+			<div class="flag red orange white pink purple stripes five attraction">
 				<a href="https://en.wikipedia.org/wiki/Lesbian" target="_blank"><h3>Lesbian (2018) (5 Stripe Variant)</h3></a>
 				<a title="Initial SVG file upload by Tmmoney, remade from scratch by AnonMoos., Public domain, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Lesbian_Pride_Flag_2019.svg" target="_blank"><img width="256" alt="Lesbian Pride Flag 2019" src="https://upload.wikimedia.org/wikipedia/commons/3/35/Lesbian_Pride_Flag_2019.svg"></a>
 			</div>
-			<div class="flag red orange yellow green blue purple turquoise pink brown black white stripes six">
+			<div class="flag red orange yellow green blue purple turquoise pink brown black white stripes six attraction identity other">
 				<a href="https://en.wikipedia.org/wiki/New_Pride_Flag" target="_blank"><h3>New Pride (2018)</h3></a>
 				<a title="Julia Feliz, Public domain, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:New_Pride_Flag_by_Julia_Feliz_2018.png" target="_blank"><img alt="New Pride Flag by Julia Feliz 2018" src="https://upload.wikimedia.org/wikipedia/commons/9/97/New_Pride_Flag_by_Julia_Feliz_2018.png"></a>
 				<p>🧠 Julia Feliz</p>
 			</div>
-			<div class="flag yellow white purple black stripes four">
+			<div class="flag yellow white purple black stripes four identity">
 				<a href="https://en.wikipedia.org/wiki/Non-binary_gender" target="_blank"><h3>Non-Binary (2014)</h3></a>
 				<a title="Kye Rowan, CC0, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Nonbinary_flag.svg" target="_blank"><img alt="Nonbinary flag" src="https://upload.wikimedia.org/wikipedia/commons/7/75/Nonbinary_flag.svg"></a>
 				<p>🧠 Kye Rowan</p>
 			</div>
-			<div class="flag pink blue stripes five">
+			<div class="flag pink blue stripes five attraction">
 				<a href="" target="_blank"><h3>Omnisexual</h3></a>
 				<a title="Mattcen, CC BY-SA 4.0 &lt;https://creativecommons.org/licenses/by-sa/4.0&gt;, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Omnisexual_Pride-Flag.svg" target="_blank"><img alt="Omnisexual Pride-Flag" src="https://upload.wikimedia.org/wikipedia/commons/5/55/Omnisexual_Pride-Flag.svg"></a>
 			</div>
-			<div class="flag pink yellow blue turquoise stripes three">
+			<div class="flag pink yellow blue turquoise stripes three attraction">
 				<a href="https://en.wikipedia.org/wiki/Pansexual_pride_flag" target="_blank"><h3>Pansexual</h3></a>
 				<a title="This SVG version: KiwiNeko14. Original idea: Tumblr blog PansexualFlag., Public domain, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Pansexuality_Pride_Flag.svg" target="_blank"><img alt="Pansexuality Pride Flag" src="https://upload.wikimedia.org/wikipedia/commons/a/a2/Pansexuality_Pride_Flag.svg"></a>
 			</div>
-			<div class="flag red orange yellow green blue purple brown black stripes eight">
+			<div class="flag red orange yellow green blue purple brown black stripes eight attraction identity other">
 				<a href="https://en.wikipedia.org/wiki/Rainbow_flag_(LGBT)#Variations" target="_blank"><h3>Philly Pride (2017)</h3></a>
 				<a title="Philadelphia City Council and Tierney, Public domain, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Philadelphia_Pride_Flag.svg" target="_blank"><img alt="Philadelphia Pride Flag" src="https://upload.wikimedia.org/wikipedia/commons/e/e0/Philadelphia_Pride_Flag.svg"></a>
 			</div>
-			<div class="flag blue red black yellow stripes symbols three">
+			<div class="flag blue red black yellow stripes symbols three attraction">
 				<a href="https://en.wikipedia.org/wiki/Polyamory" target="_blank"><h3>Polyamory</h3></a>
 				<a title="Jim Evans, Public domain, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Polyamory_Pride_Flag.svg" target="_blank"><img width="256" alt="Polyamory Pride Flag" src="https://upload.wikimedia.org/wikipedia/commons/b/b6/Polyamory_Pride_Flag.svg"></a>
 			</div>
-			<div class="flag pink green blue stripes three">
+			<div class="flag pink green blue stripes three attraction">
 				<a href="" target="_blank"><h3>Polysexuality</h3></a>
 				<a title="McLennonSon, CC BY-SA 4.0 &lt;https://creativecommons.org/licenses/by-sa/4.0&gt;, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Polysexuality_Pride_Flag.svg" target="_blank"><img alt="Polysexuality Pride Flag" src="https://upload.wikimedia.org/wikipedia/commons/a/ae/Polysexuality_Pride_Flag.svg"></a>
 			</div>
-			<div class="flag red orange yellow green blue purple turquoise pink stripes eight">
+			<div class="flag red orange yellow green blue purple turquoise pink stripes eight attraction identity other">
 				<a href="https://en.wikipedia.org/wiki/Rainbow_flag_(LGBT)#Origin" target="_blank">
 					<h3>Pride (1978)</h3>
 					<img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Gay_flag_8.svg">
 					<p>🧠 Gilbert Baker</p>
 				</a>
 			</div>
-			<div class="flag red orange yellow green blue purple turquoise stripes seven">
+			<div class="flag red orange yellow green blue purple turquoise stripes seven attraction identity other">
 				<a href="https://en.wikipedia.org/wiki/Rainbow_flag_(LGBT)#1978_to_1979" target="_blank">
 					<h3>Pride (1978&ndash;79)</h3>
 					<img src="https://upload.wikimedia.org/wikipedia/commons/1/1f/Gay_flag_7.svg">
 				</a>
 			</div>
-			<div class="flag red orange yellow green blue purple stripes six">
+			<div class="flag red orange yellow green blue purple stripes six attraction identity other">
 				<a href="https://en.wikipedia.org/wiki/Rainbow_flag_(LGBT)#1978_to_1979" target="_blank">
 					<h3>Pride (1979&ndash;present)</h3>
 					<img src="https://upload.wikimedia.org/wikipedia/commons/4/48/Gay_Pride_Flag.svg">
 				</a>
 			</div>
-			<div class="flag red orange yellow green blue purple turquoise pink stripes nine">
+			<div class="flag red orange yellow green blue purple turquoise pink stripes nine attraction identity other">
 				<a href="https://en.wikipedia.org/wiki/Rainbow_flag_(LGBT)#Variations" target="_blank">
 					<h3>Pride (2017)</h3>
 					<img src="https://upload.wikimedia.org/wikipedia/commons/7/7f/2017-diversity-flag.png">
 					<p>🧠 Gilbert Baker</p>
 				</a>
 			</div>
-			<div title="Pride (2018) (Estêvão Romane)" class="flag red orange yellow green blue purple turquoise pink white stripes nine">
+			<div title="Pride (2018) (Estêvão Romane)" class="flag red orange yellow green blue purple turquoise pink white stripes nine attraction identity other">
 				<a href="https://en.wikipedia.org/wiki/Rainbow_flag_(LGBT)#Variations" target="_blank">
 					<h3>Pride (2018)</h3>
 					<img src="https://upload.wikimedia.org/wikipedia/commons/2/20/9stripeLGBTDiversity.svg">
 					<p>🧠 Estêvão Romane</p>
 				</a>
 			</div>
-			<div class="flag red orange yellow green blue purple turquoise pink brown black white stripes chevrons six">
+			<div class="flag red orange yellow green blue purple turquoise pink brown black white stripes chevron six attraction identity other">
 				<a href="https://en.wikipedia.org/wiki/Rainbow_flag_(LGBT)#Variations" target="_blank">
 					<h3>Progress Pride (2018)</h3>
 					<img src="https://upload.wikimedia.org/wikipedia/commons/f/fd/LGBTQ%2B_rainbow_flag_Quasar_%22Progress%22_variant.svg">
 				</a>
 			</div>
-			<div class="flag red orange yellow green blue purple black stripes chevrons six">
+			<div class="flag red orange yellow green blue purple black stripes chevron six attraction identity other">
 				<a href="https://en.wikipedia.org/wiki/Rainbow_flag_(LGBT)#Variations" target="_blank">
 					<h3>Social Justice Pride (2018)</h3>
 					<img src="https://upload.wikimedia.org/wikipedia/commons/c/cc/Social_Justice_Pride_Flag.png">
 				</a>
 			</div>
-			<div class="flag blue turquoise pink white stripes five">
+			<div class="flag blue turquoise pink white stripes five identity">
 				<a href="https://en.wikipedia.org/wiki/Transgender_flag" target="_blank"><h3>Transgender (1999)</h3></a>
 				<a title="SVG file Dlloyd based on Monica Helms design, Public domain, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Transgender_Pride_flag.svg" target="_blank"><img alt="Transgender Pride flag" src="https://upload.wikimedia.org/wikipedia/commons/b/b0/Transgender_Pride_flag.svg"></a>
 				<p>🧠 Monica Helms</p>
 			</div>
 
+			<!-- TO ADD -->
+			<!-- Queer -->
 
 			<!--  -->
 		</main>

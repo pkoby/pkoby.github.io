@@ -15,6 +15,22 @@ var allRadio = document.querySelectorAll('input[type=radio]');
 var allFlags = Array.from(document.querySelectorAll('.flag'));
 var checked = {};
 
+function countFlags() {
+	const div = document.querySelector('#main');
+	const children = div.children;
+	let count = 0;
+	for (let child of children) {
+		if (child.classList.contains('flag') && child.style.display != 'none') count++;
+	}
+	if (count == 1) {
+		return count + " match";
+	} else {
+		return count + " matches";
+	}
+}
+
+document.getElementById("countbox").innerHTML = countFlags();
+
 getChecked('Red');
 getChecked('Orange');
 getChecked('Yellow');
@@ -28,16 +44,22 @@ getChecked('Black');
 getChecked('Gray');
 getChecked('White');
 getChecked('Stripes');
-getChecked('Chevrons');
+getChecked('Chevron');
+getChecked('Cross');
 getChecked('Symbols');
+getChecked('Stars');
 getChecked('Count');
+getChecked('Attraction');
+getChecked('Country');
+getChecked('Identity');
+getChecked('Other');
 
 Array.prototype.forEach.call(allCheckboxes, function (el) {
 	el.addEventListener('change', toggleCheckbox);
 });
 
 function toggleCheckbox(e) {
-	console.countReset(checked);
+	// console.countReset(checked);
 	getChecked(e.target.name);
 	setVisibility();
 }
@@ -63,15 +85,22 @@ function setVisibility() {
 		var Gray = checked.Gray.length ? _.intersection(Array.from(el.classList), checked.Gray).length : true;
 		var White = checked.White.length ? _.intersection(Array.from(el.classList), checked.White).length : true;
 		var Stripes = checked.Stripes.length ? _.intersection(Array.from(el.classList), checked.Stripes).length : true;
-		var Chevrons = checked.Chevrons.length ? _.intersection(Array.from(el.classList), checked.Chevrons).length : true;
+		var Chevron = checked.Chevron.length ? _.intersection(Array.from(el.classList), checked.Chevron).length : true;
+		var Cross = checked.Cross.length ? _.intersection(Array.from(el.classList), checked.Cross).length : true;
 		var Symbols = checked.Symbols.length ? _.intersection(Array.from(el.classList), checked.Symbols).length : true;
+		var Stars = checked.Stars.length ? _.intersection(Array.from(el.classList), checked.Stars).length : true;
 		var Count = checked.Count.length ? _.intersection(Array.from(el.classList), checked.Count).length : true;
-		if (Red && Orange && Yellow && Green && Turquoise && Blue && Purple && Pink && Brown && Black && Gray && White && Stripes && Chevrons && Symbols && Count) {
+		var Attraction = checked.Attraction.length ? _.intersection(Array.from(el.classList), checked.Attraction).length : true;
+		var Country = checked.Country.length ? _.intersection(Array.from(el.classList), checked.Country).length : true;
+		var Identity = checked.Identity.length ? _.intersection(Array.from(el.classList), checked.Identity).length : true;
+		var Other = checked.Other.length ? _.intersection(Array.from(el.classList), checked.Other).length : true;
+		if (Red && Orange && Yellow && Green && Turquoise && Blue && Purple && Pink && Brown && Black && Gray && White && Stripes && Chevron && Cross && Symbols && Stars && Count && Attraction && Country && Identity && Other) {
 			el.style.display = 'inline-block';
-			console.count(checked);
+			// console.count(checked);
 		} else {
 			el.style.display = 'none';
 		}
+		document.getElementById("countbox").innerHTML = countFlags();
 	});
 }
 
@@ -92,9 +121,15 @@ function uncheckAll() {
 		getChecked('Gray');
 		getChecked('White');
 		getChecked('Stripes');
-		getChecked('Chevrons');
+		getChecked('Chevron');
+		getChecked('Cross');
 		getChecked('Symbols');
+		getChecked('Stars');
 		getChecked('Count');
+		getChecked('Attraction');
+		getChecked('Country');
+		getChecked('Identity');
+		getChecked('Other');
 		setVisibility();
 }
 
