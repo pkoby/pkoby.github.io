@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🪑</text></svg>">
+		<link rel="stylesheet" href="leaflet.css" />
+		<link rel="stylesheet" href="MarkerCluster.css" />
+		<link rel="stylesheet" href="style.css" />
+		<link rel="stylesheet" href="mobile.css" media="screen and (max-width: 700px)" />
+		<script src="jquery-1.10.2.min.js"></script>	
+
+		<title>BenchMap</title>
+
+		<script type="text/javascript">
+
+			jQuery(function($) {
+				$(".profile-toggle").click(function() {
+					$("#infoBox").toggleClass("hidden show")
+					console.log('click');
+				});
+			});
+
+			function hideInfo() {
+				if ($("#infoBox").hasClass("show")) {
+					$("#infoBox").toggleClass("hidden show")
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<div id="sidebar">
+			<a href="#" onclick="return false;">
+				<div id="zoomin" class="linkbutton" title="Zoom In"></div>
+			</a>
+			<a href="#" onclick="return false;">
+				<div id="zoomout" class="linkbutton" title="Zoom Out"></div>
+			</a>
+			<a href="#" onclick="return false;">
+				<div id="locater" class="linkbutton" title="Locate Me"></div>
+			</a>
+			<a href="#" onclick="hideInfo()">
+				<div id="loaddata" class="loadbutton" title="Search for Places in View"><img id="loadicon" src="icons/refresh.svg"></div>
+			</a>
+		</div>
+
+		<div id="topbar">
+			<span id="logo">🪑</span>
+			<span id="title">BenchMap</span>
+		</div>
+
+		<div id="bigmap"></div>
+
+		<script src="leaflet.js"></script>
+		<script src="leaflet-hash.js"></script>
+		<script src="L.Control.Locate.min.js" charset="utf-8"></script>
+		<script src="leaflet.markercluster.js"></script>
+		<script src="mapcode.js"></script>
+	</body>
+</html>
