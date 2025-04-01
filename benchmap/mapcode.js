@@ -154,9 +154,9 @@ function setMiniMarker(poi_type, icon, lat, lon, tags, osmid, osmtype) {
 	
 	poi_markers.push(mrk);
 	mrk.addTo(poiMinis);
-	if (map.getZoom() > 16) {
+	// if (map.getZoom() > 16) {
 		poiMinis.addTo(poiClusters);
-	}
+	// }
 }
 
 function setColourMarker(poi_type, icon, lat, lon, tags, osmid, osmtype) {
@@ -181,9 +181,9 @@ function setColourMarker(poi_type, icon, lat, lon, tags, osmid, osmtype) {
 	
 	poi_markers.push(mrk);
 	mrk.addTo(poiMinis);
-	if (map.getZoom() > 17) {
+	// if (map.getZoom() > 17) {
 		poiMinis.addTo(poiClusters);
-	}
+	// }
 }
 
 function getPanoramaxThumb(tagPanoramax) {
