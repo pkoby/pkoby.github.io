@@ -3,11 +3,20 @@ var saved_lat, saved_lon, bbox, bboxOutline;
 var poi_markers = new Array();
 var poiMinis = new L.LayerGroup();
 var poiClusters = new L.markerClusterGroup({
-	disableClusteringAtZoom: 16,
+	disableClusteringAtZoom: 17,
 	spiderfyOnMaxZoom: false,
 	showCoverageOnHover: true,
-	maxClusterRadius: 20,
-	minClusterRadius: 4,
+	maxClusterRadius: 40,
+	minClusterRadius: 0,
+	iconCreateFunction: function(cluster) {
+		return L.icon({
+			iconUrl: 'icons/group_icon.svg',
+			iconSize: [32,32],
+			className: 'pointIcon',
+			iconAnchor: [16,16],
+			iconOpacity: 0.7,
+		});
+	}
 });
 
 var yab_icon,yb_na_icon,ya_nb_icon,nab_icon,yb_ua_icon,nb_ua_icon,ya_ub_icon,na_ub_icon,uab_icon,inscription_icon,no_inscription_icon,colour_icon;
@@ -473,13 +482,13 @@ $(function() {
 		iconUrl: 'icons/inscription.svg',
 		iconSize: [8,5],
 		className: 'sourceIcon',
-		iconAnchor: [4,-3],
+		iconAnchor: [4,-4],
 	});
 	no_inscription_icon = L.icon({
 		iconUrl: 'icons/no_inscription.svg',
 		iconSize: [8,5],
 		className: 'sourceIcon',
-		iconAnchor: [4,-3],
+		iconAnchor: [4,-4],
 	});
 
 	map.on('moveend', function () {
