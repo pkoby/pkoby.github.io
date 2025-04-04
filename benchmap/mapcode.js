@@ -3,11 +3,11 @@ var saved_lat, saved_lon, bbox, bboxOutline;
 var poi_markers = new Array();
 var poiMinis = new L.LayerGroup();
 var poiClusters = new L.markerClusterGroup({
-	disableClusteringAtZoom: 18,
+	disableClusteringAtZoom: 16,
 	spiderfyOnMaxZoom: false,
 	showCoverageOnHover: true,
 	maxClusterRadius: 20,
-	minClusterRadius: 1,
+	minClusterRadius: 4,
 });
 
 var yab_icon,yb_na_icon,ya_nb_icon,nab_icon,yb_ua_icon,nb_ua_icon,ya_ub_icon,na_ub_icon,uab_icon,inscription_icon,no_inscription_icon,colour_icon;
@@ -40,8 +40,9 @@ var map = new L.map('bigmap', {
 	zoomControl: false,
 })
 
-map.createPane('onePane').style.zIndex = -1;
-map.createPane('twoPane').style.zIndex = 20000;
+// map.createPane('onePane').style.zIndex = -1;
+// map.createPane('miniPane').style.zIndex = 99999;
+// map.createPane('twoPane').style.zIndex = 20000;
 
 var lc = L.control.locate({keepCurrentZoomLevel: true, inView: 'stop', outOfView: 'setView', inViewNotFollowing: 'inView', locateOptions: {enableHighAccuracy: true}}).addTo(map);
 
@@ -150,7 +151,7 @@ if (L.Browser.retina) var tp = "lr";
 else var tp = "ls";
 
 function setMiniMarker(poi_type, icon, lat, lon, tags, osmid, osmtype) {
-	var mrk = L.marker([lat, lon], {icon: icon});
+	var mrk = L.marker([lat, lon], {icon: icon, interactive:false});
 	
 	poi_markers.push(mrk);
 	mrk.addTo(poiMinis);
@@ -209,9 +210,11 @@ function getPanoramaxLink(tagPanoramax) {
 }
 
 function inscriptionParser(inscription) {
-	var slashN = inscription.replace(/ \\n /g, "<br/>");
-	var doubleSlash = slashN.replace(/ \/\/ /g, "<br/><br/>");
-	return doubleSlash.replace(/ \/ /g,"<br/>");
+	var slashN = inscription.replace(/\\n/g, "<br/>");
+	var slashNspaces = slashN.replace(/ \\n /g, "<br/>");
+	var doubleSlash = slashNspaces.replace(/ \/\/ /g, "<br/><br/>");
+	var semiColon = doubleSlash.replace(/ \; /g, "</div><br/><div class='inscription'>");
+	return semiColon.replace(/ \/ /g,"<br/>");
 }
 
 function setPoiMarker(poi_type, icon_name, lat, lon, tags, osmid, osmtype) {
@@ -219,82 +222,89 @@ function setPoiMarker(poi_type, icon_name, lat, lon, tags, osmid, osmtype) {
 		icon: icon_name,
 	});
 	var osmlink = "https://www.openstreetmap.org/"+osmtype+"/"+osmid;
-	var osmedit = "https://www.openstreetmap.org/edit\?"+osmtype+"="+osmid;
+	var iDedit = "https://www.openstreetmap.org/edit\?editor=id&"+osmtype+"="+osmid;
 	var josmedit = "http://127.0.0.1:8111/load_object?new_layer=true&objects=n"+osmid;
 
-	
-	if (tags.colour != undefined) {
-		var popup_content = "Color: <span class=\"colorbox\" title=\""+tags.colour+"\" style=\"background-color:"+tags.colour+"\">"+tags.colour+"</span><br>";
+	if (tags.inscription != undefined && tags.inscription != 'no') {
+		var popup_content = "<div class='inscription'>"+inscriptionParser(tags.inscription);
+		if (tags["inscription:1"] != undefined) {
+			popup_content += " "+inscriptionParser(tags["inscription:1"]);
+		}
+		if (tags["inscription:2"] != undefined) {
+			popup_content += " "+inscriptionParser(tags["inscription:2"]);
+			if (tags["inscription:3"] != undefined) {
+				popup_content += " "+inscriptionParser(tags["inscription:3"]);
+				if (tags["inscription:4"] != undefined) {
+					popup_content += " "+inscriptionParser(tags["inscription:4"]);
+					if (tags["inscription:5"] != undefined) {
+						popup_content += " "+inscriptionParser(tags["inscription:5"]);
+					}
+				}
+			}
+		}
+		popup_content += "</div><br/>"
+	} else if (tags.inscription == undefined && tags["inscription:1"] != undefined && tags["inscription:1"] != 'no') {
+		var popup_content = "<div class='inscription'>"+inscriptionParser(tags["inscription:1"]);
+		if (tags["inscription:2"] != undefined) {
+			popup_content += " "+inscriptionParser(tags["inscription:2"]);
+			if (tags["inscription:3"] != undefined) {
+				popup_content += " "+inscriptionParser(tags["inscription:3"]);
+				if (tags["inscription:4"] != undefined) {
+					popup_content += " "+inscriptionParser(tags["inscription:4"]);
+					if (tags["inscription:5"] != undefined) {
+						popup_content += " "+inscriptionParser(tags["inscription:5"]);
+					}
+				}
+			}
+		}
+		popup_content += "</div><br/>"
+	} else if (tags.inscription == 'no') {
+		var popup_content = "<span class=\"unknown\">No inscription</span><br/>"
 	} else {
 		var popup_content = "";
 	}
-	if (tags.material != undefined) {
-		popup_content += "Material: <span class=\"material "+tags.material+"\">"+tags.material+"</span>";
-	} else {
-		popup_content += "Material: <span class=\"unknown\">unknown</span>";
-	}
-	if (tags.backrest != undefined) {
-		popup_content += "<br/>Backrest: "+tags.backrest;
-	} else {
-		popup_content += "<br/>Backrest: <span class=\"unknown\">unknown</span>";
-	}
-	if (tags.armrest != undefined) {
-		popup_content += "<br/>Armrests: "+tags.armrest;
-	} else {
-		popup_content += "<br/>Armrests: <span class=\"unknown\">unknown</span>";
-	}
 
-	if (tags.inscription != undefined && tags.inscription != 'no') {
-		popup_content += "<br/><br/><div class='inscription'>"+inscriptionParser(tags.inscription);
-		if (tags["inscription:2"] != undefined && tags["inscription:2"] != 'no') {
-			popup_content += " "+inscriptionParser(tags["inscription:2"]);
-			if (tags["inscription:3"] != undefined && tags["inscription:3"] != 'no') {
-				popup_content += " "+inscriptionParser(tags["inscription:3"]);
-			}
-		}
-		popup_content += "</div>"
-	} else if (tags["inscription:1"] != undefined && tags["inscription:1"] != 'no') {
-		popup_content += "<br/><br/><div class='inscription'>"+inscriptionParser(tags["inscription:1"]);
-		if (tags["inscription:2"] != undefined && tags["inscription:2"] != 'no') {
-			popup_content += " "+inscriptionParser(tags["inscription:2"]);
-			if (tags["inscription:3"] != undefined && tags["inscription:3"] != 'no') {
-				popup_content += " "+inscriptionParser(tags["inscription:3"]);
-			}
-		}
-		popup_content += "</div>"
-	} else if (tags.inscription == 'no') {
-		popup_content += "<br/>No inscription"
-	}
-
-	if (tags.inscription_1 != undefined && tags.inscription_1 != 'no') {
-		popup_content += "<br/><br/><div class='inscription'>"+inscriptionParser(tags.inscription_1);
-		if (tags["inscription_1:2"] != undefined && tags["inscription_1:2"] != 'no') {
-			popup_content += " "+inscriptionParser(tags["inscription_1:2"]);
-			if (tags["inscription_1:3"] != undefined && tags["inscription_1:3"] != 'no') {
-				popup_content += " "+inscriptionParser(tags["inscription_1:3"]);
-			}
-		}
-		popup_content += "</div>"
-	} else if (tags["inscription_1:1"] != undefined && tags["inscription_1:1"] != 'no') {
-		popup_content += "<br/><br/><div class='inscription'>"+inscriptionParser(tags["inscription_1:1"]);
-		if (tags["inscription_1:2"] != undefined && tags["inscription_1:2"] != 'no') {
-			popup_content += " "+inscriptionParser(tags["inscription_1:2"]);
-			if (tags["inscription_1:3"] != undefined && tags["inscription_1:3"] != 'no') {
-				popup_content += " "+inscriptionParser(tags["inscription_1:3"]);
-			}
-		}
-		popup_content += "</div>"
-	}
 	if (tags.panoramax != undefined) {
 		var thumb = getPanoramaxThumb(tags.panoramax);
 		var link = getPanoramaxLink(tags.panoramax);
 		popup_content += "<p/><a href='"+link+"' target='_blank'><img src='"+thumb+"' class='popup_image'></a>";
 	}
 
-	popup_content += "<div class='linktext'><a href='"+osmlink+"' title=\"show feature on OSM\" target='_blank'>🗺️</a> | <a href='"+osmedit+"' title=\"edit feature on OSM\" target='_blank'>✏️</a> | <a href='"+josmedit+"' title=\"edit feature in JOSM\" target='_blank'>🖊️</a></div>";
+	if (tags.colour != undefined) {
+		popup_content += "Color: <span class=\"colorbox\" title=\""+tags.colour+"\" style=\"background-color:"+tags.colour+"\">"+tags.colour+"</span><br/>";
+		var tooltip_content = "C";
+	} else {
+		popup_content += "";
+		var tooltip_content = "";
+	}
+	if (tags.material != undefined) {
+		popup_content += "Material: <span class=\"material "+tags.material+"\">"+tags.material+"</span>";
+		tooltip_content += "M";
+	} else {
+		popup_content += "Material: 🤷";
+	}
+
+	if (tags.backrest == undefined) {
+		popup_content += "<br/>Backrest: 🤷";
+	} else if (tags.backrest == 'yes') {
+		popup_content += "<br/>Backrest: ☑️";
+	} else if (tags.backrest == 'no') {
+		popup_content += "<br/>Backrest: ❌";
+	}
+
+ 	if (tags.armrest == undefined) {
+		popup_content += "<br/>Armrests: 🤷";
+	} else if (tags.armrest == 'yes') {
+		popup_content += "<br/>Armrests: ☑️";
+	} else if (tags.armrest == 'no') {
+		popup_content += "<br/>Armrests: ❌";
+	}
+
+	popup_content += "<div class='linktext'><a href='"+osmlink+"' title=\"show feature on OSM\" target='_blank'>🗺️</a> | <a href='"+iDedit+"' title=\"edit feature on OSM\" target='_blank'>✏️</a> | <a href='"+josmedit+"' title=\"edit feature in JOSM\" target='_blank'>🖊️</a></div>";
 
 	mrk.bindPopup(L.popup({autoPanPaddingTopLeft: [0,50]}).setContent(popup_content));
-	
+	// mrk.bindTooltip(L.tooltip({permanent:true,direction:'top'}).setContent(tooltip_content)).openTooltip;
+
 	poi_markers.push(mrk);
 	mrk.addTo(poiClusters);
 	poiClusters.addTo(map);
@@ -401,75 +411,75 @@ $(function() {
 		iconSize: [24,24],
 		className: 'pointIcon',
 		iconAnchor: [12,12],
-		popupAnchor: [0,-24],
+		popupAnchor: [0,-15],
 	});
 	ya_nb_icon = L.icon({
 		iconUrl: 'icons/ya_nb_icon.svg',
 		iconSize: [24,24],
 		className: 'pointIcon',
 		iconAnchor: [12,12],
-		popupAnchor: [0,-24],
+		popupAnchor: [0,-15],
 	});
 	ya_ub_icon = L.icon({
 		iconUrl: 'icons/ya_ub_icon.svg',
 		iconSize: [24,24],
 		className: 'pointIcon',
 		iconAnchor: [12,12],
-		popupAnchor: [0,-24],
+		popupAnchor: [0,-15],
 	});
 	yb_na_icon = L.icon({
 		iconUrl: 'icons/yb_na_icon.svg',
 		iconSize: [24,24],
 		className: 'pointIcon',
 		iconAnchor: [12,12],
-		popupAnchor: [0,-24],
+		popupAnchor: [0,-15],
 	});
 	yb_ua_icon = L.icon({
 		iconUrl: 'icons/yb_ua_icon.svg',
 		iconSize: [24,24],
 		className: 'pointIcon',
 		iconAnchor: [12,12],
-		popupAnchor: [0,-24],
+		popupAnchor: [0,-15],
 	});
 	nab_icon = L.icon({
 		iconUrl: 'icons/nab_icon.svg',
 		iconSize: [24,24],
 		className: 'pointIcon',
 		iconAnchor: [12,12],
-		popupAnchor: [0,-24],
+		popupAnchor: [0,-15],
 	});
 	na_ub_icon = L.icon({
 		iconUrl: 'icons/na_ub_icon.svg',
 		iconSize: [24,24],
 		className: 'pointIcon',
 		iconAnchor: [12,12],
-		popupAnchor: [0,-24],
+		popupAnchor: [0,-15],
 	});
 	nb_ua_icon = L.icon({
 		iconUrl: 'icons/nb_ua_icon.svg',
 		iconSize: [24,24],
 		className: 'pointIcon',
 		iconAnchor: [12,12],
-		popupAnchor: [0,-24],
+		popupAnchor: [0,-15],
 	});
 	uab_icon = L.icon({
 		iconUrl: 'icons/uab_icon.svg',
 		iconSize: [24,24],
 		className: 'pointIcon',
 		iconAnchor: [12,12],
-		popupAnchor: [0,-24],
+		popupAnchor: [0,-15],
 	});
 	inscription_icon = L.icon({
 		iconUrl: 'icons/inscription.svg',
 		iconSize: [8,5],
 		className: 'sourceIcon',
-		iconAnchor: [4,-5],
+		iconAnchor: [4,-3],
 	});
 	no_inscription_icon = L.icon({
 		iconUrl: 'icons/no_inscription.svg',
 		iconSize: [8,5],
 		className: 'sourceIcon',
-		iconAnchor: [4,-5],
+		iconAnchor: [4,-3],
 	});
 
 	map.on('moveend', function () {
