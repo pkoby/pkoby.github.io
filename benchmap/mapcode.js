@@ -159,7 +159,10 @@ if (L.Browser.retina) var tp = "lr";
 else var tp = "ls";
 
 function setMiniMarker(poi_type, icon, lat, lon, tags, osmid, osmtype) {
-	var mrk = L.marker([lat, lon], {icon: icon, interactive:false});
+	var mrk = L.marker([lat, lon], {
+		icon: icon, interactive:false,
+		rotationAngle: tags.direction-180,
+	});
 	
 	poi_markers.push(mrk);
 	mrk.addTo(poiMinis);
@@ -312,19 +315,23 @@ function setPoiMarker(poi_type, icon_name, lat, lon, tags, osmid, osmtype) {
 	if (tags.panoramax != undefined) {
 		var thumb = getPanoramaxThumb(tags.panoramax);
 		var link = getPanoramaxLink(tags.panoramax);
-		popup_content += "<p/><a href='"+link+"' target='_blank'><img src='"+thumb+"' class='popup_image'></a>";
+		popup_content += "<a href='"+link+"' target='_blank'><img src='"+thumb+"' class='popup_image'></a><br/>";
+	}
+
+	if (tags.seats != undefined) {
+		var tooltip_content = tags.seats;
 	}
 
 	if (tags.colour != undefined) {
 		popup_content += "Color: <span class=\"colorbox\" title=\""+tags.colour+"\" style=\"background-color:"+tags.colour+"\">"+tags.colour+"</span><br/>";
-		var tooltip_content = "C";
+		// var tooltip_content = "C";
 	} else {
 		popup_content += "";
-		var tooltip_content = "";
+		// var tooltip_content = "";
 	}
 	if (tags.material != undefined) {
 		popup_content += "Material: <span class=\"material "+tags.material+"\">"+tags.material+"</span>";
-		tooltip_content += "M";
+		// tooltip_content += "M";
 	} else {
 		popup_content += "Material: 🤷";
 	}
@@ -346,9 +353,18 @@ function setPoiMarker(poi_type, icon_name, lat, lon, tags, osmid, osmtype) {
 	}
 
 	if (tags.backrest == 'no' && tags.direction != undefined) {
-		popup_content += "<br/>Facing: "+directionParser(tags.direction)+"/"+directionParser(tags.direction-180);
-	} else if (tags.backrest != 'no' && tags.direction != undefined) {
+		if (tags.direction >= 180) {
+			popup_content += "<br/>Facing: "+directionParser(tags.direction)+"/"+directionParser(Number(tags.direction)-180);
+		} else if (tags.direction < 180) {
+			popup_content += "<br/>Facing: "+directionParser(tags.direction)+"/"+directionParser(Number(tags.direction)+180);
+		}
+	} else 
+	if (tags.direction != undefined) {
 		popup_content += "<br/>Facing: "+directionParser(tags.direction);
+	}
+
+	if (tags.seats != undefined) {
+		popup_content += "<br/>Seats: "+tags.seats;
 	}
 
 	popup_content += "<div class='linktext'><a href='"+osmlink+"' title=\"show feature on OSM\" target='_blank'>🗺️</a> | <a href='"+iDedit+"' title=\"edit feature on OSM\" target='_blank'>✏️</a> | <a href='"+josmedit+"' title=\"edit feature in JOSM\" target='_blank'>🖊️</a></div>";

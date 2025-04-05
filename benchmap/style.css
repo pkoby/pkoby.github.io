@@ -6,6 +6,10 @@
 		font-family: fontin;
 		src: local(Fontin Regular), url('Fontin-Regular.otf') format('opentype');
 }
+@font-face {
+		font-family: fontin-bold;
+		src: local(Fontin Bold), url('Fontin-Bold.otf') format('opentype');
+}
 
 * {
 	padding:0;
@@ -57,8 +61,8 @@ button {
 }
 
 #sidebar {
-	margin: 0 auto;
-	position: absolute;
+/*	margin: 0 auto;*/
+	position: fixed;
 	top: 0px;
 	right: 0px;
 	z-index: 100;
@@ -431,7 +435,7 @@ button {
 }
 
 a, leaflet-container a {
-	color: saddlebrown !important;
+/*	color: saddlebrown !important;*/
 }
 
 .title {
@@ -521,13 +525,13 @@ text-align: right;
 
 .leaflet-tooltip {
 	position: absolute;
-	top: -5px;
+	top: -4px;
 	z-index: 1000;
 	white-space: nowrap;
 	background: none;
 	color: black;
 	font-family: roboto-medium;
-	font-size: 0.5em;
+	font-size: 0.6em;
 }
 
 .tiny {
@@ -563,10 +567,10 @@ text-align: right;
 }
 
 .zoomOverlay {
-	background-color: teal;
+	background-color: purple;
 }
 .zoomOverlay:hover {	
-	background-color: teal;
+	background-color: purple;
 	opacity: 1 !important;
 }
 .loadingOverlay {
@@ -706,8 +710,7 @@ text-align: right;
 	box-shadow: 2px 2px 2px black;
 	position: relative;
 	text-shadow: 0px 1px 0px #fc7;
-	font-family: fontin;
-	font-weight: bold;
+	font-family: fontin-bold;
 }
 
 .inscription:before, .inscription:after {
@@ -734,16 +737,16 @@ text-align: right;
 	border-radius: 2px;
 }
 .wood {
-	background-color: saddlebrown;
+	background: linear-gradient(0deg, rgb(170,85,50) 0%, rgb(221,153,100) 100%);
 }
-.metal {
-	background-color: silver;
+.metal, .steel {
+	background: linear-gradient(90deg, rgb(153,153,153) 0%, rgb(238,238,238) 100%);
 	color:#333;
 }
 .plastic {
-	background-color: lightyellow;
+	background-color: #ffee66;
 	color:#333;
 }
-.concrete {
+.concrete, .stone {
 	background-color: gray;
 }
