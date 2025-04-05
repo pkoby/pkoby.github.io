@@ -3,7 +3,7 @@ var saved_lat, saved_lon, bbox, bboxOutline;
 var poi_markers = new Array();
 var poiMinis = new L.LayerGroup();
 var poiClusters = new L.markerClusterGroup({
-	disableClusteringAtZoom: 17,
+	disableClusteringAtZoom: 18,
 	spiderfyOnMaxZoom: false,
 	showCoverageOnHover: true,
 	maxClusterRadius: 40,
@@ -14,7 +14,6 @@ var poiClusters = new L.markerClusterGroup({
 			iconSize: [32,32],
 			className: 'pointIcon',
 			iconAnchor: [16,16],
-			iconOpacity: 0.7,
 		});
 	}
 });
@@ -226,9 +225,46 @@ function inscriptionParser(inscription) {
 	return semiColon.replace(/ \/ /g,"<br/>");
 }
 
+function directionParser(direction) {
+	if (direction >= 348.75 || direction < 11.25) {
+			return "N";
+	} else if (direction >= 11.25 && direction < 33.75) {
+			return "NNE";
+	} else if (direction >= 33.75 && direction < 56.25) {
+			return "NE";
+	} else if (direction >= 56.25 && direction < 78.75) {
+			return "ENE";
+	} else if (direction >= 78.75 && direction < 101.25) {
+			return "E";
+	} else if (direction >= 101.25 && direction < 123.75) {
+			return "ESE";
+	} else if (direction >= 123.75 && direction < 146.25) {
+			return "SE";
+	} else if (direction >= 146.25 && direction < 168.75) {
+			return "SSE";
+	} else if (direction >= 168.75 && direction < 191.25) {
+			return "S";
+	} else if (direction >= 191.25 && direction < 213.75) {
+			return "SSW";
+	} else if (direction >= 213.75 && direction < 236.25) {
+			return "SW";
+	} else if (direction >= 236.25 && direction < 258.75) {
+			return "WSW";
+	} else if (direction >= 258.75 && direction < 281.25) {
+			return "W";
+	} else if (direction >= 281.25 && direction < 303.75) {
+			return "WNW";
+	} else if (direction >= 303.75 && direction < 326.25) {
+			return "NW";
+	} else if (direction >= 326.25 && direction < 348.75) {
+			return "NNW";
+	}
+}
+
 function setPoiMarker(poi_type, icon_name, lat, lon, tags, osmid, osmtype) {
 	var mrk = L.marker([lat, lon], {
 		icon: icon_name,
+		rotationAngle: tags.direction-180,
 	});
 	var osmlink = "https://www.openstreetmap.org/"+osmtype+"/"+osmid;
 	var iDedit = "https://www.openstreetmap.org/edit\?editor=id&"+osmtype+"="+osmid;
@@ -301,12 +337,18 @@ function setPoiMarker(poi_type, icon_name, lat, lon, tags, osmid, osmtype) {
 		popup_content += "<br/>Backrest: ❌";
 	}
 
- 	if (tags.armrest == undefined) {
+	if (tags.armrest == undefined) {
 		popup_content += "<br/>Armrests: 🤷";
 	} else if (tags.armrest == 'yes') {
 		popup_content += "<br/>Armrests: ☑️";
 	} else if (tags.armrest == 'no') {
 		popup_content += "<br/>Armrests: ❌";
+	}
+
+	if (tags.backrest == 'no' && tags.direction != undefined) {
+		popup_content += "<br/>Facing: "+directionParser(tags.direction)+"/"+directionParser(tags.direction-180);
+	} else if (tags.backrest != 'no' && tags.direction != undefined) {
+		popup_content += "<br/>Facing: "+directionParser(tags.direction);
 	}
 
 	popup_content += "<div class='linktext'><a href='"+osmlink+"' title=\"show feature on OSM\" target='_blank'>🗺️</a> | <a href='"+iDedit+"' title=\"edit feature on OSM\" target='_blank'>✏️</a> | <a href='"+josmedit+"' title=\"edit feature in JOSM\" target='_blank'>🖊️</a></div>";
