@@ -3,11 +3,11 @@ var saved_lat, saved_lon, bbox, bboxOutline;
 var poi_markers = new Array();
 var poiMinis = new L.LayerGroup();
 var poiClusters = new L.markerClusterGroup({
-	disableClusteringAtZoom: 18,
+	disableClusteringAtZoom: 17,
 	spiderfyOnMaxZoom: false,
 	showCoverageOnHover: true,
-	maxClusterRadius: 40,
-	minClusterRadius: 0,
+	maxClusterRadius: 50,
+	minClusterRadius: 20,
 	iconCreateFunction: function(cluster) {
 		return L.icon({
 			iconUrl: 'icons/group_icon.svg',
@@ -18,9 +18,20 @@ var poiClusters = new L.markerClusterGroup({
 	}
 });
 
-var yab_icon,yb_na_icon,ya_nb_icon,nab_icon,yb_ua_icon,nb_ua_icon,ya_ub_icon,na_ub_icon,uab_icon,inscription_icon,no_inscription_icon,colour_icon;
+var yab_icon,yb_na_icon,ya_nb_icon,nab_icon,yb_ua_icon,nb_ua_icon,ya_ub_icon,na_ub_icon,uab_icon,
+	yab_icon_red,yb_na_icon_red,ya_nb_icon_red,nab_icon_red,yb_ua_icon_red,nb_ua_icon_red,ya_ub_icon_red,na_ub_icon_red,uab_icon_red,
+	yab_icon_orange,yb_na_icon_orange,ya_nb_icon_orange,nab_icon_orange,yb_ua_icon_orange,nb_ua_icon_orange,ya_ub_icon_orange,na_ub_icon_orange,uab_icon_orange,
+	yab_icon_yellow,yb_na_icon_yellow,ya_nb_icon_yellow,nab_icon_yellow,yb_ua_icon_yellow,nb_ua_icon_yellow,ya_ub_icon_yellow,na_ub_icon_yellow,uab_icon_yellow,
+	yab_icon_green,yb_na_icon_green,ya_nb_icon_green,nab_icon_green,yb_ua_icon_green,nb_ua_icon_green,ya_ub_icon_green,na_ub_icon_green,uab_icon_green,
+	yab_icon_blue,yb_na_icon_blue,ya_nb_icon_blue,nab_icon_blue,yb_ua_icon_blue,nb_ua_icon_blue,ya_ub_icon_blue,na_ub_icon_blue,uab_icon_blue,
+	yab_icon_purple,yb_na_icon_purple,ya_nb_icon_purple,nab_icon_purple,yb_ua_icon_purple,nb_ua_icon_purple,ya_ub_icon_purple,na_ub_icon_purple,uab_icon_purple,
+	yab_icon_brown,yb_na_icon_brown,ya_nb_icon_brown,nab_icon_brown,yb_ua_icon_brown,nb_ua_icon_brown,ya_ub_icon_brown,na_ub_icon_brown,uab_icon_brown,
+	yab_icon_black,yb_na_icon_black,ya_nb_icon_black,nab_icon_black,yb_ua_icon_black,nb_ua_icon_black,ya_ub_icon_black,na_ub_icon_black,uab_icon_black,
+	yab_icon_gray,yb_na_icon_gray,ya_nb_icon_gray,nab_icon_gray,yb_ua_icon_gray,nb_ua_icon_gray,ya_ub_icon_gray,na_ub_icon_gray,uab_icon_gray,
+	yab_icon_white,yb_na_icon_white,ya_nb_icon_white,nab_icon_white,yb_ua_icon_white,nb_ua_icon_white,ya_ub_icon_white,na_ub_icon_white,uab_icon_white,
+	inscription_icon,unk_inscription_icon,colour_icon;
 
-	let OSMCarto=L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,opacity:0.3,attribution:'&copy;<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'});
+	// var OSMCarto=L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,opacity:0.3,attribution:'&copy;<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'});
 	var CartoDB_Voyager = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
 		attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
 		subdomains: 'abcd',
@@ -171,32 +182,32 @@ function setMiniMarker(poi_type, icon, lat, lon, tags, osmid, osmtype) {
 	// }
 }
 
-function setColourMarker(poi_type, icon, lat, lon, tags, osmid, osmtype) {
-	var colour;
-	if (tags.colour != undefined) {
-		colour = tags.colour;
-	} else {
-		colour = "#000000";
-	}
+// function setColourMarker(poi_type, icon, lat, lon, tags, osmid, osmtype) {
+// 	var colour;
+// 	if (tags.colour != undefined) {
+// 		colour = tags.colour;
+// 	} else {
+// 		colour = "#000000";
+// 	}
 
-	var mrk = L.marker([lat, lon], {
-		icon: L.divIcon ({
-			className:'colourIcon',
-			html:`<svg width="24" height="24" viewBox="0 0 6.3499999 6.3499999">
-  				<g transform="translate(-17.507495,-99.150042)">
-    				<path style="opacity:1;vector-effect:none;fill:`+colour+`;fill-opacity:0.8;stroke:`+colour+`;stroke-width:0.05767668;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers stroke fill"
-       d="m 23.828657,102.32504 a 3.1461616,3.1461613 0 0 1 -3.141755,3.14616 3.1461616,3.1461613 0 0 1 -3.150556,-3.13734 3.1461616,3.1461613 0 0 1 3.132929,-3.154951 3.1461616,3.1461613 0 0 1 3.159332,3.128511 l -3.146112,0.0176 z"/>
-  				</g>
-			</svg>`
-		})
-	});
+// 	var mrk = L.marker([lat, lon], {
+// 		icon: L.divIcon ({
+// 			className:'colourIcon',
+// 			html:`<svg width="24" height="24" viewBox="0 0 6.3499999 6.3499999">
+//   				<g transform="translate(-17.507495,-99.150042)">
+//     				<path style="opacity:1;vector-effect:none;fill:`+colour+`;fill-opacity:0.8;stroke:`+colour+`;stroke-width:0.05767668;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers stroke fill"
+//        d="m 23.828657,102.32504 a 3.1461616,3.1461613 0 0 1 -3.141755,3.14616 3.1461616,3.1461613 0 0 1 -3.150556,-3.13734 3.1461616,3.1461613 0 0 1 3.132929,-3.154951 3.1461616,3.1461613 0 0 1 3.159332,3.128511 l -3.146112,0.0176 z"/>
+//   				</g>
+// 			</svg>`
+// 		})
+// 	});
 	
-	poi_markers.push(mrk);
-	mrk.addTo(poiMinis);
-	// if (map.getZoom() > 17) {
-		poiMinis.addTo(poiClusters);
-	// }
-}
+// 	poi_markers.push(mrk);
+// 	mrk.addTo(poiMinis);
+// 	// if (map.getZoom() > 17) {
+// 		poiMinis.addTo(poiClusters);
+// 	// }
+// }
 
 function getPanoramaxThumb(tagPanoramax) {
 	var px_tag = tagPanoramax;
@@ -228,39 +239,59 @@ function inscriptionParser(inscription) {
 	return semiColon.replace(/ \/ /g,"<br/>");
 }
 
+// function directionParser(direction) {
+// 	if (direction >= 348.75 || direction < 11.25) {
+// 			return "N";
+// 	} else if (direction >= 11.25 && direction < 33.75) {
+// 			return "NNE";
+// 	} else if (direction >= 33.75 && direction < 56.25) {
+// 			return "NE";
+// 	} else if (direction >= 56.25 && direction < 78.75) {
+// 			return "ENE";
+// 	} else if (direction >= 78.75 && direction < 101.25) {
+// 			return "E";
+// 	} else if (direction >= 101.25 && direction < 123.75) {
+// 			return "ESE";
+// 	} else if (direction >= 123.75 && direction < 146.25) {
+// 			return "SE";
+// 	} else if (direction >= 146.25 && direction < 168.75) {
+// 			return "SSE";
+// 	} else if (direction >= 168.75 && direction < 191.25) {
+// 			return "S";
+// 	} else if (direction >= 191.25 && direction < 213.75) {
+// 			return "SSW";
+// 	} else if (direction >= 213.75 && direction < 236.25) {
+// 			return "SW";
+// 	} else if (direction >= 236.25 && direction < 258.75) {
+// 			return "WSW";
+// 	} else if (direction >= 258.75 && direction < 281.25) {
+// 			return "W";
+// 	} else if (direction >= 281.25 && direction < 303.75) {
+// 			return "WNW";
+// 	} else if (direction >= 303.75 && direction < 326.25) {
+// 			return "NW";
+// 	} else if (direction >= 326.25 && direction < 348.75) {
+// 			return "NNW";
+// 	}
+// }
+
 function directionParser(direction) {
-	if (direction >= 348.75 || direction < 11.25) {
-			return "N";
-	} else if (direction >= 11.25 && direction < 33.75) {
-			return "NNE";
-	} else if (direction >= 33.75 && direction < 56.25) {
-			return "NE";
-	} else if (direction >= 56.25 && direction < 78.75) {
-			return "ENE";
-	} else if (direction >= 78.75 && direction < 101.25) {
-			return "E";
-	} else if (direction >= 101.25 && direction < 123.75) {
-			return "ESE";
-	} else if (direction >= 123.75 && direction < 146.25) {
-			return "SE";
-	} else if (direction >= 146.25 && direction < 168.75) {
-			return "SSE";
-	} else if (direction >= 168.75 && direction < 191.25) {
-			return "S";
-	} else if (direction >= 191.25 && direction < 213.75) {
-			return "SSW";
-	} else if (direction >= 213.75 && direction < 236.25) {
-			return "SW";
-	} else if (direction >= 236.25 && direction < 258.75) {
-			return "WSW";
-	} else if (direction >= 258.75 && direction < 281.25) {
-			return "W";
-	} else if (direction >= 281.25 && direction < 303.75) {
-			return "WNW";
-	} else if (direction >= 303.75 && direction < 326.25) {
-			return "NW";
-	} else if (direction >= 326.25 && direction < 348.75) {
-			return "NNW";
+	if (direction >= 337.5 || direction < 22.5) {
+			return "North";
+	} else if (direction >= 22.5 && direction < 67.5) {
+			return "Northeast";
+	} else if (direction >= 67.5 && direction < 112.5) {
+			return "East";
+	} else if (direction >= 112.5 && direction < 157.5) {
+			return "Southeast";
+	} else if (direction >= 157.5 && direction < 202.5) {
+			return "South";
+	} else if (direction >= 202.5 && direction < 247.5) {
+			return "Southwest";
+	} else if (direction >= 247.5 && direction < 292.5) {
+			return "West";
+	} else if (direction >= 292.5 && direction < 337.5) {
+			return "Northwest";
 	}
 }
 
@@ -307,9 +338,9 @@ function setPoiMarker(poi_type, icon_name, lat, lon, tags, osmid, osmtype) {
 		}
 		popup_content += "</div><br/>"
 	} else if (tags.inscription == 'no') {
-		var popup_content = "<span class=\"unknown\">No inscription</span><br/>"
+		var popup_content = "<span>No inscription</span><br/>"
 	} else {
-		var popup_content = "";
+		var popup_content = "<span class=\"unknown\">Inscription unknown</span><br/>";
 	}
 
 	if (tags.panoramax != undefined) {
@@ -323,7 +354,11 @@ function setPoiMarker(poi_type, icon_name, lat, lon, tags, osmid, osmtype) {
 	}
 
 	if (tags.colour != undefined) {
-		popup_content += "Color: <span class=\"colorbox\" title=\""+tags.colour+"\" style=\"background-color:"+tags.colour+"\">"+tags.colour+"</span><br/>";
+		if (tags.colour.includes('white') || tags.colour.includes('silver') || tags.colour.includes('gray') || tags.colour.includes('yellow') || tags.colour.includes('pink') || tags.colour.includes('light')) {
+			popup_content += "Color: <span class=\"colorbox\" title=\""+tags.colour+"\" style=\"color: #333; background-color:"+tags.colour+"\">"+tags.colour+"</span> | ";
+		} else {
+			popup_content += "Color: <span class=\"colorbox\" title=\""+tags.colour+"\" style=\"background-color:"+tags.colour+"\">"+tags.colour+"</span> | ";
+		}
 		// var tooltip_content = "C";
 	} else {
 		popup_content += "";
@@ -345,11 +380,11 @@ function setPoiMarker(poi_type, icon_name, lat, lon, tags, osmid, osmtype) {
 	}
 
 	if (tags.armrest == undefined) {
-		popup_content += "<br/>Armrests: 🤷";
+		popup_content += " | Armrests: 🤷";
 	} else if (tags.armrest == 'yes') {
-		popup_content += "<br/>Armrests: ☑️";
+		popup_content += " | Armrests: ☑️";
 	} else if (tags.armrest == 'no') {
-		popup_content += "<br/>Armrests: ❌";
+		popup_content += " | Armrests: ❌";
 	}
 
 	if (tags.backrest == 'no' && tags.direction != undefined) {
@@ -397,36 +432,232 @@ function element_to_map(data) {
 		if (el.tags != undefined) {
 			var mrk;
 
-			// if (el.tags.colour != undefined) {
-			// 	setColourMarker("", colour_icon, el.lat, el.lon, el.tags, el.id, el.type);
-			// }
-
-			if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
-				setPoiMarker("", yab_icon, el.lat, el.lon, el.tags, el.id, el.type);
-			} else if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
-				setPoiMarker("", yb_na_icon, el.lat, el.lon, el.tags, el.id, el.type);
-			} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
-				setPoiMarker("", ya_nb_icon, el.lat, el.lon, el.tags, el.id, el.type);
-			} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
-				setPoiMarker("", nab_icon, el.lat, el.lon, el.tags, el.id, el.type);
-			} else if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest == undefined)) {
-				setPoiMarker("", yb_ua_icon, el.lat, el.lon, el.tags, el.id, el.type);
-			} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest == undefined)) {
-				setPoiMarker("", nb_ua_icon, el.lat, el.lon, el.tags, el.id, el.type);
-			} else if ((el.tags.backrest == undefined) && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
-				setPoiMarker("", ya_ub_icon, el.lat, el.lon, el.tags, el.id, el.type);
-			} else if ((el.tags.backrest == undefined) && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
-				setPoiMarker("", na_ub_icon, el.lat, el.lon, el.tags, el.id, el.type);
-			} else if ((el.tags.backrest == undefined) && (el.tags.armrest == undefined)) {
-				setPoiMarker("", uab_icon, el.lat, el.lon, el.tags, el.id, el.type);
+			if (el.tags.colour != undefined && el.tags.colour.includes('red')) {
+				if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
+					setPoiMarker("", yab_icon_red, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
+					setPoiMarker("", yb_na_icon_red, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
+					setPoiMarker("", ya_nb_icon_red, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
+					setPoiMarker("", nab_icon_red, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest == undefined)) {
+					setPoiMarker("", yb_ua_icon_red, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest == undefined)) {
+					setPoiMarker("", nb_ua_icon_red, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest == undefined) && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
+					setPoiMarker("", ya_ub_icon_red, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest == undefined) && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
+					setPoiMarker("", na_ub_icon_red, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest == undefined) && (el.tags.armrest == undefined)) {
+					setPoiMarker("", uab_icon_red, el.lat, el.lon, el.tags, el.id, el.type);
+				}
+			} else if (el.tags.colour != undefined && el.tags.colour.includes('orange')) {
+				if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
+					setPoiMarker("", yab_icon_orange, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
+					setPoiMarker("", yb_na_icon_orange, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
+					setPoiMarker("", ya_nb_icon_orange, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
+					setPoiMarker("", nab_icon_orange, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest == undefined)) {
+					setPoiMarker("", yb_ua_icon_orange, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest == undefined)) {
+					setPoiMarker("", nb_ua_icon_orange, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest == undefined) && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
+					setPoiMarker("", ya_ub_icon_orange, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest == undefined) && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
+					setPoiMarker("", na_ub_icon_orange, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest == undefined) && (el.tags.armrest == undefined)) {
+					setPoiMarker("", uab_icon_orange, el.lat, el.lon, el.tags, el.id, el.type);
+				}
+			} else if (el.tags.colour != undefined && el.tags.colour.includes('yellow')) {
+				if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
+					setPoiMarker("", yab_icon_yellow, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
+					setPoiMarker("", yb_na_icon_yellow, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
+					setPoiMarker("", ya_nb_icon_yellow, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
+					setPoiMarker("", nab_icon_yellow, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest == undefined)) {
+					setPoiMarker("", yb_ua_icon_yellow, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest == undefined)) {
+					setPoiMarker("", nb_ua_icon_yellow, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest == undefined) && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
+					setPoiMarker("", ya_ub_icon_yellow, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest == undefined) && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
+					setPoiMarker("", na_ub_icon_yellow, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest == undefined) && (el.tags.armrest == undefined)) {
+					setPoiMarker("", uab_icon_yellow, el.lat, el.lon, el.tags, el.id, el.type);
+				}
+			} else if (el.tags.colour != undefined && el.tags.colour.includes('green')) {
+				if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
+					setPoiMarker("", yab_icon_green, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
+					setPoiMarker("", yb_na_icon_green, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
+					setPoiMarker("", ya_nb_icon_green, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
+					setPoiMarker("", nab_icon_green, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest == undefined)) {
+					setPoiMarker("", yb_ua_icon_green, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest == undefined)) {
+					setPoiMarker("", nb_ua_icon_green, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest == undefined) && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
+					setPoiMarker("", ya_ub_icon_green, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest == undefined) && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
+					setPoiMarker("", na_ub_icon_green, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest == undefined) && (el.tags.armrest == undefined)) {
+					setPoiMarker("", uab_icon_green, el.lat, el.lon, el.tags, el.id, el.type);
+				}
+			} else if (el.tags.colour != undefined && el.tags.colour.includes('blue')) {
+				if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
+					setPoiMarker("", yab_icon_blue, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
+					setPoiMarker("", yb_na_icon_blue, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
+					setPoiMarker("", ya_nb_icon_blue, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
+					setPoiMarker("", nab_icon_blue, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest == undefined)) {
+					setPoiMarker("", yb_ua_icon_blue, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest == undefined)) {
+					setPoiMarker("", nb_ua_icon_blue, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest == undefined) && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
+					setPoiMarker("", ya_ub_icon_blue, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest == undefined) && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
+					setPoiMarker("", na_ub_icon_blue, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest == undefined) && (el.tags.armrest == undefined)) {
+					setPoiMarker("", uab_icon_blue, el.lat, el.lon, el.tags, el.id, el.type);
+				}
+			} else if (el.tags.colour != undefined && el.tags.colour.includes('purple')) {
+				if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
+					setPoiMarker("", yab_icon_purple, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
+					setPoiMarker("", yb_na_icon_purple, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
+					setPoiMarker("", ya_nb_icon_purple, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
+					setPoiMarker("", nab_icon_purple, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest == undefined)) {
+					setPoiMarker("", yb_ua_icon_purple, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest == undefined)) {
+					setPoiMarker("", nb_ua_icon_purple, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest == undefined) && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
+					setPoiMarker("", ya_ub_icon_purple, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest == undefined) && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
+					setPoiMarker("", na_ub_icon_purple, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest == undefined) && (el.tags.armrest == undefined)) {
+					setPoiMarker("", uab_icon_purple, el.lat, el.lon, el.tags, el.id, el.type);
+				}
+			} else if (el.tags.colour != undefined && el.tags.colour.includes('brown')) {
+				if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
+					setPoiMarker("", yab_icon_brown, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
+					setPoiMarker("", yb_na_icon_brown, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
+					setPoiMarker("", ya_nb_icon_brown, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
+					setPoiMarker("", nab_icon_brown, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest == undefined)) {
+					setPoiMarker("", yb_ua_icon_brown, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest == undefined)) {
+					setPoiMarker("", nb_ua_icon_brown, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest == undefined) && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
+					setPoiMarker("", ya_ub_icon_brown, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest == undefined) && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
+					setPoiMarker("", na_ub_icon_brown, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest == undefined) && (el.tags.armrest == undefined)) {
+					setPoiMarker("", uab_icon_brown, el.lat, el.lon, el.tags, el.id, el.type);
+				}
+			} else if (el.tags.colour != undefined && el.tags.colour.includes('black')) {
+				if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
+					setPoiMarker("", yab_icon_black, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
+					setPoiMarker("", yb_na_icon_black, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
+					setPoiMarker("", ya_nb_icon_black, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
+					setPoiMarker("", nab_icon_black, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest == undefined)) {
+					setPoiMarker("", yb_ua_icon_black, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest == undefined)) {
+					setPoiMarker("", nb_ua_icon_black, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest == undefined) && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
+					setPoiMarker("", ya_ub_icon_black, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest == undefined) && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
+					setPoiMarker("", na_ub_icon_black, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest == undefined) && (el.tags.armrest == undefined)) {
+					setPoiMarker("", uab_icon_black, el.lat, el.lon, el.tags, el.id, el.type);
+				}
+			} else if (el.tags.colour != undefined && (el.tags.colour.includes('gray') || el.tags.colour.includes('grey') || el.tags.colour.includes('silver'))) {
+				if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
+					setPoiMarker("", yab_icon_gray, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
+					setPoiMarker("", yb_na_icon_gray, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
+					setPoiMarker("", ya_nb_icon_gray, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
+					setPoiMarker("", nab_icon_gray, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest == undefined)) {
+					setPoiMarker("", yb_ua_icon_gray, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest == undefined)) {
+					setPoiMarker("", nb_ua_icon_gray, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest == undefined) && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
+					setPoiMarker("", ya_ub_icon_gray, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest == undefined) && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
+					setPoiMarker("", na_ub_icon_gray, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest == undefined) && (el.tags.armrest == undefined)) {
+					setPoiMarker("", uab_icon_gray, el.lat, el.lon, el.tags, el.id, el.type);
+				}
+			} else if (el.tags.colour != undefined && el.tags.colour.includes('white')) {
+				if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
+					setPoiMarker("", yab_icon_white, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
+					setPoiMarker("", yb_na_icon_white, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
+					setPoiMarker("", ya_nb_icon_white, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
+					setPoiMarker("", nab_icon_white, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest == undefined)) {
+					setPoiMarker("", yb_ua_icon_white, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest == undefined)) {
+					setPoiMarker("", nb_ua_icon_white, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest == undefined) && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
+					setPoiMarker("", ya_ub_icon_white, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest == undefined) && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
+					setPoiMarker("", na_ub_icon_white, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest == undefined) && (el.tags.armrest == undefined)) {
+					setPoiMarker("", uab_icon_white, el.lat, el.lon, el.tags, el.id, el.type);
+				}
 			} else {
-				setPoiMarker("Unknown Type", other_icon, el.lat, el.lon, el.tags, el.id, el.type);
+				if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
+					setPoiMarker("", yab_icon, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
+					setPoiMarker("", yb_na_icon, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
+					setPoiMarker("", ya_nb_icon, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
+					setPoiMarker("", nab_icon, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest == undefined)) {
+					setPoiMarker("", yb_ua_icon, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest == undefined)) {
+					setPoiMarker("", nb_ua_icon, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest == undefined) && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
+					setPoiMarker("", ya_ub_icon, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest == undefined) && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
+					setPoiMarker("", na_ub_icon, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.backrest == undefined) && (el.tags.armrest == undefined)) {
+					setPoiMarker("", uab_icon, el.lat, el.lon, el.tags, el.id, el.type);
+				}
 			}
-
+			
 			if ((el.tags.inscription != undefined && el.tags.inscription != 'no') || (el.tags["inscription:1"] != undefined && el.tags["inscription:1"] != 'no')) {
 				setMiniMarker("", inscription_icon, el.lat, el.lon, el.tags, el.id, el.type);
-			} else if (el.tags.inscription == 'no') {
-				setMiniMarker("", no_inscription_icon, el.lat, el.lon, el.tags, el.id, el.type);
+			} else if (el.tags.inscription == undefined) {
+				setMiniMarker("", unk_inscription_icon, el.lat, el.lon, el.tags, el.id, el.type);
 			}
 		}
 	});
@@ -478,63 +709,603 @@ $(function() {
 		iconSize: [24,24],
 		className: 'pointIcon',
 		iconAnchor: [12,12],
-		popupAnchor: [0,-15],
+		popupAnchor: [0,-20],
+	});yab_icon_red = L.icon({
+		iconUrl: 'icons/yab_icon_red.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});yab_icon_orange = L.icon({
+		iconUrl: 'icons/yab_icon_orange.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});yab_icon_yellow = L.icon({
+		iconUrl: 'icons/yab_icon_yellow.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});yab_icon_green = L.icon({
+		iconUrl: 'icons/yab_icon_green.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});yab_icon_blue = L.icon({
+		iconUrl: 'icons/yab_icon_blue.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});yab_icon_purple = L.icon({
+		iconUrl: 'icons/yab_icon_purple.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});yab_icon_brown = L.icon({
+		iconUrl: 'icons/yab_icon_brown.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});yab_icon_black = L.icon({
+		iconUrl: 'icons/yab_icon_black.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});yab_icon_gray = L.icon({
+		iconUrl: 'icons/yab_icon_gray.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});yab_icon_white = L.icon({
+		iconUrl: 'icons/yab_icon_white.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
 	});
 	ya_nb_icon = L.icon({
 		iconUrl: 'icons/ya_nb_icon.svg',
 		iconSize: [24,24],
 		className: 'pointIcon',
 		iconAnchor: [12,12],
-		popupAnchor: [0,-15],
+		popupAnchor: [0,-20],
+	});ya_nb_icon_red = L.icon({
+		iconUrl: 'icons/ya_nb_icon_red.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});ya_nb_icon_orange = L.icon({
+		iconUrl: 'icons/ya_nb_icon_orange.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});ya_nb_icon_yellow = L.icon({
+		iconUrl: 'icons/ya_nb_icon_yellow.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});ya_nb_icon_green = L.icon({
+		iconUrl: 'icons/ya_nb_icon_green.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});ya_nb_icon_blue = L.icon({
+		iconUrl: 'icons/ya_nb_icon_blue.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});ya_nb_icon_purple = L.icon({
+		iconUrl: 'icons/ya_nb_icon_purple.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});ya_nb_icon_brown = L.icon({
+		iconUrl: 'icons/ya_nb_icon_brown.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});ya_nb_icon_black = L.icon({
+		iconUrl: 'icons/ya_nb_icon_black.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});ya_nb_icon_gray = L.icon({
+		iconUrl: 'icons/ya_nb_icon_gray.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});ya_nb_icon_white = L.icon({
+		iconUrl: 'icons/ya_nb_icon_white.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
 	});
 	ya_ub_icon = L.icon({
 		iconUrl: 'icons/ya_ub_icon.svg',
 		iconSize: [24,24],
 		className: 'pointIcon',
 		iconAnchor: [12,12],
-		popupAnchor: [0,-15],
+		popupAnchor: [0,-20],
+	});ya_ub_icon_red = L.icon({
+		iconUrl: 'icons/ya_ub_icon_red.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});ya_ub_icon_orange = L.icon({
+		iconUrl: 'icons/ya_ub_icon_orange.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});ya_ub_icon_yellow = L.icon({
+		iconUrl: 'icons/ya_ub_icon_yellow.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});ya_ub_icon_green = L.icon({
+		iconUrl: 'icons/ya_ub_icon_green.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});ya_ub_icon_blue = L.icon({
+		iconUrl: 'icons/ya_ub_icon_blue.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});ya_ub_icon_purple = L.icon({
+		iconUrl: 'icons/ya_ub_icon_purple.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});ya_ub_icon_brown = L.icon({
+		iconUrl: 'icons/ya_ub_icon_brown.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});ya_ub_icon_black = L.icon({
+		iconUrl: 'icons/ya_ub_icon_black.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});ya_ub_icon_gray = L.icon({
+		iconUrl: 'icons/ya_ub_icon_gray.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});ya_ub_icon_white = L.icon({
+		iconUrl: 'icons/ya_ub_icon_white.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
 	});
 	yb_na_icon = L.icon({
 		iconUrl: 'icons/yb_na_icon.svg',
 		iconSize: [24,24],
 		className: 'pointIcon',
 		iconAnchor: [12,12],
-		popupAnchor: [0,-15],
+		popupAnchor: [0,-20],
+	});yb_na_icon_red = L.icon({
+		iconUrl: 'icons/yb_na_icon_red.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});yb_na_icon_orange = L.icon({
+		iconUrl: 'icons/yb_na_icon_orange.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});yb_na_icon_yellow = L.icon({
+		iconUrl: 'icons/yb_na_icon_yellow.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});yb_na_icon_green = L.icon({
+		iconUrl: 'icons/yb_na_icon_green.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});yb_na_icon_blue = L.icon({
+		iconUrl: 'icons/yb_na_icon_blue.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});yb_na_icon_purple = L.icon({
+		iconUrl: 'icons/yb_na_icon_purple.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});yb_na_icon_brown = L.icon({
+		iconUrl: 'icons/yb_na_icon_brown.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});yb_na_icon_black = L.icon({
+		iconUrl: 'icons/yb_na_icon_black.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});yb_na_icon_gray = L.icon({
+		iconUrl: 'icons/yb_na_icon_gray.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});yb_na_icon_white = L.icon({
+		iconUrl: 'icons/yb_na_icon_white.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
 	});
-	yb_ua_icon = L.icon({
+	yb_ua_icon_red = L.icon({
+		iconUrl: 'icons/yb_ua_icon_red.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});yb_ua_icon_orange = L.icon({
+		iconUrl: 'icons/yb_ua_icon_orange.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});yb_ua_icon_yellow = L.icon({
+		iconUrl: 'icons/yb_ua_icon_yellow.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});yb_ua_icon_green = L.icon({
+		iconUrl: 'icons/yb_ua_icon_green.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});yb_ua_icon_blue = L.icon({
+		iconUrl: 'icons/yb_ua_icon_blue.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});yb_ua_icon_purple = L.icon({
+		iconUrl: 'icons/yb_ua_icon_purple.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});yb_ua_icon_brown = L.icon({
+		iconUrl: 'icons/yb_ua_icon_brown.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});yb_ua_icon_black = L.icon({
+		iconUrl: 'icons/yb_ua_icon_black.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});yb_ua_icon_gray = L.icon({
+		iconUrl: 'icons/yb_ua_icon_gray.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});yb_ua_icon_white = L.icon({
+		iconUrl: 'icons/yb_ua_icon_white.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});yb_ua_icon = L.icon({
 		iconUrl: 'icons/yb_ua_icon.svg',
 		iconSize: [24,24],
 		className: 'pointIcon',
 		iconAnchor: [12,12],
-		popupAnchor: [0,-15],
+		popupAnchor: [0,-20],
 	});
 	nab_icon = L.icon({
 		iconUrl: 'icons/nab_icon.svg',
 		iconSize: [24,24],
 		className: 'pointIcon',
 		iconAnchor: [12,12],
-		popupAnchor: [0,-15],
+		popupAnchor: [0,-20],
+	});nab_icon_red = L.icon({
+		iconUrl: 'icons/nab_icon_red.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});nab_icon_orange = L.icon({
+		iconUrl: 'icons/nab_icon_orange.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});nab_icon_yellow = L.icon({
+		iconUrl: 'icons/nab_icon_yellow.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});nab_icon_green = L.icon({
+		iconUrl: 'icons/nab_icon_green.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});nab_icon_blue = L.icon({
+		iconUrl: 'icons/nab_icon_blue.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});nab_icon_purple = L.icon({
+		iconUrl: 'icons/nab_icon_purple.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});nab_icon_brown = L.icon({
+		iconUrl: 'icons/nab_icon_brown.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});nab_icon_black = L.icon({
+		iconUrl: 'icons/nab_icon_black.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});nab_icon_gray = L.icon({
+		iconUrl: 'icons/nab_icon_gray.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});nab_icon_white = L.icon({
+		iconUrl: 'icons/nab_icon_white.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
 	});
 	na_ub_icon = L.icon({
 		iconUrl: 'icons/na_ub_icon.svg',
 		iconSize: [24,24],
 		className: 'pointIcon',
 		iconAnchor: [12,12],
-		popupAnchor: [0,-15],
+		popupAnchor: [0,-20],
+	});na_ub_icon_red = L.icon({
+		iconUrl: 'icons/na_ub_icon_red.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});na_ub_icon_orange = L.icon({
+		iconUrl: 'icons/na_ub_icon_orange.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});na_ub_icon_yellow = L.icon({
+		iconUrl: 'icons/na_ub_icon_yellow.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});na_ub_icon_green = L.icon({
+		iconUrl: 'icons/na_ub_icon_green.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});na_ub_icon_blue = L.icon({
+		iconUrl: 'icons/na_ub_icon_blue.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});na_ub_icon_purple = L.icon({
+		iconUrl: 'icons/na_ub_icon_purple.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});na_ub_icon_brown = L.icon({
+		iconUrl: 'icons/na_ub_icon_brown.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});na_ub_icon_black = L.icon({
+		iconUrl: 'icons/na_ub_icon_black.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});na_ub_icon_gray = L.icon({
+		iconUrl: 'icons/na_ub_icon_gray.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});na_ub_icon_white = L.icon({
+		iconUrl: 'icons/na_ub_icon_white.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
 	});
 	nb_ua_icon = L.icon({
 		iconUrl: 'icons/nb_ua_icon.svg',
 		iconSize: [24,24],
 		className: 'pointIcon',
 		iconAnchor: [12,12],
-		popupAnchor: [0,-15],
+		popupAnchor: [0,-20],
+	});nb_ua_icon_red = L.icon({
+		iconUrl: 'icons/nb_ua_icon_red.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});nb_ua_icon_orange = L.icon({
+		iconUrl: 'icons/nb_ua_icon_orange.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});nb_ua_icon_yellow = L.icon({
+		iconUrl: 'icons/nb_ua_icon_yellow.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});nb_ua_icon_green = L.icon({
+		iconUrl: 'icons/nb_ua_icon_green.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});nb_ua_icon_blue = L.icon({
+		iconUrl: 'icons/nb_ua_icon_blue.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});nb_ua_icon_purple = L.icon({
+		iconUrl: 'icons/nb_ua_icon_purple.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});nb_ua_icon_brown = L.icon({
+		iconUrl: 'icons/nb_ua_icon_brown.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});nb_ua_icon_black = L.icon({
+		iconUrl: 'icons/nb_ua_icon_black.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});nb_ua_icon_gray = L.icon({
+		iconUrl: 'icons/nb_ua_icon_gray.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});nb_ua_icon_white = L.icon({
+		iconUrl: 'icons/nb_ua_icon_white.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
 	});
 	uab_icon = L.icon({
 		iconUrl: 'icons/uab_icon.svg',
 		iconSize: [24,24],
 		className: 'pointIcon',
 		iconAnchor: [12,12],
-		popupAnchor: [0,-15],
+		popupAnchor: [0,-20],
+	});uab_icon_red = L.icon({
+		iconUrl: 'icons/uab_icon_red.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});uab_icon_orange = L.icon({
+		iconUrl: 'icons/uab_icon_orange.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});uab_icon_yellow = L.icon({
+		iconUrl: 'icons/uab_icon_yellow.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});uab_icon_green = L.icon({
+		iconUrl: 'icons/uab_icon_green.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});uab_icon_blue = L.icon({
+		iconUrl: 'icons/uab_icon_blue.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});uab_icon_purple = L.icon({
+		iconUrl: 'icons/uab_icon_purple.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});uab_icon_brown = L.icon({
+		iconUrl: 'icons/uab_icon_brown.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});uab_icon_black = L.icon({
+		iconUrl: 'icons/uab_icon_black.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});uab_icon_gray = L.icon({
+		iconUrl: 'icons/uab_icon_gray.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
+	});uab_icon_white = L.icon({
+		iconUrl: 'icons/uab_icon_white.svg',
+		iconSize: [24,24],
+		className: 'pointIcon',
+		iconAnchor: [12,12],
+		popupAnchor: [0,-20],
 	});
 	inscription_icon = L.icon({
 		iconUrl: 'icons/inscription.svg',
@@ -542,9 +1313,9 @@ $(function() {
 		className: 'sourceIcon',
 		iconAnchor: [4,-4],
 	});
-	no_inscription_icon = L.icon({
-		iconUrl: 'icons/no_inscription.svg',
-		iconSize: [8,5],
+	unk_inscription_icon = L.icon({
+		iconUrl: 'icons/unk_inscription.svg',
+		iconSize: [8,8],
 		className: 'sourceIcon',
 		iconAnchor: [4,-4],
 	});

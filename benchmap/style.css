@@ -237,7 +237,7 @@ button {
 	background-color: saddlebrown;
 	opacity: 0.9;
 }
-.linkbutton:hover {
+.linkbutton:hover, .loadbutton:hover {
 	background-color: saddlebrown;
 	opacity: 1 !important;
 }
@@ -402,7 +402,7 @@ button {
 }*/
 .leaflet-popup-content {
 	/*border-radius: 0;*/
-	max-width: 380px;
+	max-width: 280px;
 	/*min-height: 180px;*/
 	text-align: center;
 	color: white;
@@ -692,8 +692,8 @@ text-align: right;
 .colorbox {
 /*	height: 14px;*/
 /*	width: 14px;*/
-	padding: 0 2px 0 2px;
-	border-radius: 2px;
+	padding: 1px 4px 1px 4px;
+	border-radius: 4px;
 /*	display: inline-block;*/
 /*	position: relative;*/
 /*	top: 3px;*/
@@ -705,7 +705,7 @@ text-align: right;
 .inscription {
 	background-color: #c94;
 	color: #111;
-	padding: 5px;
+	padding: 5px 15px 5px 15px;
 	border-radius: 2px;
 	box-shadow: 2px 2px 2px black;
 	position: relative;
@@ -733,20 +733,31 @@ text-align: right;
 }
 
 .material {
-	padding: 0 2px 0 2px;
-	border-radius: 2px;
+	padding: 1px 4px 1px 4px;
+	border-radius: 4px;
 }
 .wood {
 	background: linear-gradient(0deg, rgb(170,85,50) 0%, rgb(221,153,100) 100%);
+	color:#333;
+	background-image: url(icons/wood.png);
 }
 .metal, .steel {
 	background: linear-gradient(90deg, rgb(153,153,153) 0%, rgb(238,238,238) 100%);
 	color:#333;
+	background-image: url(icons/metal.png);
 }
 .plastic {
 	background-color: #ffee66;
 	color:#333;
+	background-image: url(icons/plastic.png);
 }
 .concrete, .stone {
 	background-color: gray;
+	color:#333;
+	background-image: url(icons/concrete.png);
+}
+.granite {
+	background-color: rosybrown;
+	color:#333;
+	background-image: url(icons/granite.png);
 }
