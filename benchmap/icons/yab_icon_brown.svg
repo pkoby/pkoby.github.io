@@ -26,7 +26,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="32"
-     inkscape:cx="2.7906087"
+     inkscape:cx="-2.7250163"
      inkscape:cy="4.3780886"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
@@ -55,7 +55,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -66,63 +66,63 @@
      transform="translate(-30.38741,-39.520475)">
     <g
        id="g6581"
-       style="stroke:#552200;stroke-width:0.6;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;fill:#008000">
+       style="stroke:#803300;stroke-width:0.6;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;fill:#008000">
       <path
          sodipodi:nodetypes="cc"
          inkscape:connector-curvature="0"
          id="path5095-7"
          d="m 31.485433,40.18923 2.910419,-6.7e-5"
-         style="fill:#008000;fill-rule:evenodd;stroke:#552200;stroke-width:0.8;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+         style="fill:#008000;fill-rule:evenodd;stroke:#803300;stroke-width:0.8;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
       <path
          sodipodi:nodetypes="cc"
          inkscape:connector-curvature="0"
          id="path6424-5-9"
          d="M 34.660433,40.883081 V 39.824748"
-         style="fill:#008000;fill-rule:evenodd;stroke:#552200;stroke-width:0.6;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+         style="fill:#008000;fill-rule:evenodd;stroke:#803300;stroke-width:0.6;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
       <path
          sodipodi:nodetypes="cc"
          inkscape:connector-curvature="0"
          id="path6424-5-9-1"
          d="M 31.220849,40.883081 V 39.824748"
-         style="fill:#008000;fill-rule:evenodd;stroke:#552200;stroke-width:0.6;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+         style="fill:#008000;fill-rule:evenodd;stroke:#803300;stroke-width:0.6;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     </g>
     <g
        id="g6602"
-       style="stroke:#552200;stroke-width:0.6;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers;fill:#008000">
+       style="stroke:#803300;stroke-width:0.6;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers;fill:#008000">
       <path
          sodipodi:nodetypes="cc"
          inkscape:connector-curvature="0"
          id="path6424"
          d="M 30.691685,41.147623 V 40.618456"
-         style="fill:#008000;fill-rule:evenodd;stroke:#552200;stroke-width:0.6;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers" />
+         style="fill:#008000;fill-rule:evenodd;stroke:#803300;stroke-width:0.6;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers" />
       <path
          sodipodi:nodetypes="cc"
          inkscape:connector-curvature="0"
          id="path6424-5"
          d="M 35.189601,41.147623 V 40.618456"
-         style="fill:#008000;fill-rule:evenodd;stroke:#552200;stroke-width:0.6;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers" />
+         style="fill:#008000;fill-rule:evenodd;stroke:#803300;stroke-width:0.6;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers" />
     </g>
     <g
        id="g6586"
-       style="fill:#008000;fill-opacity:1;stroke:#552200;stroke-width:0.6;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1">
+       style="fill:#008000;fill-opacity:1;stroke:#803300;stroke-width:0.6;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1">
       <path
          sodipodi:nodetypes="cc"
          inkscape:connector-curvature="0"
          id="path5097"
          d="m 31.220851,41.148271 -2e-6,0.857999"
-         style="fill:#008000;fill-opacity:1;fill-rule:evenodd;stroke:#552200;stroke-width:0.6;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+         style="fill:#008000;fill-opacity:1;fill-rule:evenodd;stroke:#803300;stroke-width:0.6;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
       <path
          sodipodi:nodetypes="cc"
          inkscape:connector-curvature="0"
          id="path5097-6"
          d="m 34.660435,41.148271 -2e-6,0.857999"
-         style="opacity:1;vector-effect:none;fill:#008000;fill-opacity:1;fill-rule:evenodd;stroke:#552200;stroke-width:0.6;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+         style="opacity:1;vector-effect:none;fill:#008000;fill-opacity:1;fill-rule:evenodd;stroke:#803300;stroke-width:0.6;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
       <path
          sodipodi:nodetypes="cc"
          inkscape:connector-curvature="0"
          id="path5095"
          d="m 30.691683,41.147665 h 4.497916"
-         style="fill:#008000;fill-opacity:1;fill-rule:evenodd;stroke:#552200;stroke-width:0.6;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+         style="fill:#008000;fill-opacity:1;fill-rule:evenodd;stroke:#803300;stroke-width:0.6;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     </g>
   </g>
 </svg>

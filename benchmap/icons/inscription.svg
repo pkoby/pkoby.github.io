@@ -12,7 +12,7 @@
    width="16"
    height="10"
    viewBox="0 0 16 10"
-   sodipodi:docname="inscription_rect.svg"
+   sodipodi:docname="inscription.svg"
    inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)">
   <metadata
      id="metadata859">
@@ -22,7 +22,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -46,7 +46,7 @@
      fit-margin-right="0"
      fit-margin-bottom="0"
      inkscape:zoom="38.533333"
-     inkscape:cx="6.4928465"
+     inkscape:cx="1.9123966"
      inkscape:cy="6.4993605"
      inkscape:window-x="0"
      inkscape:window-y="27"
@@ -59,7 +59,7 @@
        originy="0" />
   </sodipodi:namedview>
   <rect
-     style="opacity:1;vector-effect:none;fill:#cc9944;fill-opacity:1;stroke:#cc9944;stroke-width:4;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:fill markers stroke"
+     style="opacity:1;vector-effect:none;fill:#ddaa33;fill-opacity:1;stroke:#ddaa33;stroke-width:4;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:fill markers stroke"
      id="rect879"
      width="12"
      height="6"
