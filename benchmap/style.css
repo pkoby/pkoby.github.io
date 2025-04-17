@@ -441,10 +441,10 @@ a, leaflet-container a {
 .title {
 	font-weight: bold;
 	/*font-style: italic;*/
-	font-size: 1.7em;
+	font-size: 1.2em;
 	max-width: 250px;
 	display: inline-block;
-	margin-bottom: 5px;
+/*	margin-bottom: 5px;*/
 }
 
 .material {
@@ -567,10 +567,10 @@ text-align: right;
 }
 
 .zoomOverlay {
-	background-color: purple;
+	background-color: silver;
 }
 .zoomOverlay:hover {	
-	background-color: purple;
+	background-color: silver;
 	opacity: 1 !important;
 }
 .loadingOverlay {

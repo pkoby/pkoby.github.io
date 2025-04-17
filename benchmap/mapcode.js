@@ -1,24 +1,28 @@
 'use strict';
 var saved_lat, saved_lon, bbox, bboxOutline;
 var poi_markers = new Array();
+var poiDots = new L.LayerGroup();
 var poiMinis = new L.LayerGroup();
+var poiMain = new L.LayerGroup();
 var poiClusters = new L.markerClusterGroup({
-	disableClusteringAtZoom: 17,
+	disableClusteringAtZoom: 18,
 	spiderfyOnMaxZoom: false,
 	showCoverageOnHover: true,
 	maxClusterRadius: 50,
 	minClusterRadius: 20,
-	iconCreateFunction: function(cluster) {
-		return L.icon({
-			iconUrl: 'icons/group_icon.svg',
-			iconSize: [32,32],
-			className: 'pointIcon',
-			iconAnchor: [16,16],
-		});
-	}
+	// iconCreateFunction: function(cluster) {
+	// 	return L.icon({
+	// 		iconUrl: 'icons/group_icon.svg',
+	// 		iconSize: [32,32],
+	// 		className: 'pointIcon',
+	// 		iconAnchor: [16,16],
+	// 	});
+	// }
 });
 
-var yab_icon,yb_na_icon,ya_nb_icon,nab_icon,yb_ua_icon,nb_ua_icon,ya_ub_icon,na_ub_icon,uab_icon,
+var bench_dot,
+	picnic_table_dot,
+	yab_icon,yb_na_icon,ya_nb_icon,nab_icon,yb_ua_icon,nb_ua_icon,ya_ub_icon,na_ub_icon,uab_icon,
 	yab_icon_red,yb_na_icon_red,ya_nb_icon_red,nab_icon_red,yb_ua_icon_red,nb_ua_icon_red,ya_ub_icon_red,na_ub_icon_red,uab_icon_red,
 	yab_icon_orange,yb_na_icon_orange,ya_nb_icon_orange,nab_icon_orange,yb_ua_icon_orange,nb_ua_icon_orange,ya_ub_icon_orange,na_ub_icon_orange,uab_icon_orange,
 	yab_icon_yellow,yb_na_icon_yellow,ya_nb_icon_yellow,nab_icon_yellow,yb_ua_icon_yellow,nb_ua_icon_yellow,ya_ub_icon_yellow,na_ub_icon_yellow,uab_icon_yellow,
@@ -29,7 +33,8 @@ var yab_icon,yb_na_icon,ya_nb_icon,nab_icon,yb_ua_icon,nb_ua_icon,ya_ub_icon,na_
 	yab_icon_black,yb_na_icon_black,ya_nb_icon_black,nab_icon_black,yb_ua_icon_black,nb_ua_icon_black,ya_ub_icon_black,na_ub_icon_black,uab_icon_black,
 	yab_icon_gray,yb_na_icon_gray,ya_nb_icon_gray,nab_icon_gray,yb_ua_icon_gray,nb_ua_icon_gray,ya_ub_icon_gray,na_ub_icon_gray,uab_icon_gray,
 	yab_icon_white,yb_na_icon_white,ya_nb_icon_white,nab_icon_white,yb_ua_icon_white,nb_ua_icon_white,ya_ub_icon_white,na_ub_icon_white,uab_icon_white,
-	inscription_icon,unk_inscription_icon,colour_icon;
+	picnic_table_icon,picnic_table_icon_red,picnic_table_icon_orange,picnic_table_icon_yellow,picnic_table_icon_green,picnic_table_icon_blue,picnic_table_icon_purple,picnic_table_icon_brown,picnic_table_icon_black,picnic_table_icon_gray,picnic_table_icon_white,
+	inscription_icon,no_inscription_icon,unk_inscription_icon;
 
 	// var OSMCarto=L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,opacity:0.3,attribution:'&copy;<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'});
 	var CartoDB_Voyager = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
@@ -119,7 +124,7 @@ var zoomText = L.Control.extend({
 var zoomText =  new zoomText().addTo(map);
 
 document.getElementsByClassName('overlayText')[0].addEventListener('click', function () {
-	map.setZoom(15);
+	map.setZoom(14);
 });
 
 var loadingText = L.Control.extend({
@@ -169,17 +174,38 @@ var mapHash = new L.Hash(map);
 if (L.Browser.retina) var tp = "lr";
 else var tp = "ls";
 
+function setDotMarker(poi_type, icon, lat, lon, tags, osmid, osmtype) {
+	var mrk = L.marker([lat, lon],{
+		icon: icon,
+	});
+	
+	if (tags.amenity == 'bench') {
+		var popup_content = "<span class=\"title\">Bench</span><br/>";
+	} else if (tags.leisure == 'picnic_table') {
+		var popup_content = "<span class=\"title\">Picnic Table</span><br/>";
+	}
+	
+	mrk.bindPopup(L.popup({autoPanPaddingTopLeft: [0,50]}).setContent(popup_content));
+
+	poi_markers.push(mrk);
+	mrk.addTo(poiDots);
+	poiDots.addTo(poiClusters);
+	if (map.getZoom() <= 17) {
+		poiClusters.addTo(map);
+	}
+}
+
 function setMiniMarker(poi_type, icon, lat, lon, tags, osmid, osmtype) {
 	var mrk = L.marker([lat, lon], {
 		icon: icon, interactive:false,
 		rotationAngle: tags.direction-180,
 	});
-	
+
 	poi_markers.push(mrk);
 	mrk.addTo(poiMinis);
-	// if (map.getZoom() > 16) {
-		poiMinis.addTo(poiClusters);
-	// }
+	if (map.getZoom() > 18) {
+		poiMinis.addTo(poiMain);
+	}
 }
 
 // function setColourMarker(poi_type, icon, lat, lon, tags, osmid, osmtype) {
@@ -239,42 +265,6 @@ function inscriptionParser(inscription) {
 	return semiColon.replace(/ \/ /g,"<br/>");
 }
 
-// function directionParser(direction) {
-// 	if (direction >= 348.75 || direction < 11.25) {
-// 			return "N";
-// 	} else if (direction >= 11.25 && direction < 33.75) {
-// 			return "NNE";
-// 	} else if (direction >= 33.75 && direction < 56.25) {
-// 			return "NE";
-// 	} else if (direction >= 56.25 && direction < 78.75) {
-// 			return "ENE";
-// 	} else if (direction >= 78.75 && direction < 101.25) {
-// 			return "E";
-// 	} else if (direction >= 101.25 && direction < 123.75) {
-// 			return "ESE";
-// 	} else if (direction >= 123.75 && direction < 146.25) {
-// 			return "SE";
-// 	} else if (direction >= 146.25 && direction < 168.75) {
-// 			return "SSE";
-// 	} else if (direction >= 168.75 && direction < 191.25) {
-// 			return "S";
-// 	} else if (direction >= 191.25 && direction < 213.75) {
-// 			return "SSW";
-// 	} else if (direction >= 213.75 && direction < 236.25) {
-// 			return "SW";
-// 	} else if (direction >= 236.25 && direction < 258.75) {
-// 			return "WSW";
-// 	} else if (direction >= 258.75 && direction < 281.25) {
-// 			return "W";
-// 	} else if (direction >= 281.25 && direction < 303.75) {
-// 			return "WNW";
-// 	} else if (direction >= 303.75 && direction < 326.25) {
-// 			return "NW";
-// 	} else if (direction >= 326.25 && direction < 348.75) {
-// 			return "NNW";
-// 	}
-// }
-
 function directionParser(direction) {
 	if (direction >= 337.5 || direction < 22.5) {
 			return "North";
@@ -304,8 +294,13 @@ function setPoiMarker(poi_type, icon_name, lat, lon, tags, osmid, osmtype) {
 	var iDedit = "https://www.openstreetmap.org/edit\?editor=id&"+osmtype+"="+osmid;
 	var josmedit = "http://127.0.0.1:8111/load_object?new_layer=true&objects=n"+osmid;
 
+	if (tags.amenity == 'bench') {
+		var popup_content = "<span class=\"title\">Bench</span><br/>";
+	} else if (tags.leisure == 'picnic_table') {
+		var popup_content = "<span class=\"title\">Picnic Table</span><br/>";
+	}
 	if (tags.inscription != undefined && tags.inscription != 'no') {
-		var popup_content = "<div class='inscription'>"+inscriptionParser(tags.inscription);
+		popup_content += "<div class='inscription'>"+inscriptionParser(tags.inscription);
 		if (tags["inscription:1"] != undefined) {
 			popup_content += " "+inscriptionParser(tags["inscription:1"]);
 		}
@@ -323,7 +318,7 @@ function setPoiMarker(poi_type, icon_name, lat, lon, tags, osmid, osmtype) {
 		}
 		popup_content += "</div><br/>"
 	} else if (tags.inscription == undefined && tags["inscription:1"] != undefined && tags["inscription:1"] != 'no') {
-		var popup_content = "<div class='inscription'>"+inscriptionParser(tags["inscription:1"]);
+		popup_content += "<div class='inscription'>"+inscriptionParser(tags["inscription:1"]);
 		if (tags["inscription:2"] != undefined) {
 			popup_content += " "+inscriptionParser(tags["inscription:2"]);
 			if (tags["inscription:3"] != undefined) {
@@ -338,9 +333,11 @@ function setPoiMarker(poi_type, icon_name, lat, lon, tags, osmid, osmtype) {
 		}
 		popup_content += "</div><br/>"
 	} else if (tags.inscription == 'no') {
-		var popup_content = "<span>No inscription</span><br/>"
+		popup_content += "<span>No inscription</span><br/>"
+	} else if (tags.amenity == 'bench' && tags.inscription == undefined) {
+		popup_content += "<span class=\"unknown\">Inscription unknown</span><br/>";
 	} else {
-		var popup_content = "<span class=\"unknown\">Inscription unknown</span><br/>";
+		popup_content += "";
 	}
 
 	if (tags.panoramax != undefined) {
@@ -349,9 +346,9 @@ function setPoiMarker(poi_type, icon_name, lat, lon, tags, osmid, osmtype) {
 		popup_content += "<a href='"+link+"' target='_blank'><img src='"+thumb+"' class='popup_image'></a><br/>";
 	}
 
-	if (tags.seats != undefined) {
-		var tooltip_content = tags.seats;
-	}
+	// if (tags.seats != undefined) {
+	// 	var tooltip_content = tags.seats;
+	// }
 
 	if (tags.colour != undefined) {
 		if (tags.colour.includes('white') || tags.colour.includes('silver') || tags.colour.includes('gray') || tags.colour.includes('yellow') || tags.colour.includes('pink') || tags.colour.includes('light')) {
@@ -371,34 +368,34 @@ function setPoiMarker(poi_type, icon_name, lat, lon, tags, osmid, osmtype) {
 		popup_content += "Material: 🤷";
 	}
 
-	if (tags.backrest == undefined) {
+	if (tags.backrest == undefined && tags.amenity == 'bench') {
 		popup_content += "<br/>Backrest: 🤷";
-	} else if (tags.backrest == 'yes') {
+	} else if (tags.backrest == 'yes' && tags.amenity == 'bench') {
 		popup_content += "<br/>Backrest: ☑️";
-	} else if (tags.backrest == 'no') {
+	} else if (tags.backrest == 'no' && tags.amenity == 'bench') {
 		popup_content += "<br/>Backrest: ❌";
 	}
 
-	if (tags.armrest == undefined) {
+	if (tags.armrest == undefined && tags.amenity == 'bench') {
 		popup_content += " | Armrests: 🤷";
-	} else if (tags.armrest == 'yes') {
+	} else if (tags.armrest == 'yes' && tags.amenity == 'bench') {
 		popup_content += " | Armrests: ☑️";
-	} else if (tags.armrest == 'no') {
+	} else if (tags.armrest == 'no' && tags.amenity == 'bench') {
 		popup_content += " | Armrests: ❌";
 	}
 
-	if (tags.backrest == 'no' && tags.direction != undefined) {
+	if (tags.backrest == 'no' && tags.direction != undefined && tags.amenity == 'bench') {
 		if (tags.direction >= 180) {
 			popup_content += "<br/>Facing: "+directionParser(tags.direction)+"/"+directionParser(Number(tags.direction)-180);
 		} else if (tags.direction < 180) {
 			popup_content += "<br/>Facing: "+directionParser(tags.direction)+"/"+directionParser(Number(tags.direction)+180);
 		}
 	} else 
-	if (tags.direction != undefined) {
+	if (tags.direction != undefined && tags.amenity == 'bench') {
 		popup_content += "<br/>Facing: "+directionParser(tags.direction);
 	}
 
-	if (tags.seats != undefined) {
+	if (tags.seats != undefined && tags.amenity == 'bench') {
 		popup_content += "<br/>Seats: "+tags.seats;
 	}
 
@@ -408,12 +405,17 @@ function setPoiMarker(poi_type, icon_name, lat, lon, tags, osmid, osmtype) {
 	// mrk.bindTooltip(L.tooltip({permanent:true,direction:'top'}).setContent(tooltip_content)).openTooltip;
 
 	poi_markers.push(mrk);
-	mrk.addTo(poiClusters);
-	poiClusters.addTo(map);
+	// mrk.addTo(poiClusters);
+	mrk.addTo(poiMain);
+	if (map.getZoom() > 18) {
+		poiMain.addTo(map);
+	}
 }
 
 function element_to_map(data) {	
 	poiClusters.clearLayers();
+	poiMain.clearLayers();
+	poiDots.clearLayers();
 	poiMinis.clearLayers();
 	$.each(poi_markers, function(_, mrk) {
 		map.removeLayer(mrk);
@@ -431,232 +433,261 @@ function element_to_map(data) {
 
 		if (el.tags != undefined) {
 			var mrk;
-
-			if (el.tags.colour != undefined && el.tags.colour.includes('red')) {
-				if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
-					setPoiMarker("", yab_icon_red, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
-					setPoiMarker("", yb_na_icon_red, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
-					setPoiMarker("", ya_nb_icon_red, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
-					setPoiMarker("", nab_icon_red, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest == undefined)) {
-					setPoiMarker("", yb_ua_icon_red, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest == undefined)) {
-					setPoiMarker("", nb_ua_icon_red, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest == undefined) && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
-					setPoiMarker("", ya_ub_icon_red, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest == undefined) && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
-					setPoiMarker("", na_ub_icon_red, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest == undefined) && (el.tags.armrest == undefined)) {
-					setPoiMarker("", uab_icon_red, el.lat, el.lon, el.tags, el.id, el.type);
+			if (el.tags.leisure == 'picnic_table') {
+				setDotMarker("", picnic_table_dot, el.lat, el.lon, el.tags, el.id, el.type);
+				if (el.tags.colour != undefined && el.tags.colour.includes('red')) {
+					setPoiMarker("", picnic_table_icon_red, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if (el.tags.colour != undefined && el.tags.colour.includes('orange')) {
+					setPoiMarker("", picnic_table_icon_orange, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if (el.tags.colour != undefined && el.tags.colour.includes('yellow')) {
+					setPoiMarker("", picnic_table_icon_yellow, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if (el.tags.colour != undefined && el.tags.colour.includes('green')) {
+					setPoiMarker("", picnic_table_icon_green, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if (el.tags.colour != undefined && el.tags.colour.includes('blue')) {
+					setPoiMarker("", picnic_table_icon_blue, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if (el.tags.colour != undefined && el.tags.colour.includes('purple')) {
+					setPoiMarker("", picnic_table_icon_purple, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if (el.tags.colour != undefined && el.tags.colour.includes('brown')) {
+					setPoiMarker("", picnic_table_icon_brown, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if (el.tags.colour != undefined && el.tags.colour.includes('black')) {
+					setPoiMarker("", picnic_table_icon_black, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if (el.tags.colour != undefined && (el.tags.colour.includes('gray') || el.tags.colour.includes('grey') || el.tags.colour.includes('silver'))) {
+					setPoiMarker("", picnic_table_icon_gray, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if (el.tags.colour != undefined && el.tags.colour.includes('white')) {
+					setPoiMarker("", picnic_table_icon_white, el.lat, el.lon, el.tags, el.id, el.type);
+				} else {
+					setPoiMarker("", picnic_table_icon, el.lat, el.lon, el.tags, el.id, el.type);
 				}
-			} else if (el.tags.colour != undefined && el.tags.colour.includes('orange')) {
-				if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
-					setPoiMarker("", yab_icon_orange, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
-					setPoiMarker("", yb_na_icon_orange, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
-					setPoiMarker("", ya_nb_icon_orange, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
-					setPoiMarker("", nab_icon_orange, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest == undefined)) {
-					setPoiMarker("", yb_ua_icon_orange, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest == undefined)) {
-					setPoiMarker("", nb_ua_icon_orange, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest == undefined) && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
-					setPoiMarker("", ya_ub_icon_orange, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest == undefined) && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
-					setPoiMarker("", na_ub_icon_orange, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest == undefined) && (el.tags.armrest == undefined)) {
-					setPoiMarker("", uab_icon_orange, el.lat, el.lon, el.tags, el.id, el.type);
-				}
-			} else if (el.tags.colour != undefined && el.tags.colour.includes('yellow')) {
-				if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
-					setPoiMarker("", yab_icon_yellow, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
-					setPoiMarker("", yb_na_icon_yellow, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
-					setPoiMarker("", ya_nb_icon_yellow, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
-					setPoiMarker("", nab_icon_yellow, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest == undefined)) {
-					setPoiMarker("", yb_ua_icon_yellow, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest == undefined)) {
-					setPoiMarker("", nb_ua_icon_yellow, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest == undefined) && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
-					setPoiMarker("", ya_ub_icon_yellow, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest == undefined) && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
-					setPoiMarker("", na_ub_icon_yellow, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest == undefined) && (el.tags.armrest == undefined)) {
-					setPoiMarker("", uab_icon_yellow, el.lat, el.lon, el.tags, el.id, el.type);
-				}
-			} else if (el.tags.colour != undefined && el.tags.colour.includes('green')) {
-				if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
-					setPoiMarker("", yab_icon_green, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
-					setPoiMarker("", yb_na_icon_green, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
-					setPoiMarker("", ya_nb_icon_green, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
-					setPoiMarker("", nab_icon_green, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest == undefined)) {
-					setPoiMarker("", yb_ua_icon_green, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest == undefined)) {
-					setPoiMarker("", nb_ua_icon_green, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest == undefined) && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
-					setPoiMarker("", ya_ub_icon_green, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest == undefined) && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
-					setPoiMarker("", na_ub_icon_green, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest == undefined) && (el.tags.armrest == undefined)) {
-					setPoiMarker("", uab_icon_green, el.lat, el.lon, el.tags, el.id, el.type);
-				}
-			} else if (el.tags.colour != undefined && el.tags.colour.includes('blue')) {
-				if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
-					setPoiMarker("", yab_icon_blue, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
-					setPoiMarker("", yb_na_icon_blue, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
-					setPoiMarker("", ya_nb_icon_blue, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
-					setPoiMarker("", nab_icon_blue, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest == undefined)) {
-					setPoiMarker("", yb_ua_icon_blue, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest == undefined)) {
-					setPoiMarker("", nb_ua_icon_blue, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest == undefined) && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
-					setPoiMarker("", ya_ub_icon_blue, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest == undefined) && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
-					setPoiMarker("", na_ub_icon_blue, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest == undefined) && (el.tags.armrest == undefined)) {
-					setPoiMarker("", uab_icon_blue, el.lat, el.lon, el.tags, el.id, el.type);
-				}
-			} else if (el.tags.colour != undefined && el.tags.colour.includes('purple')) {
-				if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
-					setPoiMarker("", yab_icon_purple, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
-					setPoiMarker("", yb_na_icon_purple, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
-					setPoiMarker("", ya_nb_icon_purple, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
-					setPoiMarker("", nab_icon_purple, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest == undefined)) {
-					setPoiMarker("", yb_ua_icon_purple, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest == undefined)) {
-					setPoiMarker("", nb_ua_icon_purple, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest == undefined) && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
-					setPoiMarker("", ya_ub_icon_purple, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest == undefined) && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
-					setPoiMarker("", na_ub_icon_purple, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest == undefined) && (el.tags.armrest == undefined)) {
-					setPoiMarker("", uab_icon_purple, el.lat, el.lon, el.tags, el.id, el.type);
-				}
-			} else if (el.tags.colour != undefined && el.tags.colour.includes('brown')) {
-				if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
-					setPoiMarker("", yab_icon_brown, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
-					setPoiMarker("", yb_na_icon_brown, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
-					setPoiMarker("", ya_nb_icon_brown, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
-					setPoiMarker("", nab_icon_brown, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest == undefined)) {
-					setPoiMarker("", yb_ua_icon_brown, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest == undefined)) {
-					setPoiMarker("", nb_ua_icon_brown, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest == undefined) && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
-					setPoiMarker("", ya_ub_icon_brown, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest == undefined) && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
-					setPoiMarker("", na_ub_icon_brown, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest == undefined) && (el.tags.armrest == undefined)) {
-					setPoiMarker("", uab_icon_brown, el.lat, el.lon, el.tags, el.id, el.type);
-				}
-			} else if (el.tags.colour != undefined && el.tags.colour.includes('black')) {
-				if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
-					setPoiMarker("", yab_icon_black, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
-					setPoiMarker("", yb_na_icon_black, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
-					setPoiMarker("", ya_nb_icon_black, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
-					setPoiMarker("", nab_icon_black, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest == undefined)) {
-					setPoiMarker("", yb_ua_icon_black, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest == undefined)) {
-					setPoiMarker("", nb_ua_icon_black, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest == undefined) && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
-					setPoiMarker("", ya_ub_icon_black, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest == undefined) && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
-					setPoiMarker("", na_ub_icon_black, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest == undefined) && (el.tags.armrest == undefined)) {
-					setPoiMarker("", uab_icon_black, el.lat, el.lon, el.tags, el.id, el.type);
-				}
-			} else if (el.tags.colour != undefined && (el.tags.colour.includes('gray') || el.tags.colour.includes('grey') || el.tags.colour.includes('silver'))) {
-				if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
-					setPoiMarker("", yab_icon_gray, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
-					setPoiMarker("", yb_na_icon_gray, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
-					setPoiMarker("", ya_nb_icon_gray, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
-					setPoiMarker("", nab_icon_gray, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest == undefined)) {
-					setPoiMarker("", yb_ua_icon_gray, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest == undefined)) {
-					setPoiMarker("", nb_ua_icon_gray, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest == undefined) && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
-					setPoiMarker("", ya_ub_icon_gray, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest == undefined) && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
-					setPoiMarker("", na_ub_icon_gray, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest == undefined) && (el.tags.armrest == undefined)) {
-					setPoiMarker("", uab_icon_gray, el.lat, el.lon, el.tags, el.id, el.type);
-				}
-			} else if (el.tags.colour != undefined && el.tags.colour.includes('white')) {
-				if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
-					setPoiMarker("", yab_icon_white, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
-					setPoiMarker("", yb_na_icon_white, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
-					setPoiMarker("", ya_nb_icon_white, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
-					setPoiMarker("", nab_icon_white, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest == undefined)) {
-					setPoiMarker("", yb_ua_icon_white, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest == undefined)) {
-					setPoiMarker("", nb_ua_icon_white, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest == undefined) && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
-					setPoiMarker("", ya_ub_icon_white, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest == undefined) && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
-					setPoiMarker("", na_ub_icon_white, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest == undefined) && (el.tags.armrest == undefined)) {
-					setPoiMarker("", uab_icon_white, el.lat, el.lon, el.tags, el.id, el.type);
-				}
-			} else {
-				if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
-					setPoiMarker("", yab_icon, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
-					setPoiMarker("", yb_na_icon, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
-					setPoiMarker("", ya_nb_icon, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
-					setPoiMarker("", nab_icon, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest == undefined)) {
-					setPoiMarker("", yb_ua_icon, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest == undefined)) {
-					setPoiMarker("", nb_ua_icon, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest == undefined) && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
-					setPoiMarker("", ya_ub_icon, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest == undefined) && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
-					setPoiMarker("", na_ub_icon, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if ((el.tags.backrest == undefined) && (el.tags.armrest == undefined)) {
-					setPoiMarker("", uab_icon, el.lat, el.lon, el.tags, el.id, el.type);
+			} else if (el.tags.amenity == 'bench') {
+				setDotMarker("", bench_dot, el.lat, el.lon, el.tags, el.id, el.type);
+				if (el.tags.colour != undefined && el.tags.colour.includes('red')) {
+					if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
+						setPoiMarker("", yab_icon_red, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
+						setPoiMarker("", yb_na_icon_red, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
+						setPoiMarker("", ya_nb_icon_red, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
+						setPoiMarker("", nab_icon_red, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest == undefined)) {
+						setPoiMarker("", yb_ua_icon_red, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest == undefined)) {
+						setPoiMarker("", nb_ua_icon_red, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest == undefined) && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
+						setPoiMarker("", ya_ub_icon_red, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest == undefined) && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
+						setPoiMarker("", na_ub_icon_red, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest == undefined) && (el.tags.armrest == undefined)) {
+						setPoiMarker("", uab_icon_red, el.lat, el.lon, el.tags, el.id, el.type);
+					}
+				} else if (el.tags.colour != undefined && el.tags.colour.includes('orange')) {
+					if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
+						setPoiMarker("", yab_icon_orange, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
+						setPoiMarker("", yb_na_icon_orange, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
+						setPoiMarker("", ya_nb_icon_orange, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
+						setPoiMarker("", nab_icon_orange, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest == undefined)) {
+						setPoiMarker("", yb_ua_icon_orange, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest == undefined)) {
+						setPoiMarker("", nb_ua_icon_orange, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest == undefined) && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
+						setPoiMarker("", ya_ub_icon_orange, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest == undefined) && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
+						setPoiMarker("", na_ub_icon_orange, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest == undefined) && (el.tags.armrest == undefined)) {
+						setPoiMarker("", uab_icon_orange, el.lat, el.lon, el.tags, el.id, el.type);
+					}
+				} else if (el.tags.colour != undefined && el.tags.colour.includes('yellow')) {
+					if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
+						setPoiMarker("", yab_icon_yellow, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
+						setPoiMarker("", yb_na_icon_yellow, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
+						setPoiMarker("", ya_nb_icon_yellow, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
+						setPoiMarker("", nab_icon_yellow, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest == undefined)) {
+						setPoiMarker("", yb_ua_icon_yellow, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest == undefined)) {
+						setPoiMarker("", nb_ua_icon_yellow, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest == undefined) && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
+						setPoiMarker("", ya_ub_icon_yellow, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest == undefined) && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
+						setPoiMarker("", na_ub_icon_yellow, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest == undefined) && (el.tags.armrest == undefined)) {
+						setPoiMarker("", uab_icon_yellow, el.lat, el.lon, el.tags, el.id, el.type);
+					}
+				} else if (el.tags.colour != undefined && el.tags.colour.includes('green')) {
+					if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
+						setPoiMarker("", yab_icon_green, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
+						setPoiMarker("", yb_na_icon_green, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
+						setPoiMarker("", ya_nb_icon_green, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
+						setPoiMarker("", nab_icon_green, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest == undefined)) {
+						setPoiMarker("", yb_ua_icon_green, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest == undefined)) {
+						setPoiMarker("", nb_ua_icon_green, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest == undefined) && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
+						setPoiMarker("", ya_ub_icon_green, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest == undefined) && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
+						setPoiMarker("", na_ub_icon_green, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest == undefined) && (el.tags.armrest == undefined)) {
+						setPoiMarker("", uab_icon_green, el.lat, el.lon, el.tags, el.id, el.type);
+					}
+				} else if (el.tags.colour != undefined && el.tags.colour.includes('blue')) {
+					if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
+						setPoiMarker("", yab_icon_blue, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
+						setPoiMarker("", yb_na_icon_blue, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
+						setPoiMarker("", ya_nb_icon_blue, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
+						setPoiMarker("", nab_icon_blue, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest == undefined)) {
+						setPoiMarker("", yb_ua_icon_blue, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest == undefined)) {
+						setPoiMarker("", nb_ua_icon_blue, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest == undefined) && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
+						setPoiMarker("", ya_ub_icon_blue, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest == undefined) && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
+						setPoiMarker("", na_ub_icon_blue, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest == undefined) && (el.tags.armrest == undefined)) {
+						setPoiMarker("", uab_icon_blue, el.lat, el.lon, el.tags, el.id, el.type);
+					}
+				} else if (el.tags.colour != undefined && el.tags.colour.includes('purple')) {
+					if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
+						setPoiMarker("", yab_icon_purple, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
+						setPoiMarker("", yb_na_icon_purple, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
+						setPoiMarker("", ya_nb_icon_purple, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
+						setPoiMarker("", nab_icon_purple, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest == undefined)) {
+						setPoiMarker("", yb_ua_icon_purple, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest == undefined)) {
+						setPoiMarker("", nb_ua_icon_purple, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest == undefined) && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
+						setPoiMarker("", ya_ub_icon_purple, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest == undefined) && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
+						setPoiMarker("", na_ub_icon_purple, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest == undefined) && (el.tags.armrest == undefined)) {
+						setPoiMarker("", uab_icon_purple, el.lat, el.lon, el.tags, el.id, el.type);
+					}
+				} else if (el.tags.colour != undefined && el.tags.colour.includes('brown')) {
+					if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
+						setPoiMarker("", yab_icon_brown, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
+						setPoiMarker("", yb_na_icon_brown, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
+						setPoiMarker("", ya_nb_icon_brown, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
+						setPoiMarker("", nab_icon_brown, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest == undefined)) {
+						setPoiMarker("", yb_ua_icon_brown, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest == undefined)) {
+						setPoiMarker("", nb_ua_icon_brown, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest == undefined) && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
+						setPoiMarker("", ya_ub_icon_brown, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest == undefined) && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
+						setPoiMarker("", na_ub_icon_brown, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest == undefined) && (el.tags.armrest == undefined)) {
+						setPoiMarker("", uab_icon_brown, el.lat, el.lon, el.tags, el.id, el.type);
+					}
+				} else if (el.tags.colour != undefined && el.tags.colour.includes('black')) {
+					if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
+						setPoiMarker("", yab_icon_black, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
+						setPoiMarker("", yb_na_icon_black, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
+						setPoiMarker("", ya_nb_icon_black, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
+						setPoiMarker("", nab_icon_black, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest == undefined)) {
+						setPoiMarker("", yb_ua_icon_black, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest == undefined)) {
+						setPoiMarker("", nb_ua_icon_black, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest == undefined) && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
+						setPoiMarker("", ya_ub_icon_black, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest == undefined) && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
+						setPoiMarker("", na_ub_icon_black, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest == undefined) && (el.tags.armrest == undefined)) {
+						setPoiMarker("", uab_icon_black, el.lat, el.lon, el.tags, el.id, el.type);
+					}
+				} else if (el.tags.colour != undefined && (el.tags.colour.includes('gray') || el.tags.colour.includes('grey') || el.tags.colour.includes('silver'))) {
+					if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
+						setPoiMarker("", yab_icon_gray, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
+						setPoiMarker("", yb_na_icon_gray, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
+						setPoiMarker("", ya_nb_icon_gray, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
+						setPoiMarker("", nab_icon_gray, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest == undefined)) {
+						setPoiMarker("", yb_ua_icon_gray, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest == undefined)) {
+						setPoiMarker("", nb_ua_icon_gray, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest == undefined) && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
+						setPoiMarker("", ya_ub_icon_gray, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest == undefined) && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
+						setPoiMarker("", na_ub_icon_gray, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest == undefined) && (el.tags.armrest == undefined)) {
+						setPoiMarker("", uab_icon_gray, el.lat, el.lon, el.tags, el.id, el.type);
+					}
+				} else if (el.tags.colour != undefined && el.tags.colour.includes('white')) {
+					if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
+						setPoiMarker("", yab_icon_white, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
+						setPoiMarker("", yb_na_icon_white, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
+						setPoiMarker("", ya_nb_icon_white, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
+						setPoiMarker("", nab_icon_white, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest == undefined)) {
+						setPoiMarker("", yb_ua_icon_white, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest == undefined)) {
+						setPoiMarker("", nb_ua_icon_white, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest == undefined) && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
+						setPoiMarker("", ya_ub_icon_white, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest == undefined) && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
+						setPoiMarker("", na_ub_icon_white, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest == undefined) && (el.tags.armrest == undefined)) {
+						setPoiMarker("", uab_icon_white, el.lat, el.lon, el.tags, el.id, el.type);
+					}
+				} else {
+					if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
+						setPoiMarker("", yab_icon, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
+						setPoiMarker("", yb_na_icon, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
+						setPoiMarker("", ya_nb_icon, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
+						setPoiMarker("", nab_icon, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest == undefined)) {
+						setPoiMarker("", yb_ua_icon, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest != undefined && el.tags.backrest == 'no') && (el.tags.armrest == undefined)) {
+						setPoiMarker("", nb_ua_icon, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest == undefined) && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
+						setPoiMarker("", ya_ub_icon, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest == undefined) && (el.tags.armrest != undefined && el.tags.armrest == 'no')) {
+						setPoiMarker("", na_ub_icon, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if ((el.tags.backrest == undefined) && (el.tags.armrest == undefined)) {
+						setPoiMarker("", uab_icon, el.lat, el.lon, el.tags, el.id, el.type);
+					}
 				}
 			}
 			
 			if ((el.tags.inscription != undefined && el.tags.inscription != 'no') || (el.tags["inscription:1"] != undefined && el.tags["inscription:1"] != 'no')) {
 				setMiniMarker("", inscription_icon, el.lat, el.lon, el.tags, el.id, el.type);
-			} else if (el.tags.inscription == undefined) {
+			// } else if (el.tags.inscription == 'no') {
+			// 	setMiniMarker("", no_inscription_icon, el.lat, el.lon, el.tags, el.id, el.type);
+			} else if (el.tags.inscription == undefined && el.tags.amenity == 'bench') {
 				setMiniMarker("", unk_inscription_icon, el.lat, el.lon, el.tags, el.id, el.type);
 			}
 		}
@@ -667,7 +698,7 @@ function element_to_map(data) {
 
 function downloadData() {
 	var mapHash = new L.Hash(map);
-	if (map.getZoom() < 15) {
+	if (map.getZoom() < 14) {
 		var new_span = document.createElement('span');
 		new_span.innerText = "Please Zoom In";
 		return null;
@@ -683,7 +714,7 @@ function downloadData() {
 	$.ajax({
 		url: "https://overpass-api.de/api/interpreter",
 		data: {
-			"data": '[bbox:'+bbox+'][out:json][timeout:25];(nwr[amenity=bench];);out body center; >; out skel qt;'
+			"data": '[bbox:'+bbox+'][out:json][timeout:25];(nwr[amenity=bench];nwr[leisure=picnic_table];);out body center; >; out skel qt;'
 		},
 		success: element_to_map,
 		error: error_function,
@@ -704,6 +735,20 @@ function error_function() {
 }
 
 $(function() {
+	bench_dot = L.icon({
+		iconUrl: 'icons/bench_dot.svg',
+		iconSize: [8,8],
+		className: 'pointIcon',
+		iconAnchor: [4,4],
+		popupAnchor: [0,-14],
+	});
+	picnic_table_dot = L.icon({
+		iconUrl: 'icons/picnic_table_dot.svg',
+		iconSize: [10,10],
+		className: 'pointIcon',
+		iconAnchor: [5,5],
+		popupAnchor: [0,-14],
+	});
 	yab_icon = L.icon({
 		iconUrl: 'icons/yab_icon.svg',
 		iconSize: [24,24],
@@ -1307,8 +1352,91 @@ $(function() {
 		iconAnchor: [12,12],
 		popupAnchor: [0,-20],
 	});
+	picnic_table_icon = L.icon({
+		iconUrl: 'icons/picnic_table.svg',
+		iconSize: [28,28],
+		className: 'pointIcon',
+		iconAnchor: [14,14],
+		popupAnchor: [0,-20],
+	});
+	picnic_table_icon_red = L.icon({
+		iconUrl: 'icons/picnic_table_red.svg',
+		iconSize: [28,28],
+		className: 'pointIcon',
+		iconAnchor: [14,14],
+		popupAnchor: [0,-20],
+	});
+	picnic_table_icon_orange = L.icon({
+		iconUrl: 'icons/picnic_table_orange.svg',
+		iconSize: [28,28],
+		className: 'pointIcon',
+		iconAnchor: [14,14],
+		popupAnchor: [0,-20],
+	});
+	picnic_table_icon_yellow = L.icon({
+		iconUrl: 'icons/picnic_table_yellow.svg',
+		iconSize: [28,28],
+		className: 'pointIcon',
+		iconAnchor: [14,14],
+		popupAnchor: [0,-20],
+	});
+	picnic_table_icon_green = L.icon({
+		iconUrl: 'icons/picnic_table_green.svg',
+		iconSize: [28,28],
+		className: 'pointIcon',
+		iconAnchor: [14,14],
+		popupAnchor: [0,-20],
+	});
+	picnic_table_icon_blue = L.icon({
+		iconUrl: 'icons/picnic_table_blue.svg',
+		iconSize: [28,28],
+		className: 'pointIcon',
+		iconAnchor: [14,14],
+		popupAnchor: [0,-20],
+	});
+	picnic_table_icon_purple = L.icon({
+		iconUrl: 'icons/picnic_table_purple.svg',
+		iconSize: [28,28],
+		className: 'pointIcon',
+		iconAnchor: [14,14],
+		popupAnchor: [0,-20],
+	});
+	picnic_table_icon_brown = L.icon({
+		iconUrl: 'icons/picnic_table_brown.svg',
+		iconSize: [28,28],
+		className: 'pointIcon',
+		iconAnchor: [14,14],
+		popupAnchor: [0,-20],
+	});
+	picnic_table_icon_black = L.icon({
+		iconUrl: 'icons/picnic_table_black.svg',
+		iconSize: [28,28],
+		className: 'pointIcon',
+		iconAnchor: [14,14],
+		popupAnchor: [0,-20],
+	});
+	picnic_table_icon_gray = L.icon({
+		iconUrl: 'icons/picnic_table_gray.svg',
+		iconSize: [28,28],
+		className: 'pointIcon',
+		iconAnchor: [14,14],
+		popupAnchor: [0,-20],
+	});
+	picnic_table_icon_white = L.icon({
+		iconUrl: 'icons/picnic_table_white.svg',
+		iconSize: [28,28],
+		className: 'pointIcon',
+		iconAnchor: [14,14],
+		popupAnchor: [0,-20],
+	});
 	inscription_icon = L.icon({
 		iconUrl: 'icons/inscription.svg',
+		iconSize: [8,5],
+		className: 'sourceIcon',
+		iconAnchor: [4,-4],
+	});
+	no_inscription_icon = L.icon({
+		iconUrl: 'icons/no_inscription.svg',
 		iconSize: [8,5],
 		className: 'sourceIcon',
 		iconAnchor: [4,-4],
@@ -1320,27 +1448,30 @@ $(function() {
 		iconAnchor: [4,-4],
 	});
 
-	map.on('moveend', function () {
-		if (map.getZoom() >= 18) {
-			josmText.setContent('<a href="http://127.0.0.1:8111/load_and_zoom?left='+map.getBounds().getWest()+'&right='+map.getBounds().getEast()+'&top='+map.getBounds().getNorth()+'&bottom='+map.getBounds().getSouth()+'" target=\"\_blank\">Edit area in JOSM</a>');
-		}
-		if (map.getZoom() < 18) {
-			josmText.setContent('');
-		}
-	});
-
+	// map.on('moveend', function () {
+	// 	if (map.getZoom() >= 19) {
+	// 		josmText.setContent('<a href="http://127.0.0.1:8111/load_and_zoom?left='+map.getBounds().getWest()+'&right='+map.getBounds().getEast()+'&top='+map.getBounds().getNorth()+'&bottom='+map.getBounds().getSouth()+'" target=\"\_blank\">Edit area in JOSM</a>');
+	// 	}
+	// 	if (map.getZoom() < 19) {
+	// 		josmText.setContent('');
+	// 	}
+	// });
 	map.on('zoomend', function () {
-		// if (map.getZoom() > 16) {
-		// 	map.addLayer(poiMinis);
-		// }
-		// if (map.getZoom() <= 16) {
-		// 	map.removeLayer(poiMinis);
-		// }
-		if (map.getZoom() >= 15) {
+		if (map.getZoom() > 17) {
+			map.removeLayer(poiClusters);
+			map.addLayer(poiMain);
+			map.addLayer(poiMinis);
+		}
+		if (map.getZoom() <= 17) {
+			map.addLayer(poiClusters);
+			map.removeLayer(poiMain);
+			map.removeLayer(poiMinis);
+		}
+		if (map.getZoom() >= 14) {
 			map.removeLayer(overlay);
 			zoomText.setContent('');
 		}
-		if (map.getZoom() < 15) {
+		if (map.getZoom() < 14) {
 			map.addLayer(overlay);
 			zoomText.setContent('Please Zoom In');
 		}
