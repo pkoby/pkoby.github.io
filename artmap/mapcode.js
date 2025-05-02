@@ -22,32 +22,10 @@ var counter_div = document.getElementById("counter_display");
 var outline_icon,error_icon,wiki_icon,image_icon,mapillary_icon,panoramax_icon,artwork_icon,architecture_icon,bust_icon,graffiti_icon,installation_icon,memorial_icon,mosaic_icon,mural_icon,painting_icon,relief_icon,sculpture_icon,statue_icon,stone_icon,totem_icon;
 	
 	// init map
-	var Positron = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
-		attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
-		subdomains: 'abcd',
-		maxZoom: 18,
-		minZoom: 3,
-		detectRetina: true,
-	});
-
-	var Esri_NatGeoWorldMap = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}', {
-		attribution: 'Tiles &copy; Esri &mdash; National Geographic, Esri, DeLorme, NAVTEQ, UNEP-WCMC, USGS, NASA, ESA, METI, NRCAN, GEBCO, NOAA, iPC',
-		maxZoom: 16,
-		opacity: 0.6,
-	});
-
-	var Stamen_TonerLite = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.{ext}', {
-		attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-		subdomains: 'abcd',
-		minZoom: 0,
-		maxZoom: 20,
-		ext: 'png'
-	});
-
 	var CartoDB_Voyager = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
 		attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
 		subdomains: 'abcd',
-		maxZoom: 18,
+		maxZoom: 19,
 	});
 
 	var overlay = L.polygon([
@@ -301,7 +279,7 @@ function setPoiMarker(poi_type, icon, lat, lon, tags, osmid, osmtype) {
 	// }
 
 	if (tags.material != undefined) {
-		popup_content += "<br>Material: "+tags.material;
+		popup_content += "<br>Material: <span class='material "+tags.material+"'>"+tags.material+"</span>";
 	}
 	
 	if (tags.start_date != undefined) {

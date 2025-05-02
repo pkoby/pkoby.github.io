@@ -460,3 +460,38 @@ a, leaflet-control a {
 .imageIcon {
 	pointer-events: none;
 }
+
+.material {
+	padding: 0 2px 0 2px;
+	border-radius: 4px;
+}
+.wood {
+	background: linear-gradient(0deg, rgb(170,85,50) 0%, rgb(221,153,100) 100%);
+	color:#333;
+	background-image: url(icons/wood.png);
+}
+.metal, .steel {
+	background: linear-gradient(90deg, rgb(153,153,153) 0%, rgb(238,238,238) 100%);
+	color:#222;
+	background-image: url(icons/metal.png);
+}
+.plastic {
+	background-color: #ffee66;
+	color:#222;
+	background-image: url(icons/plastic.png);
+}
+.bronze {
+	background-color: #cb935f;
+	color:#222;
+	background-image: url(icons/bronze.png);
+}
+.concrete, .stone {
+	background-color: lightgray;
+	color:#222;
+	background-image: url(icons/concrete.png);
+}
+.granite {
+	background-color: rosybrown;
+	color:#222;
+	background-image: url(icons/granite.png);
+}
