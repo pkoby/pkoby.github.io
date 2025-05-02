@@ -235,13 +235,25 @@ function getWikiThumb(tagWiki) {
 		var wiki_file = wiki_tag.split("File%3A")[1];
 	} else if (wiki_tag.includes("media/Datei:")) {
 		var wiki_file = wiki_tag.split("media/Datei:")[1];
-		console.log(wiki_file);
 	}
 	var wiki_file_no_special = decodeURI(wiki_file);
 	var wiki_file_no_spaces = wiki_file_no_special.replace(new RegExp(' ', 'g'), '\_');
 	var wiki_file_no_apos = wiki_file_no_spaces.replace(new RegExp('\'', 'g'), '\%27');
 	var hash = calcMD5(unescape(encodeURIComponent(wiki_file_no_spaces)));
 	var wiki_link = "https://upload.wikimedia.org/wikipedia/commons/thumb/"+hash.substring(0,1)+"/"+hash.substring(0,2)+"/"+wiki_file_no_apos+"/250px-"+wiki_file_no_apos;
+	return wiki_link;
+}
+
+function getWikipedia(tagWikip) {
+	var wiki_tag = tagWikip;
+	var lang = wiki_tag.substr(0,2);
+	var page = wiki_tag.substr(3);
+	var page_no_special = decodeURI(page);
+	var page_no_spaces = page_no_special.replace(new RegExp(' ', 'g'), '\_');
+	var page_no_apos = page_no_spaces.replace(new RegExp('\'', 'g'), '\%27');
+	console.log(page_no_apos);
+	var wiki_link = "https://"+lang+".wikipedia.org/wiki/"+page_no_apos;
+	console.log(wiki_link);
 	return wiki_link;
 }
 
@@ -294,6 +306,11 @@ function setPoiMarker(poi_type, icon, lat, lon, tags, osmid, osmtype) {
 	
 	if (tags.start_date != undefined) {
 		popup_content += "<br>Installed: "+tags.start_date;
+	}
+
+	if (tags.wikipedia != undefined) {
+		var link = getWikipedia(tags.wikipedia);
+		popup_content += "<br><a href="+link+" target=\"_blank\">Wikipedia Link</a>";
 	}
 	
 	if (tags.wikimedia_commons != undefined) {
