@@ -218,12 +218,10 @@ function getWikiLink(tagWiki) {
 		var wiki_file = wiki_tag.split("File%3A")[1];
 	} else if (wiki_tag.includes("media/Datei:")) {
 		var wiki_file = wiki_tag.split("media/Datei:")[1];
-		console.log(wiki_file);
 	}
 	var wiki_file_no_special = decodeURI(wiki_file);
 	var wiki_file_no_spaces = wiki_file_no_special.replace(new RegExp(' ', 'g'), '\_').replace(new RegExp('\%2C', 'g'), '\,');
 	var wiki_file_no_apos = wiki_file_no_spaces.replace(new RegExp('\'', 'g'), '\%27');
-	console.log(wiki_file_no_apos);
 	var hash = calcMD5(unescape(encodeURIComponent(wiki_file_no_spaces)));
 	var wiki_link = "https://upload.wikimedia.org/wikipedia/commons/"+hash.substring(0,1)+"/"+hash.substring(0,2)+"/"+wiki_file_no_apos;
 	return wiki_link;
@@ -231,7 +229,14 @@ function getWikiLink(tagWiki) {
 
 function getWikiThumb(tagWiki) {
 	var wiki_tag = tagWiki;
-	var wiki_file = wiki_tag.split("File:")[1];
+	if (wiki_tag.includes("File:")) {
+		var wiki_file = wiki_tag.split("File:")[1];
+	} else if (wiki_tag.includes("File%3A")) {
+		var wiki_file = wiki_tag.split("File%3A")[1];
+	} else if (wiki_tag.includes("media/Datei:")) {
+		var wiki_file = wiki_tag.split("media/Datei:")[1];
+		console.log(wiki_file);
+	}
 	var wiki_file_no_special = decodeURI(wiki_file);
 	var wiki_file_no_spaces = wiki_file_no_special.replace(new RegExp(' ', 'g'), '\_');
 	var wiki_file_no_apos = wiki_file_no_spaces.replace(new RegExp('\'', 'g'), '\%27');
@@ -315,7 +320,8 @@ function setPoiMarker(poi_type, icon, lat, lon, tags, osmid, osmtype) {
 			popup_content += "<br><span class='invalid' title='"+tags.image+"'>Image tag may be invalid</span>";
 		} else if (tags.image.includes("//commons.wikimedia.org") || tags.image.startsWith("File:") || tags.image.includes("wikipedia.org")) {
 			var link = getWikiLink(tags.image);
-			popup_content += "<br><a href='"+link+"' target='_blank'><img src='"+link+"' class='popup_image'></a><br/><span class='invalid' title='"+tags.image+"'>(Image tag may be invalid)</span>";
+			var thumb = getWikiThumb(tags.image);
+			popup_content += "<br><a href='"+link+"' target='_blank'><img src='"+thumb+"' class='popup_image'></a><br/><span class='invalid' title='"+tags.image+"'>(Image tag may be invalid)</span>";
 		} else if (tags.image.toLowerCase().endsWith(".jpg") || tags.image.toLowerCase().endsWith(".jpg") || tags.image.toLowerCase().endsWith(".jpeg") || tags.image.toLowerCase().endsWith(".png") || tags.image.toLowerCase().endsWith(".gif") || tags.image.toLowerCase().endsWith(".bmp")) {
 			popup_content += "<br><a href='"+tags.image+"' target='_blank'><img src='"+tags.image+"' class='popup_image'></a>";
 		} else {
