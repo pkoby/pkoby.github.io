@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<!-- <link rel="stylesheet" href="normalize.css" /> -->
+		<link rel="shortcut icon" type="image/x-icon" href="logo.svg">
+		<link rel="stylesheet" href="leaflet.css" />
+		<link rel="stylesheet" href="style.css" />
+		<link rel="stylesheet" href="mobile.css" media="screen and (max-width: 700px)" />
+		<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css"> -->
+		<!-- <link rel="stylesheet" href="L.Control.Locate.min.css" /> -->
+
+		<title>OpenArtMap</title>
+	</head>
+	<body>
+		<div id="sidebar">
+			<a href="#" onclick="return false;">
+				<div id="zoomin" class="linkbutton" title="Zoom In"></div>
+			</a>
+			<a href="#" onclick="return false;">
+				<div id="zoomout" class="linkbutton" title="Zoom Out"></div>
+			</a>
+			<a href="#" onclick="return false;">
+				<div id="locater" class="linkbutton" title="Locate Me"></div>
+			</a>
+			<a href="#" onclick="return false;">
+				<div id="loadart" class="loadbutton" title="Load Art"><img id="loadicon" src="icons/refresh.svg"></div><span id="tipRight">Load Art</span><span id="arrow" class="arrowRight"></span>
+			</a>
+			<a href="#" onclick="return false;">
+				<div id="openlegend" class="linkbutton"></div>
+			</a>
+		</div>
+		
+		<div id="legendbox" class="legend leaflet_control">
+			<img src="icons/unknown2.svg" class="legendicon">Unknown Type<br><img src="icons/architecture2.svg" class="legendicon">Architecture<br><img src="icons/bust2.svg" class="legendicon">Bust<br><img src="icons/graffiti2.svg" class="legendicon">Graffiti<br><img src="icons/memorial2.svg" class="legendicon">Memorial<br><img src="icons/mosaic2.svg" class="legendicon">Mosaic<br><img src="icons/mural2.svg" class="legendicon">Mural<br><img src="icons/painting2.svg" class="legendicon">Painting<br><img src="icons/relief2.svg" class="legendicon">Relief<br><img src="icons/sculpture2.svg" class="legendicon">Sculpture<br><img src="icons/statue2.svg" class="legendicon">Statue<br><img src="icons/stone2.svg" class="legendicon">Stone<br><img src="icons/totem2.svg" class="legendicon">Totem Pole<br>
+		</div>
+
+		<div id="topbar">
+			<span id="logo"><img src="logo.svg"></span>
+			<span id="title">ArtMap</span>
+			<!-- <div id="searchgroup"> -->
+				<!-- <input type="text" placeholder="City" id="searchfield"> -->
+				<!-- <div id="autocomplete"></div> -->
+			<!-- </div>  -->
+		</div>
+		<div id="counter_display">Click buttons above to find art</div>
+
+		<!-- <button id="geolocator" onClick="go_to_current_pos();">Locate Me</button>
+		<button id="loader">Load Art</button> -->
+		<div id="bigmap">
+		</div>
+
+		<script src="leaflet.js"></script>
+		<script src="leaflet-hash.js"></script>
+		<script src="jquery-1.10.2.min.js"></script>
+		<script src="L.Control.Locate.min.js" charset="utf-8"></script>
+		<!-- <script src="leaflet.markercluster.js"></script> -->
+		<script language="JavaScript" src="md5.js"></script>
+		<script src="mapcode.js"></script>
+	</body>
+</html>
