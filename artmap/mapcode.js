@@ -229,9 +229,7 @@ function getWikipedia(tagWikip) {
 	var page_no_special = decodeURI(page);
 	var page_no_spaces = page_no_special.replace(new RegExp(' ', 'g'), '\_');
 	var page_no_apos = page_no_spaces.replace(new RegExp('\'', 'g'), '\%27');
-	console.log(page_no_apos);
 	var wiki_link = "https://"+lang+".wikipedia.org/wiki/"+page_no_apos;
-	console.log(wiki_link);
 	return wiki_link;
 }
 
@@ -241,20 +239,12 @@ function getMapillaryLink(tagMapillary) {
 }
 
 function getPanoramaxThumb(tagPanoramax) {
-	var px_tag = tagPanoramax;
-	var a = px_tag.substr(0,2);
-	var b = px_tag.substr(2,2);
-	var c = px_tag.substr(4,2);
-	var d = px_tag.substr(6,2);
-	var e = px_tag.substr(9);
-	var px_link = "https://api.panoramax.xyz/derivates/"+a+"/"+b+"/"+c+"/"+d+"/"+e+"/thumb.jpg";
-	return px_link;
+	var px_link = "https://api.panoramax.xyz/api/pictures/"+tagPanoramax+"/thumb.jpg";
+	return px_link
 }
 
 function getPanoramaxLink(tagPanoramax) {
-	var px_tag = tagPanoramax;
-	var a = px_tag.substr(0);
-	var px_link = "https://api.panoramax.xyz/#s=fp;s2;p"+a;
+	var px_link = "https://api.panoramax.xyz/#s=fp;s2;p"+tagPanoramax;
 	return px_link;
 }
 
@@ -302,11 +292,11 @@ function setPoiMarker(poi_type, icon, lat, lon, tags, osmid, osmtype) {
 			popup_content += "<br><span class='invalid' title='"+tags.wikimedia_commons+"'>Invalid image tag: <a href='https://commons.wikimedia.org/wiki/"+tags.wikimedia_commons+"' target='_blank'>"+tags.wikimedia_commons+"</span>";
 		}
 	} else if (tags.panoramax != undefined) {
-		// var thumb = getPanoramaxThumb(tags.panoramax);
-		// var link = getPanoramaxLink(tags.panoramax);
-		// popup_content += "<br><a href='"+link+"' target='_blank'><img src='"+thumb+"' class='popup_image'></a>";
+		var thumb = getPanoramaxThumb(tags.panoramax);
 		var link = getPanoramaxLink(tags.panoramax);
-		popup_content += "<br><a href='"+link+"' target='_blank'>Panoramax Image Link</a>";
+		popup_content += "<br><a href='"+link+"' target='_blank'><img src='"+thumb+"' class='popup_image'></a>";
+		// var link = getPanoramaxLink(tags.panoramax);
+		// popup_content += "<br><a href='"+link+"' target='_blank'>Panoramax Image Link</a>";
 	} else if (tags.mapillary != undefined) {
 		var link = getMapillaryLink(tags.mapillary);
 		popup_content += "<br><a href='"+link+"' target='_blank'>Mapillary Image Link</a>";
