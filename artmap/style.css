@@ -314,7 +314,7 @@ a, leaflet-control a {
 }
 
 .invalid {
-	color: red;
+	color: orangered;
 	/*box-shadow: 1px 1px 3px #666;*/
 	/*padding: 3px;*/
 	/*line-height: 26px;*/

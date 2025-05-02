@@ -216,6 +216,9 @@ function getWikiLink(tagWiki) {
 		var wiki_file = wiki_tag.split("File:")[1];
 	} else if (wiki_tag.includes("File%3A")) {
 		var wiki_file = wiki_tag.split("File%3A")[1];
+	} else if (wiki_tag.includes("media/Datei:")) {
+		var wiki_file = wiki_tag.split("media/Datei:")[1];
+		console.log(wiki_file);
 	}
 	var wiki_file_no_special = decodeURI(wiki_file);
 	var wiki_file_no_spaces = wiki_file_no_special.replace(new RegExp(' ', 'g'), '\_').replace(new RegExp('\%2C', 'g'), '\,');
@@ -309,14 +312,14 @@ function setPoiMarker(poi_type, icon, lat, lon, tags, osmid, osmtype) {
 		popup_content += "<br><a href='"+link+"' target='_blank'>Mapillary Image Link</a>";
 	} else if (tags.image != undefined) {
 		if (tags.image.includes("//static.panoramio.com")) {
-			popup_content += "<br><span class='invalid' title='"+tags.image+"'>Invalid image tag</span>";
-		} else if (tags.image.includes("//commons.wikimedia.org/wiki/File") || tags.image.startsWith("File:")) {
+			popup_content += "<br><span class='invalid' title='"+tags.image+"'>Image tag may be invalid</span>";
+		} else if (tags.image.includes("//commons.wikimedia.org") || tags.image.startsWith("File:") || tags.image.includes("wikipedia.org")) {
 			var link = getWikiLink(tags.image);
-			popup_content += "<br><span class='invalid' title='"+tags.image+"'>(Invalid image tag)</span><br><a href='"+link+"' target='_blank'><img src='"+link+"' class='popup_image'></a>";
+			popup_content += "<br><a href='"+link+"' target='_blank'><img src='"+link+"' class='popup_image'></a><br/><span class='invalid' title='"+tags.image+"'>(Image tag may be invalid)</span>";
 		} else if (tags.image.toLowerCase().endsWith(".jpg") || tags.image.toLowerCase().endsWith(".jpg") || tags.image.toLowerCase().endsWith(".jpeg") || tags.image.toLowerCase().endsWith(".png") || tags.image.toLowerCase().endsWith(".gif") || tags.image.toLowerCase().endsWith(".bmp")) {
 			popup_content += "<br><a href='"+tags.image+"' target='_blank'><img src='"+tags.image+"' class='popup_image'></a>";
 		} else {
-			popup_content += "<br><span class='invalid' title='"+tags.image+"'>Invalid image tag: "+tags.image+"</span>";
+			popup_content += "<br><span class='invalid' title='"+tags.image+"'>Image tag may be invalid: "+tags.image+"</span>";
 		}
 	}
 
