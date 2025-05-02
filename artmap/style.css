@@ -17,7 +17,7 @@ button {
 	border: 1px solid #aaa;
 	/*text-shadow:none;*/
 	background-color: rgba(255, 255, 255, 0.7);
-	color: #197;
+	color: teal;
 	/*box-shadow: 1px 1px 1px #000;*/
 	z-index: 1000;
 	font-weight: bold;
@@ -154,11 +154,11 @@ button {
 }
 
 .active {
-	background-color: #197;
+	background-color: teal;
 	opacity: 0.9;
 }
 .linkbutton:hover {
-	background-color: #197;
+	background-color: teal;
 	opacity: 1 !important;
 }
 
@@ -221,7 +221,7 @@ button {
 #title {
 	font-family: fontin;
 	font-weight: bold;
-	color: #197;
+	color: teal;
 	font-size: 28pt;
 	vertical-align: middle;
 	margin-left: -2px;
@@ -293,7 +293,7 @@ button {
 }
 
 a, leaflet-control a {
-	color: #197 !important;
+	color: teal !important;
 }
 
 .title {
@@ -333,7 +333,7 @@ a, leaflet-control a {
 
 .link_text a {
 	text-decoration: none;
-	color: #197;
+	color: teal;
 }
 
 .popup_image {
