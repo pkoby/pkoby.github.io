@@ -281,6 +281,11 @@ button {
 	display: block;
 }*/
 
+.leaflet-popup-content {
+	text-align: center;
+	color: #222;
+}
+
 .leaflet-popup-content img {
 	/*border-radius: 0;*/
 	max-width: 200px;
@@ -294,13 +299,14 @@ a, leaflet-control a {
 .title {
 	font-weight: bold;
 	font-style: italic;
-	font-size: 1.2em;
-	max-width: 200px;
+	font-size: 1.4em;
+	max-width: 240px;
 	display: inline-block;
 }
 
 .type {
 	font-weight: bold;
+	font-size: 1.2em;
 }
 
 .leaflet-popup-tip {
@@ -494,4 +500,17 @@ a, leaflet-control a {
 	background-color: rosybrown;
 	color:#222;
 	background-image: url(icons/granite.png);
+}
+
+.linktext {
+	margin-top: 10px;
+	text-align: center;
+/*	font-size: 80%;*/
+/*	color: #3c3c3c!important;*/
+/*	text-shadow: 1px 1px #4e4e4e !important;*/
+}
+
+.linktext a {
+	text-decoration: none;
+	color: #b298e6!important;
 }

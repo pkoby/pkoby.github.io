@@ -261,8 +261,8 @@ function getPanoramaxLink(tagPanoramax) {
 function setPoiMarker(poi_type, icon, lat, lon, tags, osmid, osmtype) {
 	var mrk = L.marker([lat, lon], {icon: icon});
 	var osmlink = "https://www.openstreetmap.org/"+osmtype+"/"+osmid;
-	var osmedit = "https://www.openstreetmap.org/edit\?"+osmtype+"="+osmid;
-	var mllink = "https://www.mapillary.com/app/?lat="+lat+"&lng="+lon+'&z=18';
+	var iDedit = "https://www.openstreetmap.org/edit\?editor=id&"+osmtype+"="+osmid;
+	var josmedit = "http://127.0.0.1:8111/load_object?new_layer=true&objects=n"+osmid;
 
 	if (tags.name == undefined) {
 		var popup_content = "<span class='type'>"+poi_type+"</span>";
@@ -324,8 +324,10 @@ function setPoiMarker(poi_type, icon, lat, lon, tags, osmid, osmtype) {
 		}
 	}
 
-	popup_content += "<div class='link_text'><a href='"+osmlink+"' target='_blank'>show feature on OSM</a> | <a href='"+mllink+"' target='_blank'>show area on Mapillary</a></div>";
-	popup_content += "<div class='link_text'><a href='http://localhost:8111/import?url="+osmlink+"' target='_blank'>edit feature in JOSM</a> | <a href='"+osmedit+"' target='_blank'>edit feature in iD</a></div>";
+	popup_content += "<div class='linktext'><a href='"+osmlink+"' title=\"show feature on OSM\" target='_blank'>🗺️</a> | <a href='"+iDedit+"' title=\"edit feature on OSM\" target='_blank'>✏️</a> | <a href='"+josmedit+"' title=\"edit feature in JOSM\" target='_blank'>🖊️</a></div>";
+
+	// popup_content += "<div class='link_text'><a href='"+osmlink+"' target='_blank'>show feature on OSM</a> | <a href='"+mllink+"' target='_blank'>show area on Mapillary</a></div>";
+	// popup_content += "<div class='link_text'><a href='http://localhost:8111/import?url="+osmlink+"' target='_blank'>edit feature in JOSM</a> | <a href='"+osmedit+"' target='_blank'>edit feature in iD</a></div>";
 
 	mrk.bindPopup(L.popup({autoPanPaddingTopLeft: [0,50]}).setContent(popup_content));
 	poi_markers.push(mrk);
