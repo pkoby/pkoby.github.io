@@ -242,14 +242,21 @@ function getMapillaryLink(tagMapillary) {
 	return ml_link;
 }
 
-function getPanoramaxLink(tagPanoramax) {
+function getPanoramaxThumb(tagPanoramax) {
 	var px_tag = tagPanoramax;
 	var a = px_tag.substr(0,2);
 	var b = px_tag.substr(2,2);
 	var c = px_tag.substr(4,2);
 	var d = px_tag.substr(6,2);
 	var e = px_tag.substr(9);
-	var px_link = "https://panoramax.mapcomplete.org/permanent/"+a+"/"+b+"/"+c+"/"+d+"/"+e+".jpg";
+	var px_link = "https://api.panoramax.xyz/derivates/"+a+"/"+b+"/"+c+"/"+d+"/"+e+"/thumb.jpg";
+	return px_link;
+}
+
+function getPanoramaxLink(tagPanoramax) {
+	var px_tag = tagPanoramax;
+	var a = px_tag.substr(0);
+	var px_link = "https://api.panoramax.xyz/#s=fp;s2;p"+a;
 	return px_link;
 }
 
@@ -292,8 +299,11 @@ function setPoiMarker(poi_type, icon, lat, lon, tags, osmid, osmtype) {
 			popup_content += "<br><span class='invalid' title='"+tags.wikimedia_commons+"'>Invalid image tag: <a href='https://commons.wikimedia.org/wiki/"+tags.wikimedia_commons+"' target='_blank'>"+tags.wikimedia_commons+"</span>";
 		}
 	} else if (tags.panoramax != undefined) {
+		// var thumb = getPanoramaxThumb(tags.panoramax);
+		// var link = getPanoramaxLink(tags.panoramax);
+		// popup_content += "<br><a href='"+link+"' target='_blank'><img src='"+thumb+"' class='popup_image'></a>";
 		var link = getPanoramaxLink(tags.panoramax);
-		popup_content += "<br><a href='"+link+"' target='_blank'><img src='"+link+"' class='popup_image'></a>";
+		popup_content += "<br><a href='"+link+"' target='_blank'>Panoramax Image Link</a>";
 	} else if (tags.mapillary != undefined) {
 		var link = getMapillaryLink(tags.mapillary);
 		popup_content += "<br><a href='"+link+"' target='_blank'>Mapillary Image Link</a>";
