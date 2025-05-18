@@ -1,6 +1,21 @@
 'use strict';
 var bbox, bboxOutline;
 var poi_markers = new Array();
+var poi_clusters = new L.markerClusterGroup({
+	// disableClusteringAtZoom: 16,
+	spiderfyOnMaxZoom: true,
+	showCoverageOnHover: true,
+	maxClusterRadius: 15,
+	minClusterRadius: 1,
+	// iconCreateFunction: function(cluster) {
+	// 	return L.icon({
+	// 		iconUrl: 'icons/group_icon.svg',
+	// 		iconSize: [32,32],
+	// 		className: 'pointIcon',
+	// 		iconAnchor: [16,16],
+	// 	});
+	// }
+});
 
 var primary_icon,welcome_icon,no_icon,has_source_icon,has_website_icon,no_source_icon,bar_icon,cafe_icon,fitness_icon,gallery_icon,healthcare_icon,heart_icon,library_icon,lodging_icon,memorial_icon,museum_icon,office_icon,pharmacy_icon,placeofworship_icon,pub_icon,restaurant_icon,sauna_icon,shop_icon,theater_icon,vet_icon,other_icon;
 	
@@ -277,7 +292,9 @@ function setPoiMarker(poi_type, icon, lat, lon, tags, osmid, osmtype, timestamp)
 
 	if (tags.lgbtq == 'only') {
 		popup_content += "🌈 <span class='primary'>This location only allows members of the LGBTQ+ community</span><br/>";
-	} else if (tags.lgbtq == 'primary') {
+	} else if (tags.lgbtq == 'primary' && tags.historic == 'memorial') {
+		popup_content += "🌈 <span class='primary'>This location commemorates LGBTQ+ people</span><br/>";
+	}  else if (tags.lgbtq == 'primary') {
 		popup_content += "🌈 <span class='primary'>This location caters primarily to the LGBTQ+ community</span><br/>";
 	} else if (tags.lgbtq == 'welcome' || tags.lgbtq == 'friendly') {
 		popup_content += "💗 <span class='welcome'>This location explicitly welcomes members of the LGBTQ+ community</span><br/>";
@@ -371,7 +388,7 @@ function setPoiMarker(poi_type, icon, lat, lon, tags, osmid, osmtype, timestamp)
 }
 
 function element_to_map(data) {	
-	// poi_clusters.clearLayers();
+	poi_clusters.clearLayers();
 	$.each(poi_markers, function(_, mrk) {
 		map.removeLayer(mrk);
 	});

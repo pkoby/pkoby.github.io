@@ -14,7 +14,7 @@
 		<link rel="apple-touch-icon" sizes="180x180" href="icons/globeicon180.png">
 		<link rel="icon" type="image/png" sizes="192x192" href="icons/globeicon192.png">
 		<link rel="stylesheet" href="leaflet.css" />
-		<!-- <link rel="stylesheet" href="MarkerCluster.css" /> -->
+		<link rel="stylesheet" href="MarkerCluster.css" />
 		<link rel="stylesheet" href="style.css" />
 		<link rel="stylesheet" href="mobile.css" media="screen and (max-width: 700px)" />
 		<script src="jquery-1.10.2.min.js"></script>	
@@ -55,8 +55,8 @@
 			<a href="#" onclick="return false;">
 				<div id="background" class="togglebutton" title="Toggle Background"><img id="lighticon" class="light" src="icons/lightbulb-light.svg" onclick="toggle()"></div>
 			</a>
-			<a href="#" onclick="hideInfo()">
-				<div id="loaddata" class="loadbutton" title="Search for Places in View"><img id="loadicon" src="icons/refresh.svg"></div><span id="tipRight">Search for Places in View</span><span id="arrowRight"></span>
+			<a href="#" onclick="return false;">
+				<div id="loaddata" class="loadbutton" title="Search for Places in View" onclick="hideInfo()"><img id="loadicon" src="icons/refresh.svg"></div><span id="tipRight">Search for Places in View</span><span id="arrowRight"></span>
 			</a>
 		</div>
 
@@ -108,7 +108,7 @@
 		<script src="leaflet.js"></script>
 		<script src="leaflet-hash.js"></script>
 		<script src="L.Control.Locate.min.js" charset="utf-8"></script>
-		<!-- <script src="leaflet.markercluster.js"></script> -->
+		<script src="leaflet.markercluster.js"></script>
 		<script src="mapcode.js"></script>
 		<script>
 		//onclick code
