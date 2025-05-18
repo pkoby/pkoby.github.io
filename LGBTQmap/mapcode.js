@@ -260,6 +260,8 @@ function millToDays(ms) {
 				return "<span class='days'>"+days+" days ago</span>";
 			} else if (days == 1) {
 				return "<span class='days'>"+days+" day ago</span>";
+			} else {
+				return "<span class='days'>less than a day ago</span>";
 			}
 		}
 	}
