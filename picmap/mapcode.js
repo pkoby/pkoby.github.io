@@ -20,8 +20,8 @@ var poiClusters = new L.markerClusterGroup({
 	// }
 });
 
-var artwork_icon,building_icon,castle_icon,cemetery_icon,globe_icon,information_icon,landmark_icon,memorial_icon,monument_icon,museum_icon,temple_icon,church_icon,synagogue_icon,mosque_icon,school_icon,viewpoint_icon,
-	artwork_icon_pic,building_icon_pic,castle_icon_pic,cemetery_icon_pic,globe_icon_pic,information_icon_pic,landmark_icon_pic,memorial_icon_pic,monument_icon_pic,museum_icon_pic,temple_icon_pic,church_icon_pic,synagogue_icon_pic,mosque_icon_pic,school_icon_pic,viewpoint_icon_pic;
+var artwork_icon,attraction_icon,building_icon,castle_icon,cemetery_icon,globe_icon,information_icon,landmark_icon,memorial_icon,monument_icon,museum_icon,temple_icon,church_icon,synagogue_icon,mosque_icon,school_icon,viewpoint_icon,
+	artwork_icon_pic,attraction_icon_pic,building_icon_pic,castle_icon_pic,cemetery_icon_pic,globe_icon_pic,information_icon_pic,landmark_icon_pic,memorial_icon_pic,monument_icon_pic,museum_icon_pic,temple_icon_pic,church_icon_pic,synagogue_icon_pic,mosque_icon_pic,school_icon_pic,viewpoint_icon_pic;
 
 	// var OSMCarto=L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,opacity:0.3,attribution:'&copy;<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'});
 	var CartoDB_Positron = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
@@ -221,7 +221,7 @@ function setPoiMarker(poi_type, icon_name, lat, lon, tags, osmid, osmtype) {
 		popup_content += "<span class=\"type\">Historic Building</span><br/>";
 	} else if (tags.tourism == 'viewpoint') {
 		popup_content += "<span class=\"type\">Viewpoint</span><br/>";
-	} 
+	}
 
 	if (tags.panoramax != undefined) {
 		var thumb = getPxThumb(tags.panoramax);
@@ -291,6 +291,8 @@ function element_to_map(data) {
 					setPoiMarker("", building_icon, el.lat, el.lon, el.tags, el.id, el.type);
 				} else if (el.tags.tourism == 'viewpoint') {
 					setPoiMarker("", viewpoint_icon, el.lat, el.lon, el.tags, el.id, el.type);
+				} else {
+					setPoiMarker("", attraction_icon, el.lat, el.lon, el.tags, el.id, el.type);
 				}
 			} else if (el.tags.panoramax != null) {
 				if (el.tags.tourism == 'artwork') {
@@ -325,6 +327,8 @@ function element_to_map(data) {
 					setPoiMarker("", building_icon_pic, el.lat, el.lon, el.tags, el.id, el.type);
 				} else if (el.tags.tourism == 'viewpoint') {
 					setPoiMarker("", viewpoint_icon_pic, el.lat, el.lon, el.tags, el.id, el.type);
+				} else {
+					setPoiMarker("", attraction_icon_pic, el.lat, el.lon, el.tags, el.id, el.type);
 				}
 			}
 		}
@@ -351,7 +355,7 @@ function downloadData() {
 	$.ajax({
 		url: "https://overpass-api.de/api/interpreter",
 		data: {
-			"data": '[bbox:'+bbox+'][out:json][timeout:25];(nwr["tourism"="information"]["information"~"board|map"];nwr["tourism"~"artwork|attraction|viewpoint|museum"];nwr["historic"]["historic"!~"district|milestone|cemetery|yes"];nwr["building"~"temple|church|synagogue|mosque"];);out body center; >; out skel qt;'
+			"data": '[bbox:'+bbox+'][out:json][timeout:25];(nwr["tourism"="information"]["information"~"board|map"];nwr["tourism"~"artwork|attraction|viewpoint|museum"];nwr["historic"]["historic"!~"district|milestone|cemetery"];nwr["building"~"temple|church|synagogue|mosque"];);out body center; >; out skel qt;'
 		},
 		success: element_to_map,
 		error: error_function,
@@ -381,6 +385,20 @@ $(function() {
 	});
 	artwork_icon_pic = L.icon({
 		iconUrl: 'icons/art-gallery-blue.svg',
+		iconSize: [18,18],
+		className: 'pointIcon',
+		iconAnchor: [9,9],
+		popupAnchor: [0,-16],
+	});
+	attraction_icon = L.icon({
+		iconUrl: 'icons/attraction-15.svg',
+		iconSize: [18,18],
+		className: 'pointIcon',
+		iconAnchor: [9,9],
+		popupAnchor: [0,-16],
+	});
+	attraction_icon_pic = L.icon({
+		iconUrl: 'icons/attraction-blue.svg',
 		iconSize: [18,18],
 		className: 'pointIcon',
 		iconAnchor: [9,9],
