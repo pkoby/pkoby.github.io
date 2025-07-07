@@ -10,14 +10,16 @@ var poiClusters = new L.markerClusterGroup({
 	showCoverageOnHover: true,
 	maxClusterRadius: 5,
 	minClusterRadius: 1,
-	// iconCreateFunction: function(cluster) {
-	// 	return L.icon({
-	// 		iconUrl: 'icons/group_icon.svg',
-	// 		iconSize: [32,32],
-	// 		className: 'pointIcon',
-	// 		iconAnchor: [16,16],
-	// 	});
-	// }
+});
+var poiClustersPic= new L.markerClusterGroup({
+	disableClusteringAtZoom: 17,
+	spiderfyOnMaxZoom: true,
+	showCoverageOnHover: true,
+	maxClusterRadius: 5,
+	minClusterRadius: 1,
+	iconCreateFunction: function(cluster) {
+		return L.divIcon({ className: 'pic-cluster', html: '<div><span>' + cluster.getChildCount() + '</span></div>' });
+	}
 });
 
 var artwork_icon,attraction_icon,building_icon,castle_icon,cemetery_icon,globe_icon,information_icon,landmark_icon,memorial_icon,monument_icon,museum_icon,temple_icon,church_icon,synagogue_icon,mosque_icon,school_icon,viewpoint_icon,
@@ -235,8 +237,13 @@ function setPoiMarker(poi_type, icon_name, lat, lon, tags, osmid, osmtype) {
 	// mrk.bindTooltip(L.tooltip({permanent:true,direction:'top'}).setContent(tooltip_content)).openTooltip;
 
 	poi_markers.push(mrk);
-	mrk.addTo(poiClusters);
+	if (tags.panoramax != undefined) {
+		mrk.addTo(poiClustersPic);
+	} else {
+		mrk.addTo(poiClusters);
+	}
 	poiClusters.addTo(map);
+	poiClustersPic.addTo(map);
 
 }
 

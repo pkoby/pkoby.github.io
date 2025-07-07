@@ -331,7 +331,7 @@ button {
 
 #topbar #logo img {
 	height: 28px;
-	/*vertical-align: middle;*/
+	vertical-align: middle;
 	border-radius: 3px;
 }
 
@@ -341,7 +341,7 @@ button {
 	color: #1e88e5;
 	font-size: 28pt;
 	/*position: relative;*/
-	/*vertical-align: middle;*/
+	vertical-align: middle;
 	margin-left: -2px;
 }
 
@@ -402,7 +402,7 @@ button {
 }*/
 .leaflet-popup-content {
 	/*border-radius: 0;*/
-	max-width: 280px;
+	/*max-width: 400px;*/
 	/*min-height: 180px;*/
 	text-align: center;
 	color: white;
@@ -410,11 +410,14 @@ button {
 
 .leaflet-popup-content-wrapper {
 	background-color: #444;
+	max-width: 400px;
 }
 
 .leaflet-popup-content img {
 	/*border-radius: 0;*/
-	max-width: 250px;
+	max-width: 300px;
+	max-height: 300px;
+	border-radius: 5px;
 	/*min-height: 180px;*/
 }
 
@@ -508,12 +511,13 @@ hr {
 	color: #b298e6!important;
 }
 
-.popup_image {
-	width: 200px;
+/*.popup_image {
+	/*width: 300px;*/
+	/*max-height: 300px;*/
 	/*	display: inline-block;*/
-	text-align: right;
-	padding: 5px;
-}
+	/*text-align: right;*/
+	/*padding-top: 5px;*/
+/*}*/
 
 .leaflet-interactive {
 	cursor: pointer !important;
@@ -696,64 +700,4 @@ hr {
 /*	background-color: white;*/
 /*	text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;
 	font-weight: bolder;*/
-}
-
-.inscription {
-	background-color: #c94;
-	color: #111;
-	padding: 5px 15px 5px 15px;
-	border-radius: 2px;
-	box-shadow: 2px 2px 2px black;
-	position: relative;
-	text-shadow: 0px 1px 0px #fc7;
-	font-family: fontin-bold;
-}
-
-.inscription:before, .inscription:after {
-		content: "";
-		position: absolute;
-		height: 100%;
-		width: 2px;
-		top: 0px;
-		background-image: radial-gradient(circle at center, #860 5px, transparent 5px), radial-gradient(circle at center, #860 5px, transparent 5px);
-		background-size: 2px 2px;
-		background-position: 5% 3%, 95% 97%;
-		background-repeat: no-repeat;
-}
-
-.inscription:before {
-		left: 2px;
-}
-.inscription:after {
-		right: 2px;
-}
-
-.material {
-	padding: 1px 4px 1px 4px;
-	border-radius: 4px;
-}
-.wood {
-	background: linear-gradient(0deg, rgb(170,85,50) 0%, rgb(221,153,100) 100%);
-	color:#333;
-	background-image: url(icons/wood.png);
-}
-.metal, .steel {
-	background: linear-gradient(90deg, rgb(153,153,153) 0%, rgb(238,238,238) 100%);
-	color:#333;
-	background-image: url(icons/metal.png);
-}
-.plastic {
-	background-color: #ffee66;
-	color:#333;
-	background-image: url(icons/plastic.png);
-}
-.concrete, .stone {
-	background-color: lightgray;
-	color:#333;
-	background-image: url(icons/concrete.png);
-}
-.granite {
-	background-color: rosybrown;
-	color:#333;
-	background-image: url(icons/granite.png);
 }
