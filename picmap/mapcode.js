@@ -8,14 +8,14 @@ var poiClusters = new L.markerClusterGroup({
 	disableClusteringAtZoom: 17,
 	spiderfyOnMaxZoom: true,
 	showCoverageOnHover: true,
-	maxClusterRadius: 5,
+	maxClusterRadius: 10,
 	minClusterRadius: 1,
 });
 var poiClustersPic= new L.markerClusterGroup({
 	disableClusteringAtZoom: 17,
 	spiderfyOnMaxZoom: true,
 	showCoverageOnHover: true,
-	maxClusterRadius: 5,
+	maxClusterRadius: 10,
 	minClusterRadius: 1,
 	iconCreateFunction: function(cluster) {
 		return L.divIcon({ className: 'pic-cluster', html: '<div><span>' + cluster.getChildCount() + '</span></div>' });
