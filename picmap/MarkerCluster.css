@@ -67,6 +67,7 @@
 .marker-cluster, .pic-cluster {
 	background-clip: padding-box;
 	border-radius: 20px;
+	z-index: 1000;
 	}
 .marker-cluster div {
 	width: 18px;

@@ -10,6 +10,7 @@ var poiClusters = new L.markerClusterGroup({
 	showCoverageOnHover: true,
 	maxClusterRadius: 10,
 	minClusterRadius: 1,
+	clusterPane: 'clustersPane',
 });
 var poiClustersPic= new L.markerClusterGroup({
 	disableClusteringAtZoom: 17,
@@ -17,6 +18,7 @@ var poiClustersPic= new L.markerClusterGroup({
 	showCoverageOnHover: true,
 	maxClusterRadius: 10,
 	minClusterRadius: 1,
+	clusterPane: 'clustersPicPane',
 	iconCreateFunction: function(cluster) {
 		return L.divIcon({ className: 'pic-cluster', html: '<div><span>' + cluster.getChildCount() + '</span></div>' });
 	}
@@ -53,9 +55,8 @@ var map = new L.map('bigmap', {
 	zoomControl: false,
 })
 
-// map.createPane('onePane').style.zIndex = -1;
-// map.createPane('miniPane').style.zIndex = 99999;
-// map.createPane('twoPane').style.zIndex = 20000;
+map.createPane('clustersPane').style.zIndex = 400;
+map.createPane('clustersPicPane').style.zIndex = 600;
 
 var lc = L.control.locate({keepCurrentZoomLevel: true, inView: 'stop', outOfView: 'setView', inViewNotFollowing: 'inView', locateOptions: {enableHighAccuracy: true}}).addTo(map);
 
@@ -242,13 +243,14 @@ function setPoiMarker(poi_type, icon_name, lat, lon, tags, osmid, osmtype) {
 	} else {
 		mrk.addTo(poiClusters);
 	}
-	poiClusters.addTo(map);
 	poiClustersPic.addTo(map);
+	poiClusters.addTo(map);
 
 }
 
 function element_to_map(data) {	
 	poiClusters.clearLayers();
+	poiClustersPic.clearLayers();
 	$.each(poi_markers, function(_, mrk) {
 		map.removeLayer(mrk);
 	});
