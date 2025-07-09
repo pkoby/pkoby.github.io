@@ -36,7 +36,7 @@
 	}
 /* map is broken in FF if you have max-width: 100% on tiles */
 .leaflet-container img {
-	max-width: none !important;
+	/*max-width: none !important;*/
 	}
 /* stupid Android 2 doesn't understand "max-width: none" properly */
 .leaflet-container img.leaflet-image-layer {

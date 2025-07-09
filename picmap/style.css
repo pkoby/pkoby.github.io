@@ -410,7 +410,7 @@ button {
 
 .leaflet-popup-content-wrapper {
 	background-color: #444;
-	max-width: 400px;
+	/*max-width: 400px;*/
 }
 
 .leaflet-popup-content img {
@@ -418,6 +418,7 @@ button {
 	max-width: 300px;
 	max-height: 300px;
 	border-radius: 5px;
+	margin-top: 5px;
 	/*min-height: 180px;*/
 }
 
@@ -443,7 +444,15 @@ a, leaflet-container a {
 
 .title {
 	font-weight: bold;
-	text-decoration: underline;
+	font-style: italic;
+	font-size: 1.2em;
+	max-width: 250px;
+	display: inline-block;
+/*	margin-bottom: 5px;*/
+}
+
+.name {
+	font-weight: bold;
 	font-size: 1.2em;
 	max-width: 250px;
 	display: inline-block;
@@ -518,6 +527,14 @@ hr {
 	/*text-align: right;*/
 	/*padding-top: 5px;*/
 /*}*/
+
+.tiny-pic {
+	width: 80px;
+	max-height: 80px;
+	display: inline-block;
+	text-align: right;
+	padding: 2px;
+}
 
 .leaflet-interactive {
 	cursor: pointer !important;
