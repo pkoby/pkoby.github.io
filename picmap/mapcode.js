@@ -10,7 +10,7 @@ var poiClusters = new L.markerClusterGroup({
 	showCoverageOnHover: true,
 	maxClusterRadius: 20,
 	minClusterRadius: 1,
-	clusterPane: 'clustersPane',
+	// clusterPane: 'clustersPane',
 });
 var poiClustersPic= new L.markerClusterGroup({
 	disableClusteringAtZoom: 17,
@@ -18,7 +18,7 @@ var poiClustersPic= new L.markerClusterGroup({
 	showCoverageOnHover: true,
 	maxClusterRadius: 20,
 	minClusterRadius: 1,
-	clusterPane: 'clustersPicPane',
+	// clusterPane: 'clustersPicPane',
 	iconCreateFunction: function(cluster) {
 		return L.divIcon({ className: 'pic-cluster', html: '<div><span>' + cluster.getChildCount() + '</span></div>' });
 	}
@@ -55,8 +55,8 @@ var map = new L.map('bigmap', {
 	zoomControl: false,
 })
 
-map.createPane('clustersPane').style.zIndex = 400;
-map.createPane('clustersPicPane').style.zIndex = 600;
+map.createPane('clustersPane').style.zIndex = 4000;
+map.createPane('clustersPicPane').style.zIndex = 6000;
 
 var lc = L.control.locate({keepCurrentZoomLevel: true, inView: 'stop', outOfView: 'setView', inViewNotFollowing: 'inView', locateOptions: {enableHighAccuracy: true}}).addTo(map);
 
@@ -262,7 +262,7 @@ function setPoiMarker(poi_type, icon_name, lat, lon, tags, osmid, osmtype) {
 		popup_content += "<a href='"+link+"' target='_blank'><img class='tiny-pic' src='"+thumb+"'></a>";
 	}
 
-	popup_content += "<div class='linktext'><a href='"+osmlink+"' title=\"show feature on OSM\" target='_blank'><img class='edit-icon' src='icons/OSM.svg'></a> | <a href='"+iDedit+"' title=\"edit feature on OSM\" target='_blank'><img class='edit-icon' src='icons/ID.svg'></a> | <a href='"+josmedit+"' title=\"edit feature in JOSM\" target='_blank'><img class='edit-icon' src='icons/JOSM.svg'></a></div>";
+	popup_content += "<div class='linktext'><a href='"+osmlink+"' title=\"show feature on OSM\" target='_blank'>🗺️ OSM</a> | <a href='"+iDedit+"' title=\"edit feature on OSM\" target='_blank'>✏️ iD</a> | <a href='"+josmedit+"' title=\"edit feature in JOSM\" target='_blank'>🖊️ JOSM</a></div>";
 
 	mrk.bindPopup(L.popup({autoPanPaddingTopLeft: [0,50]}).setContent(popup_content));
 	// mrk.bindTooltip(L.tooltip({permanent:true,direction:'top'}).setContent(tooltip_content)).openTooltip;
@@ -701,7 +701,6 @@ $(function() {
 	document.querySelector(".leaflet-popup-pane").addEventListener("load", function (event) {
 		var tagName = event.target.tagName,
 		popup = map._popup; // Last open Popup.
-
 		if (tagName === "IMG" && popup && !popup._updated) {
 			popup._updated = true; // Assumes only 1 image per Popup.
 			popup.update();
