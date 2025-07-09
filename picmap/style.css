@@ -416,10 +416,22 @@ button {
 .leaflet-popup-content img {
 	/*border-radius: 0;*/
 	max-width: 300px;
-	max-height: 300px;
+	max-height: 250px;
 	border-radius: 5px;
 	margin-top: 5px;
 	/*min-height: 180px;*/
+}
+
+.tiny-pic {
+	width: 40px;
+	max-height: 40px;
+	display: inline-block;
+	text-align: right;
+	padding: 2px;
+}
+
+.edit-icon {
+	height: 18px;
 }
 
 .leaflet-popup-tip {
@@ -527,14 +539,6 @@ hr {
 	/*text-align: right;*/
 	/*padding-top: 5px;*/
 /*}*/
-
-.tiny-pic {
-	width: 80px;
-	max-height: 80px;
-	display: inline-block;
-	text-align: right;
-	padding: 2px;
-}
 
 .leaflet-interactive {
 	cursor: pointer !important;

@@ -262,7 +262,7 @@ function setPoiMarker(poi_type, icon_name, lat, lon, tags, osmid, osmtype) {
 		popup_content += "<a href='"+link+"' target='_blank'><img class='tiny-pic' src='"+thumb+"'></a>";
 	}
 
-	popup_content += "<div class='linktext'><a href='"+osmlink+"' title=\"show feature on OSM\" target='_blank'>🗺️</a> | <a href='"+iDedit+"' title=\"edit feature on OSM\" target='_blank'>✏️</a> | <a href='"+josmedit+"' title=\"edit feature in JOSM\" target='_blank'>🖊️</a></div>";
+	popup_content += "<div class='linktext'><a href='"+osmlink+"' title=\"show feature on OSM\" target='_blank'><img class='edit-icon' src='icons/OSM.svg'></a> | <a href='"+iDedit+"' title=\"edit feature on OSM\" target='_blank'><img class='edit-icon' src='icons/ID.svg'></a> | <a href='"+josmedit+"' title=\"edit feature in JOSM\" target='_blank'><img class='edit-icon' src='icons/JOSM.svg'></a></div>";
 
 	mrk.bindPopup(L.popup({autoPanPaddingTopLeft: [0,50]}).setContent(popup_content));
 	// mrk.bindTooltip(L.tooltip({permanent:true,direction:'top'}).setContent(tooltip_content)).openTooltip;
