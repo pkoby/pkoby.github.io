@@ -105,6 +105,9 @@ button {
 /*	background-position: center center;*/
 /*	background-size: 16px;*/
 }
+#picsicon{
+	padding: 13px;
+}
 #loadicon {
 	padding: 13px;
 	transform: rotate(360deg);
@@ -115,10 +118,26 @@ button {
 	transform: rotate(0deg);
 	transition:	0s;
 }
-.loadbutton img {
+.loadbutton img, .togglebutton img {
 	height: 19px;
 	width: 19px;
 }
+
+#pictures {
+	position: absolute;
+	top: 250px;
+	border-radius: 8px 0 0 8px;
+	/*background-repeat: no-repeat;
+	background-position: center center;
+	background-size: 14px;*/
+}
+.nopics {
+	content:url(icons/camera-no.svg);
+}
+.yespics {
+	content:url(icons/camera-yes.svg);
+}
+
 #infoButton {
 	position: fixed;
 	bottom: 35px;
@@ -215,7 +234,7 @@ button {
 	font-size: 20px;
 }*/
 
-.linkbutton, .loadbutton	{
+.linkbutton, .loadbutton, .togglebutton	{
 	width: 44px;
 	height: 44px;
 	background-color: #1e88e5;

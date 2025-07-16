@@ -3,7 +3,7 @@ var saved_lat, saved_lon, bbox, bboxOutline;
 var poi_markers = new Array();
 // var poiDots = new L.LayerGroup();
 // var poiMinis = new L.LayerGroup();
-var poiMain = new L.LayerGroup();
+var picLayer = new L.LayerGroup();
 var poiClusters = new L.markerClusterGroup({
 	disableClusteringAtZoom: 17,
 	spiderfyOnMaxZoom: false,
@@ -66,6 +66,16 @@ document.getElementById('zoomin').addEventListener('click', function () {
 document.getElementById('zoomout').addEventListener('click', function () {
 	map.zoomOut();
 });
+
+document.getElementById('pictures').addEventListener('click', togglePictures);
+
+function togglePictures() {
+	if (map.hasLayer(picLayer)) {
+		map.removeLayer(picLayer);
+	} else {
+		map.addLayer(picLayer);	
+	}
+}
 
 var currentLoc = null;
 var state = null;
@@ -273,7 +283,8 @@ function setPoiMarker(poi_type, icon_name, lat, lon, tags, osmid, osmtype) {
 	} else {
 		mrk.addTo(poiClusters);
 	}
-	poiClustersPic.addTo(map);
+	poiClustersPic.addTo(picLayer);
+	// picLayer.addTo(map);
 	poiClusters.addTo(map);
 
 }
@@ -677,16 +688,16 @@ $(function() {
 	// 	}
 	// });
 	map.on('zoomend', function () {
-		if (map.getZoom() > 17) {
-			// map.removeLayer(poiClusters);
-			map.addLayer(poiMain);
-			// map.addLayer(poiMinis);
-		}
-		if (map.getZoom() <= 17) {
-			// map.addLayer(poiClusters);
-			map.removeLayer(poiMain);
-			// map.removeLayer(poiMinis);
-		}
+		// if (map.getZoom() > 16) {
+		// 	// map.removeLayer(poiClusters);
+		// 	// map.addLayer(poiMain);
+		// 	// map.addLayer(picLayer);
+		// }
+		// if (map.getZoom() <= 16) {
+		// 	// map.addLayer(poiClusters);
+		// 	// map.removeLayer(poiMain);
+		// 	// map.removeLayer(picLayer);
+		// }
 		if (map.getZoom() >= 14) {
 			map.removeLayer(overlay);
 			zoomText.setContent('');
@@ -706,5 +717,4 @@ $(function() {
 			popup.update();
 		}
 	}, true);
-
 });

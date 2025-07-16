@@ -43,6 +43,9 @@
 			<a href="#" onclick="hideInfo()">
 				<div id="loaddata" class="loadbutton" title="Search for Places in View" accesskey="d"><img id="loadicon" src="icons/refresh.svg"></div>
 			</a>
+			<a href="#" onclick="return false;">
+				<div id="pictures" class="togglebutton" title="Toggle POIs with Pictures"><img id="picsicon" class="nopics" src="icons/camera-no.svg" onclick="toggle()"></div>
+			</a>
 		</div>
 
 		<div id="topbar">
@@ -57,5 +60,10 @@
 		<script src="L.Control.Locate.min.js" charset="utf-8"></script>
 		<script src="leaflet.markercluster.js"></script>
 		<script src="mapcode.js"></script>
+		<script>
+			function toggle() {
+				$('img.nopics').toggleClass('yespics');
+			}
+		</script>
 	</body>
 </html>
