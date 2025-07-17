@@ -125,7 +125,7 @@ button {
 
 #pictures {
 	position: absolute;
-	top: 250px;
+	bottom: 26px;
 	border-radius: 8px 0 0 8px;
 	/*background-repeat: no-repeat;
 	background-position: center center;
