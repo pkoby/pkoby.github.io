@@ -36,6 +36,13 @@
 			<img src="icons/unknown2.svg" class="legendicon">Unknown Type<br><img src="icons/architecture2.svg" class="legendicon">Architecture<br><img src="icons/bust2.svg" class="legendicon">Bust<br><img src="icons/graffiti2.svg" class="legendicon">Graffiti<br><img src="icons/memorial2.svg" class="legendicon">Memorial<br><img src="icons/mosaic2.svg" class="legendicon">Mosaic<br><img src="icons/mural2.svg" class="legendicon">Mural<br><img src="icons/painting2.svg" class="legendicon">Painting<br><img src="icons/relief2.svg" class="legendicon">Relief<br><img src="icons/sculpture2.svg" class="legendicon">Sculpture<br><img src="icons/statue2.svg" class="legendicon">Statue<br><img src="icons/stone2.svg" class="legendicon">Stone<br><img src="icons/totem2.svg" class="legendicon">Totem Pole<br>
 		</div>
 
+		<div id="linksbutton" onclick="togglelinks()" style="display: block;" title="Other Maps"></div>
+		<div id="linksdiv" onclick="togglelinks()" style="display: none;">
+			<a href="../LGBTQmap/index.html" target="_blank">LGBTQ+map</a>
+			<a href="../picmap/index.html" target="_blank" class="artmap">PicMap</a>
+			<a href="../benchmap/index.html" target="_blank" class="benchmap">BenchMap</a>
+		</div>
+
 		<div id="topbar">
 			<span id="logo"><img src="logo.svg"></span>
 			<span id="title">ArtMap</span>
@@ -44,7 +51,7 @@
 				<!-- <div id="autocomplete"></div> -->
 			<!-- </div>  -->
 		</div>
-		<div id="counter_display">Click buttons above to find art</div>
+		<!-- <div id="counter_display">Click buttons above to find art</div> -->
 
 		<!-- <button id="geolocator" onClick="go_to_current_pos();">Locate Me</button>
 		<button id="loader">Load Art</button> -->
@@ -58,5 +65,18 @@
 		<!-- <script src="leaflet.markercluster.js"></script> -->
 		<script language="JavaScript" src="md5.js"></script>
 		<script src="mapcode.js"></script>
+		<script>
+			function togglelinks() {
+				var div = document.getElementById("linksdiv");
+				var button = document.getElementById("linksbutton");
+				if (button.style.display === "block") {
+					div.style.display = "block";
+					button.style.display = "none";
+				} else {
+					div.style.display = "none";
+					button.style.display = "block";
+				}
+			} 
+		</script>
 	</body>
 </html>
