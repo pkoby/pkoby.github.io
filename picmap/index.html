@@ -48,6 +48,13 @@
 			</a>
 		</div>
 
+		<div id="linksbutton" onclick="togglelinks()" style="display: block;" title="Other maps by pkoby"></div>
+		<div id="linksdiv" onclick="togglelinks()" style="display: none;">
+			<a href="../LGBTQmap/index.html" target="_blank">LGBTQ+map</a>
+			<a href="../artmap/index.html" target="_blank" class="artmap">ArtMap</a>
+			<a href="../benchmap/index.html" target="_blank" class="benchmap">BenchMap</a>
+		</div>
+
 		<div id="topbar">
 			<!-- <span id="logo">🖼️</span> -->
 			<span id="title">PicMap</span>
@@ -64,6 +71,19 @@
 			function toggle() {
 				$('img.nopics').toggleClass('yespics');
 			}
+		</script>
+		<script>
+			function togglelinks() {
+				var div = document.getElementById("linksdiv");
+				var button = document.getElementById("linksbutton");
+				if (button.style.display === "block") {
+					div.style.display = "block";
+					button.style.display = "none";
+				} else {
+					div.style.display = "none";
+					button.style.display = "block";
+				}
+			} 
 		</script>
 	</body>
 </html>
