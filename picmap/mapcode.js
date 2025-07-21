@@ -242,6 +242,8 @@ function setPoiMarker(poi_type, icon_name, lat, lon, tags, osmid, osmtype) {
 		popup_content += "<span class=\"type\">Historic Building</span><br/>";
 	} else if (tags.tourism == 'viewpoint') {
 		popup_content += "<span class=\"type\">Viewpoint</span><br/>";
+	} else if (tags.historic == 'wayside_shrine') {
+		popup_content += "<span class=\"type\">Wayside Shrine</span><br/>";
 	} else if (tags.historic && tags.historic != 'yes') {
 		popup_content += "<span class=\"type\">"+tags.historic+"</span><br/>";
 	} else if (tags.amenity) {
@@ -249,9 +251,23 @@ function setPoiMarker(poi_type, icon_name, lat, lon, tags, osmid, osmtype) {
 	}
 
 	if (tags.panoramax != undefined) {
-		var thumb = getPxThumb(tags.panoramax);
-		var link = getPxLink(tags.panoramax);
-		popup_content += "<a href='"+link+"' target='_blank'><img src='"+thumb+"'></a><br/>";
+		if (tags.panoramax.includes(";")) {
+			var array = tags.panoramax.split(';');
+			var j = tags.panoramax.split(';').length;
+			console.log(j);
+			var thumb = getPxThumb(array[0]);
+			var link = getPxLink(array[0]);
+			popup_content += "<a href='"+link+"' target='_blank'><img src='"+thumb+"'></a><br/>";
+			for (let i = 1; i < j; i++) {
+				var thumb = getPxThumb(array[i]);
+				var link = getPxLink(array[i]);
+				popup_content += "<a href='"+link+"' target='_blank'><img class='tiny-pic' src='"+thumb+"'></a>";
+			}
+		} else {
+			var thumb = getPxThumb(tags.panoramax);
+			var link = getPxLink(tags.panoramax);
+			popup_content += "<a href='"+link+"' target='_blank'><img src='"+thumb+"'></a><br/>";
+		}
 	}
 	if (tags["panoramax:1"] != undefined) {
 		var thumb = getPxThumb(tags["panoramax:1"]);
@@ -311,7 +327,7 @@ function element_to_map(data) {
 		if (el.tags != undefined) {
 			var mrk;
 			if (el.tags.panoramax == null) {
-				if (el.tags.tourism == 'artwork') {
+				if (el.tags.tourism == 'artwork' && el.tags.start_date.substring(0,4) < 1978) {
 					setPoiMarker("", artwork_icon, el.lat, el.lon, el.tags, el.id, el.type);
 				} else if (el.tags.tourism == 'attraction') {
 					setPoiMarker("", attraction_icon, el.lat, el.lon, el.tags, el.id, el.type);
@@ -411,7 +427,7 @@ function downloadData() {
 	$.ajax({
 		url: "https://overpass-api.de/api/interpreter",
 		data: {
-			"data": '[bbox:'+bbox+'][out:json][timeout:25];(nwr["tourism"="information"]["information"~"board|map"];nwr["tourism"~"artwork|attraction|viewpoint|museum"];nwr["historic"]["historic"!~"district|milestone|cemetery"];nwr["building"~"temple|church|synagogue|mosque"];nwr["amenity"="library"];);out body center; >; out skel qt;'
+			"data": '[bbox:'+bbox+'][out:json][timeout:25];(nwr["tourism"="information"]["information"~"board|map"];nwr["tourism"~"attraction|viewpoint|museum"];nwr["tourism"="artwork"]["start_date"];nwr["historic"]["historic"!~"district|milestone|cemetery"];nwr["building"~"temple|church|synagogue|mosque"];nwr["amenity"="library"];);out body center; >; out skel qt;'
 		},
 		success: element_to_map,
 		error: error_function,
