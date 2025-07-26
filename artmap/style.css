@@ -54,6 +54,7 @@ button {
 	padding: 0 5px 0 5px;
 	max-width: 500px;
 	z-index: 10000;
+	display: none;
 }
 
 #sidebar {

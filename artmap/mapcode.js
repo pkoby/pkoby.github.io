@@ -188,7 +188,7 @@ var outline_icon,error_icon,wiki_icon,image_icon,mapillary_icon,panoramax_icon,a
 
 
 
-function getWikiLink(tagWiki) {
+function getWikiImg(tagWiki) {
 	var wiki_tag = tagWiki;
 	if (wiki_tag.includes("File:")) {
 		var wiki_file = wiki_tag.split("File:")[1];
@@ -222,7 +222,7 @@ function getWikiThumb(tagWiki) {
 	return wiki_link;
 }
 
-function getWikipedia(tagWikip) {
+function getWiki(tagWikip) {
 	var wiki_tag = tagWikip;
 	var lang = wiki_tag.substr(0,2);
 	var page = wiki_tag.substr(3);
@@ -233,17 +233,17 @@ function getWikipedia(tagWikip) {
 	return wiki_link;
 }
 
-function getMapillaryLink(tagMapillary) {
+function getMLLink(tagMapillary) {
 	var ml_link = "https://www.mapillary.com/app/?focus=photo&pKey="+tagMapillary;
 	return ml_link;
 }
 
-function getPanoramaxThumb(tagPanoramax) {
+function getPxThumb(tagPanoramax) {
 	var px_link = "https://api.panoramax.xyz/api/pictures/"+tagPanoramax+"/thumb.jpg";
 	return px_link
 }
 
-function getPanoramaxLink(tagPanoramax) {
+function getPxLink(tagPanoramax) {
 	var px_link = "https://api.panoramax.xyz/#s=fp;s2;p"+tagPanoramax;
 	return px_link;
 }
@@ -261,7 +261,11 @@ function setPoiMarker(poi_type, icon, lat, lon, tags, osmid, osmtype) {
 	}
 
 	if (tags.artist_name != undefined) {
-		popup_content += "<br>Artist: "+tags.artist_name;
+		if (tags["artist:wikipedia"] != undefined) {
+			popup_content += "<br>Artist: <a href='"+getWiki(tags["artist:wikipedia"])+"' target='_blank'>"+tags.artist_name+"</a>";
+		} else {
+			popup_content += "<br>Artist: "+tags.artist_name;
+		}
 	}
 
 	// if (tags.artwork_subject != undefined) {
@@ -277,12 +281,12 @@ function setPoiMarker(poi_type, icon, lat, lon, tags, osmid, osmtype) {
 	}
 
 	if (tags.wikipedia != undefined) {
-		var link = getWikipedia(tags.wikipedia);
+		var link = getWiki(tags.wikipedia);
 		popup_content += "<br><a href="+link+" target=\"_blank\">Wikipedia Link</a>";
 	}
 	
 	if (tags.wikimedia_commons != undefined) {
-		var link = getWikiLink(tags.wikimedia_commons);
+		var link = getWikiImg(tags.wikimedia_commons);
 		var thumb = getWikiThumb(tags.wikimedia_commons);
 		if (tags.wikimedia_commons.startsWith("File")) {
 			popup_content += "<br><a href='"+link+"' target='_blank'><img src='"+thumb+"' class='popup_image'></a>";
@@ -292,19 +296,18 @@ function setPoiMarker(poi_type, icon, lat, lon, tags, osmid, osmtype) {
 			popup_content += "<br><span class='invalid' title='"+tags.wikimedia_commons+"'>Invalid image tag: <a href='https://commons.wikimedia.org/wiki/"+tags.wikimedia_commons+"' target='_blank'>"+tags.wikimedia_commons+"</span>";
 		}
 	} else if (tags.panoramax != undefined) {
-		var thumb = getPanoramaxThumb(tags.panoramax);
-		var link = getPanoramaxLink(tags.panoramax);
+		var thumb = getPxThumb(tags.panoramax);
+		var link = getPxLink(tags.panoramax);
 		popup_content += "<br><a href='"+link+"' target='_blank'><img src='"+thumb+"' class='popup_image'></a>";
-		// var link = getPanoramaxLink(tags.panoramax);
+		// var link = getPxLink(tags.panoramax);
 		// popup_content += "<br><a href='"+link+"' target='_blank'>Panoramax Image Link</a>";
 	} else if (tags.mapillary != undefined) {
-		var link = getMapillaryLink(tags.mapillary);
-		popup_content += "<br><a href='"+link+"' target='_blank'>Mapillary Image Link</a>";
+		popup_content += "<br><a href='"+getMLLink(tags.mapillary)+"' target='_blank'>Mapillary Image Link</a>";
 	} else if (tags.image != undefined) {
 		if (tags.image.includes("//static.panoramio.com")) {
 			popup_content += "<br><span class='invalid' title='"+tags.image+"'>Image tag may be invalid</span>";
 		} else if (tags.image.includes("//commons.wikimedia.org") || tags.image.startsWith("File:") || tags.image.includes("wikipedia.org")) {
-			var link = getWikiLink(tags.image);
+			var link = getWikiImg(tags.image);
 			var thumb = getWikiThumb(tags.image);
 			popup_content += "<br><a href='"+link+"' target='_blank'><img src='"+thumb+"' class='popup_image'></a><br/><span class='invalid' title='"+tags.image+"'>(Image tag may be invalid)</span>";
 		} else if (tags.image.toLowerCase().endsWith(".jpg") || tags.image.toLowerCase().endsWith(".jpg") || tags.image.toLowerCase().endsWith(".jpeg") || tags.image.toLowerCase().endsWith(".png") || tags.image.toLowerCase().endsWith(".gif") || tags.image.toLowerCase().endsWith(".bmp")) {
@@ -498,9 +501,9 @@ function dlObjects() {
 	document.getElementById('tipRight').style.display = 'none';
 	document.getElementById('arrow').style.display = 'none';
 
-	while (counter_div.hasChildNodes()) {
-		counter_div.removeChild(counter_div.lastChild);
-	}
+	// while (counter_div.hasChildNodes()) {
+	// 	counter_div.removeChild(counter_div.lastChild);
+	// }
 
 	map.addLayer(loadingOverlay);
 	loadingText.setContent('Loading<img src="loading.gif">');
