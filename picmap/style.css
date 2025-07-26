@@ -46,20 +46,6 @@ button {
 	width: 90px;
 }
 
-#counter_display {
-	position: absolute;
-	z-index: 1000;
-	bottom: 0;
-	left: 0;
-	font-family: roboto-medium;
-	font-size: 10pt;
-	color: #444;
-	background-color: rgba(255,255,255,0.7);
-	padding: 0 5px 0 5px;
-	max-width: 500px;
-	z-index: 10000;
-}
-
 #sidebar {
 /*	margin: 0 auto;*/
 	position: fixed;
@@ -107,6 +93,7 @@ button {
 }
 #picsicon{
 	padding: 13px;
+	margin-top: -5px;
 }
 #loadicon {
 	padding: 13px;
@@ -136,6 +123,21 @@ button {
 }
 .yespics {
 	content:url(icons/camera-yes.svg);
+}
+
+#counter_display {
+	position: relative;
+	z-index: 1000;
+	bottom: 19px;
+	right: 0;
+	font-family: roboto-medium;
+	font-size: 8pt;
+}
+.dimtext {
+	color: #9ec4f8;
+}
+.brighttext {
+	color: #fff;
 }
 
 #infoButton {
@@ -442,8 +444,8 @@ button {
 }
 
 .tiny-pic {
-	width: 40px;
-	max-height: 40px;
+	/*width: 40px;*/
+	max-height: 60px !important;
 	display: inline-block;
 	text-align: right;
 	padding: 2px;
@@ -729,19 +731,6 @@ hr {
 	z-index: 0;
 }
 
-.colorbox {
-/*	height: 14px;*/
-/*	width: 14px;*/
-	padding: 1px 4px 1px 4px;
-	border-radius: 4px;
-/*	display: inline-block;*/
-/*	position: relative;*/
-/*	top: 3px;*/
-/*	background-color: white;*/
-/*	text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;
-	font-weight: bolder;*/
-}
-
 #linksbutton {
 	width: 44px;
 	height: 44px;
@@ -772,8 +761,13 @@ hr {
 	left: 0px;
 	z-index: 10000;
 } #linksdiv a {
-	display: block;
-	margin: 5px;
+	line-height: 24px;
 	text-decoration: underline dotted;
 	color: white;
+}
+#closebutton {
+	float: right;
+	margin-top: -4px;
+	color: #9ec4f8;
+	pointer-events: none;
 }

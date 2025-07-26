@@ -3,7 +3,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-		<link rel="shortcut icon" type="image/x-icon" href="icons/art-gallery-blue.svg">
+		<link rel="shortcut icon" type="image/x-icon" href="icons/attraction-blue.svg">
 		<!-- <link rel="icon" type="image/png" sizes="192x192" href="icons/pic_icon.png"> -->
 		<link rel="stylesheet" href="leaflet.css" />
 		<link rel="stylesheet" href="MarkerCluster.css" />
@@ -44,15 +44,19 @@
 				<div id="loaddata" class="loadbutton" title="Search for Places in View" accesskey="d"><img id="loadicon" src="icons/refresh.svg"></div>
 			</a>
 			<a href="#" onclick="return false;">
-				<div id="pictures" class="togglebutton" title="Toggle POIs with Pictures"><img id="picsicon" class="nopics" src="icons/camera-no.svg" onclick="toggle()"></div>
+				<div id="pictures" class="togglebutton" title="Toggle POIs with Pictures">
+					<img id="picsicon" class="nopics" src="icons/camera-no.svg" onclick="toggle()">
+					<div id="counter_display" class="dimtext">0</div>
+				</div>
 			</a>
 		</div>
 
 		<div id="linksbutton" onclick="togglelinks()" style="display: block;" title="Other maps by pkoby"></div>
 		<div id="linksdiv" onclick="togglelinks()" style="display: none;">
+			<div id="closebutton">×</div>
+			<a href="../artmap/index.html" target="_blank" class="artmap">ArtMap</a><br/>
+			<a href="../benchmap/index.html" target="_blank" class="benchmap">BenchMap</a><br/>
 			<a href="../LGBTQmap/index.html" target="_blank">LGBTQ+map</a>
-			<a href="../artmap/index.html" target="_blank" class="artmap">ArtMap</a>
-			<a href="../benchmap/index.html" target="_blank" class="benchmap">BenchMap</a>
 		</div>
 
 		<div id="topbar">
@@ -70,6 +74,7 @@
 		<script>
 			function toggle() {
 				$('img.nopics').toggleClass('yespics');
+				$('div.dimtext').toggleClass('brighttext');
 			}
 		</script>
 		<script>
