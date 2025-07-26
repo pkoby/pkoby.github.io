@@ -75,20 +75,6 @@ button {
 	width: 140px;
 }
 
-#counter_display {
-	position: absolute;
-	z-index: 1000;
-	bottom: 0;
-	left: 0;
-	font-family: roboto-medium;
-	font-size: 12pt;
-	color: #333;
-	background-color: rgba(255,255,255,0.7);
-	padding: 0 5px 0 5px;
-	max-width: 250px;
-	z-index: 10000;
-}
-
 .leaflet-control-zoom {
 	display:none;
 }
