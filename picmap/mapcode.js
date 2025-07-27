@@ -207,7 +207,7 @@ function setPoiMarker(poi_type, icon_name, lat, lon, tags, osmid, osmtype) {
 		var popup_content = "";
 	}
 
-	if (tags.tourism == 'artwork') {
+	if (tags.tourism == 'artwork' && tags.start_date != null) {
 		if (tags.artwork_type != null) {
 			popup_content += "<span class=\"type\">"+tags.artwork_type+"</span><br/>";
 		} else {
@@ -332,7 +332,7 @@ function element_to_map(data) {
 		if (el.tags != undefined) {
 			var mrk;
 			if (el.tags.panoramax == null) {
-				if (el.tags.tourism == 'artwork' && el.tags.start_date.substring(0,4) < 1978) {
+				if (el.tags.tourism == 'artwork' && el.tags.start_date != null && el.tags.start_date.substring(0,4) < 1978) {
 					setPoiMarker("", artwork_icon, el.lat, el.lon, el.tags, el.id, el.type);
 				} else if (el.tags.tourism == 'attraction') {
 					setPoiMarker("", attraction_icon, el.lat, el.lon, el.tags, el.id, el.type);
@@ -436,21 +436,6 @@ function element_to_map(data) {
 	}
 	var new_span = document.createElement('span');
 	new_span.innerHTML = counter;
-	if (counter != 0) {
-		// if (image_counter != 0) {
-		// 	var image_percent = ' ('+(image_counter/counter*100).toFixed(1)+'%)';
-		// } else {
-		// 	var image_percent = '';
-		// }
-		// if (error_counter != 0) {
-		// 	var error_percent = ' ('+(error_counter/counter*100).toFixed(1)+'%)';
-		// } else {
-		// 	var error_percent = '';
-		// }
-		// new_span.innerHTML += ", "+image_counter+" with images"+image_percent+", "+error_counter+" with tagging errors"+error_percent;
-	} else {
-		new_span.innerHTML += "";
-	}
 	counter_div.appendChild(new_span);
 }
 
@@ -472,8 +457,8 @@ function downloadData() {
 	$.ajax({
 		url: "https://overpass-api.de/api/interpreter",
 		data: {
-			"data": '[bbox:'+bbox+'][out:json][timeout:25];(nwr["tourism"="information"]["information"~"board|map"];nwr["tourism"~"attraction|viewpoint|museum"];nwr["tourism"="artwork"]["start_date"];nwr["historic"]["historic"!~"district|milestone|cemetery|place"][!"demolished:building"];nwr["building"~"temple|church|synagogue|mosque"];nwr["amenity"="library"];);out body center; >; out skel qt;'
-		},
+				"data": '[bbox:'+bbox+'][out:json][timeout:25];(nwr["tourism"="information"]["information"="board"];nwr["tourism"~"attraction|viewpoint|museum"];nwr["tourism"="artwork"]["start_date"];nwr["historic"]["historic"!~"district|milestone|cemetery|place"][!"demolished:building"];nwr["building"~"temple|church|synagogue|mosque"];nwr["amenity"="library"];);out body center; >; out skel qt;'
+			},
 		success: element_to_map,
 		error: error_function,
 	});

@@ -754,7 +754,7 @@ hr {
 	display: none;
 	background-color: #1e88e5;
 	opacity: 0.9;
-	border-radius: 0 20px 0 0;
+	border-radius: 0 22px 0 0;
 	padding: 10px;
 	position: absolute;
 	bottom: 0px;
@@ -767,7 +767,7 @@ hr {
 }
 #closebutton {
 	float: right;
-	margin-top: -4px;
+	margin: -3px 0px 0 0;
 	color: #9ec4f8;
 	pointer-events: none;
 }
