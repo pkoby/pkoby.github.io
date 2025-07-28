@@ -20,8 +20,22 @@
 		<script src="jquery-1.10.2.min.js"></script>	
 
 		<title>LGBTQ+map</title>
-
 		<script type="text/javascript">
+			function arta() {
+				var linkhash = window.location.hash;
+				var artstr = "../artmap/index.html" + linkhash;
+				document.getElementById("artlink").setAttribute("href",artstr);
+			}
+			function pica() {
+				var linkhash = window.location.hash;
+				var picstr = "../picmap/index.html" + linkhash;
+				document.getElementById("piclink").setAttribute("href",picstr);
+			}
+			function bencha() {
+				var linkhash = window.location.hash;
+				var benchstr = "../benchmap/index.html" + linkhash;
+				document.getElementById("benchlink").setAttribute("href",benchstr);
+			}
 
 			jQuery(function($) {
 				$(".profile-toggle").click(function() {
@@ -60,6 +74,14 @@
 			</a>
 		</div>
 
+		<div id="linksbutton" onclick="togglelinks()" style="display: block;" title="Other maps by pkoby"></div>
+		<div id="linksdiv" onclick="togglelinks()" style="display: none;">
+			<div id="closebutton">×</div>
+			<a id="artlink" onclick="arta()" target="_blank">ArtMap</a><br/>
+			<a id="piclink" onclick="pica()" target="_blank">PicMap</a><br/>
+			<a id="benchlink" onclick="bencha()" target="_blank">BenchMap</a>
+		</div>
+
 		<div id="topbar">
 			<span id="logo"><img src="icons/globeicon72.png"></span>
 			<span id="title">LGBTQ+map</span>
@@ -67,7 +89,7 @@
 
 		<!-- <a href="#" onclick="toggleInfo()"> -->
 			<div id="infoButton" class="linkbutton profile-toggle" title="Info"></div>
-			<span id="tipLeft">Info</span><span id="arrowLeft"></span>
+			<span id="tipRightBottom">Info</span><span id="arrowRightBottom"></span>
 		<!-- </a> -->
 		<div id="infoBox" class="show" onclick="hideInfo()">
 			<div>
@@ -112,9 +134,21 @@
 		<script src="mapcode.js"></script>
 		<script>
 		//onclick code
-		function toggle() {
-			$('img.light').toggleClass('dark');
-		}
+			function toggle() {
+				$('img.light').toggleClass('dark');
+			}
+
+			function togglelinks() {
+				var div = document.getElementById("linksdiv");
+				var button = document.getElementById("linksbutton");
+				if (button.style.display === "block") {
+					div.style.display = "block";
+					button.style.display = "none";
+				} else {
+					div.style.display = "none";
+					button.style.display = "block";
+				}
+			}
 		</script>
 	</body>
 </html>

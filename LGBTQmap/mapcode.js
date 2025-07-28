@@ -58,6 +58,7 @@ var map = new L.map('bigmap', {
 	zoomControl: false,
 	center: [51.5,-0.1],
 	zoom: 12,
+	attributionControl: false
 })
 
 let hash=new L.Hash(map);
@@ -147,19 +148,8 @@ var loadingText = L.Control.extend({
 });
 var loadingText =  new loadingText().addTo(map);
 
-var githubText = L.Control.extend({
-	options: {
-		position: 'bottomleft'
-	},
-	onAdd: function (map) {
-		return L.DomUtil.create('div', 'githubtext');
-	},
-	setContent: function (content) {
-		this.getContainer().innerHTML = content;
-	}
-});
-var githubText =  new githubText().addTo(map);
-	githubText.setContent('<a href="https://github.com/pkoby/pkoby.github.io/issues" target=\"\_blank\">Report issue on Github</a>');
+	// leafl.addContent('<a href="https://github.com/pkoby/pkoby.github.io/issues" target=\"\_blank\">Report issue on Github</a>');
+L.control.attribution({prefix: '<a href="https://github.com/pkoby/pkoby.github.io/issues" target=\"\_blank\">Report issue on Github</a> | <a href="https://leafletjs.com/">Leaflet</a>'}).addTo(map);
 
 
 
@@ -275,7 +265,8 @@ function setPoiMarker(poi_type, icon, lat, lon, tags, osmid, osmtype, timestamp)
 	const month = daysSince.toLocaleString('default',{ month:'long' });
 	var mrk = L.marker([lat, lon], {icon: icon});
 	var osmlink = "https://www.openstreetmap.org/"+osmtype+"/"+osmid;
-	var osmedit = "https://www.openstreetmap.org/edit\?"+osmtype+"="+osmid;
+	var iDedit = "https://www.openstreetmap.org/edit\?editor=id&"+osmtype+"="+osmid;
+	var josmedit = "http://127.0.0.1:8111/load_object?new_layer=true&objects=n"+osmid;
 
 	if (tags.name == undefined) {
 		var popup_content = "<span class='type'>"+poi_type+"</span><hr/>";
@@ -376,7 +367,7 @@ function setPoiMarker(poi_type, icon, lat, lon, tags, osmid, osmtype, timestamp)
 		popup_content += "<span class='source'>Source not tagged</span>";
 	}
 
-	popup_content += "<div class='linktext'><a href='"+osmlink+"' target='_blank'>show on OSM</a> | <a href='"+osmedit+"' target='_blank'>edit feature</a></div>";
+	popup_content += "<div class='linktext'><a href='"+osmlink+"' title=\"show feature on OSM\" target='_blank'>🗺️ OSM</a> | <a href='"+iDedit+"' title=\"edit feature on OSM\" target='_blank'>✏️ iD</a> | <a href='"+josmedit+"' title=\"edit feature in JOSM\" target='_blank'>🖊️ JOSM</a></div>";
 	if (timestamp) {
 		popup_content += "<span class='editdate'>Last updated: "+dateStr+"</span>";
 	}
@@ -495,8 +486,8 @@ function downloadData() {
 
 	document.getElementById('tipRight').style.display = 'none';
 	document.getElementById('arrowRight').style.display = 'none';
-	document.getElementById('tipLeft').style.display = 'none';
-	document.getElementById('arrowLeft').style.display = 'none';
+	document.getElementById('tipRightBottom').style.display = 'none';
+	document.getElementById('arrowRightBottom').style.display = 'none';
 	
 	map.addLayer(loadingOverlay);
 	loadingText.setContent('Loading<img src="icons/loading.gif">');
