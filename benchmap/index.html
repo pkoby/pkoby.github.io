@@ -12,20 +12,21 @@
 		<script src="jquery-1.10.2.min.js"></script>	
 
 		<title>BenchMap</title>
-
 		<script type="text/javascript">
-
-			jQuery(function($) {
-				$(".profile-toggle").click(function() {
-					$("#infoBox").toggleClass("hidden show")
-					console.log('click');
-				});
-			});
-
-			function hideInfo() {
-				if ($("#infoBox").hasClass("show")) {
-					$("#infoBox").toggleClass("hidden show")
-				}
+			function arta() {
+				var linkhash = window.location.hash;
+				var artstr = "../artmap/index.html" + linkhash;
+				document.getElementById("artlink").setAttribute("href",artstr);
+			}
+			function pica() {
+				var linkhash = window.location.hash;
+				var picstr = "../picmap/index.html" + linkhash;
+				document.getElementById("piclink").setAttribute("href",picstr);
+			}
+			function lgbtqa() {
+				var linkhash = window.location.hash;
+				var lgbtqstr = "../LGBTQmap/index.html" + linkhash;
+				document.getElementById("lgbtqlink").setAttribute("href",lgbtqstr);
 			}
 		</script>
 	</head>
@@ -40,16 +41,17 @@
 			<a href="#" onclick="return false;">
 				<div id="locater" class="linkbutton" title="Locate Me" accesskey="w"></div>
 			</a>
-			<a href="#" onclick="hideInfo()">
+			<a href="#" onclick="return false;">
 				<div id="loaddata" class="loadbutton" title="Search for Places in View" accesskey="d"><img id="loadicon" src="icons/refresh.svg"></div>
 			</a>
 		</div>
 
 		<div id="linksbutton" onclick="togglelinks()" style="display: block;" title="Other maps by pkoby"></div>
 		<div id="linksdiv" onclick="togglelinks()" style="display: none;">
-			<a href="../LGBTQmap/index.html" target="_blank">LGBTQ+map</a>
-			<a href="../artmap/index.html" target="_blank" class="artmap">ArtMap</a>
-			<a href="../picmap/index.html" target="_blank" class="benchmap">PicMap</a>
+			<div id="closebutton">×</div>
+			<a id="artlink" onclick="arta()" target="_blank">ArtMap</a><br/>
+			<a id="piclink" onclick="pica()" target="_blank">PicMap</a><br/>
+			<a id="lgbtqlink" onclick="lgbtqa()" target="_blank">LGBTQ+map</a>
 		</div>
 
 		<div id="topbar">

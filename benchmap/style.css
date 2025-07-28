@@ -17,6 +17,10 @@
 	font-family: roboto-medium, sans-serif;
 }
 
+a {
+	cursor: pointer;
+}
+
 button {
 	border: 1px solid #aaa;
 	/*text-shadow:none;*/
@@ -434,8 +438,8 @@ button {
 	z-index: 100000;
 }
 
-a, leaflet-container a {
-/*	color: saddlebrown !important;*/
+leaflet-container a {
+	color: saddlebrown !important;
 }
 
 .title {
@@ -505,12 +509,12 @@ hr {
 
 .linktext a {
 	text-decoration: none;
-	color: #b298e6!important;
+	color: #c96; !important;
 }
 
 .sourcelink a {
 	text-decoration: none;
-	color: #b298e6!important;
+	color: #c96; !important;
 }
 
 .popup_image {
@@ -711,18 +715,23 @@ text-align: right;
 	position: relative;
 	text-shadow: 0px 1px 0px #fc7;
 	font-family: fontin-bold;
+	margin-bottom: 8px;
+}
+
+pre {
+	display: inline;
 }
 
 .inscription:before, .inscription:after {
-		content: "";
-		position: absolute;
-		height: 100%;
-		width: 2px;
-		top: 0px;
-		background-image: radial-gradient(circle at center, #860 5px, transparent 5px), radial-gradient(circle at center, #860 5px, transparent 5px);
-		background-size: 2px 2px;
-		background-position: 5% 3%, 95% 97%;
-		background-repeat: no-repeat;
+	content: "";
+	position: absolute;
+	height: 100%;
+	width: 2px;
+	top: 0px;
+	background-image: radial-gradient(circle at center, #860 5px, transparent 5px), radial-gradient(circle at center, #860 5px, transparent 5px);
+	background-size: 2px 2px;
+	background-position: 5% 3%, 95% 97%;
+	background-repeat: no-repeat;
 }
 
 .inscription:before {
@@ -781,19 +790,26 @@ text-align: right;
 	z-index: 10000;
 }
 
+
 #linksdiv {
 	display: none;
 	background-color: saddlebrown;
 	opacity: 0.9;
-	border-radius: 0 20px 0 0;
+	border-radius: 0 22px 0 0;
 	padding: 10px;
 	position: absolute;
 	bottom: 0px;
 	left: 0px;
 	z-index: 10000;
 } #linksdiv a {
-	display: block;
-	margin: 5px;
+	line-height: 24px;
 	text-decoration: underline dotted;
 	color: white;
+	opacity: 0.9;
+}
+#closebutton {
+	float: right;
+	margin: -3px 0px 0 0;
+	color: #c96;
+	pointer-events: none;
 }

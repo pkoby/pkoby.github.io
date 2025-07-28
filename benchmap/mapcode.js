@@ -5,7 +5,7 @@ var poiDots = new L.LayerGroup();
 var poiMinis = new L.LayerGroup();
 var poiMain = new L.LayerGroup();
 var poiClusters = new L.markerClusterGroup({
-	disableClusteringAtZoom: 18,
+	disableClusteringAtZoom: 16,
 	spiderfyOnMaxZoom: false,
 	showCoverageOnHover: true,
 	maxClusterRadius: 50,
@@ -20,8 +20,8 @@ var poiClusters = new L.markerClusterGroup({
 	// }
 });
 
-var bench_dot,
-	picnic_table_dot,
+var bench_dot,bench_dot_unk,
+	// picnic_table_dot,picnic_table_dot_unk,
 	yab_icon,yb_na_icon,ya_nb_icon,nab_icon,yb_ua_icon,nb_ua_icon,ya_ub_icon,na_ub_icon,uab_icon,
 	yab_icon_red,yb_na_icon_red,ya_nb_icon_red,nab_icon_red,yb_ua_icon_red,nb_ua_icon_red,ya_ub_icon_red,na_ub_icon_red,uab_icon_red,
 	yab_icon_orange,yb_na_icon_orange,ya_nb_icon_orange,nab_icon_orange,yb_ua_icon_orange,nb_ua_icon_orange,ya_ub_icon_orange,na_ub_icon_orange,uab_icon_orange,
@@ -33,7 +33,7 @@ var bench_dot,
 	yab_icon_black,yb_na_icon_black,ya_nb_icon_black,nab_icon_black,yb_ua_icon_black,nb_ua_icon_black,ya_ub_icon_black,na_ub_icon_black,uab_icon_black,
 	yab_icon_gray,yb_na_icon_gray,ya_nb_icon_gray,nab_icon_gray,yb_ua_icon_gray,nb_ua_icon_gray,ya_ub_icon_gray,na_ub_icon_gray,uab_icon_gray,
 	yab_icon_white,yb_na_icon_white,ya_nb_icon_white,nab_icon_white,yb_ua_icon_white,nb_ua_icon_white,ya_ub_icon_white,na_ub_icon_white,uab_icon_white,
-	picnic_table_icon,picnic_table_icon_red,picnic_table_icon_orange,picnic_table_icon_yellow,picnic_table_icon_green,picnic_table_icon_blue,picnic_table_icon_purple,picnic_table_icon_brown,picnic_table_icon_black,picnic_table_icon_gray,picnic_table_icon_white,
+	// picnic_table_icon,picnic_table_icon_red,picnic_table_icon_orange,picnic_table_icon_yellow,picnic_table_icon_green,picnic_table_icon_blue,picnic_table_icon_purple,picnic_table_icon_brown,picnic_table_icon_black,picnic_table_icon_gray,picnic_table_icon_white,
 	inscription_icon,no_inscription_icon,unk_inscription_icon;
 
 	// var OSMCarto=L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,opacity:0.3,attribution:'&copy;<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'});
@@ -179,128 +179,18 @@ function setDotMarker(poi_type, icon, lat, lon, tags, osmid, osmtype) {
 		icon: icon,
 	});
 	
-	if (tags.amenity == 'bench') {
-		var popup_content = "<span class=\"title\">Bench</span><br/>";
-	} else if (tags.leisure == 'picnic_table') {
-		var popup_content = "<span class=\"title\">Picnic Table</span><br/>";
-	}
-	
-	mrk.bindPopup(L.popup({autoPanPaddingTopLeft: [0,50]}).setContent(popup_content));
-
-	poi_markers.push(mrk);
-	mrk.addTo(poiDots);
-	poiDots.addTo(poiClusters);
-	if (map.getZoom() <= 17) {
-		poiClusters.addTo(map);
-	}
-}
-
-function setMiniMarker(poi_type, icon, lat, lon, tags, osmid, osmtype) {
-	var mrk = L.marker([lat, lon], {
-		icon: icon, interactive:false,
-		rotationAngle: tags.direction-180,
-	});
-
-	poi_markers.push(mrk);
-	mrk.addTo(poiMinis);
-	if (map.getZoom() > 18) {
-		poiMinis.addTo(poiMain);
-	}
-}
-
-// function setColourMarker(poi_type, icon, lat, lon, tags, osmid, osmtype) {
-// 	var colour;
-// 	if (tags.colour != undefined) {
-// 		colour = tags.colour;
-// 	} else {
-// 		colour = "#000000";
-// 	}
-
-// 	var mrk = L.marker([lat, lon], {
-// 		icon: L.divIcon ({
-// 			className:'colourIcon',
-// 			html:`<svg width="24" height="24" viewBox="0 0 6.3499999 6.3499999">
-//   				<g transform="translate(-17.507495,-99.150042)">
-//     				<path style="opacity:1;vector-effect:none;fill:`+colour+`;fill-opacity:0.8;stroke:`+colour+`;stroke-width:0.05767668;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers stroke fill"
-//        d="m 23.828657,102.32504 a 3.1461616,3.1461613 0 0 1 -3.141755,3.14616 3.1461616,3.1461613 0 0 1 -3.150556,-3.13734 3.1461616,3.1461613 0 0 1 3.132929,-3.154951 3.1461616,3.1461613 0 0 1 3.159332,3.128511 l -3.146112,0.0176 z"/>
-//   				</g>
-// 			</svg>`
-// 		})
-// 	});
-	
-// 	poi_markers.push(mrk);
-// 	mrk.addTo(poiMinis);
-// 	// if (map.getZoom() > 17) {
-// 		poiMinis.addTo(poiClusters);
-// 	// }
-// }
-
-function getPanoramaxThumb(tagPanoramax) {
-	var px_tag = tagPanoramax;
-	var a = px_tag.substr(0,2);
-	var b = px_tag.substr(2,2);
-	var c = px_tag.substr(4,2);
-	var d = px_tag.substr(6,2);
-	var e = px_tag.substr(9);
-	var px_link = "https://panoramax.openstreetmap.fr/derivates/"+a+"/"+b+"/"+c+"/"+d+"/"+e+"/thumb.jpg";
-	return px_link;
-}
-
-function getPanoramaxLink(tagPanoramax) {
-	var px_tag = tagPanoramax;
-	var a = px_tag.substr(0,2);
-	var b = px_tag.substr(2,2);
-	var c = px_tag.substr(4,2);
-	var d = px_tag.substr(6,2);
-	var e = px_tag.substr(9);
-	var px_link = "https://panoramax.openstreetmap.fr/images/"+a+"/"+b+"/"+c+"/"+d+"/"+e+".jpg";
-	return px_link;
-}
-
-function inscriptionParser(inscription) {
-	var slashN = inscription.replace(/\\n/g, "<br/>");
-	var slashNspaces = slashN.replace(/ \\n /g, "<br/>");
-	var doubleSlash = slashNspaces.replace(/ \/\/ /g, "<br/><br/>");
-	var semiColon = doubleSlash.replace(/ \; /g, "</div><br/><div class='inscription'>");
-	return semiColon.replace(/ \/ /g,"<br/>");
-}
-
-function directionParser(direction) {
-	if (direction >= 337.5 || direction < 22.5) {
-			return "North";
-	} else if (direction >= 22.5 && direction < 67.5) {
-			return "Northeast";
-	} else if (direction >= 67.5 && direction < 112.5) {
-			return "East";
-	} else if (direction >= 112.5 && direction < 157.5) {
-			return "Southeast";
-	} else if (direction >= 157.5 && direction < 202.5) {
-			return "South";
-	} else if (direction >= 202.5 && direction < 247.5) {
-			return "Southwest";
-	} else if (direction >= 247.5 && direction < 292.5) {
-			return "West";
-	} else if (direction >= 292.5 && direction < 337.5) {
-			return "Northwest";
-	}
-}
-
-function setPoiMarker(poi_type, icon_name, lat, lon, tags, osmid, osmtype) {
-	var mrk = L.marker([lat, lon], {
-		icon: icon_name,
-		rotationAngle: tags.direction-180,
-	});
 	var osmlink = "https://www.openstreetmap.org/"+osmtype+"/"+osmid;
 	var iDedit = "https://www.openstreetmap.org/edit\?editor=id&"+osmtype+"="+osmid;
 	var josmedit = "http://127.0.0.1:8111/load_object?new_layer=true&objects=n"+osmid;
 
-	if (tags.amenity == 'bench') {
-		var popup_content = "<span class=\"title\">Bench</span><br/>";
-	} else if (tags.leisure == 'picnic_table') {
-		var popup_content = "<span class=\"title\">Picnic Table</span><br/>";
-	}
-	if (tags.inscription != undefined && tags.inscription != 'no') {
-		popup_content += "<div class='inscription'>"+inscriptionParser(tags.inscription);
+	// if (tags.amenity == 'bench') {
+	// 	var popup_content = "<span class=\"title\">Bench</span><br/>";
+	// } else if (tags.leisure == 'picnic_table') {
+	// 	var popup_content = "<span class=\"title\">Picnic Table</span><br/>";
+	// }
+	var popup_content = '';
+	if (tags.inscription != undefined && tags.inscription != 'no' && tags.inscription != 'No' && tags.inscription != 'NO') {
+		popup_content = "<div class='inscription'>"+inscriptionParser(tags.inscription);
 		if (tags["inscription:1"] != undefined) {
 			popup_content += " "+inscriptionParser(tags["inscription:1"]);
 		}
@@ -316,8 +206,8 @@ function setPoiMarker(poi_type, icon_name, lat, lon, tags, osmid, osmtype) {
 				}
 			}
 		}
-		popup_content += "</div><br/>"
-	} else if (tags.inscription == undefined && tags["inscription:1"] != undefined && tags["inscription:1"] != 'no') {
+		popup_content += "</div>"
+	} else if (tags.inscription == undefined && tags["inscription:1"] != undefined && tags["inscription:1"] != 'no' && tags["inscription:1"] != 'No' && tags["inscription:1"] != 'NO') {
 		popup_content += "<div class='inscription'>"+inscriptionParser(tags["inscription:1"]);
 		if (tags["inscription:2"] != undefined) {
 			popup_content += " "+inscriptionParser(tags["inscription:2"]);
@@ -331,8 +221,8 @@ function setPoiMarker(poi_type, icon_name, lat, lon, tags, osmid, osmtype) {
 				}
 			}
 		}
-		popup_content += "</div><br/>"
-	} else if (tags.inscription == 'no') {
+		popup_content += "</div>"
+	} else if (tags.inscription == 'no' || tags.inscription == 'No' || tags.inscription == 'NO') {
 		popup_content += "<span>No inscription</span><br/>"
 	} else if (tags.amenity == 'bench' && tags.inscription == undefined) {
 		popup_content += "<span class=\"unknown\">Inscription unknown</span><br/>";
@@ -341,8 +231,8 @@ function setPoiMarker(poi_type, icon_name, lat, lon, tags, osmid, osmtype) {
 	}
 
 	if (tags.panoramax != undefined) {
-		var thumb = getPanoramaxThumb(tags.panoramax);
-		var link = getPanoramaxLink(tags.panoramax);
+		var thumb = getPxThumb(tags.panoramax);
+		var link = getPxLink(tags.panoramax);
 		popup_content += "<a href='"+link+"' target='_blank'><img src='"+thumb+"' class='popup_image'></a><br/>";
 	}
 
@@ -399,7 +289,214 @@ function setPoiMarker(poi_type, icon_name, lat, lon, tags, osmid, osmtype) {
 		popup_content += "<br/>Seats: "+tags.seats;
 	}
 
-	popup_content += "<div class='linktext'><a href='"+osmlink+"' title=\"show feature on OSM\" target='_blank'>🗺️</a> | <a href='"+iDedit+"' title=\"edit feature on OSM\" target='_blank'>✏️</a> | <a href='"+josmedit+"' title=\"edit feature in JOSM\" target='_blank'>🖊️</a></div>";
+	popup_content += "<div class='linktext'><a href='"+osmlink+"' title=\"show feature on OSM\" target='_blank'>🗺️ OSM</a> | <a href='"+iDedit+"' title=\"edit feature on OSM\" target='_blank'>✏️ iD</a> | <a href='"+josmedit+"' title=\"edit feature in JOSM\" target='_blank'>🖊️ JOSM</a></div>";
+
+	
+	mrk.bindPopup(L.popup({autoPanPaddingTopLeft: [0,50]}).setContent(popup_content));
+
+	poi_markers.push(mrk);
+	mrk.addTo(poiDots);
+	poiDots.addTo(poiClusters);
+	if (map.getZoom() <= 17) {
+		poiClusters.addTo(map);
+	}
+}
+
+function setMiniMarker(poi_type, icon, lat, lon, tags, osmid, osmtype) {
+	var mrk = L.marker([lat, lon], {
+		icon: icon, interactive:false,
+		rotationAngle: tags.direction-180,
+	});
+
+	poi_markers.push(mrk);
+	mrk.addTo(poiMinis);
+	if (map.getZoom() > 18) {
+		poiMinis.addTo(poiMain);
+	}
+}
+
+// function setColourMarker(poi_type, icon, lat, lon, tags, osmid, osmtype) {
+// 	var colour;
+// 	if (tags.colour != undefined) {
+// 		colour = tags.colour;
+// 	} else {
+// 		colour = "#000000";
+// 	}
+
+// 	var mrk = L.marker([lat, lon], {
+// 		icon: L.divIcon ({
+// 			className:'colourIcon',
+// 			html:`<svg width="24" height="24" viewBox="0 0 6.3499999 6.3499999">
+//   				<g transform="translate(-17.507495,-99.150042)">
+//     				<path style="opacity:1;vector-effect:none;fill:`+colour+`;fill-opacity:0.8;stroke:`+colour+`;stroke-width:0.05767668;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers stroke fill"
+//        d="m 23.828657,102.32504 a 3.1461616,3.1461613 0 0 1 -3.141755,3.14616 3.1461616,3.1461613 0 0 1 -3.150556,-3.13734 3.1461616,3.1461613 0 0 1 3.132929,-3.154951 3.1461616,3.1461613 0 0 1 3.159332,3.128511 l -3.146112,0.0176 z"/>
+//   				</g>
+// 			</svg>`
+// 		})
+// 	});
+	
+// 	poi_markers.push(mrk);
+// 	mrk.addTo(poiMinis);
+// 	// if (map.getZoom() > 17) {
+// 		poiMinis.addTo(poiClusters);
+// 	// }
+// }
+
+function getPxThumb(tagPanoramax) {
+	var px_link = "https://api.panoramax.xyz/api/pictures/"+tagPanoramax+"/thumb.jpg";
+	return px_link
+}
+
+function getPxLink(tagPanoramax) {
+	var px_link = "https://api.panoramax.xyz/#s=fp;s2;p"+tagPanoramax;
+	return px_link;
+}
+
+function inscriptionParser(inscription) {
+	var slashN = inscription.replace(/\\n/g, "<br/>");
+	var slashNspaces = slashN.replace(/ \\n /g, "<br/>");
+	var doubleSlash = slashNspaces.replace(/ \/\/ /g, "<br/><br/>");
+	var semiColon = doubleSlash.replace(/ \; /g, "</div><br/><div class='inscription'>");
+	var tab = semiColon.replace(/ \\t /g, "<pre>\t</pre>");
+	return tab.replace(/ \/ /g,"<br/>");
+}
+
+function directionParser(direction) {
+	if (direction >= 337.5 || direction < 22.5) {
+			return "North";
+	} else if (direction >= 22.5 && direction < 67.5) {
+			return "Northeast";
+	} else if (direction >= 67.5 && direction < 112.5) {
+			return "East";
+	} else if (direction >= 112.5 && direction < 157.5) {
+			return "Southeast";
+	} else if (direction >= 157.5 && direction < 202.5) {
+			return "South";
+	} else if (direction >= 202.5 && direction < 247.5) {
+			return "Southwest";
+	} else if (direction >= 247.5 && direction < 292.5) {
+			return "West";
+	} else if (direction >= 292.5 && direction < 337.5) {
+			return "Northwest";
+	}
+}
+
+function setPoiMarker(poi_type, icon_name, lat, lon, tags, osmid, osmtype) {
+	var mrk = L.marker([lat, lon], {
+		icon: icon_name,
+		rotationAngle: tags.direction-180,
+	});
+	var osmlink = "https://www.openstreetmap.org/"+osmtype+"/"+osmid;
+	var iDedit = "https://www.openstreetmap.org/edit\?editor=id&"+osmtype+"="+osmid;
+	var josmedit = "http://127.0.0.1:8111/load_object?new_layer=true&objects=n"+osmid;
+
+	// if (tags.amenity == 'bench') {
+		// var popup_content = "<span class=\"title\">Bench</span><br/>";
+	// } else if (tags.leisure == 'picnic_table') {
+	// 	var popup_content = "<span class=\"title\">Picnic Table</span><br/>";
+	// }
+	var popup_content = '';
+	if (tags.inscription != undefined && tags.inscription != 'no' && tags.inscription != 'No' && tags.inscription != 'NO') {
+		popup_content += "<div class='inscription'>"+inscriptionParser(tags.inscription);
+		if (tags["inscription:1"] != undefined) {
+			popup_content += " "+inscriptionParser(tags["inscription:1"]);
+		}
+		if (tags["inscription:2"] != undefined) {
+			popup_content += " "+inscriptionParser(tags["inscription:2"]);
+			if (tags["inscription:3"] != undefined) {
+				popup_content += " "+inscriptionParser(tags["inscription:3"]);
+				if (tags["inscription:4"] != undefined) {
+					popup_content += " "+inscriptionParser(tags["inscription:4"]);
+					if (tags["inscription:5"] != undefined) {
+						popup_content += " "+inscriptionParser(tags["inscription:5"]);
+					}
+				}
+			}
+		}
+		popup_content += "</div>"
+	} else if (tags.inscription == undefined && tags["inscription:1"] != undefined && tags["inscription:1"] != 'no' && tags["inscription:1"] != 'No' && tags["inscription:1"] != 'NO') {
+		popup_content += "<div class='inscription'>"+inscriptionParser(tags["inscription:1"]);
+		if (tags["inscription:2"] != undefined) {
+			popup_content += " "+inscriptionParser(tags["inscription:2"]);
+			if (tags["inscription:3"] != undefined) {
+				popup_content += " "+inscriptionParser(tags["inscription:3"]);
+				if (tags["inscription:4"] != undefined) {
+					popup_content += " "+inscriptionParser(tags["inscription:4"]);
+					if (tags["inscription:5"] != undefined) {
+						popup_content += " "+inscriptionParser(tags["inscription:5"]);
+					}
+				}
+			}
+		}
+		popup_content += "</div>"
+	} else if (tags.inscription == 'no' || tags.inscription == 'No' || tags.inscription == 'NO') {
+		popup_content += "<span>No inscription</span><br/>"
+	} else if (tags.amenity == 'bench' && tags.inscription == undefined) {
+		popup_content += "<span class=\"unknown\">Inscription unknown</span><br/>";
+	} else {
+		popup_content += "";
+	}
+
+	if (tags.panoramax != undefined) {
+		var thumb = getPxThumb(tags.panoramax);
+		var link = getPxLink(tags.panoramax);
+		popup_content += "<a href='"+link+"' target='_blank'><img src='"+thumb+"' class='popup_image'></a><br/>";
+	}
+
+	// if (tags.seats != undefined) {
+	// 	var tooltip_content = tags.seats;
+	// }
+
+	if (tags.colour != undefined) {
+		if (tags.colour.includes('white') || tags.colour.includes('silver') || tags.colour.includes('gray') || tags.colour.includes('yellow') || tags.colour.includes('pink') || tags.colour.includes('light')) {
+			popup_content += "Color: <span class=\"colorbox\" title=\""+tags.colour+"\" style=\"color: #333; background-color:"+tags.colour+"\">"+tags.colour+"</span> | ";
+		} else {
+			popup_content += "Color: <span class=\"colorbox\" title=\""+tags.colour+"\" style=\"background-color:"+tags.colour+"\">"+tags.colour+"</span> | ";
+		}
+		// var tooltip_content = "C";
+	} else {
+		popup_content += "";
+		// var tooltip_content = "";
+	}
+	if (tags.material != undefined) {
+		popup_content += "Material: <span class=\"material "+tags.material+"\">"+tags.material+"</span>";
+		// tooltip_content += "M";
+	} else {
+		popup_content += "Material: 🤷";
+	}
+
+	if (tags.backrest == undefined && tags.amenity == 'bench') {
+		popup_content += "<br/>Backrest: 🤷";
+	} else if (tags.backrest == 'yes' && tags.amenity == 'bench') {
+		popup_content += "<br/>Backrest: ☑️";
+	} else if (tags.backrest == 'no' && tags.amenity == 'bench') {
+		popup_content += "<br/>Backrest: ❌";
+	}
+
+	if (tags.armrest == undefined && tags.amenity == 'bench') {
+		popup_content += " | Armrests: 🤷";
+	} else if (tags.armrest == 'yes' && tags.amenity == 'bench') {
+		popup_content += " | Armrests: ☑️";
+	} else if (tags.armrest == 'no' && tags.amenity == 'bench') {
+		popup_content += " | Armrests: ❌";
+	}
+
+	if (tags.backrest == 'no' && tags.direction != undefined && tags.amenity == 'bench') {
+		if (tags.direction >= 180) {
+			popup_content += "<br/>Facing: "+directionParser(tags.direction)+"/"+directionParser(Number(tags.direction)-180);
+		} else if (tags.direction < 180) {
+			popup_content += "<br/>Facing: "+directionParser(tags.direction)+"/"+directionParser(Number(tags.direction)+180);
+		}
+	} else 
+	if (tags.direction != undefined && tags.amenity == 'bench') {
+		popup_content += "<br/>Facing: "+directionParser(tags.direction);
+	}
+
+	if (tags.seats != undefined && tags.amenity == 'bench') {
+		popup_content += "<br/>Seats: "+tags.seats;
+	}
+
+	popup_content += "<div class='linktext'><a href='"+osmlink+"' title=\"show feature on OSM\" target='_blank'>🗺️ OSM</a> | <a href='"+iDedit+"' title=\"edit feature on OSM\" target='_blank'>✏️ iD</a> | <a href='"+josmedit+"' title=\"edit feature in JOSM\" target='_blank'>🖊️ JOSM</a></div>";
 
 	mrk.bindPopup(L.popup({autoPanPaddingTopLeft: [0,50]}).setContent(popup_content));
 	// mrk.bindTooltip(L.tooltip({permanent:true,direction:'top'}).setContent(tooltip_content)).openTooltip;
@@ -433,33 +530,42 @@ function element_to_map(data) {
 
 		if (el.tags != undefined) {
 			var mrk;
-			if (el.tags.leisure == 'picnic_table') {
-				setDotMarker("", picnic_table_dot, el.lat, el.lon, el.tags, el.id, el.type);
-				if (el.tags.colour != undefined && el.tags.colour.includes('red')) {
-					setPoiMarker("", picnic_table_icon_red, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if (el.tags.colour != undefined && el.tags.colour.includes('orange')) {
-					setPoiMarker("", picnic_table_icon_orange, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if (el.tags.colour != undefined && el.tags.colour.includes('yellow')) {
-					setPoiMarker("", picnic_table_icon_yellow, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if (el.tags.colour != undefined && el.tags.colour.includes('green')) {
-					setPoiMarker("", picnic_table_icon_green, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if (el.tags.colour != undefined && el.tags.colour.includes('blue')) {
-					setPoiMarker("", picnic_table_icon_blue, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if (el.tags.colour != undefined && el.tags.colour.includes('purple')) {
-					setPoiMarker("", picnic_table_icon_purple, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if (el.tags.colour != undefined && el.tags.colour.includes('brown')) {
-					setPoiMarker("", picnic_table_icon_brown, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if (el.tags.colour != undefined && el.tags.colour.includes('black')) {
-					setPoiMarker("", picnic_table_icon_black, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if (el.tags.colour != undefined && (el.tags.colour.includes('gray') || el.tags.colour.includes('grey') || el.tags.colour.includes('silver'))) {
-					setPoiMarker("", picnic_table_icon_gray, el.lat, el.lon, el.tags, el.id, el.type);
-				} else if (el.tags.colour != undefined && el.tags.colour.includes('white')) {
-					setPoiMarker("", picnic_table_icon_white, el.lat, el.lon, el.tags, el.id, el.type);
+			// if (el.tags.leisure == 'picnic_table') {
+			// 	if (el.tags.inscription != null) {
+			// 		setDotMarker("", picnic_table_dot, el.lat, el.lon, el.tags, el.id, el.type);
+			// 	} else {
+			// 		setDotMarker("", picnic_table_dot_unk, el.lat, el.lon, el.tags, el.id, el.type);
+			// 	}
+			// 	if (el.tags.colour != undefined && el.tags.colour.includes('red')) {
+			// 		setPoiMarker("", picnic_table_icon_red, el.lat, el.lon, el.tags, el.id, el.type);
+			// 	} else if (el.tags.colour != undefined && el.tags.colour.includes('orange')) {
+			// 		setPoiMarker("", picnic_table_icon_orange, el.lat, el.lon, el.tags, el.id, el.type);
+			// 	} else if (el.tags.colour != undefined && el.tags.colour.includes('yellow')) {
+			// 		setPoiMarker("", picnic_table_icon_yellow, el.lat, el.lon, el.tags, el.id, el.type);
+			// 	} else if (el.tags.colour != undefined && el.tags.colour.includes('green')) {
+			// 		setPoiMarker("", picnic_table_icon_green, el.lat, el.lon, el.tags, el.id, el.type);
+			// 	} else if (el.tags.colour != undefined && el.tags.colour.includes('blue')) {
+			// 		setPoiMarker("", picnic_table_icon_blue, el.lat, el.lon, el.tags, el.id, el.type);
+			// 	} else if (el.tags.colour != undefined && el.tags.colour.includes('purple')) {
+			// 		setPoiMarker("", picnic_table_icon_purple, el.lat, el.lon, el.tags, el.id, el.type);
+			// 	} else if (el.tags.colour != undefined && el.tags.colour.includes('brown')) {
+			// 		setPoiMarker("", picnic_table_icon_brown, el.lat, el.lon, el.tags, el.id, el.type);
+			// 	} else if (el.tags.colour != undefined && el.tags.colour.includes('black')) {
+			// 		setPoiMarker("", picnic_table_icon_black, el.lat, el.lon, el.tags, el.id, el.type);
+			// 	} else if (el.tags.colour != undefined && (el.tags.colour.includes('gray') || el.tags.colour.includes('grey') || el.tags.colour.includes('silver'))) {
+			// 		setPoiMarker("", picnic_table_icon_gray, el.lat, el.lon, el.tags, el.id, el.type);
+			// 	} else if (el.tags.colour != undefined && el.tags.colour.includes('white')) {
+			// 		setPoiMarker("", picnic_table_icon_white, el.lat, el.lon, el.tags, el.id, el.type);
+			// 	} else {
+			// 		setPoiMarker("", picnic_table_icon, el.lat, el.lon, el.tags, el.id, el.type);
+			// 	}
+			// } else 
+			if (el.tags.amenity == 'bench') {
+				if (el.tags.inscription != null) {
+					setDotMarker("", bench_dot, el.lat, el.lon, el.tags, el.id, el.type);
 				} else {
-					setPoiMarker("", picnic_table_icon, el.lat, el.lon, el.tags, el.id, el.type);
+					setDotMarker("", bench_dot_unk, el.lat, el.lon, el.tags, el.id, el.type);
 				}
-			} else if (el.tags.amenity == 'bench') {
-				setDotMarker("", bench_dot, el.lat, el.lon, el.tags, el.id, el.type);
 				if (el.tags.colour != undefined && el.tags.colour.includes('red')) {
 					if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
 						setPoiMarker("", yab_icon_red, el.lat, el.lon, el.tags, el.id, el.type);
@@ -683,10 +789,10 @@ function element_to_map(data) {
 				}
 			}
 			
-			if ((el.tags.inscription != undefined && el.tags.inscription != 'no') || (el.tags["inscription:1"] != undefined && el.tags["inscription:1"] != 'no')) {
+			if ((el.tags.inscription != undefined && el.tags.inscription != 'no' && el.tags.inscription != 'No' && el.tags.inscription != 'NO') || (el.tags["inscription:1"] != undefined && el.tags["inscription:1"] != 'no'&& el.tags["inscription:1"] != 'No'&& el.tags["inscription:1"] != 'NO')) {
 				setMiniMarker("", inscription_icon, el.lat, el.lon, el.tags, el.id, el.type);
 			// } else if (el.tags.inscription == 'no') {
-			// 	setMiniMarker("", no_inscription_icon, el.lat, el.lon, el.tags, el.id, el.type);
+				// setMiniMarker("", no_inscription_icon, el.lat, el.lon, el.tags, el.id, el.type);
 			} else if (el.tags.inscription == undefined && el.tags.amenity == 'bench') {
 				setMiniMarker("", unk_inscription_icon, el.lat, el.lon, el.tags, el.id, el.type);
 			}
@@ -697,7 +803,6 @@ function element_to_map(data) {
 }
 
 function downloadData() {
-	var mapHash = new L.Hash(map);
 	if (map.getZoom() < 14) {
 		var new_span = document.createElement('span');
 		new_span.innerText = "Please Zoom In";
@@ -714,7 +819,7 @@ function downloadData() {
 	$.ajax({
 		url: "https://overpass-api.de/api/interpreter",
 		data: {
-			"data": '[bbox:'+bbox+'][out:json][timeout:25];(nwr[amenity=bench];nwr[leisure=picnic_table];);out body center; >; out skel qt;'
+			"data": '[bbox:'+bbox+'][out:json][timeout:25];(nwr[amenity=bench];);out body center; >; out skel qt;' //nwr[leisure=picnic_table];
 		},
 		success: element_to_map,
 		error: error_function,
@@ -742,13 +847,27 @@ $(function() {
 		iconAnchor: [4,4],
 		popupAnchor: [0,-14],
 	});
-	picnic_table_dot = L.icon({
-		iconUrl: 'icons/picnic_table_dot.svg',
-		iconSize: [10,10],
+	bench_dot_unk = L.icon({
+		iconUrl: 'icons/bench_dot_unk.svg',
+		iconSize: [8,8],
 		className: 'pointIcon',
-		iconAnchor: [5,5],
+		iconAnchor: [4,4],
 		popupAnchor: [0,-14],
 	});
+	// picnic_table_dot = L.icon({
+	// 	iconUrl: 'icons/picnic_table_dot.svg',
+	// 	iconSize: [10,10],
+	// 	className: 'pointIcon',
+	// 	iconAnchor: [5,5],
+	// 	popupAnchor: [0,-14],
+	// });
+	// picnic_table_dot_unk = L.icon({
+	// 	iconUrl: 'icons/picnic_table_dot_unk.svg',
+	// 	iconSize: [10,10],
+	// 	className: 'pointIcon',
+	// 	iconAnchor: [5,5],
+	// 	popupAnchor: [0,-14],
+	// });
 	yab_icon = L.icon({
 		iconUrl: 'icons/yab_icon.svg',
 		iconSize: [24,24],
@@ -1352,83 +1471,83 @@ $(function() {
 		iconAnchor: [12,12],
 		popupAnchor: [0,-20],
 	});
-	picnic_table_icon = L.icon({
-		iconUrl: 'icons/picnic_table.svg',
-		iconSize: [28,28],
-		className: 'pointIcon',
-		iconAnchor: [14,14],
-		popupAnchor: [0,-20],
-	});
-	picnic_table_icon_red = L.icon({
-		iconUrl: 'icons/picnic_table_red.svg',
-		iconSize: [28,28],
-		className: 'pointIcon',
-		iconAnchor: [14,14],
-		popupAnchor: [0,-20],
-	});
-	picnic_table_icon_orange = L.icon({
-		iconUrl: 'icons/picnic_table_orange.svg',
-		iconSize: [28,28],
-		className: 'pointIcon',
-		iconAnchor: [14,14],
-		popupAnchor: [0,-20],
-	});
-	picnic_table_icon_yellow = L.icon({
-		iconUrl: 'icons/picnic_table_yellow.svg',
-		iconSize: [28,28],
-		className: 'pointIcon',
-		iconAnchor: [14,14],
-		popupAnchor: [0,-20],
-	});
-	picnic_table_icon_green = L.icon({
-		iconUrl: 'icons/picnic_table_green.svg',
-		iconSize: [28,28],
-		className: 'pointIcon',
-		iconAnchor: [14,14],
-		popupAnchor: [0,-20],
-	});
-	picnic_table_icon_blue = L.icon({
-		iconUrl: 'icons/picnic_table_blue.svg',
-		iconSize: [28,28],
-		className: 'pointIcon',
-		iconAnchor: [14,14],
-		popupAnchor: [0,-20],
-	});
-	picnic_table_icon_purple = L.icon({
-		iconUrl: 'icons/picnic_table_purple.svg',
-		iconSize: [28,28],
-		className: 'pointIcon',
-		iconAnchor: [14,14],
-		popupAnchor: [0,-20],
-	});
-	picnic_table_icon_brown = L.icon({
-		iconUrl: 'icons/picnic_table_brown.svg',
-		iconSize: [28,28],
-		className: 'pointIcon',
-		iconAnchor: [14,14],
-		popupAnchor: [0,-20],
-	});
-	picnic_table_icon_black = L.icon({
-		iconUrl: 'icons/picnic_table_black.svg',
-		iconSize: [28,28],
-		className: 'pointIcon',
-		iconAnchor: [14,14],
-		popupAnchor: [0,-20],
-	});
-	picnic_table_icon_gray = L.icon({
-		iconUrl: 'icons/picnic_table_gray.svg',
-		iconSize: [28,28],
-		className: 'pointIcon',
-		iconAnchor: [14,14],
-		popupAnchor: [0,-20],
-	});
-	picnic_table_icon_white = L.icon({
-		iconUrl: 'icons/picnic_table_white.svg',
-		iconSize: [28,28],
-		className: 'pointIcon',
-		iconAnchor: [14,14],
-		popupAnchor: [0,-20],
-	});
+	// picnic_table_icon = L.icon({
+	// 	iconUrl: 'icons/picnic_table.svg',
+	// 	iconSize: [28,28],
+	// 	className: 'pointIcon',
+	// 	iconAnchor: [14,14],
+	// 	popupAnchor: [0,-20],
+	// });
+	// picnic_table_icon_red = L.icon({
+	// 	iconUrl: 'icons/picnic_table_red.svg',
+	// 	iconSize: [28,28],
+	// 	className: 'pointIcon',
+	// 	iconAnchor: [14,14],
+	// 	popupAnchor: [0,-20],
+	// });
+	// picnic_table_icon_orange = L.icon({
+	// 	iconUrl: 'icons/picnic_table_orange.svg',
+	// 	iconSize: [28,28],
+	// 	className: 'pointIcon',
+	// 	iconAnchor: [14,14],
+	// 	popupAnchor: [0,-20],
+	// });
+	// picnic_table_icon_yellow = L.icon({
+	// 	iconUrl: 'icons/picnic_table_yellow.svg',
+	// 	iconSize: [28,28],
+	// 	className: 'pointIcon',
+	// 	iconAnchor: [14,14],
+	// 	popupAnchor: [0,-20],
+	// });
+	// picnic_table_icon_green = L.icon({
+	// 	iconUrl: 'icons/picnic_table_green.svg',
+	// 	iconSize: [28,28],
+	// 	className: 'pointIcon',
+	// 	iconAnchor: [14,14],
+	// 	popupAnchor: [0,-20],
+	// });
+	// picnic_table_icon_blue = L.icon({
+	// 	iconUrl: 'icons/picnic_table_blue.svg',
+	// 	iconSize: [28,28],
+	// 	className: 'pointIcon',
+	// 	iconAnchor: [14,14],
+	// 	popupAnchor: [0,-20],
+	// });
+	// picnic_table_icon_purple = L.icon({
+	// 	iconUrl: 'icons/picnic_table_purple.svg',
+	// 	iconSize: [28,28],
+	// 	className: 'pointIcon',
+	// 	iconAnchor: [14,14],
+	// 	popupAnchor: [0,-20],
+	// });
+	// picnic_table_icon_brown = L.icon({
+	// 	iconUrl: 'icons/picnic_table_brown.svg',
+	// 	iconSize: [28,28],
+	// 	className: 'pointIcon',
+	// 	iconAnchor: [14,14],
+	// 	popupAnchor: [0,-20],
+	// });
+	// picnic_table_icon_black = L.icon({
+	// 	iconUrl: 'icons/picnic_table_black.svg',
+	// 	iconSize: [28,28],
+	// 	className: 'pointIcon',
+	// 	iconAnchor: [14,14],
+	// 	popupAnchor: [0,-20],
+	// });
+	// picnic_table_icon_gray = L.icon({
+	// 	iconUrl: 'icons/picnic_table_gray.svg',
+	// 	iconSize: [28,28],
+	// 	className: 'pointIcon',
+	// 	iconAnchor: [14,14],
+	// 	popupAnchor: [0,-20],
+	// });
+	// picnic_table_icon_white = L.icon({
+	// 	iconUrl: 'icons/picnic_table_white.svg',
+	// 	iconSize: [28,28],
+	// 	className: 'pointIcon',
+	// 	iconAnchor: [14,14],
+	// 	popupAnchor: [0,-20],
+	// });
 	inscription_icon = L.icon({
 		iconUrl: 'icons/inscription.svg',
 		iconSize: [8,5],
