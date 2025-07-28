@@ -6,10 +6,6 @@
 		font-family: fontin;
 		src: local(Fontin Regular), url('Fontin-Regular.otf') format('opentype');
 }
-@font-face {
-		font-family: fontin-bold;
-		src: local(Fontin Bold), url('Fontin-Bold.otf') format('opentype');
-}
 
 * {
 	padding:0;
@@ -30,20 +26,8 @@ button {
 	cursor: pointer;
 }
 
-#geolocator {
-	font-family: roboto-medium;
-	position: absolute;
-	top: 20px;
-	right: 0px;
-	width: 90px;
-}
-
-#loader {
-	font-family: roboto-medium;
-	position: absolute;
-	top: 70px;
-	right: 0px;
-	width: 90px;
+a {
+	cursor: pointer;
 }
 
 #sidebar {
@@ -53,7 +37,7 @@ button {
 	right: 0px;
 	z-index: 100;
 	height: 100%;
-	font-family: Ubuntu;
+	font-family: roboto-medium;
 	font-weight: lighter;
 	/*font-size: 1em;*/
 }
@@ -86,10 +70,6 @@ button {
 	position: absolute;
 	top: 190px;
 	border-radius: 8px 0 0 8px;
-/*	background-image: url(icons/refresh.svg);*/
-/*	background-repeat: no-repeat;*/
-/*	background-position: center center;*/
-/*	background-size: 16px;*/
 }
 #picsicon{
 	padding: 13px;
@@ -114,9 +94,6 @@ button {
 	position: absolute;
 	bottom: 26px;
 	border-radius: 8px 0 0 8px;
-	/*background-repeat: no-repeat;
-	background-position: center center;
-	background-size: 14px;*/
 }
 .nopics {
 	content:url(icons/camera-no.svg);
@@ -140,101 +117,9 @@ button {
 	color: #fff;
 }
 
-#infoButton {
-	position: fixed;
-	bottom: 35px;
-	left: 20px;
-	height: 40px;
-	width: 40px;
-	border-radius: 20px;
-	background-image: url(icons/information.svg);
-	background-repeat: no-repeat;
-	background-position: center center;
-	background-size: 16px;
-	font-size: 2em;
-	z-index: 100;
-}
-
-#infoBox {
-	position: fixed;
-	/*display: none;*/
-	width: 600px;
-	/*height: 500px;*/
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	/*padding: 2em;*/
-	/*height: 80%;*/
-	z-index: 10000;
-	background-color: #333;
-	color: #ccc;
-	border-radius: 15px;
-	opacity: 1;
-	font-family: roboto-medium;
-	overflow-y: scroll;
-}
-
-#infoBox div {
-	padding: 2em;
-	line-height: 26px;
-}
-
-#infoBox h2, h3 {
-	text-align: center;
-	font-family: fontin;
-	margin-bottom: -15px;
-}
-
-#infoBox p {
-	margin-bottom: 10px;
-}
-
-#infoBox img {
-	height: 18px;
-	width: 18px;
-	vertical-align: middle;
-	margin-top: 0px;
-}
-
-.infoIcons {
-	white-space: nowrap;
-}
-
-.tinyIcons img {
-	height: 10px !important;
-	width: 10px !important;
-}
-
 .hidden {
 	display: none;
 }
-
-.dismiss {
-	font-size: 0.7em;
-	text-align: center;
-	color: #666;
-	position: absolute;
-	left: 40%;
-	bottom: 10px;
-}
-
-.code {
-	font-family: monospace;
-	font-weight: bold;
-}
-
-#legendbox {
-	display: none;
-	position: fixed;
-	bottom: 30px;
-	left: 10px;
-	/*width: 100px;*/
-	z-index: 1000;
-}
-
-/*#legendbox span {
-	font-size: 20px;
-}*/
 
 .linkbutton, .loadbutton, .togglebutton	{
 	width: 44px;
@@ -261,74 +146,6 @@ button {
 .linkbutton:hover, .loadbutton:hover {
 	background-color: #1e88e5;
 	opacity: 1 !important;
-}
-
-#tipRight {
-	display: block;
-	position: absolute;
-	top: 195px;
-	right: 62px;
-	line-height: 34px;
-	height: 34px;
-	padding: 0 10px 0 10px;
-	/*content: attr(title);*/
-	text-align: center;
-	white-space: nowrap;
-	background: #777;
-	opacity: 0.8 !important;
-	color: #fff;
-	font-family: roboto-medium;
-	font-size: 12pt;
-	pointer-events: none;
-	border-radius: 5px 0 0 5px;
-}
-
-#arrowRight {
-	width: 0;
-	height: 0;
-	border-top: 17px solid transparent;
-	border-bottom: 17px solid transparent;
-	border-left: 17px solid #777;
-	position: absolute;
-	top: 195px;
-	right: 45px;
-	opacity: 0.8 !important;
-	pointer-events: none;
-}
-
-#tipLeft {
-	display: block;
-	position: absolute;
-	bottom: 38px;
-	left: 78px;
-	line-height: 34px;
-	height: 34px;
-	padding: 0 10px 0 10px;
-	/*content: attr(title);*/
-	text-align: center;
-	white-space: nowrap;
-	background: #777;
-	opacity: 0.8 !important;
-	color: #fff;
-	font-family: roboto-medium;
-	font-size: 12pt;
-	pointer-events: none;
-	border-radius: 0 5px 5px 0;
-	z-index: 100;
-}
-
-#arrowLeft {
-	width: 0;
-	height: 0;
-	border-top: 17px solid transparent;
-	border-bottom: 17px solid transparent;
-	border-right: 17px solid #777;
-	position: absolute;
-	bottom: 38px;
-	left: 61px;
-	opacity: 0.8 !important;
-	pointer-events: none;
-	z-index: 100;
 }
 
 #topbar {
@@ -366,21 +183,6 @@ button {
 	margin-left: -2px;
 }
 
-/*#topbar #searchgroup button {
-	border: 1px solid #228b22;
-	height:50px;
-	width:3rem;
-	margin-left:0.2rem;
-	display: inline-block;
-	position: absolute;
-	right:1rem;
-}*/
-
-/*#topbar #searchgroup button img {
-	width:70%;
-	margin-top:4px;
-}*/
-
 #bigmap {
 	position: absolute;
 	width: 100%;
@@ -399,32 +201,7 @@ button {
 	background: none;
 }
 
-/*#autocomplete {
-	position: absolute;
-	left:13rem;
-	top:4rem;
-	padding-left:0.5rem;
-	padding-right:0.5rem;
-	background: rgba(255, 255, 255, 0.9);
-	display: block;
-	width:20rem;
-	font-size:1.4rem;
-	line-height: 1.8rem;
-	display: none;
-}
-
-#autocomplete li {
-	list-style-type: none;
-	cursor: pointer;
-}
-
-.autocomplete_ul {
-	display: block;
-}*/
 .leaflet-popup-content {
-	/*border-radius: 0;*/
-	/*max-width: 400px;*/
-	/*min-height: 180px;*/
 	text-align: center;
 	color: white;
 }
@@ -435,16 +212,13 @@ button {
 }
 
 .leaflet-popup-content img {
-	/*border-radius: 0;*/
 	max-width: 300px;
 	max-height: 250px;
 	border-radius: 5px;
 	margin-top: 5px;
-	/*min-height: 180px;*/
 }
 
 .tiny-pic {
-	/*width: 40px;*/
 	max-height: 60px !important;
 	display: inline-block;
 	text-align: right;
@@ -471,10 +245,6 @@ button {
 	z-index: 100000;
 }
 
-a, leaflet-container a {
-/*	color: #1e88e5 !important;*/
-}
-
 .title {
 	font-weight: bold;
 	font-style: italic;
@@ -498,42 +268,11 @@ a, leaflet-container a {
 	text-transform: capitalize;
 }
 
-.unknown {
-/*	font-weight: bold;*/
-/*	font-style: italic;*/
-	color: #f34;
-}
-
-.missing {
-	font-weight: normal;
-	font-style: italic;
-	font-size: 0.8em;
-}
-.missing br {
-	height: 10px;
-}
-.missing img {
-	height: 6px;
-	width: 6px;
-}
-
-.source {
-	font-size: 1em;
-}
-
 hr {
 	width: 70%;
 	color: #555;
 	opacity: 0.6;
 	margin: 3px auto 3px auto;
-}
-
-.invalid {
-	color: red;
-	/*box-shadow: 1px 1px 3px #666;*/
-	/*padding: 3px;*/
-	/*line-height: 26px;*/
-	/*border-radius: 2px;*/
 }
 
 .linktext {

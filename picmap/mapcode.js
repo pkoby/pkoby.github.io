@@ -454,20 +454,20 @@ function downloadData() {
 	$.ajax({
 		url: "https://overpass-api.de/api/interpreter",
 		data: {
-				"data": '[bbox:'+bbox+'][out:json][timeout:25];(nwr["tourism"="information"]["information"="board"];nwr["tourism"~"attraction|viewpoint|museum"];nwr["tourism"="artwork"]["start_date"];nwr["historic"]["historic"!~"district|milestone|cemetery|place"][!"demolished:building"];nwr["building"~"temple|church|synagogue|mosque"];nwr["amenity"="library"];);out body center; >; out skel qt;'
-			},
+			"data": '[bbox:'+bbox+'][out:json][timeout:25];(nwr["tourism"="information"]["information"="board"];nwr["tourism"~"attraction|viewpoint|museum"];nwr["tourism"="artwork"]["start_date"];nwr["historic"]["historic"!~"district|milestone|cemetery|place"][!"demolished:building"];nwr["building"~"temple|church|synagogue|mosque"];nwr["amenity"="library"];);out body center; >; out skel qt;'
+		},
 		success: element_to_map,
-		error: error_function,
+		// error: error_function,
 	});
 
 	if (map.hasLayer(bboxOutline)) {
 		map.removeLayer(bboxOutline);	
 	}
 
-	var bounds = map.getBounds();
-	var northWest = bounds.getNorthWest(),northEast = bounds.getNorthEast(),southWest = bounds.getSouthWest(),southEast = bounds.getSouthEast();
+	// var bounds = map.getBounds();
+	// var northWest = bounds.getNorthWest(),northEast = bounds.getNorthEast(),southWest = bounds.getSouthWest(),southEast = bounds.getSouthEast();
 
-	bboxOutline = L.polygon([[[90, -180],[90, 180],[-90, 180],[-90, -180]],[[northWest.lat,northWest.lng],[northEast.lat,northEast.lng],[southEast.lat,southEast.lng],[southWest.lat,southWest.lng]]],{color: '#aaaaaa', fillColor: '#aaaaaa', fillOpacity: 0.3, weight: 1, dashArray: '1,3',}).addTo(map);
+	// bboxOutline = L.polygon([[[90, -180],[90, 180],[-90, 180],[-90, -180]],[[northWest.lat,northWest.lng],[northEast.lat,northEast.lng],[southEast.lat,southEast.lng],[southWest.lat,southWest.lng]]],{color: '#aaaaaa', fillColor: '#aaaaaa', fillOpacity: 0.3, weight: 1, dashArray: '1,3',}).addTo(map);
 }
 
 function error_function() {

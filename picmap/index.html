@@ -14,22 +14,21 @@
 		<title>PicMap</title>
 
 		<script type="text/javascript">
-			jQuery(function($) {
-				$(".profile-toggle").click(function() {
-					$("#infoBox").toggleClass("hidden show")
-					console.log('click');
-				});
-			});
-
-			function hideInfo() {
-				if ($("#infoBox").hasClass("show")) {
-					$("#infoBox").toggleClass("hidden show")
-				}
+			function arta() {
+				var linkhash = window.location.hash;
+				var artstr = "../artmap/index.html" + linkhash;
+				document.getElementById("artlink").setAttribute("href",artstr);
 			}
-
-			var hash = window.location.hash;
-			console.log(hash);
-
+			function bencha() {
+				var linkhash = window.location.hash;
+				var benchstr = "../benchmap/index.html" + linkhash;
+				document.getElementById("benchlink").setAttribute("href",benchstr);
+			}
+			function lgbtqa() {
+				var linkhash = window.location.hash;
+				var lgbtqstr = "../LGBTQmap/index.html" + linkhash;
+				document.getElementById("lgbtqlink").setAttribute("href",lgbtqstr);
+			}
 		</script>
 	</head>
 	<body>
@@ -43,7 +42,7 @@
 			<a href="#" onclick="return false;">
 				<div id="locater" class="linkbutton" title="Locate Me" accesskey="w"></div>
 			</a>
-			<a href="#" onclick="hideInfo()">
+			<a href="#" onclick="return false;">
 				<div id="loaddata" class="loadbutton" title="Search for Places in View" accesskey="d"><img id="loadicon" src="icons/refresh.svg"></div>
 			</a>
 			<!-- <div id="counter_no_pics" class="dimtext">0 points loaded</div> -->
@@ -55,16 +54,12 @@
 			</a>
 		</div>
 
-		<div id="linksbutton" onclick="togglelinks()" style="display: block;" title="Other maps by pkoby"></div>
+		<div id="linksbutton" onmouseover="togglelinks()" onclick="togglelinks()" style="display: block;" title="Other maps by pkoby"></div>
 		<div id="linksdiv" onclick="togglelinks()" style="display: none;">
 			<div id="closebutton">×</div>
-			<a id="artlink" href="../artmap/index.html" target="_blank" onclick="location.href=this.href+hash;return false;">ArtMap</a><br/>
-			<a id="benchlink" href="../benchmap/index.html" target="_blank">BenchMap</a><br/>
-			<a id="lgbtqlink" href="../LGBTQmap/index.html" target="_blank">LGBTQ+map</a>
-			<script>
-        let loc = "https://www.google.com/?xyz=" + val;
-        document.write('<a href="' + hash + '">Google</a>');
-    </script>
+			<a id="artlink" onclick="arta()" target="_blank">ArtMap</a><br/>
+			<a id="benchlink" onclick="bencha()" target="_blank">BenchMap</a><br/>
+			<a id="lgbtqlink" onclick="lgbtqa()" target="_blank">LGBTQ+map</a>
 		</div>
 
 		<div id="topbar">
