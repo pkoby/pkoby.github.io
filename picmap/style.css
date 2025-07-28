@@ -13,6 +13,10 @@
 	font-family: roboto-medium, sans-serif;
 }
 
+a {
+	cursor: pointer;
+}
+
 button {
 	border: 1px solid #aaa;
 	/*text-shadow:none;*/
@@ -23,10 +27,6 @@ button {
 	font-weight: bold;
 	border-radius: 5px 0 0 5px;
 	padding: 8px;
-	cursor: pointer;
-}
-
-a {
 	cursor: pointer;
 }
 
@@ -284,12 +284,12 @@ hr {
 
 .linktext a {
 	text-decoration: none;
-	color: #b298e6!important;
+	color: #1e88e5!important;
 }
 
 .sourcelink a {
 	text-decoration: none;
-	color: #b298e6!important;
+	color: #1e88e5!important;
 }
 
 /*.popup_image {
@@ -488,7 +488,6 @@ hr {
 	left: 0px;
 	z-index: 10000;
 }
-
 #linksdiv {
 	display: none;
 	background-color: #1e88e5;
@@ -503,6 +502,7 @@ hr {
 	line-height: 24px;
 	text-decoration: underline dotted;
 	color: white;
+	opacity: 0.9;
 }
 #closebutton {
 	float: right;
