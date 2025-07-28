@@ -14,7 +14,6 @@
 		<title>PicMap</title>
 
 		<script type="text/javascript">
-
 			jQuery(function($) {
 				$(".profile-toggle").click(function() {
 					$("#infoBox").toggleClass("hidden show")
@@ -27,6 +26,10 @@
 					$("#infoBox").toggleClass("hidden show")
 				}
 			}
+
+			var hash = window.location.hash;
+			console.log(hash);
+
 		</script>
 	</head>
 	<body>
@@ -55,9 +58,13 @@
 		<div id="linksbutton" onclick="togglelinks()" style="display: block;" title="Other maps by pkoby"></div>
 		<div id="linksdiv" onclick="togglelinks()" style="display: none;">
 			<div id="closebutton">×</div>
-			<a href="../artmap/index.html" target="_blank" class="artmap">ArtMap</a><br/>
-			<a href="../benchmap/index.html" target="_blank" class="benchmap">BenchMap</a><br/>
-			<a href="../LGBTQmap/index.html" target="_blank">LGBTQ+map</a>
+			<a id="artlink" href="../artmap/index.html" target="_blank" onclick="location.href=this.href+hash;return false;">ArtMap</a><br/>
+			<a id="benchlink" href="../benchmap/index.html" target="_blank">BenchMap</a><br/>
+			<a id="lgbtqlink" href="../LGBTQmap/index.html" target="_blank">LGBTQ+map</a>
+			<script>
+        let loc = "https://www.google.com/?xyz=" + val;
+        document.write('<a href="' + hash + '">Google</a>');
+    </script>
 		</div>
 
 		<div id="topbar">
@@ -77,8 +84,7 @@
 				$('img.nopics').toggleClass('yespics');
 				$('div.dimtext').toggleClass('brighttext');
 			}
-		</script>
-		<script>
+			
 			function togglelinks() {
 				var div = document.getElementById("linksdiv");
 				var button = document.getElementById("linksbutton");
@@ -89,7 +95,7 @@
 					div.style.display = "none";
 					button.style.display = "block";
 				}
-			} 
+			}
 		</script>
 	</body>
 </html>

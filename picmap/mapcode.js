@@ -173,7 +173,6 @@ if (saved_lat != undefined) {
 }
 
 var mapHash = new L.Hash(map);
-console.log(mapHash);
 
 if (L.Browser.retina) var tp = "lr";
 else var tp = "ls";
@@ -258,7 +257,6 @@ function setPoiMarker(poi_type, icon_name, lat, lon, tags, osmid, osmtype) {
 		if (tags.panoramax.includes(";")) {
 			var array = tags.panoramax.split(';');
 			var j = tags.panoramax.split(';').length;
-			console.log(j);
 			var thumb = getPxThumb(array[0]);
 			var link = getPxLink(array[0]);
 			popup_content += "<a href='"+link+"' target='_blank'><img src='"+thumb+"'></a><br/>";
@@ -440,7 +438,6 @@ function element_to_map(data) {
 }
 
 function downloadData() {
-	var mapHash = new L.Hash(map);
 	if (map.getZoom() < 14) {
 		var new_span = document.createElement('span');
 		new_span.innerText = "Please Zoom In";
