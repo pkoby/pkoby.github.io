@@ -317,7 +317,7 @@ function setPoiMarker(poi_type, icon, lat, lon, tags, osmid, osmtype) {
 		}
 	}
 
-	popup_content += "<div class='linktext'><a href='"+osmlink+"' title=\"show feature on OSM\" target='_blank'>🗺️</a> | <a href='"+iDedit+"' title=\"edit feature on OSM\" target='_blank'>✏️</a> | <a href='"+josmedit+"' title=\"edit feature in JOSM\" target='_blank'>🖊️</a></div>";
+	popup_content += "<div class='linktext'><a href='"+osmlink+"' title=\"show feature on OSM\" target='_blank'>🗺️ OSM</a> | <a href='"+iDedit+"' title=\"edit feature on OSM\" target='_blank'>✏️ iD</a> | <a href='"+josmedit+"' title=\"edit feature in JOSM\" target='_blank'>🖊️ JOSM</a></div>";
 
 	// popup_content += "<div class='link_text'><a href='"+osmlink+"' target='_blank'>show feature on OSM</a> | <a href='"+mllink+"' target='_blank'>show area on Mapillary</a></div>";
 	// popup_content += "<div class='link_text'><a href='http://localhost:8111/import?url="+osmlink+"' target='_blank'>edit feature in JOSM</a> | <a href='"+osmedit+"' target='_blank'>edit feature in iD</a></div>";

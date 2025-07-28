@@ -13,6 +13,10 @@
 	font-family: roboto-medium, Helvetica, sans-serif;
 }
 
+a {
+	cursor: pointer;
+}
+
 button {
 	border: 1px solid #aaa;
 	/*text-shadow:none;*/
@@ -64,7 +68,7 @@ button {
 	right: 0px;
 	z-index: 100;
 	height: 100%;
-	font-family: Ubuntu;
+	font-family: roboto-medium;
 	font-weight: lighter;
 	/*font-size: 1em;*/
 }
@@ -293,7 +297,7 @@ button {
 	/*min-height: 180px;*/
 }
 
-a, leaflet-control a {
+leaflet-control a {
 	color: teal !important;
 }
 
@@ -357,9 +361,8 @@ a, leaflet-control a {
 	position: fixed;
 	opacity: 0.7;
 	/*left: 50%;*/
-	bottom: 50%;
-	left: 20%;
-	width: 60%;
+	bottom: 40%;
+	width: 100%;
 	text-align: center;
 	/*margin-left: -87px !important;*/
 	/*pointer-events: none;*/
@@ -507,13 +510,12 @@ a, leaflet-control a {
 	margin-top: 10px;
 	text-align: center;
 /*	font-size: 80%;*/
-/*	color: #3c3c3c!important;*/
-/*	text-shadow: 1px 1px #4e4e4e !important;*/
+	color: #aaa !important;
 }
 
 .linktext a {
 	text-decoration: none;
-	color: #b298e6!important;
+	color: teal !important;
 }
 
 #linksbutton {
@@ -534,19 +536,26 @@ a, leaflet-control a {
 	left: 0px;
 	z-index: 10000;
 }
+
 #linksdiv {
 	display: none;
 	background-color: teal;
 	opacity: 0.9;
-	border-radius: 0 20px 0 0;
+	border-radius: 0 22px 0 0;
 	padding: 10px;
 	position: absolute;
 	bottom: 0px;
 	left: 0px;
 	z-index: 10000;
 } #linksdiv a {
-	display: block;
-	margin: 5px;
+	line-height: 24px;
 	text-decoration: underline dotted;
-	color: white !important;
+	color: white;
+	opacity: 0.9;
+}
+#closebutton {
+	float: right;
+	margin: -3px 0px 0 0;
+	color: #8cc;
+	pointer-events: none;
 }

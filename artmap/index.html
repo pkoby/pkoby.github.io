@@ -12,6 +12,23 @@
 		<!-- <link rel="stylesheet" href="L.Control.Locate.min.css" /> -->
 
 		<title>ArtMap</title>
+		<script type="text/javascript">
+			function pica() {
+				var linkhash = window.location.hash;
+				var picstr = "../picmap/index.html" + linkhash;
+				document.getElementById("piclink").setAttribute("href",picstr);
+			}
+			function bencha() {
+				var linkhash = window.location.hash;
+				var benchstr = "../benchmap/index.html" + linkhash;
+				document.getElementById("benchlink").setAttribute("href",benchstr);
+			}
+			function lgbtqa() {
+				var linkhash = window.location.hash;
+				var lgbtqstr = "../LGBTQmap/index.html" + linkhash;
+				document.getElementById("lgbtqlink").setAttribute("href",lgbtqstr);
+			}
+		</script>
 	</head>
 	<body>
 		<div id="sidebar">
@@ -38,9 +55,10 @@
 
 		<div id="linksbutton" onclick="togglelinks()" style="display: block;" title="Other Maps"></div>
 		<div id="linksdiv" onclick="togglelinks()" style="display: none;">
-			<a href="../LGBTQmap/index.html" target="_blank">LGBTQ+map</a>
-			<a href="../picmap/index.html" target="_blank" class="artmap">PicMap</a>
-			<a href="../benchmap/index.html" target="_blank" class="benchmap">BenchMap</a>
+			<div id="closebutton">×</div>
+			<a id="piclink" onclick="pica()" target="_blank">PicMap</a><br/>
+			<a id="benchlink" onclick="bencha()" target="_blank">BenchMap</a><br/>
+			<a id="lgbtqlink" onclick="lgbtqa()" target="_blank">LGBTQ+map</a>
 		</div>
 
 		<div id="topbar">
