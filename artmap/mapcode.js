@@ -233,6 +233,26 @@ function getWiki(tagWikip) {
 	return wiki_link;
 }
 
+function getWikidataImage(tagWD) {
+	const wdLink = fetch("https://www.wikidata.org/w/api.php?action=wbgetclaims&property=P18&entity="+tagWD+"&format=json",
+		{
+            headers: {
+                Accept: 'application/sparql-results+json',
+                'User-Agent':
+                    'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36',
+            },
+        })
+		.then(response => response.json())
+  		.then(data => console.log(data))
+  		.catch(error => console.error("Error fetching JSON:", error));
+	var jsonData = wdLink;
+	// var parsed = JSON.parse(wdLink);
+	var hash = calcMD5(unescape(encodeURIComponent(wdLink)));
+	// var wiki_link = "https://upload.wikimedia.org/wikipedia/commons/thumb/"+hash.substring(0,1)+"/"+hash.substring(0,2)+"/"+wiki_file_no_apos+"/250px-"+wiki_file_no_apos;
+	console.log(jsonData);
+	// return wiki_link;
+}
+
 function getMLLink(tagMapillary) {
 	var ml_link = "https://www.mapillary.com/app/?focus=photo&pKey="+tagMapillary;
 	return ml_link;
@@ -254,7 +274,7 @@ function setPoiMarker(poi_type, icon, lat, lon, tags, osmid, osmtype) {
 	var iDedit = "https://www.openstreetmap.org/edit\?editor=id&"+osmtype+"="+osmid;
 	var josmedit = "http://127.0.0.1:8111/load_object?new_layer=true&objects=n"+osmid;
 
-	if (tags.name == undefined) {
+	if (tags.name == null) {
 		var popup_content = "<span class='type'>"+poi_type+"</span>";
 	} else {
 		var popup_content = "<span class='title'>"+tags.name+"</span><br/><span class='type'>"+poi_type+"</span>";//<br><span class='type'>"+poi_type+"</span>
@@ -284,14 +304,20 @@ function setPoiMarker(poi_type, icon, lat, lon, tags, osmid, osmtype) {
 		var link = getWiki(tags.wikipedia);
 		popup_content += "<br><a href="+link+" target=\"_blank\">Wikipedia Link</a>";
 	}
-	
-	if (tags.wikimedia_commons != undefined) {
+
+	if (tags.wikidata != undefined) {
+		var image = getWikidataImage(tags.wikidata);
+		console.log(image);
+		popup_content += "<br><a href='"+link+"' target='_blank'><img src='"+image+"' class='popup_image'></a>";
+	} else if (tags.wikimedia_commons != undefined) {
 		var link = getWikiImg(tags.wikimedia_commons);
 		var thumb = getWikiThumb(tags.wikimedia_commons);
 		if (tags.wikimedia_commons.startsWith("File")) {
 			popup_content += "<br><a href='"+link+"' target='_blank'><img src='"+thumb+"' class='popup_image'></a>";
 		} else if (tags.wikimedia_commons.includes("//commons.wikimedia.org/wiki/File")) {
 			popup_content += "<br><span class='invalid' title='"+tags.wikimedia_commons+"'>(Invalid image tag)</span><br><a href='"+link+"' target='_blank'><img src='"+thumb+"' class='popup_image'></a>";
+		} else if (tags.wikimedia_commons.includes("Category")) {
+			popup_content += "<br><span class='category' title='"+tags.wikimedia_commons+"'>📷 <a href='https://commons.wikimedia.org/wiki/"+tags.wikimedia_commons+"' target='_blank'>Wikimeda Commons Images</a></span>";
 		} else {
 			popup_content += "<br><span class='invalid' title='"+tags.wikimedia_commons+"'>Invalid image tag: <a href='https://commons.wikimedia.org/wiki/"+tags.wikimedia_commons+"' target='_blank'>"+tags.wikimedia_commons+"</span>";
 		}
@@ -414,8 +440,8 @@ function element_to_map(data) {
 				if (el.tags.wikimedia_commons.includes("File")) {
 					setPoiMarker("", image_icon, el.lat, el.lon, el.tags, el.id, el.type);
 					image_counter++;
-				// } else if (el.tags.wikimedia_commons.includes("Category")) {
-					// setPoiMarker("", outline_icon, el.lat, el.lon);
+				} else if (el.tags.wikimedia_commons.includes("Category")) {
+					setPoiMarker("", image_icon, el.lat, el.lon, el.tags, el.id, el.type);
 				} else {
 					setPoiMarker("", error_icon, el.lat, el.lon, el.tags, el.id, el.type);
 					error_counter++;
