@@ -12,13 +12,15 @@
 	}*/
 .marker-cluster-small div {
 	background-color: white;
+	opacity: 0.7;
 	border: 1px solid #333;
 	color: #333;
 	}
 
 .pic-cluster div {
-	background-color: #1e88e5;
-	border: 1px solid #333;
+	background-color: #80f;
+	opacity: 0.7;
+	border: 1px solid #406;
 	color: #333;
 	}
 
@@ -28,6 +30,7 @@
 	}*/
 .marker-cluster-medium div {
 	background-color: white;
+	opacity: 0.7;
 	border: 1px solid #333;
 	color: #333;
 }
@@ -38,6 +41,7 @@
 	}*/
 .marker-cluster-large div {
 	background-color: white;
+	opacity: 0.7;
 	border: 1px solid #333;
 	color: #333;
 }
