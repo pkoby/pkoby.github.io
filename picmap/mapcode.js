@@ -29,8 +29,10 @@ var counterPics = 0;
 var counterNoPics = 0;
 var counter_div = document.getElementById("counter_display");
 
-var artwork_icon,attraction_icon,building_icon,castle_icon,cemetery_icon,globe_icon,information_icon,landmark_icon,library_icon,memorial_icon,monument_icon,museum_icon,temple_icon,church_icon,synagogue_icon,mosque_icon,school_icon,shrine_icon,viewpoint_icon,village_icon,
-	artwork_icon_pic,attraction_icon_pic,building_icon_pic,castle_icon_pic,cemetery_icon_pic,globe_icon_pic,information_icon_pic,landmark_icon_pic,library_icon_pic,memorial_icon_pic,monument_icon_pic,museum_icon_pic,temple_icon_pic,church_icon_pic,synagogue_icon_pic,mosque_icon_pic,school_icon_pic,shrine_icon_pic,viewpoint_icon_pic,village_icon_pic;
+var artwork_icon,attraction_icon,castle_icon,cemetery_icon,globe_icon,information_icon,landmark_icon,library_icon,memorial_icon,monument_icon,museum_icon,temple_icon,church_icon,synagogue_icon,mosque_icon,school_icon,shrine_icon,viewpoint_icon,village_icon,
+	artwork_icon_wc,attraction_icon_wc,castle_icon_wc,cemetery_icon_wc,globe_icon_wc,information_icon_wc,landmark_icon_wc,library_icon_wc,memorial_icon_wc,monument_icon_wc,museum_icon_wc,temple_icon_wc,church_icon_wc,synagogue_icon_wc,mosque_icon_wc,school_icon_wc,shrine_icon_wc,viewpoint_icon_wc,village_icon_wc,
+	artwork_icon_pr,attraction_icon_pr,castle_icon_pr,cemetery_icon_pr,globe_icon_pr,information_icon_pr,landmark_icon_pr,library_icon_pr,memorial_icon_pr,monument_icon_pr,museum_icon_pr,temple_icon_pr,church_icon_pr,synagogue_icon_pr,mosque_icon_pr,school_icon_pr,shrine_icon_pr,viewpoint_icon_pr,village_icon_pr,
+	artwork_icon_ml,attraction_icon_ml,castle_icon_ml,cemetery_icon_ml,globe_icon_ml,information_icon_ml,landmark_icon_ml,library_icon_ml,memorial_icon_ml,monument_icon_ml,museum_icon_ml,temple_icon_ml,church_icon_ml,synagogue_icon_ml,mosque_icon_ml,school_icon_ml,shrine_icon_ml,viewpoint_icon_ml,village_icon_ml;
 
 	// var OSMCarto=L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,opacity:0.3,attribution:'&copy;<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'});
 	var CartoDB_Positron = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
@@ -501,63 +503,181 @@ function element_to_map(data) {
 					setPoiMarker("", landmark_icon, el.lat, el.lon, el.tags, el.id, el.type);
 					counterNoPics++;
 				}
-			} else if (el.tags.wikimedia_commons != null || el.tags.panoramax != null || el.tags.mapillary != null || el.tags.image != null) {
+			} else if (el.tags.wikimedia_commons != null) {
 				if (el.tags.tourism == 'artwork') {
-					setPoiMarker("", artwork_icon_pic, el.lat, el.lon, el.tags, el.id, el.type);
+					setPoiMarker("", artwork_icon_wc, el.lat, el.lon, el.tags, el.id, el.type);
 					counterPics++;
 				} else if (el.tags.tourism == 'attraction') {
-					setPoiMarker("", attraction_icon_pic, el.lat, el.lon, el.tags, el.id, el.type);
+					setPoiMarker("", attraction_icon_wc, el.lat, el.lon, el.tags, el.id, el.type);
 					counterPics++;
 				} else if (el.tags.historic == 'castle' || el.tags.building == 'castle' || el.tags.ruins == 'castle') {
-					setPoiMarker("", castle_icon_pic, el.lat, el.lon, el.tags, el.id, el.type);
+					setPoiMarker("", castle_icon_wc, el.lat, el.lon, el.tags, el.id, el.type);
 					counterPics++;
 				} else if (el.tags.historic == 'tomb') {
-					setPoiMarker("", cemetery_icon_pic, el.lat, el.lon, el.tags, el.id, el.type);
+					setPoiMarker("", cemetery_icon_wc, el.lat, el.lon, el.tags, el.id, el.type);
 					counterPics++;
 				} else if (el.tags.tourism == 'information' && el.tags.information == 'map') {
-					setPoiMarker("", globe_icon_pic, el.lat, el.lon, el.tags, el.id, el.type);
+					setPoiMarker("", globe_icon_wc, el.lat, el.lon, el.tags, el.id, el.type);
 					counterPics++;
 				} else if (el.tags.tourism == 'information' && el.tags.information == 'board') {
-					setPoiMarker("", information_icon_pic, el.lat, el.lon, el.tags, el.id, el.type);
+					setPoiMarker("", information_icon_wc, el.lat, el.lon, el.tags, el.id, el.type);
 					counterPics++;
 				} else if (el.tags.historic == 'memorial') {
-					setPoiMarker("", memorial_icon_pic, el.lat, el.lon, el.tags, el.id, el.type);
+					setPoiMarker("", memorial_icon_wc, el.lat, el.lon, el.tags, el.id, el.type);
 					counterPics++;
 				} else if (el.tags.historic == 'monument') {
-					setPoiMarker("", monument_icon_pic, el.lat, el.lon, el.tags, el.id, el.type);
+					setPoiMarker("", monument_icon_wc, el.lat, el.lon, el.tags, el.id, el.type);
 					counterPics++;
 				} else if (el.tags.tourism == 'museum' || el.tags.building == 'museum') {
-					setPoiMarker("", museum_icon_pic, el.lat, el.lon, el.tags, el.id, el.type);
+					setPoiMarker("", museum_icon_wc, el.lat, el.lon, el.tags, el.id, el.type);
 					counterPics++;
 				} else if (el.tags.building == 'temple') {
-					setPoiMarker("", temple_icon_pic, el.lat, el.lon, el.tags, el.id, el.type);
+					setPoiMarker("", temple_icon_wc, el.lat, el.lon, el.tags, el.id, el.type);
 					counterPics++;
 				} else if (el.tags.building == 'church') {
-					setPoiMarker("", church_icon_pic, el.lat, el.lon, el.tags, el.id, el.type);
+					setPoiMarker("", church_icon_wc, el.lat, el.lon, el.tags, el.id, el.type);
 					counterPics++;
 				} else if (el.tags.building == 'synagogue') {
-					setPoiMarker("", synagogue_icon_pic, el.lat, el.lon, el.tags, el.id, el.type);
+					setPoiMarker("", synagogue_icon_wc, el.lat, el.lon, el.tags, el.id, el.type);
 					counterPics++;
 				} else if (el.tags.building == 'mosque') {
-					setPoiMarker("", mosque_icon_pic, el.lat, el.lon, el.tags, el.id, el.type);
+					setPoiMarker("", mosque_icon_wc, el.lat, el.lon, el.tags, el.id, el.type);
 					counterPics++;
 				} else if (el.tags.building == 'school') {
-					setPoiMarker("", school_icon_pic, el.lat, el.lon, el.tags, el.id, el.type);
+					setPoiMarker("", school_icon_wc, el.lat, el.lon, el.tags, el.id, el.type);
 					counterPics++;
 				} else if (el.tags.historic == 'building') {
-					setPoiMarker("", village_icon_pic, el.lat, el.lon, el.tags, el.id, el.type);
+					setPoiMarker("", village_icon_wc, el.lat, el.lon, el.tags, el.id, el.type);
 					counterPics++;
 				} else if (el.tags.historic == 'wayside_shrine') {
-					setPoiMarker("", shrine_icon_pic, el.lat, el.lon, el.tags, el.id, el.type);
+					setPoiMarker("", shrine_icon_wc, el.lat, el.lon, el.tags, el.id, el.type);
 					counterPics++;
 				} else if (el.tags.tourism == 'viewpoint') {
-					setPoiMarker("", viewpoint_icon_pic, el.lat, el.lon, el.tags, el.id, el.type);
+					setPoiMarker("", viewpoint_icon_wc, el.lat, el.lon, el.tags, el.id, el.type);
 					counterPics++;
 				} else if (el.tags.amenity == 'library') {
-					setPoiMarker("", library_icon_pic, el.lat, el.lon, el.tags, el.id, el.type);
+					setPoiMarker("", library_icon_wc, el.lat, el.lon, el.tags, el.id, el.type);
 					counterPics++;
 				} else {
-					setPoiMarker("", landmark_icon_pic, el.lat, el.lon, el.tags, el.id, el.type);
+					setPoiMarker("", landmark_icon_wc, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				}
+			} else if (el.tags.panoramax != null || el.tags.mapillary != null || el.tags.image != null) {
+				if (el.tags.tourism == 'artwork') {
+					setPoiMarker("", artwork_icon_pr, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.tourism == 'attraction') {
+					setPoiMarker("", attraction_icon_pr, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.historic == 'castle' || el.tags.building == 'castle' || el.tags.ruins == 'castle') {
+					setPoiMarker("", castle_icon_pr, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.historic == 'tomb') {
+					setPoiMarker("", cemetery_icon_pr, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.tourism == 'information' && el.tags.information == 'map') {
+					setPoiMarker("", globe_icon_pr, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.tourism == 'information' && el.tags.information == 'board') {
+					setPoiMarker("", information_icon_pr, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.historic == 'memorial') {
+					setPoiMarker("", memorial_icon_pr, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.historic == 'monument') {
+					setPoiMarker("", monument_icon_pr, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.tourism == 'museum' || el.tags.building == 'museum') {
+					setPoiMarker("", museum_icon_pr, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.building == 'temple') {
+					setPoiMarker("", temple_icon_pr, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.building == 'church') {
+					setPoiMarker("", church_icon_pr, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.building == 'synagogue') {
+					setPoiMarker("", synagogue_icon_pr, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.building == 'mosque') {
+					setPoiMarker("", mosque_icon_pr, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.building == 'school') {
+					setPoiMarker("", school_icon_pr, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.historic == 'building') {
+					setPoiMarker("", village_icon_pr, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.historic == 'wayside_shrine') {
+					setPoiMarker("", shrine_icon_pr, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.tourism == 'viewpoint') {
+					setPoiMarker("", viewpoint_icon_pr, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.amenity == 'library') {
+					setPoiMarker("", library_icon_pr, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else {
+					setPoiMarker("", landmark_icon_pr, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				}
+			} else if (el.tags.mapillary != null || el.tags.image != null) {
+				if (el.tags.tourism == 'artwork') {
+					setPoiMarker("", artwork_icon_ml, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.tourism == 'attraction') {
+					setPoiMarker("", attraction_icon_ml, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.historic == 'castle' || el.tags.building == 'castle' || el.tags.ruins == 'castle') {
+					setPoiMarker("", castle_icon_ml, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.historic == 'tomb') {
+					setPoiMarker("", cemetery_icon_ml, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.tourism == 'information' && el.tags.information == 'map') {
+					setPoiMarker("", globe_icon_ml, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.tourism == 'information' && el.tags.information == 'board') {
+					setPoiMarker("", information_icon_ml, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.historic == 'memorial') {
+					setPoiMarker("", memorial_icon_ml, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.historic == 'monument') {
+					setPoiMarker("", monument_icon_ml, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.tourism == 'museum' || el.tags.building == 'museum') {
+					setPoiMarker("", museum_icon_ml, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.building == 'temple') {
+					setPoiMarker("", temple_icon_ml, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.building == 'church') {
+					setPoiMarker("", church_icon_ml, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.building == 'synagogue') {
+					setPoiMarker("", synagogue_icon_ml, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.building == 'mosque') {
+					setPoiMarker("", mosque_icon_ml, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.building == 'school') {
+					setPoiMarker("", school_icon_ml, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.historic == 'building') {
+					setPoiMarker("", village_icon_ml, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.historic == 'wayside_shrine') {
+					setPoiMarker("", shrine_icon_ml, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.tourism == 'viewpoint') {
+					setPoiMarker("", viewpoint_icon_ml, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.amenity == 'library') {
+					setPoiMarker("", library_icon_ml, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else {
+					setPoiMarker("", landmark_icon_ml, el.lat, el.lon, el.tags, el.id, el.type);
 					counterPics++;
 				}
 			}
@@ -617,286 +737,101 @@ function error_function() {
 }
 
 $(function() {
-	artwork_icon = L.icon({
-		iconUrl: 'icons/artwork.svg',
-		iconSize: [18,18],
-		className: 'pointIcon',
-		iconAnchor: [9,9],
-		popupAnchor: [0,-16],
-	});
-	artwork_icon_pic = L.icon({
-		iconUrl: 'icons/artwork_purple.svg',
-		iconSize: [18,18],
-		className: 'pointIcon',
-		iconAnchor: [9,9],
-		popupAnchor: [0,-16],
-	});
-	attraction_icon = L.icon({
-		iconUrl: 'icons/camera.svg',
-		iconSize: [18,18],
-		className: 'pointIcon',
-		iconAnchor: [9,9],
-		popupAnchor: [0,-16],
-	});
-	attraction_icon_pic = L.icon({
-		iconUrl: 'icons/camera_purple.svg',
-		iconSize: [18,18],
-		className: 'pointIcon',
-		iconAnchor: [9,9],
-		popupAnchor: [0,-16],
-	});
-	building_icon = L.icon({
-		iconUrl: 'icons/building-15.svg',
-		iconSize: [18,18],
-		className: 'pointIcon',
-		iconAnchor: [9,9],
-		popupAnchor: [0,-16],
-	});
-	building_icon_pic = L.icon({
-		iconUrl: 'icons/building-blue.svg',
-		iconSize: [18,18],
-		className: 'pointIcon',
-		iconAnchor: [9,9],
-		popupAnchor: [0,-16],
-	});
-	castle_icon = L.icon({
-		iconUrl: 'icons/castle-15.svg',
-		iconSize: [18,18],
-		className: 'pointIcon',
-		iconAnchor: [9,9],
-		popupAnchor: [0,-16],
-	});
-	castle_icon_pic = L.icon({
-		iconUrl: 'icons/castle-blue.svg',
-		iconSize: [18,18],
-		className: 'pointIcon',
-		iconAnchor: [9,9],
-		popupAnchor: [0,-16],
-	});
-	cemetery_icon = L.icon({
-		iconUrl: 'icons/cemetery-15.svg',
-		iconSize: [18,18],
-		className: 'pointIcon',
-		iconAnchor: [9,9],
-		popupAnchor: [0,-16],
-	});
-	cemetery_icon_pic = L.icon({
-		iconUrl: 'icons/cemetery-blue.svg',
-		iconSize: [18,18],
-		className: 'pointIcon',
-		iconAnchor: [9,9],
-		popupAnchor: [0,-16],
-	});
-	globe_icon = L.icon({
-		iconUrl: 'icons/globe-15.svg',
-		iconSize: [18,18],
-		className: 'pointIcon',
-		iconAnchor: [9,9],
-		popupAnchor: [0,-16],
-	});
-	globe_icon_pic = L.icon({
-		iconUrl: 'icons/globe-blue.svg',
-		iconSize: [18,18],
-		className: 'pointIcon',
-		iconAnchor: [9,9],
-		popupAnchor: [0,-16],
-	});
-	information_icon = L.icon({
-		iconUrl: 'icons/information-15.svg',
-		iconSize: [18,18],
-		className: 'pointIcon',
-		iconAnchor: [9,9],
-		popupAnchor: [0,-16],
-	});
-	information_icon_pic = L.icon({
-		iconUrl: 'icons/information-blue.svg',
-		iconSize: [18,18],
-		className: 'pointIcon',
-		iconAnchor: [9,9],
-		popupAnchor: [0,-16],
-	});
-	landmark_icon = L.icon({
-		iconUrl: 'icons/landmark-15.svg',
-		iconSize: [18,18],
-		className: 'pointIcon',
-		iconAnchor: [9,9],
-		popupAnchor: [0,-16],
-	});
-	landmark_icon_pic = L.icon({
-		iconUrl: 'icons/landmark-blue.svg',
-		iconSize: [18,18],
-		className: 'pointIcon',
-		iconAnchor: [9,9],
-		popupAnchor: [0,-16],
-	});
-	library_icon = L.icon({
-		iconUrl: 'icons/books.svg',
-		iconSize: [18,18],
-		className: 'pointIcon',
-		iconAnchor: [9,9],
-		popupAnchor: [0,-16],
-	});
-	library_icon_pic = L.icon({
-		iconUrl: 'icons/books_purple.svg',
-		iconSize: [18,18],
-		className: 'pointIcon',
-		iconAnchor: [9,9],
-		popupAnchor: [0,-16],
-	});
-	memorial_icon = L.icon({
-		iconUrl: 'icons/memorial.svg',
-		iconSize: [18,18],
-		className: 'pointIcon',
-		iconAnchor: [9,9],
-		popupAnchor: [0,-16],
-	});
-	memorial_icon_pic = L.icon({
-		iconUrl: 'icons/memorial-blue.svg',
-		iconSize: [18,18],
-		className: 'pointIcon',
-		iconAnchor: [9,9],
-		popupAnchor: [0,-16],
-	});
-	monument_icon = L.icon({
-		iconUrl: 'icons/monument.svg',
-		iconSize: [18,18],
-		className: 'pointIcon',
-		iconAnchor: [9,9],
-		popupAnchor: [0,-16],
-	});
-	monument_icon_pic = L.icon({
-		iconUrl: 'icons/monument-blue.svg',
-		iconSize: [18,18],
-		className: 'pointIcon',
-		iconAnchor: [9,9],
-		popupAnchor: [0,-16],
-	});
-	museum_icon = L.icon({
-		iconUrl: 'icons/museum-15.svg',
-		iconSize: [18,18],
-		className: 'pointIcon',
-		iconAnchor: [9,9],
-		popupAnchor: [0,-16],
-	});
-	museum_icon_pic = L.icon({
-		iconUrl: 'icons/museum-blue.svg',
-		iconSize: [18,18],
-		className: 'pointIcon',
-		iconAnchor: [9,9],
-		popupAnchor: [0,-16],
-	});
-	temple_icon = L.icon({
-		iconUrl: 'icons/religious-buddhist-15.svg',
-		iconSize: [18,18],
-		className: 'pointIcon',
-		iconAnchor: [9,9],
-		popupAnchor: [0,-16],
-	});
-	temple_icon_pic = L.icon({
-		iconUrl: 'icons/religious-buddhist-blue.svg',
-		iconSize: [18,18],
-		className: 'pointIcon',
-		iconAnchor: [9,9],
-		popupAnchor: [0,-16],
-	});
-	church_icon = L.icon({
-		iconUrl: 'icons/religious-christian-15.svg',
-		iconSize: [18,18],
-		className: 'pointIcon',
-		iconAnchor: [9,9],
-		popupAnchor: [0,-16],
-	});
-	church_icon_pic = L.icon({
-		iconUrl: 'icons/religious-christian-blue.svg',
-		iconSize: [18,18],
-		className: 'pointIcon',
-		iconAnchor: [9,9],
-		popupAnchor: [0,-16],
-	});
-	synagogue_icon = L.icon({
-		iconUrl: 'icons/religious-jewish-15.svg',
-		iconSize: [18,18],
-		className: 'pointIcon',
-		iconAnchor: [9,9],
-		popupAnchor: [0,-16],
-	});
-	synagogue_icon_pic = L.icon({
-		iconUrl: 'icons/religious-jewish-blue.svg',
-		iconSize: [18,18],
-		className: 'pointIcon',
-		iconAnchor: [9,9],
-		popupAnchor: [0,-16],
-	});
-	mosque_icon = L.icon({
-		iconUrl: 'icons/religious-muslim-15.svg',
-		iconSize: [18,18],
-		className: 'pointIcon',
-		iconAnchor: [9,9],
-		popupAnchor: [0,-16],
-	});
-	mosque_icon_pic = L.icon({
-		iconUrl: 'icons/religious-muslim-blue.svg',
-		iconSize: [18,18],
-		className: 'pointIcon',
-		iconAnchor: [9,9],
-		popupAnchor: [0,-16],
-	});
-	school_icon = L.icon({
-		iconUrl: 'icons/school-15.svg',
-		iconSize: [18,18],
-		className: 'pointIcon',
-		iconAnchor: [9,9],
-		popupAnchor: [0,-16],
-	});
-	school_icon_pic = L.icon({
-		iconUrl: 'icons/school-blue.svg',
-		iconSize: [18,18],
-		className: 'pointIcon',
-		iconAnchor: [9,9],
-		popupAnchor: [0,-16],
-	});
-	shrine_icon = L.icon({
-		iconUrl: 'icons/wayside-shrine.svg',
-		iconSize: [18,18],
-		className: 'pointIcon',
-		iconAnchor: [9,9],
-		popupAnchor: [0,-16],
-	});
-	shrine_icon_pic = L.icon({
-		iconUrl: 'icons/wayside-shrine-blue.svg',
-		iconSize: [18,18],
-		className: 'pointIcon',
-		iconAnchor: [9,9],
-		popupAnchor: [0,-16],
-	});
-	viewpoint_icon = L.icon({
-		iconUrl: 'icons/viewpoint-15.svg',
-		iconSize: [18,18],
-		className: 'pointIcon',
-		iconAnchor: [9,9],
-		popupAnchor: [0,-16],
-	});
-	viewpoint_icon_pic = L.icon({
-		iconUrl: 'icons/viewpoint-blue.svg',
-		iconSize: [18,18],
-		className: 'pointIcon',
-		iconAnchor: [9,9],
-		popupAnchor: [0,-16],
-	});
-	village_icon = L.icon({
-		iconUrl: 'icons/village-15.svg',
-		iconSize: [18,18],
-		className: 'pointIcon',
-		iconAnchor: [9,9],
-		popupAnchor: [0,-16],
-	});
-	village_icon_pic = L.icon({
-		iconUrl: 'icons/village-blue.svg',
-		iconSize: [18,18],
-		className: 'pointIcon',
-		iconAnchor: [9,9],
-		popupAnchor: [0,-16],
-	});
+// Artwork
+	artwork_icon = L.icon({iconUrl:'icons/artwork.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor: [0,-16]});
+	artwork_icon_wc = L.icon({iconUrl:'icons/artwork_purple.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor: [0,-16]});
+	artwork_icon_pr = L.icon({iconUrl:'icons/artwork_blue.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor: [0,-16]});
+	artwork_icon_ml = L.icon({iconUrl:'icons/artwork_green.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+//Attraction
+	attraction_icon = L.icon({iconUrl:'icons/camera.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	attraction_icon_wc = L.icon({iconUrl:'icons/camera_purple.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	attraction_icon_pr = L.icon({iconUrl:'icons/camera_blue.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	attraction_icon_ml = L.icon({iconUrl:'icons/camera_green.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+//Castle
+	castle_icon = L.icon({iconUrl:'icons/castle-15.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	castle_icon_wc = L.icon({iconUrl:'icons/castle_purple.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	castle_icon_pr = L.icon({iconUrl:'icons/castle_blue.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	castle_icon_ml = L.icon({iconUrl:'icons/castle_green.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+
+	cemetery_icon = L.icon({iconUrl:'icons/cemetery-15.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	cemetery_icon_wc = L.icon({iconUrl:'icons/cemetery_purple.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	cemetery_icon_pr = L.icon({iconUrl:'icons/cemetery_blue.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	cemetery_icon_ml = L.icon({iconUrl:'icons/cemetery_green.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+
+	globe_icon = L.icon({iconUrl:'icons/globe-15.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	globe_icon_wc = L.icon({iconUrl:'icons/globe_purple.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	globe_icon_pr = L.icon({iconUrl:'icons/globe_blue.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	globe_icon_ml = L.icon({iconUrl:'icons/globe_green.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+
+	information_icon = L.icon({iconUrl:'icons/information-15.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	information_icon_wc = L.icon({iconUrl:'icons/information_purple.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	information_icon_pr = L.icon({iconUrl:'icons/information_blue.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	information_icon_ml = L.icon({iconUrl:'icons/information_green.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+
+	landmark_icon = L.icon({iconUrl:'icons/landmark-15.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	landmark_icon_wc = L.icon({iconUrl:'icons/landmark_purple.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	landmark_icon_pr = L.icon({iconUrl:'icons/landmark_blue.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	landmark_icon_ml = L.icon({iconUrl:'icons/landmark_green.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+
+	library_icon = L.icon({iconUrl:'icons/books.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	library_icon_wc = L.icon({iconUrl:'icons/books_purple.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	library_icon_pr = L.icon({iconUrl:'icons/books_blue.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	library_icon_ml = L.icon({iconUrl:'icons/books_green.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+
+	memorial_icon = L.icon({iconUrl:'icons/memorial.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	memorial_icon_wc = L.icon({iconUrl:'icons/memorial_purple.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	memorial_icon_pr = L.icon({iconUrl:'icons/memorial_blue.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	memorial_icon_ml = L.icon({iconUrl:'icons/memorial_green.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+
+	monument_icon = L.icon({iconUrl:'icons/monument.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	monument_icon_wc = L.icon({iconUrl:'icons/monument_purple.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	monument_icon_pr = L.icon({iconUrl:'icons/monument_blue.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	monument_icon_ml = L.icon({iconUrl:'icons/monument_green.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+
+	museum_icon = L.icon({iconUrl:'icons/museum-15.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	museum_icon_wc = L.icon({iconUrl:'icons/museum_purple.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	museum_icon_pr = L.icon({iconUrl:'icons/museum_blue.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	museum_icon_ml = L.icon({iconUrl:'icons/museum_green.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+
+	temple_icon = L.icon({iconUrl:'icons/religious-buddhist-15.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	temple_icon_wc = L.icon({iconUrl:'icons/religious-buddhist_purple.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	temple_icon_pr = L.icon({iconUrl:'icons/religious-buddhist_blue.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	temple_icon_ml = L.icon({iconUrl:'icons/religious-buddhist_green.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+
+	church_icon = L.icon({iconUrl:'icons/cross.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	church_icon_wc = L.icon({iconUrl:'icons/cross_purple.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	church_icon_pr = L.icon({iconUrl:'icons/cross_blue.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	church_icon_ml = L.icon({iconUrl:'icons/cross_green.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+
+	synagogue_icon = L.icon({iconUrl:'icons/religious-jewish-15.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	synagogue_icon_wc = L.icon({iconUrl:'icons/religious-jewish_purple.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	synagogue_icon_pr = L.icon({iconUrl:'icons/religious-jewish_blue.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	synagogue_icon_ml = L.icon({iconUrl:'icons/religious-jewish_green.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+
+	mosque_icon = L.icon({iconUrl:'icons/religious-muslim-15.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	mosque_icon_wc = L.icon({iconUrl:'icons/religious-muslim_purple.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	mosque_icon_pr = L.icon({iconUrl:'icons/religious-muslim_blue.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	mosque_icon_ml = L.icon({iconUrl:'icons/religious-muslim_green.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+
+	school_icon = L.icon({iconUrl:'icons/school-15.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	school_icon_wc = L.icon({iconUrl:'icons/school_purple.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	school_icon_pr = L.icon({iconUrl:'icons/school_blue.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	school_icon_ml = L.icon({iconUrl:'icons/school_green.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+
+	shrine_icon = L.icon({iconUrl:'icons/wayside-shrine.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	shrine_icon_wc = L.icon({iconUrl:'icons/wayside-shrine_purple.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	shrine_icon_pr = L.icon({iconUrl:'icons/wayside-shrine_blue.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	shrine_icon_ml = L.icon({iconUrl:'icons/wayside-shrine_green.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+
+	viewpoint_icon = L.icon({iconUrl:'icons/viewpoint-15.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	viewpoint_icon_wc = L.icon({iconUrl:'icons/viewpoint_purple.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	viewpoint_icon_pr = L.icon({iconUrl:'icons/viewpoint_blue.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	viewpoint_icon_ml = L.icon({iconUrl:'icons/viewpoint_green.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+
+	village_icon = L.icon({iconUrl:'icons/village-15.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	village_icon_wc = L.icon({iconUrl:'icons/village_purple.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	village_icon_pr = L.icon({iconUrl:'icons/village_blue.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	village_icon_ml = L.icon({iconUrl:'icons/village_green.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
 
 	// map.on('moveend', function () {
 	// 	if (map.getZoom() >= 19) {
@@ -935,6 +870,5 @@ $(function() {
 			popup._updated = true; // Assumes only 1 image per Popup.
 			popup.update();
 		}
-		console.log(tagName);
 	}, true);
 });

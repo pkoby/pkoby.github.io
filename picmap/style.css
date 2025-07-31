@@ -111,7 +111,7 @@ button {
 	font-size: 8pt;
 }
 .dimtext {
-	color: #749;
+	color: #527;
 }
 .brighttext {
 	color: #fff;
@@ -507,7 +507,7 @@ hr {
 #closebutton {
 	float: right;
 	margin: -3px 0px 0 0;
-	color: #749;
+	color: #c9f;
 	pointer-events: none;
 }
 
