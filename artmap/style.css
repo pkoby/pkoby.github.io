@@ -370,7 +370,7 @@ leaflet-control a {
 	margin: 0 !important;
 	background-color: rgba(17, 153, 119, 0.9);
 	padding: 10px 0 10px 0;
-	border-radius: 10px;
+	/*border-radius: 10px;*/
 }
 
 .overlayText:empty {
