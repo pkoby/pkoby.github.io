@@ -1062,21 +1062,13 @@ $(function() {
 		}
 	});
 
-	// document.querySelector(".leaflet-popup-pane").addEventListener("load", function (event) {
-	// 	var tagName = $(event.target).attr("class"),
-	// 	popup = map._popup; // Last open Popup.
-	// 	if (tagName === "mainImage" && popup && !popup._updated) {
-	// 		popup._updated = true; // Assumes only 1 image per Popup.
-	// 		popup.update();
-	// 		popup.update();
-	// 	}
-	// 	console.log(tagName);
-	// }, true);
-
-	map.on('popupopen', function (e) {
-		$('img.mainImage').on('load', function () {
-			e.popup.update()
-			console.log("test2");
-		})
-	})
+	document.querySelector(".leaflet-popup-pane").addEventListener("load", function (event) {
+		var tagName = $(event.target).attr("class"),
+		popup = map._popup; // Last open Popup.
+		if (tagName === "mainImage" && popup && !popup._updated) {
+			popup._updated = true; // Assumes only 1 image per Popup.
+			popup.update();
+		}
+		console.log("why");
+	}, true);
 });
