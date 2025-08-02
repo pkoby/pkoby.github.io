@@ -1076,7 +1076,7 @@ $(function() {
 	map.on('popupopen', function (e) {
 		$('img.mainImage').on('load', function () {
 			e.popup.update()
-			console.log("hello");
+			console.log("test2");
 		})
 	})
 });

@@ -205,6 +205,8 @@ button {
 	text-align: center;
 	color: white;
 	font-size: 12px;
+	min-width: 150px;
+	width: fit-content !important;
 }
 
 .leaflet-popup-content a {
@@ -214,7 +216,7 @@ button {
 
 .leaflet-popup-content-wrapper {
 	background-color: #444;
-	max-width: 400px;
+	/*max-width: 400px;*/
 }
 
 .leaflet-popup-content img {
