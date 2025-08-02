@@ -931,11 +931,11 @@ $(function() {
 	globe_icon_ml = L.icon({iconUrl:'icons/globe_green.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
 	globe_icon_im = L.icon({iconUrl:'icons/globe_purple.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
 
-	information_icon = L.icon({iconUrl:'icons/information.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
-	information_icon_wc = L.icon({iconUrl:'icons/information_red.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
-	information_icon_pr = L.icon({iconUrl:'icons/information_blue.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
-	information_icon_ml = L.icon({iconUrl:'icons/information_green.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
-	information_icon_im = L.icon({iconUrl:'icons/information_purple.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	information_icon = L.icon({iconUrl:'icons/info_board.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	information_icon_wc = L.icon({iconUrl:'icons/info_board_red.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	information_icon_pr = L.icon({iconUrl:'icons/info_board_blue.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	information_icon_ml = L.icon({iconUrl:'icons/info_board_green.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	information_icon_im = L.icon({iconUrl:'icons/info_board_purple.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
 
 	landmark_icon = L.icon({iconUrl:'icons/landmark.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
 	landmark_icon_wc = L.icon({iconUrl:'icons/landmark_red.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
@@ -1068,8 +1068,8 @@ $(function() {
 		popup = map._popup; // Last open Popup.
 		if (tagName === "mainImage" && popup && !popup._updated) {
 			popup._updated = true; // Assumes only 1 image per Popup.
+			console.log(tagName);
 			popup.update();
 		}
-		console.log(tagName);
 	}, true);
 });
