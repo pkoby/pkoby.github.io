@@ -11,7 +11,7 @@
    height="14"
    version="1.1"
    id="svg4"
-   sodipodi:docname="monument.svg"
+   sodipodi:docname="info_blue.svg"
    inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)">
   <metadata
      id="metadata10">
@@ -40,20 +40,20 @@
      inkscape:window-height="741"
      id="namedview6"
      showgrid="false"
-     fit-margin-top="0"
-     fit-margin-left="0"
-     fit-margin-right="0"
-     fit-margin-bottom="0"
      inkscape:zoom="14.75"
-     inkscape:cx="-8.4915254"
-     inkscape:cy="7"
+     inkscape:cx="-7.4915254"
+     inkscape:cy="4"
      inkscape:window-x="0"
      inkscape:window-y="27"
      inkscape:window-maximized="1"
-     inkscape:current-layer="svg4" />
+     inkscape:current-layer="svg4"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0" />
   <path
-     d="M 7,0 A 1,1 0 0 0 6,1 1,1 0 0 0 7,2 1,1 0 0 0 8,1 1,1 0 0 0 7,0 M 6.5,3 C 6.2239,3 6,3.2239 6,3.5 V 4 H 5.5 C 5.2239,4 5,4.2239 5,4.5 V 5 c 2e-4,0.1896 0.1076,0.3628 0.2773,0.4473 L 5.9688,5.793 5.5469,10 H 5 C 4.7239,10 4.5,10.2239 4.5,10.5 4.5,10.7761 4.7239,11 5,11 v 2 H 4.5 C 4.2239,13 4,13.2239 4,13.5 4,13.7761 4.2239,14 4.5,14 h 5 C 9.7761,14 10,13.7761 10,13.5 10,13.2239 9.7761,13 9.5,13 H 9 V 11 C 9.2761,11 9.5,10.7761 9.5,10.5 9.5,10.2239 9.2761,10 9,10 H 8.4531 L 8.0312,5.793 8.7227,5.4473 C 8.8924,5.3628 8.9998,5.1896 9,5 V 4.5 C 9,4.2239 8.7761,4 8.5,4 H 8 V 3.5 C 8,3.2239 7.7761,3 7.5,3 h -1"
+     d="m 2.2,1.5999999 c -0.6648,0 -1.2,0.5352 -1.2,1.2 V 11.2 c 0,0.6648 0.5352,1.2 1.2,1.2 h 9.6 c 0.6648,0 1.2,-0.5352 1.2,-1.2 V 2.7999999 c 0,-0.6648 -0.5352,-1.2 -1.2,-1.2 H 2.2 m 4.2,1.2 h 1.2 c 0.3324,0 0.6,0.2676 0.6,0.6 v 1.2 c 0,0.3324 -0.2676,0.6 -0.6,0.6 H 6.4 c -0.3324,0 -0.6,-0.2676 -0.6,-0.6 v -1.2 c 0,-0.3324 0.2676,-0.6 0.6,-0.6 m -0.6,3.6 h 1.8 c 0.3324,0 0.6,0.2676 0.6,0.6 V 10 c 0.32196,0 0.6,0.27804 0.6,0.6 0,0.32196 -0.27804,0.6 -0.6,0.6 H 5.8 C 5.47804,11.2 5.2,10.92196 5.2,10.6 5.2,10.27804 5.47804,10 5.8,10 V 7.5999999 c -0.3324,0 -0.6,-0.2676 -0.6,-0.6 0,-0.3324 0.2676,-0.6 0.6,-0.6"
      id="path2"
      inkscape:connector-curvature="0"
-     style="fill:#555555;fill-opacity:1" />
+     style="fill:#2288ee;fill-opacity:1;stroke-width:1.19999993" />
 </svg>

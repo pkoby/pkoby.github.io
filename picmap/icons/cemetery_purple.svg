@@ -7,26 +7,27 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   id="cemetery-15"
    width="14"
    height="14"
-   version="1.1"
-   id="svg4"
-   sodipodi:docname="monument.svg"
+   viewBox="0 0 14 14"
+   sodipodi:docname="cemetery_purple.svg"
    inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)">
   <metadata
-     id="metadata10">
+     id="metadata9">
     <rdf:RDF>
       <cc:Work
          rdf:about="">
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
   <defs
-     id="defs8" />
+     id="defs7" />
   <sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -38,22 +39,22 @@
      inkscape:pageshadow="2"
      inkscape:window-width="1366"
      inkscape:window-height="741"
-     id="namedview6"
+     id="namedview5"
      showgrid="false"
-     fit-margin-top="0"
-     fit-margin-left="0"
-     fit-margin-right="0"
-     fit-margin-bottom="0"
-     inkscape:zoom="14.75"
-     inkscape:cx="-8.4915254"
-     inkscape:cy="7"
+     inkscape:zoom="15.733333"
+     inkscape:cx="-6.2723908"
+     inkscape:cy="6.4999998"
      inkscape:window-x="0"
      inkscape:window-y="27"
      inkscape:window-maximized="1"
-     inkscape:current-layer="svg4" />
+     inkscape:current-layer="cemetery-15"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0" />
   <path
-     d="M 7,0 A 1,1 0 0 0 6,1 1,1 0 0 0 7,2 1,1 0 0 0 8,1 1,1 0 0 0 7,0 M 6.5,3 C 6.2239,3 6,3.2239 6,3.5 V 4 H 5.5 C 5.2239,4 5,4.2239 5,4.5 V 5 c 2e-4,0.1896 0.1076,0.3628 0.2773,0.4473 L 5.9688,5.793 5.5469,10 H 5 C 4.7239,10 4.5,10.2239 4.5,10.5 4.5,10.7761 4.7239,11 5,11 v 2 H 4.5 C 4.2239,13 4,13.2239 4,13.5 4,13.7761 4.2239,14 4.5,14 h 5 C 9.7761,14 10,13.7761 10,13.5 10,13.2239 9.7761,13 9.5,13 H 9 V 11 C 9.2761,11 9.5,10.7761 9.5,10.5 9.5,10.2239 9.2761,10 9,10 H 8.4531 L 8.0312,5.793 8.7227,5.4473 C 8.8924,5.3628 8.9998,5.1896 9,5 V 4.5 C 9,4.2239 8.7761,4 8.5,4 H 8 V 3.5 C 8,3.2239 7.7761,3 7.5,3 h -1"
+     d="M 11.264579,11.846154 H 10.532271 L 11.846117,2.7461538 C 11.864963,2.4374 11.629871,2.1719385 11.321225,2.1530923 c -0.02606,-0.00151 -0.05223,-0.00129 -0.07818,7.539e-4 H 9.972271 C 9.972271,1.1630769 8.6476555,0 7.0107324,0 5.3738093,0 4.0599632,1.1630769 4.0599632,2.1538462 H 2.7353478 C 2.4262709,2.1414612 2.1657632,2.3818308 2.1532709,2.6909077 c -7.539e-4,0.018415 -5.385e-4,0.036831 5.384e-4,0.055246 L 3.446117,11.846154 h -0.7 C 2.4347786,11.833877 2.1712555,12.0736 2.1538093,12.384615 V 14 h 9.6923077 v -1.626154 c -0.01734,-0.305092 -0.276231,-0.539969 -0.581538,-0.527692 z M 3.769194,4.3076923 h 6.461538 V 5.3846154 H 3.769194 Z"
      id="path2"
-     inkscape:connector-curvature="0"
-     style="fill:#555555;fill-opacity:1" />
+     style="fill:#9966dd;stroke-width:1.07692313;fill-opacity:1"
+     inkscape:connector-curvature="0" />
 </svg>
