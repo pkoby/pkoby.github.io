@@ -1065,10 +1065,12 @@ $(function() {
 	document.querySelector(".leaflet-popup-pane").addEventListener("load", function (event) {
 		var tagName = $(event.target).attr("class"),
 		popup = map._popup; // Last open Popup.
-		if (tagName === "mainImage" && popup && !popup._updated) {
-			popup._updated = true; // Assumes only 1 image per Popup.
-			popup.update();
-		}
-		console.log("why");
+		setTimeout(function() {
+			if (tagName === "mainImage" && popup && !popup._updated) {
+				// popup._updated = true; // Assumes only 1 image per Popup.
+				popup.update();
+			}
+		}, 10);
+		console.log("slow");
 	}, true);
 });
