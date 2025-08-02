@@ -95,11 +95,11 @@ button {
 	bottom: 26px;
 	border-radius: 8px 0 0 8px;
 }
-.nopics {
-	content:url(icons/camera-no.svg);
-}
 .yespics {
 	content:url(icons/camera-yes.svg);
+}
+.nopics {
+	content:url(icons/camera-no.svg);
 }
 
 #counter_display {
@@ -110,11 +110,11 @@ button {
 	font-family: roboto-medium;
 	font-size: 8pt;
 }
-.dimtext {
-	color: #527;
-}
 .brighttext {
 	color: #fff;
+}
+.dimtext {
+	color: #527;
 }
 
 .hidden {
@@ -204,6 +204,7 @@ button {
 .leaflet-popup-content {
 	text-align: center;
 	color: white;
+	font-size: 12px;
 }
 
 .leaflet-popup-content a {
@@ -526,9 +527,10 @@ hr {
 	font-family: monospace;
 	font-weight: normal;
 	color: white;
-	background-color: #222;
-	padding: 1px;
-	border-radius: 4px;
+	background-color: #424;
+	padding: 2px;
+	border-radius: 3px;
+	display: inline-block;
 }
 
 .image {
@@ -549,6 +551,12 @@ hr {
 	max-height: 18px;
 	position: relative;
 	top: 4px;
+}
+
+.categoryLogo {
+	float: left;
+	width: 18px;
+	max-height: 18px;
 }
 
 .caption {

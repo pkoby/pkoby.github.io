@@ -2,70 +2,20 @@
 		font-family: roboto-medium;
 		src: local(roboto-medium), url('Roboto-Medium.ttf') format('opentype');
 }
-@font-face {
-		font-family: fontin;
-		src: local(Fontin Regular), url('Fontin-Regular.otf') format('opentype');
-}
-/*.marker-cluster-small {
-	background-color: rgba(222,170,135,0.6);
-	color: #333;
-	}*/
-.marker-cluster-small div {
-	background-color: white;
-	opacity: 0.7;
-	border: 1px solid #333;
-	color: #333;
-	}
 
 .pic-cluster div {
-	background-color: #80f;
-	opacity: 0.7;
-	border: 1px solid #406;
-	color: #333;
-	}
-
-/*.marker-cluster-medium {
-	background-color: rgba(200,113,55,0.6);
-	color: #444;
-	}*/
-.marker-cluster-medium div {
-	background-color: white;
-	opacity: 0.7;
+	background-color: #fff;
+	/*opacity: 0.7;*/
 	border: 1px solid #333;
-	color: #333;
-}
+	color: #555;
+	}
 
-/*.marker-cluster-large {
-	background-color: rgba(120,68,33,0.6);
-	color: #ddd;
-	}*/
-.marker-cluster-large div {
-	background-color: white;
-	opacity: 0.7;
+.marker-cluster div {
+	background-color: #555;
+	/*opacity: 0.7;*/
 	border: 1px solid #333;
-	color: #333;
-}
-
-	/* IE 6-8 fallback colors */
-.leaflet-oldie .marker-cluster-small {
-	background-color: rgb(181, 226, 140);
+	color: #fff;
 	}
-.leaflet-oldie .marker-cluster-small div {
-	background-color: rgb(110, 204, 57);
-	}
-
-.leaflet-oldie .marker-cluster-medium {
-	background-color: rgb(241, 211, 87);
-	}
-.leaflet-oldie .marker-cluster-medium div {
-	background-color: rgb(240, 194, 12);
-	}
-
-.leaflet-oldie .marker-cluster-large {
-	background-color: rgb(253, 156, 115);
-	}
-.leaflet-oldie .marker-cluster-large div {
-	background-color: rgb(241, 128, 23);
 }
 
 .marker-cluster, .pic-cluster {
@@ -73,6 +23,7 @@
 	border-radius: 20px;
 	z-index: 1000;
 	}
+
 .marker-cluster div {
 	width: 18px;
 	height: 18px;
@@ -80,7 +31,8 @@
 	margin-top: 5px;
 	text-align: center;
 	border-radius: 18px;
-	font-family: fontin;
+	font-family: roboto-medium;
+	font-size: 8pt;
 }
 .pic-cluster div {
 	width: 18px;
@@ -89,11 +41,13 @@
 	margin-top: -5px;
 	text-align: center;
 	border-radius: 18px;
-	font-family: fontin;
+	font-family: roboto-medium;
+	font-size: 8pt;
 }
 .marker-cluster span, .pic-cluster span {
 	line-height: 18px;
 }
 .pic-cluster span {
-	color: white;
+	color: #555;
+	font-weight: bold;
 }

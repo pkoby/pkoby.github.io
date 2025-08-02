@@ -47,9 +47,9 @@
 			</a>
 			<!-- <div id="counter_no_pics" class="dimtext">0 points loaded</div> -->
 			<a href="#" onclick="return false;">
-				<div id="pictures" class="togglebutton" title="Toggle POIs with Pictures" onclick="toggle()">
-					<img id="picsicon" class="nopics" src="icons/camera-no.svg">
-					<div id="counter_display" class="dimtext">0</div>
+				<div id="pictures" class="togglebutton" title="Toggle POIs with Pictures" onclick="toggle()" accesskey="s">
+					<img id="picsicon" class="yespics" src="icons/camera-no.svg">
+					<div id="counter_display" class="brighttext">0</div>
 				</div>
 			</a>
 		</div>
@@ -77,8 +77,8 @@
 		<script src="mapcode.js"></script>
 		<script>
 			function toggle() {
-				$('img.nopics').toggleClass('yespics');
-				$('div.dimtext').toggleClass('brighttext');
+				$('img.yespics').toggleClass('nopics');
+				$('div.brighttext').toggleClass('dimtext');
 			}
 			
 			function togglelinks() {
