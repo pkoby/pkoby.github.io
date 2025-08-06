@@ -118,5 +118,9 @@ button {
 }
 
 .marker-cluster span, .pic-cluster span {
-	line-height: 20px !important;
+	line-height: 22px !important;
+}
+
+#counter_display {
+	bottom: 16px !important;
 }
