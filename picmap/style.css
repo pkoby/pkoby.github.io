@@ -105,7 +105,7 @@ button {
 #counter_display {
 	position: relative;
 	z-index: 1000;
-	bottom: 19px;
+	bottom: 18px;
 	right: 0;
 	font-family: roboto-medium;
 	font-size: 8pt;
@@ -205,7 +205,7 @@ button {
 	text-align: center;
 	color: white;
 	font-size: 12px;
-	min-width: 150px;
+	min-width: 157px;
 	width: fit-content !important;
 }
 
@@ -274,6 +274,7 @@ button {
 	font-weight: bold;
 	font-size: 1em;
 	text-transform: capitalize;
+	color: #aaa;
 }
 
 hr {
@@ -284,15 +285,23 @@ hr {
 }
 
 .linktext {
-	margin-top: 10px;
+	margin-top: 5px;
 /*	font-size: 80%;*/
 	color: #3c3c3c!important;
 	text-shadow: 1px 1px #4e4e4e !important;
+	line-height: 20px;
 }
 
 .linktext a {
 	text-decoration: none;
 	color: #c4f !important;
+}
+
+.linktext img {
+	max-height: 18px;
+	margin: -1px 0 -5px 0;
+	border-radius: 0;
+	display: inline-block;
 }
 
 /*.popup_image {
@@ -515,7 +524,7 @@ hr {
 }
 
 .invalid {
-	color: #fa0;
+	color: #fa0 !important;
 	font-variant: small-caps;
 	font-weight: bold;
 }
