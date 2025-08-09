@@ -109,11 +109,21 @@ button {
 	right: 0;
 	font-family: roboto-medium;
 	font-size: 8pt;
+	color: #527;
+}
+#counter_display div {
+	display: inline-block;
 }
 .brighttext {
 	color: #fff;
 }
+.lighttext {
+	color: #fff !important;
+}
 .dimtext {
+	color: #527 !important;
+}
+.darktext {
 	color: #527;
 }
 

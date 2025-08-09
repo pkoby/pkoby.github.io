@@ -69,7 +69,8 @@ const poiClustersI= new L.markerClusterGroup({
 
 let counterPics = 0;
 let counterNoPics = 0;
-let counter_div = document.getElementById("counter_display");
+let counter_1_div = document.getElementById("count1");
+let counter_2_div = document.getElementById("count2");
 
 let artwork_icon_n,attraction_icon_n,bench_icon_n,bookcase_icon_n,bridge_icon_n,bike_rental_icon_n,castle_icon_n,cemetery_icon_n,church_icon_n,defibrillator_icon_n,globe_icon_n,information_icon_n,landmark_icon_n,library_icon_n,memorial_icon_n,monument_icon_n,mosque_icon_n,museum_icon_n,obelisk_icon_n,plaque_icon_n,ruins_icon_n,school_icon_n,shrine_icon_n,statue_icon_n,synagogue_icon_n,temple_icon_n,viewpoint_icon_n,village_icon_n,
 	artwork_icon_w,attraction_icon_w,bench_icon_w,bookcase_icon_w,bridge_icon_w,bike_rental_icon_w,castle_icon_w,cemetery_icon_w,church_icon_w,defibrillator_icon_w,globe_icon_w,information_icon_w,landmark_icon_w,library_icon_w,memorial_icon_w,monument_icon_w,mosque_icon_w,museum_icon_w,obelisk_icon_w,plaque_icon_w,ruins_icon_w,school_icon_w,shrine_icon_w,statue_icon_w,synagogue_icon_w,temple_icon_w,viewpoint_icon_w,village_icon_w,
@@ -121,10 +122,14 @@ document.getElementById('zoomout').addEventListener('click', function () {
 document.getElementById('pictures').addEventListener('click', togglePictures);
 
 function togglePictures() {
-	while (counter_div.hasChildNodes()) {
-		counter_div.removeChild(counter_div.lastChild);
+	while (counter_1_div.hasChildNodes()) {
+		counter_1_div.removeChild(counter_1_div.lastChild);
 	}
-	var new_span = document.createElement('span');
+	while (counter_2_div.hasChildNodes()) {
+		counter_2_div.removeChild(counter_2_div.lastChild);
+	}
+	var new_span_pics = document.createElement('span');
+	var new_span_no_pics = document.createElement('span');
 	if (map.hasLayer(noPicLayer)) {
 		map.removeLayer(noPicLayer);
 		map.addLayer(picLayer);
@@ -141,11 +146,15 @@ function togglePictures() {
 		map.addLayer(noPicLayer);
 	}
 	if (map.hasLayer(noPicLayer)) {
-		new_span.innerHTML = counterNoPics;
-		counter_div.appendChild(new_span);
+		new_span_pics.innerHTML = counterPics;
+		new_span_no_pics.innerHTML = counterNoPics;
+		counter_1_div.appendChild(new_span_no_pics);
+		counter_2_div.appendChild(new_span_pics);
 	} else {
-		new_span.innerHTML = counterPics;
-		counter_div.appendChild(new_span);
+		new_span_pics.innerHTML = counterPics;
+		new_span_no_pics.innerHTML = counterNoPics;
+		counter_1_div.appendChild(new_span_pics);
+		counter_2_div.appendChild(new_span_no_pics);
 	}
 }
 
@@ -1111,16 +1120,24 @@ function element_to_map(data) {
 	map.removeLayer(loadingOverlay);
 	loadingText.setContent('');
 
-	while (counter_div.hasChildNodes()) {
-		counter_div.removeChild(counter_div.lastChild);
+	while (counter_1_div.hasChildNodes()) {
+		counter_1_div.removeChild(counter_1_div.lastChild);
 	}
-	var new_span = document.createElement('span');
+	while (counter_2_div.hasChildNodes()) {
+		counter_2_div.removeChild(counter_2_div.lastChild);
+	}
+	var new_span_pics = document.createElement('span');
+	var new_span_no_pics = document.createElement('span');
 	if (map.hasLayer(picLayer)) {
-		new_span.innerHTML = counterPics;
-		counter_div.appendChild(new_span);
+		new_span_pics.innerHTML = counterPics;
+		new_span_no_pics.innerHTML = counterNoPics;
+		counter_1_div.appendChild(new_span_pics);
+		counter_2_div.appendChild(new_span_no_pics);
 	} else {
-		new_span.innerHTML = counterNoPics;
-		counter_div.appendChild(new_span);
+		new_span_pics.innerHTML = counterPics;
+		new_span_no_pics.innerHTML = counterNoPics;
+		counter_1_div.appendChild(new_span_no_pics);
+		counter_2_div.appendChild(new_span_pics);
 	}
 }
 
@@ -1141,7 +1158,7 @@ function downloadData() {
 	$.ajax({
 		url: "https://overpass-api.de/api/interpreter",
 		data: {
-			"data": '[bbox:'+bbox+'][out:json][timeout:25];(nwr["tourism"="information"]["information"="board"];nwr["tourism"~"attraction|viewpoint|museum"];nwr["tourism"="artwork"];nwr["historic"]["historic"!~"district|cemetery|place|milestone"][!"demolished:building"];nwr["building"~"temple|church|synagogue|mosque"];nwr["amenity"~"^library$|bicycle_rental|public_bookcase"];nwr["emergency"="defibrillator"];nwr["man_made"="bridge"]["name"];);out body center; >; out skel qt;'
+			"data": '[bbox:'+bbox+'][out:json][timeout:25];(nwr["tourism"="information"]["information"="board"];nwr["tourism"~"attraction|viewpoint|museum"];nwr["tourism"="artwork"];nwr["historic"]["historic"!~"district|cemetery|place|milestone"][!"demolished:building"];nwr["building"~"temple|church|synagogue|mosque"];nwr["amenity"~"^library$|bicycle_rental"];nwr["emergency"="defibrillator"];nwr["man_made"="bridge"]["name"];);out body center; >; out skel qt;'
 		},
 		success: element_to_map,
 		// error: error_function,
