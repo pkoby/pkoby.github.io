@@ -439,10 +439,10 @@ function setPoiMarker(poi_type, icon_name, lat, lon, tags, osmid, osmtype) {
 				var array = tags.panoramax.split(';');
 				var j = tags.panoramax.split(';').length;
 				var link = getPxLink(array[0]);
-				popup_content += "<br/><a href='"+link+"' class='panoramax' target='_blank'><img class='logo' src='icons/PanoramaxLogo.jpg' title='Panoramax'> Panoramax</a>";
+				popup_content += "<br/><a href='"+link+"' class='panoramax' target='_blank'><img class='logo' src='icons/PanoramaxLogo.jpg' title='Panoramax'> Panoramax</a><br/>";
 			} else {
 				var link = getPxLink(tags.panoramax);
-				popup_content += "<br/><a href='"+link+"' class='panoramax' target='_blank'><img class='logo' src='icons/PanoramaxLogo.jpg' title='Panoramax'> Panoramax</a>";
+				popup_content += "<br/><a href='"+link+"' class='panoramax' target='_blank'><img class='logo' src='icons/PanoramaxLogo.jpg' title='Panoramax'> Panoramax</a><br/>";
 			}
 			if (tags.mapillary != null) {
 				popup_content += " | <a href='"+getMLLink(tags.mapillary)+"' class='mapillary' target='_blank'><img class='logo' src='icons/MapillaryLogo.svg' title='Mapillary'> Mapillary</a><br/>";
@@ -1129,13 +1129,29 @@ function element_to_map(data) {
 	var new_span_pics = document.createElement('span');
 	var new_span_no_pics = document.createElement('span');
 	if (map.hasLayer(picLayer)) {
-		new_span_pics.innerHTML = counterPics;
-		new_span_no_pics.innerHTML = counterNoPics;
+		if (counterPics>999 || counterNoPics>999) {
+			new_span_pics.innerHTML = "<span style='font-size: 5pt;'>"+counterPics+"</span>";
+			new_span_no_pics.innerHTML = "<span style='font-size: 5pt;'>"+counterNoPics+"</span>";
+		} else if (counterPics>99 || counterNoPics>99) {
+			new_span_pics.innerHTML = "<span style='font-size: 7pt;'>"+counterPics+"</span>";
+			new_span_no_pics.innerHTML = "<span style='font-size: 7pt;'>"+counterNoPics+"</span>";
+		} else {
+			new_span_pics.innerHTML = counterPics;
+			new_span_no_pics.innerHTML = counterNoPics;
+		}
 		counter_1_div.appendChild(new_span_pics);
 		counter_2_div.appendChild(new_span_no_pics);
 	} else {
-		new_span_pics.innerHTML = counterPics;
-		new_span_no_pics.innerHTML = counterNoPics;
+		if (counterPics>999 || counterNoPics>999) {
+			new_span_pics.innerHTML = "<span style='font-size: 5pt;'>"+counterPics+"</span>";
+			new_span_no_pics.innerHTML = "<span style='font-size: 5pt;'>"+counterNoPics+"</span>";
+		} else if (counterPics>99 || counterNoPics>99) {
+			new_span_pics.innerHTML = "<span style='font-size: 7pt;'>"+counterPics+"</span>";
+			new_span_no_pics.innerHTML = "<span style='font-size: 7pt;'>"+counterNoPics+"</span>";
+		} else {
+			new_span_pics.innerHTML = counterPics;
+			new_span_no_pics.innerHTML = counterNoPics;
+		}
 		counter_1_div.appendChild(new_span_no_pics);
 		counter_2_div.appendChild(new_span_pics);
 	}
