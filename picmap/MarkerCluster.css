@@ -3,28 +3,13 @@
 		src: local(roboto-medium), url('Roboto-Medium.ttf') format('opentype');
 }
 
-.pic-cluster div {
-	background-color: #fff;
-	/*opacity: 0.7;*/
-	border: 1px solid #333;
-	color: #555;
-	}
-
-.marker-cluster div {
-	background-color: #555;
-	/*opacity: 0.7;*/
-	border: 1px solid #333;
-	color: #fff;
-	}
-}
-
 .marker-cluster, .pic-cluster {
 	background-clip: padding-box;
 	border-radius: 20px;
 	z-index: 1000;
-	}
+}
 
-.marker-cluster div {
+.marker-cluster div, .pic-cluster div, .c-cluster div, .p-cluster div, .m-cluster div, .i-cluster div {
 	width: 18px;
 	height: 18px;
 	margin-left: 5px;
@@ -34,17 +19,39 @@
 	font-family: roboto-medium;
 	font-size: 8pt;
 }
-.pic-cluster div {
-	width: 18px;
-	height: 18px;
-	margin-left: -5px;
-	margin-top: -5px;
-	text-align: center;
-	border-radius: 18px;
-	font-family: roboto-medium;
-	font-size: 8pt;
+
+.marker-cluster div {
+	background-color: #555;
+	border: 1px solid #333;
+	color: #fff;
 }
-.marker-cluster span, .pic-cluster span {
+.pic-cluster div {
+	background-color: #fff;
+	border: 1px solid #333;
+	color: #555;
+}
+.c-cluster div {
+	background-color: #bb4444;
+	border: 1px solid #333;
+	color: #fff;
+}
+.p-cluster div {
+	background-color: #2288ee;
+	border: 1px solid #333;
+	color: #fff;
+}
+.m-cluster div {
+	background-color: #22aa55ff;
+	border: 1px solid #333;
+	color: #fff;
+}
+.i-cluster div {
+	background-color: #9966ddff;
+	border: 1px solid #333;
+	color: #fff;
+}
+
+.marker-cluster span, .pic-cluster span, .c-cluster span, .p-cluster span, .m-cluster span, .i-cluster span {
 	line-height: 18px;
 }
 .pic-cluster span {
