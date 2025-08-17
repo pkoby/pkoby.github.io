@@ -9,11 +9,22 @@
 	z-index: 1000;
 }
 
-.marker-cluster div, .pic-cluster div, .c-cluster div, .p-cluster div, .m-cluster div, .i-cluster div {
+.marker-cluster div {
 	width: 18px;
 	height: 18px;
-	margin-left: 5px;
-	margin-top: 5px;
+	margin-left: 10px;
+	margin-top: 10px;
+	text-align: center;
+	border-radius: 18px;
+	font-family: roboto-medium;
+	font-size: 8pt;
+}
+
+.pic-cluster div, .c-cluster div, .p-cluster div, .m-cluster div, .i-cluster div, .w-cluster div {
+	width: 18px;
+	height: 18px;
+	margin-left: -4px;
+	margin-top: -4px;
 	text-align: center;
 	border-radius: 18px;
 	font-family: roboto-medium;
@@ -46,12 +57,17 @@
 	color: #fff;
 }
 .i-cluster div {
-	background-color: #9966ddff;
+	background-color: #9966dd;
+	border: 1px solid #333;
+	color: #fff;
+}
+.w-cluster div {
+	background-color: #aa7777;
 	border: 1px solid #333;
 	color: #fff;
 }
 
-.marker-cluster span, .pic-cluster span, .c-cluster span, .p-cluster span, .m-cluster span, .i-cluster span {
+.marker-cluster span, .pic-cluster span, .c-cluster span, .p-cluster span, .m-cluster span, .i-cluster span, .w-cluster span {
 	line-height: 18px;
 }
 .pic-cluster span {

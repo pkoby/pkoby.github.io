@@ -537,8 +537,7 @@ hr {
 }
 
 .invalid {
-	color: #fa0 !important;
-	font-variant: small-caps;
+	color: #f70 !important;
 	font-weight: bold;
 }
 
@@ -605,4 +604,7 @@ hr {
 	color: #05cb63 !important;
 	text-decoration: none;
 	line-height: 24px;
+}
+.search {
+	display: block;
 }
