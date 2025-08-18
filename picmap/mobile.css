@@ -117,7 +117,7 @@ button {
 	border-radius: 5px 0 0 5px;
 }
 
-.marker-cluster span, .pic-cluster span, .c-cluster span, .p-cluster span, .m-cluster span, .i-cluster span {
+.marker-cluster span, .pic-cluster span, .c-cluster span, .p-cluster span, .m-cluster span, .i-cluster span, .2-cluster span {
 	line-height: 21px !important;
 }
 
