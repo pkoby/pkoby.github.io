@@ -1285,7 +1285,9 @@ function downloadData() {
 			"data": '[bbox:'+bbox+'][out:json][timeout:25];(nwr["tourism"="information"]["information"~"board|map"];nwr["tourism"~"attraction|viewpoint|museum"];nwr["tourism"="artwork"];nwr["historic"]["historic"!~"district|cemetery|place|milestone"][!"demolished:building"];nwr["building"~"temple|church|synagogue|mosque"];nwr["amenity"~"^library$|bicycle_rental|public_bookcase"];nwr["emergency"="defibrillator"];nwr["man_made"="bridge"]["name"];nwr["natural"="cave_entrance"];);out body center; >; out skel qt;'
 		},
 		success: element_to_map,
-		// error: error_function,
+		error: function(xhr, status, errorThrown){
+			loadingText.setContent('Error, '+errorThrown)
+		},
 	});
 
 	if (map.hasLayer(bboxOutline)) {
@@ -1298,8 +1300,8 @@ function downloadData() {
 	bboxOutline = L.polygon([[[90, -180],[90, 180],[-90, 180],[-90, -180]],[[northWest.lat,northWest.lng],[northEast.lat,northEast.lng],[southEast.lat,southEast.lng],[southWest.lat,southWest.lng]]],{color: '#aaaaaa', fillColor: '#aaaaaa', fillOpacity: 0.3, weight: 1, dashArray: '1,3',}).addTo(map);
 }
 
-function error_function() {
-	loadingText.setContent('Error, try again')
+function error_function(error) {
+	loadingText.setContent('Error, try again'+error)
 }
 
 $(function() {
