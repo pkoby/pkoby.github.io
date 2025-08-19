@@ -559,7 +559,8 @@ hr {
 .image {
 	position: relative;
 	display: block;
-	margin-top: 5px;
+	margin: 5px auto;
+	width: fit-content;
 }
 
 .badge {
@@ -582,6 +583,7 @@ hr {
 	max-height: 14px;
 	position: relative;
 	top: 4px;
+	right: 2px;
 }
 
 .categoryLogo {
