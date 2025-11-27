@@ -20,7 +20,7 @@ var poiClusters = new L.markerClusterGroup({
 	// }
 });
 
-var bench_dot,bench_dot_unk,
+var bench_dot,bench_dot_insc,bench_dot_unk,
 	// picnic_table_dot,picnic_table_dot_unk,
 	yab_icon,yb_na_icon,ya_nb_icon,nab_icon,yb_ua_icon,nb_ua_icon,ya_ub_icon,na_ub_icon,uab_icon,
 	yab_icon_red,yb_na_icon_red,ya_nb_icon_red,nab_icon_red,yb_ua_icon_red,nb_ua_icon_red,ya_ub_icon_red,na_ub_icon_red,uab_icon_red,
@@ -276,13 +276,13 @@ function setDotMarker(poi_type, icon, lat, lon, tags, osmid, osmtype) {
 
 	if (tags.backrest == 'no' && tags.direction != undefined && tags.amenity == 'bench') {
 		if (tags.direction >= 180) {
-			popup_content += "<br/>Facing: "+directionParser(tags.direction)+"/"+directionParser(Number(tags.direction)-180);
+			popup_content += "<br/>Facing "+directionParser(tags.direction)+"/"+directionParser(Number(tags.direction)-180);
 		} else if (tags.direction < 180) {
-			popup_content += "<br/>Facing: "+directionParser(tags.direction)+"/"+directionParser(Number(tags.direction)+180);
+			popup_content += "<br/>Facing "+directionParser(tags.direction)+"/"+directionParser(Number(tags.direction)+180);
 		}
 	} else 
 	if (tags.direction != undefined && tags.amenity == 'bench') {
-		popup_content += "<br/>Facing: "+directionParser(tags.direction);
+		popup_content += "<br/>Facing "+directionParser(tags.direction);
 	}
 
 	if (tags.seats != undefined && tags.amenity == 'bench') {
@@ -355,29 +355,29 @@ function getPxLink(tagPanoramax) {
 function inscriptionParser(inscription) {
 	var slashN = inscription.replace(/\\n/g, "<br/>");
 	var slashNspaces = slashN.replace(/ \\n /g, "<br/>");
-	var doubleSlash = slashNspaces.replace(/ \/\/ /g, "<br/><br/>");
-	var semiColon = doubleSlash.replace(/ \; /g, "</div><br/><div class='inscription'>");
+	var doubleSlash = slashNspaces.replace(/ \/\/ /g, "<br class='thiccbreak'/>");
+	var semiColon = doubleSlash.replace(/ \; /g, "</div><div class='inscription'>");
 	var tab = semiColon.replace(/ \\t /g, "<pre>\t</pre>");
 	return tab.replace(/ \/ /g,"<br/>");
 }
 
 function directionParser(direction) {
 	if (direction >= 337.5 || direction < 22.5) {
-			return "North";
+			return "N";
 	} else if (direction >= 22.5 && direction < 67.5) {
-			return "Northeast";
+			return "NE";
 	} else if (direction >= 67.5 && direction < 112.5) {
-			return "East";
+			return "E";
 	} else if (direction >= 112.5 && direction < 157.5) {
-			return "Southeast";
+			return "SE";
 	} else if (direction >= 157.5 && direction < 202.5) {
-			return "South";
+			return "S";
 	} else if (direction >= 202.5 && direction < 247.5) {
-			return "Southwest";
+			return "SW";
 	} else if (direction >= 247.5 && direction < 292.5) {
-			return "West";
+			return "W";
 	} else if (direction >= 292.5 && direction < 337.5) {
-			return "Northwest";
+			return "NW";
 	}
 }
 
@@ -483,13 +483,13 @@ function setPoiMarker(poi_type, icon_name, lat, lon, tags, osmid, osmtype) {
 
 	if (tags.backrest == 'no' && tags.direction != undefined && tags.amenity == 'bench') {
 		if (tags.direction >= 180) {
-			popup_content += "<br/>Facing: "+directionParser(tags.direction)+"/"+directionParser(Number(tags.direction)-180);
+			popup_content += "<br/>Facing "+directionParser(tags.direction)+"/"+directionParser(Number(tags.direction)-180);
 		} else if (tags.direction < 180) {
-			popup_content += "<br/>Facing: "+directionParser(tags.direction)+"/"+directionParser(Number(tags.direction)+180);
+			popup_content += "<br/>Facing "+directionParser(tags.direction)+"/"+directionParser(Number(tags.direction)+180);
 		}
 	} else 
 	if (tags.direction != undefined && tags.amenity == 'bench') {
-		popup_content += "<br/>Facing: "+directionParser(tags.direction);
+		popup_content += "<br/>Facing "+directionParser(tags.direction);
 	}
 
 	if (tags.seats != undefined && tags.amenity == 'bench') {
@@ -561,7 +561,9 @@ function element_to_map(data) {
 			// 	}
 			// } else 
 			if (el.tags.amenity == 'bench') {
-				if (el.tags.inscription != null) {
+				if ((el.tags.inscription != undefined && el.tags.inscription != 'no' && el.tags.inscription != 'No' && el.tags.inscription != 'NO') || (el.tags["inscription:1"] != undefined && el.tags["inscription:1"] != 'no'&& el.tags["inscription:1"] != 'No'&& el.tags["inscription:1"] != 'NO')) {
+					setDotMarker("", bench_dot_insc, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.inscription != undefined && (el.tags.inscription == 'no' || el.tags.inscription == 'No' || el.tags.inscription == 'NO')) || (el.tags["inscription:1"] != undefined && (el.tags["inscription:1"] == 'no'|| el.tags["inscription:1"] == 'No' || el.tags["inscription:1"] == 'NO'))) {
 					setDotMarker("", bench_dot, el.lat, el.lon, el.tags, el.id, el.type);
 				} else {
 					setDotMarker("", bench_dot_unk, el.lat, el.lon, el.tags, el.id, el.type);
@@ -822,7 +824,10 @@ function downloadData() {
 			"data": '[bbox:'+bbox+'][out:json][timeout:25];(nwr[amenity=bench];);out body center; >; out skel qt;' //nwr[leisure=picnic_table];
 		},
 		success: element_to_map,
-		error: error_function,
+		error: function(xhr, status, errorThrown){
+			loadingText.setContent('<span id="error">Error '+xhr.status+', '+errorThrown+'; Try Again</span>');
+			document.getElementById('error').addEventListener('click', downloadData);
+		},
 	});
 
 	if (map.hasLayer(bboxOutline)) {
@@ -835,13 +840,16 @@ function downloadData() {
 	bboxOutline = L.polygon([[[90, -180],[90, 180],[-90, 180],[-90, -180]],[[northWest.lat,northWest.lng],[northEast.lat,northEast.lng],[southEast.lat,southEast.lng],[southWest.lat,southWest.lng]]],{color: '#aaaaaa', fillColor: '#aaaaaa', fillOpacity: 0.3, weight: 1, dashArray: '1,3',}).addTo(map);
 }
 
-function error_function() {
-	loadingText.setContent('Error, try again')
-}
-
 $(function() {
 	bench_dot = L.icon({
 		iconUrl: 'icons/bench_dot.svg',
+		iconSize: [8,8],
+		className: 'pointIcon',
+		iconAnchor: [4,4],
+		popupAnchor: [0,-14],
+	});
+	bench_dot_insc = L.icon({
+		iconUrl: 'icons/bench_dot_insc.svg',
 		iconSize: [8,8],
 		className: 'pointIcon',
 		iconAnchor: [4,4],
