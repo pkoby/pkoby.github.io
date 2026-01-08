@@ -355,9 +355,9 @@ function getPxLink(tagPanoramax) {
 function inscriptionParser(inscription) {
 	var slashN = inscription.replace(/\\n/g, "<br/>");
 	var slashNspaces = slashN.replace(/ \\n /g, "<br/>");
-	var doubleSlash = slashNspaces.replace(/ \/\/ /g, "<br class='thiccbreak'/>");
+	var doubleSlash = slashNspaces.replace(/ \/\/ /g, "<br/><p class='thiccbreak'></p>");
 	var semiColon = doubleSlash.replace(/ \; /g, "</div><div class='inscription'>");
-	var tab = semiColon.replace(/ \\t /g, "<pre>\t</pre>");
+	var tab = semiColon.replace(/ \\t /g, "<pre>\t\t</pre>");
 	return tab.replace(/ \/ /g,"<br/>");
 }
 

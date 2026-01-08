@@ -707,13 +707,13 @@ text-align: right;
 }
 
 .inscription {
-	background-color: #c94;
+	background-color: #eb7;
 	color: #111;
 	padding: 5px 15px 5px 15px;
 	border-radius: 2px;
 	box-shadow: 2px 2px 2px black;
 	position: relative;
-	text-shadow: 0px 1px 0px #fc7;
+	text-shadow: 0px 1px 0px #ffd;
 	font-family: fontin-bold;
 	margin-bottom: 8px;
 	display: block;
@@ -723,8 +723,8 @@ pre {
 	display: inline;
 }
 
-br.thiccbreak {
-	line-height: 2.4;
+p.thiccbreak {
+	margin: 12px 0;
 }
 /*br.thinbreak {
 	line-height: 0;
