@@ -1284,7 +1284,7 @@ function downloadData() {
 		},
 		success: element_to_map,
 		error: function(xhr, status, errorThrown){
-			loadingText.setContent('<span id="error">Error '+xhr.status+', '+errorThrown+'; Try Again</span>');
+			loadingText.setContent('<span id="error">Error '+xhr.status+', '+errorThrown+'; Try&nbsp;Again</span>');
 			document.getElementById('error').addEventListener('click', downloadData);
 		},
 	});
