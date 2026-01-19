@@ -127,8 +127,8 @@ function togglePictures() {
 			new_span_pics.innerHTML = counterPics;
 			new_span_no_pics.innerHTML = counterNoPics;
 		}
-		counter_1_div.appendChild(new_span_no_pics);
-		counter_2_div.appendChild(new_span_pics);
+		counter_1_div.appendChild(new_span_pics);
+		counter_2_div.appendChild(new_span_no_pics);
 	} else {
 		if (counterPics>999 || counterNoPics>999) {
 			new_span_pics.innerHTML = "<span style='font-size: 5pt;'>"+counterPics+"</span>";
@@ -1258,8 +1258,8 @@ function element_to_map(data) {
 			new_span_pics.innerHTML = counterPics;
 			new_span_no_pics.innerHTML = counterNoPics;
 		}
-		counter_1_div.appendChild(new_span_no_pics);
-		counter_2_div.appendChild(new_span_pics);
+		counter_1_div.appendChild(new_span_pics);
+		counter_2_div.appendChild(new_span_no_pics);
 	}
 }
 
@@ -1278,7 +1278,7 @@ function downloadData() {
 	localStorage.setItem("pos_lat", map.getCenter().lat)
 	localStorage.setItem("pos_lon", map.getCenter().lng)
 	$.ajax({
-		url: "https://overpass-api.de/api/interpreter",
+		url: "https://overpass.private.coffee/api/interpreter",
 		data: {
 			"data": '[bbox:'+bbox+'][out:json][timeout:25];(nwr["tourism"="information"]["information"~"board|map"];nwr["tourism"~"attraction|viewpoint|museum"];nwr["tourism"="artwork"];nwr["historic"]["historic"!~"district|cemetery|place|milestone"][!"demolished:building"];nwr["building"~"temple|church|synagogue|mosque"];nwr["amenity"~"^library$|bicycle_rental|public_bookcase"];nwr["emergency"="defibrillator"];nwr["man_made"="bridge"]["name"];nwr["natural"="cave_entrance"];);out body center; >; out skel qt;'
 		},

@@ -116,6 +116,7 @@ button {
 }
 .brighttext {
 	color: #fff;
+	text-decoration: underline dotted;
 }
 .lighttext {
 	color: #fff !important;
@@ -125,6 +126,13 @@ button {
 }
 .darktext {
 	color: #527;
+}
+.nounderline {
+	text-shadow: none;
+	text-decoration: none;
+}
+.underlinetext {
+	text-decoration: underline dotted;
 }
 
 .hidden {
