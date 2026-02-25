@@ -71,6 +71,52 @@ button {
 	top: 190px;
 	border-radius: 8px 0 0 8px;
 }
+#infoButton {
+	position: absolute;
+	bottom: 86px;
+	border-radius: 8px 0 0 8px;
+	background-image: url(icons/info_board_white.svg);
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: 19px;
+}
+
+#infoBox {
+	position: fixed;
+	/*display: none;*/
+	/*width: 400px;*/
+	/*height: 500px;*/
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	padding: 2em;
+	/*height: 80%;*/
+	z-index: 10000;
+	background-color: #444;
+	color: #fff;
+	border-radius: 8px;
+	opacity: 0.9;
+	font-family: roboto-medium;
+	font-size: 0.8em;
+	overflow-y: scroll;
+	line-height: 1.2em;
+} #infoBox h2, h3 {
+	text-align: center;
+	font-family: fontin;
+	line-height: 26px;
+	margin-bottom: 15px;
+}
+
+.lineitem {
+	padding: 0 0 0.5em 1.5em;
+    text-indent: -1.5em;
+    display: block;
+}.lineitem img {
+	position: relative;
+	top: 1px;
+	right: 5px;
+}
+
 #picsicon{
 	padding: 13px;
 	margin-top: -5px;
@@ -118,11 +164,11 @@ button {
 	color: #fff;
 	text-decoration: underline dotted;
 }
-.lighttext {
-	color: #fff !important;
+.divider {
+	color: #fff;
 }
-.dimtext {
-	color: #527 !important;
+.darkdivider {
+	color: #527;
 }
 .darktext {
 	color: #527;
@@ -561,7 +607,17 @@ hr {
 	background-color: #424;
 	padding: 2px;
 	border-radius: 3px;
-	display: inline-block;
+	/*display: inline-block;*/
+	opacity: 0.9;
+}
+
+.dismiss {
+	font-size: 0.7em;
+	text-align: center;
+	color: #fff;
+	position: absolute;
+	left: 44%;
+	bottom: 10px;
 }
 
 .image {
@@ -625,4 +681,8 @@ hr {
 }
 .search {
 	display: block;
+}
+
+.tryagain {
+	text-decoration: underline dotted;
 }
