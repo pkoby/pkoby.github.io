@@ -84,7 +84,7 @@ button {
 #infoBox {
 	position: fixed;
 	/*display: none;*/
-	/*width: 400px;*/
+	max-width: 85%;
 	/*height: 500px;*/
 	top: 50%;
 	left: 50%;
@@ -98,7 +98,7 @@ button {
 	opacity: 0.9;
 	font-family: roboto-medium;
 	font-size: 0.8em;
-	overflow-y: scroll;
+	overflow: scroll;
 	line-height: 1.2em;
 } #infoBox h2, h3 {
 	text-align: center;
