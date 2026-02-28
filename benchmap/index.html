@@ -3,44 +3,30 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-		<link rel="shortcut icon" type="image/x-icon" href="icons/camera_purple.svg">
-		<link rel="icon" type="image/png" sizes="192x192" href="icons/pic_icon.png">
+		<link rel="shortcut icon" type="image/x-icon" href="icons/yab_icon.svg">
+		<link rel="icon" type="image/png" sizes="192x192" href="icons/bench_icon.png">
 		<link rel="stylesheet" href="leaflet.css" />
 		<link rel="stylesheet" href="MarkerCluster.css" />
 		<link rel="stylesheet" href="style.css" />
 		<link rel="stylesheet" href="mobile.css" media="screen and (max-width: 700px)" />
 		<script src="jquery-1.10.2.min.js"></script>	
 
-		<title>PicMap</title>
-
+		<title>BenchMap</title>
 		<script type="text/javascript">
 			function arta() {
 				var linkhash = window.location.hash;
 				var artstr = "../artmap/index.html" + linkhash;
 				document.getElementById("artlink").setAttribute("href",artstr);
 			}
-			function bencha() {
+			function pica() {
 				var linkhash = window.location.hash;
-				var benchstr = "../benchmap/index.html" + linkhash;
-				document.getElementById("benchlink").setAttribute("href",benchstr);
+				var picstr = "../picmap/index.html" + linkhash;
+				document.getElementById("piclink").setAttribute("href",picstr);
 			}
 			function lgbtqa() {
 				var linkhash = window.location.hash;
 				var lgbtqstr = "../LGBTQmap/index.html" + linkhash;
 				document.getElementById("lgbtqlink").setAttribute("href",lgbtqstr);
-			}
-
-			jQuery(function($) {
-				$(".infotoggle").click(function() {
-					$("#infoBox").toggleClass("hidden show")
-					console.log('click');
-				});
-			});
-
-			function hideInfo() {
-				if ($("#infoBox").hasClass("show")) {
-					$("#infoBox").toggleClass("hidden show")
-				}
 			}
 		</script>
 	</head>
@@ -56,17 +42,7 @@
 				<div id="locater" class="linkbutton" title="Locate Me" accesskey="w"></div>
 			</a>
 			<a href="#" onclick="return false;">
-				<div id="loaddata" class="loadbutton" title="Search for Places in View" accesskey="f" onclick="hideInfo()"><img id="loadicon" src="icons/refresh.svg"></div>
-			<a href="#" onclick="return false;">
-				<div id="infoButton" class="infotoggle" title="Info"></div>
-			</a>
-			</a>
-			<!-- <div id="counter_no_pics" class="dimtext">0 points loaded</div> -->
-			<a href="#" onclick="return false;">
-				<div id="pictures" class="togglebutton" title="Toggle POIs with Pictures" onclick="toggle()" accesskey="s">
-					<img id="picsicon" class="yespics" src="icons/camera-no.svg">
-					<div id="counter_display"><span id="count1" class="brighttext">0</span><span class="divider">&thinsp;|&thinsp;</span><span id="count2" class="darktext">0</span></div>
-				</div>
+				<div id="loaddata" class="loadbutton" title="Search for Places in View" accesskey="f"><img id="loadicon" src="icons/refresh.svg"></div>
 			</a>
 		</div>
 
@@ -74,57 +50,24 @@
 		<div id="linksdiv" onclick="togglelinks()" style="display: none;">
 			<div id="closebutton">×</div>
 			<a id="artlink" onclick="arta()" target="_blank">ArtMap</a><br/>
-			<a id="benchlink" onclick="bencha()" target="_blank">BenchMap</a><br/>
+			<a id="piclink" onclick="pica()" target="_blank">PicMap</a><br/>
 			<a id="lgbtqlink" onclick="lgbtqa()" target="_blank">LGBTQ+map</a>
 		</div>
 
 		<div id="topbar">
-			<!-- <span id="logo">🖼️</span> -->
-			<span id="title">PicMap</span>
+			<span id="logo"><img src="icons/yb_na_icon.svg"></span>
+			<span id="title">BenchMap</span>
 		</div>
 
-		<div id="bigmap" onclick="hideInfo()"></div>
-
-		<div id="infoBox" class="hidden" onclick="hideInfo()">
-			<h2>What features are shown?</h2>
-			<ul>
-				<li class="lineitem"><img src="icons/information_purple.svg">Information Boards (<span class="code">tourism=information</span> + <span class="code">information=board</span>; displays <span class="code">board:title</span>, not <span class="code">name</span>)</li>
-				<li class="lineitem"><img src="icons/globe_purple.svg">Maps (<span class="code">tourism=information</span> + <span class="code">information=map</span>)</li>
-				<li class="lineitem"><img src="icons/camera_purple.svg">Attractions (<span class="code">tourism=attraction</span>)</li>
-				<li class="lineitem"><img src="icons/viewpoint_purple.svg">Viewpoints (<span class="code">tourism=viewpoint</span>)</li>
-				<li class="lineitem"><img src="icons/museum_purple.svg">Museums (<span class="code">tourism=museum</span>)</li>
-				<li class="lineitem"><img src="icons/artwork_purple.svg"><img src="icons/statue_purple.svg">Artwork (<span class="code">tourism=artwork</span>; warns about creation date after 1978, per US copyright law)</li>
-				<li class="lineitem"><img src="icons/castle_purple.svg"><img src="icons/cemetery_purple.svg"><img src="icons/ruins_purple.svg"><img src="icons/obelisk_purple.svg"><img src="icons/plaque_purple.svg"><img src="icons/memorial_bench_purple.svg"><img src="icons/memorial_purple.svg"><img src="icons/monument_purple.svg"><img src="icons/village_purple.svg"><img src="icons/shrine_purple.svg">Historic Features (<span class="code">historic=*</span>; does not show <span class="code">historic=district</span>, <span class="code">=cemetery</span>, <span class="code">=place</span>, <span class="code">=milestone</span>, or <span class="code">demolished:building=*</span>)</li>
-				<li class="lineitem"><img src="icons/buddhist_purple.svg">Temples (<span class="code">building=temple</span>)</li>
-				<li class="lineitem"><img src="icons/cross_purple.svg">Churches (<span class="code">building=church</span>)</li>
-				<li class="lineitem"><img src="icons/jewish_purple.svg">Synagogues (<span class="code">building=synagogue</span>)</li>
-				<li class="lineitem"><img src="icons/muslim_purple.svg">Mosques (<span class="code">building=mosque</span>)</li>
-				<!-- <li class="lineitem"><img src="icons/school_purple.svg">Schools (<span class="code">building=school</span>)</li> -->
-				<li class="lineitem"><img src="icons/books_purple.svg">Libraries (<span class="code">amenity=library</span>)</li>
-				<li class="lineitem"><img src="icons/bicycle_rental_purple.svg">Bike Rental Stations (<span class="code">amenity=bicycle_rental</span>)</li>
-				<li class="lineitem"><img src="icons/bookcase_purple.svg">Public Bookcases (<span class="code">amenity=public_bookcase</span>)</li>
-				<li class="lineitem"><img src="icons/defibrillator_purple.svg">Defibrillators (<span class="code">emergency=defibrillator</span>)</li>
-				<li class="lineitem"><img src="icons/bridge_purple.svg">Bridges with Names (<span class="code">man_made=bridge</span> + <span class="code">name=*</span>)</li>
-				<li class="lineitem"><img src="icons/cave_purple.svg">Caves (<span class="code">natural=cave_entrance</span>)</li>
-				<li class="lineitem"><img src="icons/waterfall_purple.svg">Waterfalls (<span class="code">waterway=waterfall</span>)</li>
-			</ul>
-			<span class="dismiss">Tap to dismiss</span>
-		</div>
+		<div id="bigmap"></div>
 
 		<script src="leaflet.js"></script>
 		<script src="leaflet-hash.js"></script>
 		<script src="L.Control.Locate.min.js" charset="utf-8"></script>
 		<script src="leaflet.markercluster.js"></script>
-		<script language="JavaScript" src="md5.js"></script>
+		<script src="leaflet.rotatedMarker.js"></script>
 		<script src="mapcode.js"></script>
 		<script>
-			function toggle() {
-				$('img.yespics').toggleClass('nopics');
-				$('span.brighttext').toggleClass('nounderline');
-				$('span.darktext').toggleClass('underlinetext');
-				$('span.divider').toggleClass('darkdivider');
-			}
-			
 			function togglelinks() {
 				var div = document.getElementById("linksdiv");
 				var button = document.getElementById("linksbutton");
@@ -135,7 +78,7 @@
 					div.style.display = "none";
 					button.style.display = "block";
 				}
-			}
+			} 
 		</script>
 	</body>
 </html>
