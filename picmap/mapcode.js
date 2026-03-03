@@ -1083,7 +1083,7 @@ function element_to_map(data) {
 					counterNoPics++;
 				} else if (el.tags.waterway == 'waterfall') {
 					setPoiMarker("", waterfall_icon_w, el.lat, el.lon, el.tags, el.id, el.type);
-					counterPics++;
+					counterNoPics++;
 				} else if (el.tags.historic == 'tomb') {
 					setPoiMarker("", cemetery_icon_w, el.lat, el.lon, el.tags, el.id, el.type);
 					counterNoPics++;
@@ -1144,10 +1144,10 @@ function element_to_map(data) {
 					counterNoPics++;
 				} else if (el.tags.amenity == 'public_bookcase') {
 					setPoiMarker("", bookcase_icon_w, el.lat, el.lon, el.tags, el.id, el.type);
-					counterPics++;
+					counterNoPics++;
 				} else if (el.tags.amenity == 'give_box') {
 					setPoiMarker("", give_box_icon_w, el.lat, el.lon, el.tags, el.id, el.type);
-					counterPics++;
+					counterNoPics++;
 				} else if (el.tags.amenity == 'bicycle_rental') {
 					setPoiMarker("", bike_rental_icon_w, el.lat, el.lon, el.tags, el.id, el.type);
 					counterNoPics++;
@@ -1180,7 +1180,7 @@ function element_to_map(data) {
 					counterNoPics++;
 				} else if (el.tags.waterway == 'waterfall') {
 					setPoiMarker("", waterfall_icon_n, el.lat, el.lon, el.tags, el.id, el.type);
-					counterPics++;
+					counterNoPics++;
 				} else if (el.tags.historic == 'tomb') {
 					setPoiMarker("", cemetery_icon_n, el.lat, el.lon, el.tags, el.id, el.type);
 					counterNoPics++;
@@ -1241,10 +1241,10 @@ function element_to_map(data) {
 					counterNoPics++;
 				} else if (el.tags.amenity == 'public_bookcase') {
 					setPoiMarker("", bookcase_icon_n, el.lat, el.lon, el.tags, el.id, el.type);
-					counterPics++;
+					counterNoPics++;
 				} else if (el.tags.amenity == 'give_box') {
 					setPoiMarker("", give_box_icon_n, el.lat, el.lon, el.tags, el.id, el.type);
-					counterPics++;
+					counterNoPics++;
 				} else if (el.tags.amenity == 'bicycle_rental') {
 					setPoiMarker("", bike_rental_icon_n, el.lat, el.lon, el.tags, el.id, el.type);
 					counterNoPics++;
