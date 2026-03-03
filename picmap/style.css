@@ -145,7 +145,7 @@ button {
 	border-radius: 8px 0 0 8px;
 }
 .yespics {
-	content:url(icons/camera-yes.svg);
+	content:url(icons/camera_white.svg);
 }
 .nopics {
 	content:url(icons/camera-no.svg);
