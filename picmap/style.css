@@ -72,49 +72,52 @@ button {
 	border-radius: 8px 0 0 8px;
 }
 #infoButton {
-	position: absolute;
-	bottom: 86px;
+	position: fixed;
+	left: 0px;
+	top: 50px;
 	border-radius: 8px 0 0 8px;
-	background-image: url(icons/info_board_white.svg);
+	background-image: url(icons/info_board_purple.svg);
 	background-repeat: no-repeat;
 	background-position: center center;
-	background-size: 19px;
+	background-size: 14px;
+	z-index: 1000;
 }
 
 #infoBox {
 	position: fixed;
 	/*display: none;*/
-	max-width: 83%;
+	/*max-width: 83%;*/
 	/*height: 500px;*/
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-	padding: 2em;
 	/*height: 80%;*/
 	z-index: 10000;
 	background-color: #444;
-	color: #fff;
 	border-radius: 8px;
 	opacity: 0.9;
+} 
+#infoText {
+	padding: 1.5em 1.5em 2.5em 1.5em;
 	font-family: roboto-medium;
-	font-size: 0.75em;
+	font-size: 0.8em;
 	overflow-y: scroll;
-	/*line-height: 1.1em;*/
-} #infoBox h2, h3 {
+	line-height: 1.8em;
+	color: #fff;
+}
+#infoText h2, h3 {
 	text-align: center;
 	font-family: fontin;
-	line-height: 26px;
-	margin-bottom: 15px;
-}
-
-.lineitem {
-	padding: 0 0 0.5em 1.5em;
-    text-indent: -1.5em;
-    display: block;
-}.lineitem img {
+	line-height: 24px;
+	margin-bottom: 10px;
+} #infoText img {
+	display: inline;
 	position: relative;
-	top: 1px;
-	right: 5px;
+	top: 2px;
+	padding-right: 2px;
+	/*right: 5px;*/
+}.nowrap {
+	text-wrap: nowrap;
 }
 
 #picsicon{
@@ -195,11 +198,28 @@ button {
 	opacity: 0.7;
 	position: absolute;
 	right: 0px;
-} .linkbutton img {
+/*} .linkbutton img {
 	margin-top: 10px;
 	width: 16px;
 	height: 16px;
-} .linkbutton span {
+*/} .linkbutton span {
+	box-shadow: 0 0 10px #ccc;
+}
+.infotoggle	{
+	width: 44px;
+	height: 44px;
+	background-color: none;
+	display: inline-block;
+	vertical-align: middle;
+	text-align: center;
+	/*opacity: 0.7;*/
+	/*position: absolute;*/
+	/*left: 0px;*/
+/*} .infotoggle img {
+	margin-top: 10px;
+	width: 16px;
+	height: 16px;*/
+} .infotoggle span {
 	box-shadow: 0 0 10px #ccc;
 }
 

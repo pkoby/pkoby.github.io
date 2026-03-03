@@ -56,10 +56,10 @@
 				<div id="locater" class="linkbutton" title="Locate Me" accesskey="w"></div>
 			</a>
 			<a href="#" onclick="return false;">
-				<div id="infoButton" class="linkbutton infotoggle" title="Info"></div>
-			</a>
-			<a href="#" onclick="return false;">
 				<div id="loaddata" class="loadbutton" title="Search for Places in View" accesskey="f" onclick="hideInfo()"><img id="loadicon" src="icons/refresh.svg"></div>
+			<a href="#" onclick="return false;">
+				<div id="infoButton" class="infotoggle" title="Info"></div>
+			</a>
 			</a>
 			<!-- <div id="counter_no_pics" class="dimtext">0 points loaded</div> -->
 			<a href="#" onclick="return false;">
@@ -86,29 +86,30 @@
 		<div id="bigmap" onclick="hideInfo()"></div>
 
 		<div id="infoBox" class="hidden" onclick="hideInfo()">
-			<h2>What features are shown?</h2>
-			<ul>
-				<li class="lineitem"><img src="icons/information_purple.svg">Information Boards (<span class="code">tourism=information</span> + <span class="code">information=board</span>; displays <span class="code">board:title</span>, not <span class="code">name</span>)</li>
-				<li class="lineitem"><img src="icons/globe_purple.svg">Maps (<span class="code">tourism=information</span> + <span class="code">information=map</span>)</li>
-				<li class="lineitem"><img src="icons/camera_purple.svg">Attractions (<span class="code">tourism=attraction</span>)</li>
-				<li class="lineitem"><img src="icons/viewpoint_purple.svg">Viewpoints (<span class="code">tourism=viewpoint</span>)</li>
-				<li class="lineitem"><img src="icons/museum_purple.svg">Museums (<span class="code">tourism=museum</span>)</li>
-				<li class="lineitem"><img src="icons/artwork_purple.svg"><img src="icons/statue_purple.svg">Artwork (<span class="code">tourism=artwork</span>; warns about creation date after 1978, per US copyright law)</li>
-				<li class="lineitem"><img src="icons/castle_purple.svg"><img src="icons/cemetery_purple.svg"><img src="icons/ruins_purple.svg"><img src="icons/obelisk_purple.svg"><img src="icons/plaque_purple.svg"><img src="icons/memorial_bench_purple.svg"><img src="icons/memorial_purple.svg"><img src="icons/monument_purple.svg"><img src="icons/village_purple.svg"><img src="icons/shrine_purple.svg">Historic Features (<span class="code">historic=*</span>; does not show <span class="code">historic=district</span>, <span class="code">=cemetery</span>, <span class="code">=place</span>, <span class="code">=milestone</span>, or <span class="code">demolished:building=*</span>)</li>
-				<li class="lineitem"><img src="icons/buddhist_purple.svg">Temples (<span class="code">building=temple</span>)</li>
-				<li class="lineitem"><img src="icons/cross_purple.svg">Churches (<span class="code">building=church</span>)</li>
-				<li class="lineitem"><img src="icons/jewish_purple.svg">Synagogues (<span class="code">building=synagogue</span>)</li>
-				<li class="lineitem"><img src="icons/muslim_purple.svg">Mosques (<span class="code">building=mosque</span>)</li>
-				<!-- <li class="lineitem"><img src="icons/school_purple.svg">Schools (<span class="code">building=school</span>)</li> -->
-				<li class="lineitem"><img src="icons/books_purple.svg">Libraries (<span class="code">amenity=library</span>)</li>
-				<li class="lineitem"><img src="icons/bicycle_rental_purple.svg">Bike Rental Stations (<span class="code">amenity=bicycle_rental</span>)</li>
-				<li class="lineitem"><img src="icons/bookcase_purple.svg">Public Bookcases (<span class="code">amenity=public_bookcase</span>)</li>
-				<li class="lineitem"><img src="icons/defibrillator_purple.svg">Defibrillators (<span class="code">emergency=defibrillator</span>)</li>
-				<li class="lineitem"><img src="icons/bridge_purple.svg">Bridges with Names (<span class="code">man_made=bridge</span> + <span class="code">name=*</span>)</li>
-				<li class="lineitem"><img src="icons/cave_purple.svg">Caves (<span class="code">natural=cave_entrance</span>)</li>
-				<li class="lineitem"><img src="icons/waterfall_purple.svg">Waterfalls (<span class="code">waterway=waterfall</span>)</li>
-			</ul>
-			<span class="dismiss">Tap to dismiss</span>
+			<div id="infoText">
+				<h2>What features are shown?</h2>
+				<span class="nowrap"><img src="icons/artwork_purple.svg"><img src="icons/statue_purple.svg">Artwork</span> (<span class="code">tourism=artwork</span>; warns about creation date after 1978, per US copyright law), 
+				<span class="nowrap"><img src="icons/camera_purple.svg">Attractions</span> (<span class="code">tourism=attraction</span>), 
+				<span class="nowrap"><img src="icons/bicycle_rental_purple.svg">Bike Rental Stations</span> (<span class="code">amenity=bicycle_rental</span>), 
+				<span class="nowrap"><img src="icons/cave_purple.svg">Caves</span> (<span class="code">natural=cave_entrance</span>), 
+				<span class="nowrap"><img src="icons/cross_purple.svg">Church Buildings</span> (<span class="code">building=church</span>), 
+				<span class="nowrap"><img src="icons/defibrillator_purple.svg">Defibrillators</span> (<span class="code">emergency=defibrillator</span>), 
+				<span class="nowrap"><img src="icons/give_box_purple.svg">Give Boxes</span> (<span class="code">amenity=give_box</span>), 
+				<span class="nowrap"><img src="icons/castle_purple.svg"><img src="icons/cemetery_purple.svg"><img src="icons/ruins_purple.svg"><img src="icons/obelisk_purple.svg"><img src="icons/plaque_purple.svg"><img src="icons/memorial_bench_purple.svg"><img src="icons/memorial_purple.svg"><img src="icons/monument_purple.svg"><img src="icons/village_purple.svg"><img src="icons/shrine_purple.svg">Historic Features</span> (<span class="code">historic=*</span>; does not show <span class="code">historic=district</span>, <span class="code">=cemetery</span>, <span class="code">=place</span>, <span class="code">=milestone</span>, or <span class="code">demolished:building=*</span>), 
+				<span class="nowrap"><img src="icons/information_purple.svg">Information Boards</span> (<span class="code">tourism=information</span> + <span class="code">information=board</span>; displays <span class="code">board:title</span>, not <span class="code">name</span>), 
+				<span class="nowrap"><img src="icons/books_purple.svg">Libraries</span> (<span class="code">amenity=library</span>), 
+				<span class="nowrap"><img src="icons/globe_purple.svg">Maps</span> (<span class="code">tourism=information</span> + <span class="code">information=map</span>), 
+				<span class="nowrap"><img src="icons/muslim_purple.svg">Mosque Buildings</span> (<span class="code">building=mosque</span>), 
+				<span class="nowrap"><img src="icons/museum_purple.svg">Museums</span> (<span class="code">tourism=museum</span>), 
+				<span class="nowrap"><img src="icons/bridge_purple.svg">Named Bridges</span> (<span class="code">man_made=bridge</span> + <span class="code">name=*</span>), 
+				<span class="nowrap"><img src="icons/bookcase_purple.svg">Public Bookcases</span> (<span class="code">amenity=public_bookcase</span>), 
+				<span class="nowrap"><img src="icons/jewish_purple.svg">Synagogue Buildings</span> (<span class="code">building=synagogue</span>), 
+				<span class="nowrap"><img src="icons/buddhist_purple.svg">Temple Buildings</span> (<span class="code">building=temple</span>), 
+				<span class="nowrap"><img src="icons/viewpoint_purple.svg">Viewpoints</span> (<span class="code">tourism=viewpoint</span>), 
+				<span class="nowrap"><img src="icons/waterfall_purple.svg">Waterfalls</span> (<span class="code">waterway=waterfall</span>)
+				<!-- <img src="icons/school_purple.svg">Schools (<span class="code">building=school</span>),  -->
+				<span class="dismiss">Tap to dismiss</span>
+			</div>
 		</div>
 
 		<script src="leaflet.js"></script>
