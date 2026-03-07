@@ -1316,8 +1316,8 @@ function downloadData() {
 	localStorage.setItem("pos_lat", map.getCenter().lat)
 	localStorage.setItem("pos_lon", map.getCenter().lng)
 	$.ajax({
-		url: "https://overpass-api.de/api/interpreter",
-		// url: "https://overpass.private.coffee/api/interpreter",
+		// url: "https://overpass-api.de/api/interpreter",
+		url: "https://overpass.private.coffee/api/interpreter",
 		data: {
 			"data": '[bbox:'+bbox+'][out:json][timeout:25];(nwr["tourism"="information"]["information"~"board|map"];nwr["tourism"~"attraction|viewpoint|museum|artwork"];nwr["historic"]["historic"!~"district|cemetery|place|milestone"][!"demolished:building"];nwr["building"~"temple|church|synagogue|mosque"];nwr["amenity"~"^library$|bicycle_rental|public_bookcase|give_box"];nwr["emergency"="defibrillator"];nwr["man_made"="bridge"]["name"];nwr["natural"="cave_entrance"];nwr["waterway"="waterfall"];);out body center; >; out skel qt;'
 		},
