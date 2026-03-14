@@ -20,7 +20,7 @@ var poiClusters = new L.markerClusterGroup({
 	// }
 });
 
-var bench_dot,bench_dot_insc,bench_dot_unk,
+var bench_dot,bench_dot_insc,bench_dot_unk,bench_dot_ob,
 	// picnic_table_dot,picnic_table_dot_unk,
 	yab_icon,yb_na_icon,ya_nb_icon,nab_icon,yb_ua_icon,nb_ua_icon,ya_ub_icon,na_ub_icon,uab_icon,
 	yab_icon_red,yb_na_icon_red,ya_nb_icon_red,nab_icon_red,yb_ua_icon_red,nb_ua_icon_red,ya_ub_icon_red,na_ub_icon_red,uab_icon_red,
@@ -291,7 +291,7 @@ function setDotMarker(poi_type, icon, lat, lon, tags, osmid, osmtype) {
 	}
 
 	if (tags["openbenches:id"] != undefined && tags.amenity == 'bench'){
-		popup_content += "<br/><span class='openbenches'><a href='"+oblink+"' title=\"show feature on OpenBenches\" target='_blank'>OpenBenches</a></span>";
+		popup_content += "<br/><span class='openbenches'><a href='"+oblink+"' title=\"show feature on OpenBenches\" target='_blank'>OpenBenches↗</a></span>";
 	}
 
 	popup_content += "<div class='linktext'><a href='"+osmlink+"' title=\"show feature on OSM\" target='_blank'>🗺️ OSM</a> | <a href='"+iDedit+"' title=\"edit feature on OSM\" target='_blank'>✏️ iD</a> | <a href='"+josmedit+"' title=\"edit feature in JOSM\" target='_blank'>🖊️ JOSM</a></div>";
@@ -369,6 +369,11 @@ function getPxThumb(tagPanoramax) {
 function getPxLink(tagPanoramax) {
 	var px_link = "https://api.panoramax.xyz/#s=fp;s2;p"+tagPanoramax;
 	return px_link;
+}
+
+function getOpenbenchPhoto(OBid) {
+	var obapi_link = "https://openbenches.org/api/bench/"+OBid+"?media=true";
+	return obapi_link;
 }
 
 function inscriptionParser(inscription) {
@@ -517,7 +522,9 @@ function setPoiMarker(poi_type, icon_name, lat, lon, tags, osmid, osmtype) {
 	}
 
 	if (tags["openbenches:id"] != undefined && tags.amenity == 'bench'){
-		popup_content += "<br/><span class='openbenches'><a href='"+oblink+"' title=\"show feature on OpenBenches\" target='_blank'>OpenBenches</a></span>";
+		popup_content += "<br/><span class='openbenches'><a href='"+oblink+"' title=\"show feature on OpenBenches\" target='_blank'>OpenBenches↗</a></span>";
+		// popup_content += getOpenbenchPhoto(tags["openbenches:id"]);
+		console.log(getOpenbenchPhoto(tags["openbenches:id"]))
 	}
 
 	popup_content += "<div class='linktext'><a href='"+osmlink+"' title=\"show feature on OSM\" target='_blank'>🗺️ OSM</a> | <a href='"+iDedit+"' title=\"edit feature on OSM\" target='_blank'>✏️ iD</a> | <a href='"+josmedit+"' title=\"edit feature in JOSM\" target='_blank'>🖊️ JOSM</a></div>";
@@ -585,7 +592,9 @@ function element_to_map(data) {
 			// 	}
 			// } else 
 			if (el.tags.amenity == 'bench') {
-				if ((el.tags.inscription != undefined && el.tags.inscription != 'no' && el.tags.inscription != 'No' && el.tags.inscription != 'NO') || (el.tags["inscription:1"] != undefined && el.tags["inscription:1"] != 'no'&& el.tags["inscription:1"] != 'No'&& el.tags["inscription:1"] != 'NO')) {
+				if (el.tags["openbenches:id"] != undefined) {
+					setDotMarker("", bench_dot_ob, el.lat, el.lon, el.tags, el.id, el.type);
+				} else if ((el.tags.inscription != undefined && el.tags.inscription != 'no' && el.tags.inscription != 'No' && el.tags.inscription != 'NO') || (el.tags["inscription:1"] != undefined && el.tags["inscription:1"] != 'no'&& el.tags["inscription:1"] != 'No'&& el.tags["inscription:1"] != 'NO')) {
 					setDotMarker("", bench_dot_insc, el.lat, el.lon, el.tags, el.id, el.type);
 				} else if ((el.tags.inscription != undefined && (el.tags.inscription == 'no' || el.tags.inscription == 'No' || el.tags.inscription == 'NO')) || (el.tags["inscription:1"] != undefined && (el.tags["inscription:1"] == 'no'|| el.tags["inscription:1"] == 'No' || el.tags["inscription:1"] == 'NO'))) {
 					setDotMarker("", bench_dot, el.lat, el.lon, el.tags, el.id, el.type);
@@ -846,6 +855,7 @@ function downloadData() {
 	localStorage.setItem("pos_lon", map.getCenter().lng)
 	$.ajax({
 		url: "https://overpass-api.de/api/interpreter",
+		// url: "https://overpass.private.coffee/api/interpreter",
 		data: {
 			"data": '[bbox:'+bbox+'][out:json][timeout:25];(nwr[amenity=bench];);out body center; >; out skel qt;' //nwr[leisure=picnic_table];
 		},
@@ -883,6 +893,13 @@ $(function() {
 	});
 	bench_dot_unk = L.icon({
 		iconUrl: 'icons/bench_dot_unk.svg',
+		iconSize: [8,8],
+		className: 'pointIcon',
+		iconAnchor: [4,4],
+		popupAnchor: [0,-14],
+	});
+	bench_dot_ob = L.icon({
+		iconUrl: 'icons/bench_dot_ob.svg',
 		iconSize: [8,8],
 		className: 'pointIcon',
 		iconAnchor: [4,4],
@@ -1583,10 +1600,10 @@ $(function() {
 	// 	popupAnchor: [0,-20],
 	// });
 	openbenches_icon = L.icon({
-		iconUrl: 'icons/purple_line.svg',
-		iconSize: [10,2],
+		iconUrl: 'icons/bench_dot_ob.svg',
+		iconSize: [6,6],
 		className: 'colourIcon',
-		iconAnchor: [5,4.5],
+		iconAnchor: [-5,10],
 	});
 	inscription_icon = L.icon({
 		iconUrl: 'icons/inscription.svg',
