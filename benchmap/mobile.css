@@ -130,3 +130,7 @@ button {
 	pointer-events: none;
 	border-radius: 5px 0 0 5px;
 }
+
+.marker-cluster span, .pic-cluster span, .c-cluster span, .p-cluster span, .m-cluster span, .i-cluster span, .w-cluster span {
+	line-height: 21px !important;
+}
