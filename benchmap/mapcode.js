@@ -373,7 +373,19 @@ function getPxLink(tagPanoramax) {
 
 function getOpenbenchPhoto(OBid) {
 	var obapi_link = "https://openbenches.org/api/bench/"+OBid+"?media=true";
-	return obapi_link;
+	fetch(obapi_link)
+		.then(response => {
+			if (!response.ok) {
+				throw new Error('Network response was not ok');
+			}
+			return response.json();
+		})
+		// .then(userData => {
+		// 	console.log('User Data:', userData);
+		// })
+		.catch(error => {
+			console.error('Error:', error);
+		});
 }
 
 function inscriptionParser(inscription) {
