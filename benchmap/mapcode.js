@@ -5,7 +5,7 @@ var poiDots = new L.LayerGroup();
 var poiMinis = new L.LayerGroup();
 var poiMain = new L.LayerGroup();
 var poiClusters = new L.markerClusterGroup({
-	disableClusteringAtZoom: 16,
+	disableClusteringAtZoom: 14,
 	spiderfyOnMaxZoom: false,
 	showCoverageOnHover: true,
 	maxClusterRadius: 50,
@@ -20,7 +20,16 @@ var poiClusters = new L.markerClusterGroup({
 	// }
 });
 
-var bench_dot,bench_dot_insc,bench_dot_unk,bench_dot_ob,
+let counter_bench = 0;
+let counter_insc = 0;
+let counter_unk = 0;
+let counter_ob = 0;
+let counter_bench_div = document.getElementById("count_bench");
+let counter_insc_div = document.getElementById("count_insc");
+let counter_unk_div = document.getElementById("count_unk");
+let counter_ob_div = document.getElementById("count_ob");
+
+let bench_dot,bench_dot_insc,bench_dot_unk,bench_dot_ob,
 	// picnic_table_dot,picnic_table_dot_unk,
 	yab_icon,yb_na_icon,ya_nb_icon,nab_icon,yb_ua_icon,nb_ua_icon,ya_ub_icon,na_ub_icon,uab_icon,
 	yab_icon_red,yb_na_icon_red,ya_nb_icon_red,nab_icon_red,yb_ua_icon_red,nb_ua_icon_red,ya_ub_icon_red,na_ub_icon_red,uab_icon_red,
@@ -36,11 +45,14 @@ var bench_dot,bench_dot_insc,bench_dot_unk,bench_dot_ob,
 	// picnic_table_icon,picnic_table_icon_red,picnic_table_icon_orange,picnic_table_icon_yellow,picnic_table_icon_green,picnic_table_icon_blue,picnic_table_icon_purple,picnic_table_icon_brown,picnic_table_icon_black,picnic_table_icon_gray,picnic_table_icon_white,
 	openbenches_icon,inscription_icon,no_inscription_icon,unk_inscription_icon;
 
-	// var OSMCarto=L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,opacity:0.3,attribution:'&copy;<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'});
+	var OSMCarto=L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,opacity:0.3,attribution:'&copy;<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'});
 	var CartoDB_Voyager = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
 		attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
 		subdomains: 'abcd',
 		maxZoom: 20,
+	});
+	var Esri_WorldTopoMap = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
+		attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), and the GIS User Community'
 	});
 
 var overlay = L.polygon([
@@ -373,19 +385,6 @@ function getPxLink(tagPanoramax) {
 
 function getOpenbenchPhoto(OBid) {
 	var obapi_link = "https://openbenches.org/api/bench/"+OBid+"?media=true";
-	fetch(obapi_link)
-		.then(response => {
-			if (!response.ok) {
-				throw new Error('Network response was not ok');
-			}
-			return response.json();
-		})
-		// .then(userData => {
-		// 	console.log('User Data:', userData);
-		// })
-		.catch(error => {
-			console.error('Error:', error);
-		});
 }
 
 function inscriptionParser(inscription) {
@@ -399,21 +398,21 @@ function inscriptionParser(inscription) {
 
 function directionParser(direction) {
 	if (direction >= 337.5 || direction < 22.5) {
-			return "north";
+			return "⬆️";
 	} else if (direction >= 22.5 && direction < 67.5) {
-			return "northeast";
+			return "↗️";
 	} else if (direction >= 67.5 && direction < 112.5) {
-			return "east";
+			return "➡️";
 	} else if (direction >= 112.5 && direction < 157.5) {
-			return "southeast";
+			return "↘️";
 	} else if (direction >= 157.5 && direction < 202.5) {
-			return "south";
+			return "⬇️";
 	} else if (direction >= 202.5 && direction < 247.5) {
-			return "southwest";
+			return "↙️";
 	} else if (direction >= 247.5 && direction < 292.5) {
-			return "west";
+			return "⬅️";
 	} else if (direction >= 292.5 && direction < 337.5) {
-			return "northwest";
+			return "↖️";
 	}
 }
 
@@ -536,7 +535,7 @@ function setPoiMarker(poi_type, icon_name, lat, lon, tags, osmid, osmtype) {
 	if (tags["openbenches:id"] != undefined && tags.amenity == 'bench'){
 		popup_content += "<br/><span class='openbenches'><a href='"+oblink+"' title=\"show feature on OpenBenches\" target='_blank'>OpenBenches↗</a></span>";
 		// popup_content += getOpenbenchPhoto(tags["openbenches:id"]);
-		console.log(getOpenbenchPhoto(tags["openbenches:id"]))
+		// popup_content += "<br/><img src=\""+getOpenbenchPhoto(tags["openbenches:id"])+"\">";
 	}
 
 	popup_content += "<div class='linktext'><a href='"+osmlink+"' title=\"show feature on OSM\" target='_blank'>🗺️ OSM</a> | <a href='"+iDedit+"' title=\"edit feature on OSM\" target='_blank'>✏️ iD</a> | <a href='"+josmedit+"' title=\"edit feature in JOSM\" target='_blank'>🖊️ JOSM</a></div>";
@@ -552,7 +551,11 @@ function setPoiMarker(poi_type, icon_name, lat, lon, tags, osmid, osmtype) {
 	}
 }
 
-function element_to_map(data) {	
+function element_to_map(data) {
+	counter_bench = 0;
+	counter_insc = 0;
+	counter_unk = 0;
+	counter_ob = 0;
 	poiClusters.clearLayers();
 	poiMain.clearLayers();
 	poiDots.clearLayers();
@@ -606,12 +609,16 @@ function element_to_map(data) {
 			if (el.tags.amenity == 'bench') {
 				if (el.tags["openbenches:id"] != undefined) {
 					setDotMarker("", bench_dot_ob, el.lat, el.lon, el.tags, el.id, el.type);
+					counter_ob++;
 				} else if ((el.tags.inscription != undefined && el.tags.inscription != 'no' && el.tags.inscription != 'No' && el.tags.inscription != 'NO') || (el.tags["inscription:1"] != undefined && el.tags["inscription:1"] != 'no'&& el.tags["inscription:1"] != 'No'&& el.tags["inscription:1"] != 'NO')) {
 					setDotMarker("", bench_dot_insc, el.lat, el.lon, el.tags, el.id, el.type);
+					counter_insc++;
 				} else if ((el.tags.inscription != undefined && (el.tags.inscription == 'no' || el.tags.inscription == 'No' || el.tags.inscription == 'NO')) || (el.tags["inscription:1"] != undefined && (el.tags["inscription:1"] == 'no'|| el.tags["inscription:1"] == 'No' || el.tags["inscription:1"] == 'NO'))) {
 					setDotMarker("", bench_dot, el.lat, el.lon, el.tags, el.id, el.type);
+					counter_bench++;
 				} else {
 					setDotMarker("", bench_dot_unk, el.lat, el.lon, el.tags, el.id, el.type);
+					counter_unk++;
 				}
 				if (el.tags.colour != undefined && el.tags.colour.includes('red')) {
 					if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
@@ -849,6 +856,33 @@ function element_to_map(data) {
 	});
 	map.removeLayer(loadingOverlay);
 	loadingText.setContent('');
+
+	while (counter_bench_div.hasChildNodes()) {
+		counter_bench_div.removeChild(counter_bench_div.lastChild);
+	}
+	while (counter_insc_div.hasChildNodes()) {
+		counter_insc_div.removeChild(counter_insc_div.lastChild);
+	}
+	while (counter_unk_div.hasChildNodes()) {
+		counter_unk_div.removeChild(counter_unk_div.lastChild);
+	}
+	while (counter_ob_div.hasChildNodes()) {
+		counter_ob_div.removeChild(counter_ob_div.lastChild);
+	}
+	var new_span_bench = document.createElement('span');
+	var new_span_insc = document.createElement('span');
+	var new_span_unk = document.createElement('span');
+	var new_span_ob = document.createElement('span');
+
+	new_span_bench.innerHTML = counter_bench;
+	new_span_insc.innerHTML = counter_insc;
+	new_span_unk.innerHTML = counter_unk;
+	new_span_ob.innerHTML = counter_ob;
+
+	counter_bench_div.appendChild(new_span_bench);
+	counter_insc_div.appendChild(new_span_insc);
+	counter_unk_div.appendChild(new_span_unk);
+	counter_ob_div.appendChild(new_span_ob);
 }
 
 function downloadData() {
@@ -873,7 +907,7 @@ function downloadData() {
 		},
 		success: element_to_map,
 		error: function(xhr, status, errorThrown){
-			loadingText.setContent('<span id="error">'+errorThrown+'; Try&nbsp;Again</span>');
+			loadingText.setContent('<span id="error">'+errorThrown+'; <span class="tryagain">Try&nbsp;Again</span></span>');
 			document.getElementById('error').addEventListener('click', downloadData);
 		},
 	});

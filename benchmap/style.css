@@ -50,18 +50,36 @@ button {
 	width: 90px;
 }
 
-#counter_display {
+#pictures {
 	position: absolute;
-	z-index: 1000;
-	bottom: 0;
-	left: 0;
-	font-family: roboto-medium;
-	font-size: 10pt;
-	color: #444;
-	background-color: rgba(255,255,255,0.7);
-	padding: 0 5px 0 5px;
-	max-width: 500px;
+	bottom: 26px;
+	border-radius: 8px 0 0 8px;
+}
+.yespics {
+	content:url(icons/camera_white.svg);
+}
+.nopics {
+	content:url(icons/camera-no.svg);
+}
+
+#counter_display {
+	position: fixed;
+	bottom: 30px;
+	right: 30px;
+	width: fit-content;
+	background-color: rgba(255,235,200,0.7);
+	border-radius: 8px;
+	padding: 10px;
 	z-index: 10000;
+	font-family: roboto-medium;
+	font-size: 8pt;
+	color: #222;
+	line-height: 16px;
+}
+#counter_display img {
+	width: 10px;
+	position: relative;
+	top: 1px;
 }
 
 #sidebar {
@@ -724,7 +742,7 @@ hr {
 	border-radius: 2px;
 	box-shadow: 2px 2px 2px black;
 	position: relative;
-	text-shadow: 0px 1px 0px #ffd;
+	text-shadow: 0px 1px 0px #ddb;
 	font-family: fontin-bold;
 	margin-bottom: 8px;
 	display: block;
@@ -831,4 +849,7 @@ p.thiccbreak {
 	margin: -3px 0px 0 0;
 	color: #ea8;
 	pointer-events: none;
+}
+.tryagain {
+	text-decoration: underline dotted;
 }
