@@ -900,8 +900,8 @@ function downloadData() {
 	localStorage.setItem("pos_lat", map.getCenter().lat)
 	localStorage.setItem("pos_lon", map.getCenter().lng)
 	$.ajax({
-		url: "https://overpass-api.de/api/interpreter",
-		// url: "https://overpass.private.coffee/api/interpreter",
+		// url: "https://overpass-api.de/api/interpreter",
+		url: "https://overpass.private.coffee/api/interpreter",
 		data: {
 			"data": '[bbox:'+bbox+'][out:json][timeout:25];(nwr[amenity=bench];);out body center; >; out skel qt;' //nwr[leisure=picnic_table];
 		},
