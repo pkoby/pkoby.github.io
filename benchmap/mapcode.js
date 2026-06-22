@@ -393,7 +393,8 @@ function inscriptionParser(inscription) {
 	var doubleSlash = slashNspaces.replace(/ \/\/ /g, "<br/><p class='thiccbreak'></p>");
 	var semiColon = doubleSlash.replace(/ \; /g, "</div><div class='inscription'>");
 	var tab = semiColon.replace(/ \\t /g, "<pre>\t\t</pre>");
-	return tab.replace(/ \/ /g,"<br/>");
+	var slashEnd = tab.replace(/ \//g, "<br/>");
+	return slashEnd.replace(/ \/ /g,"<br/>");
 }
 
 function directionParser(direction) {
