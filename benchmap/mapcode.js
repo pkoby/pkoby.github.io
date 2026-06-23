@@ -255,9 +255,9 @@ function setDotMarker(poi_type, icon, lat, lon, tags, osmid, osmtype) {
 
 	if (tags.colour != undefined) {
 		if (tags.colour.includes('white') || tags.colour.includes('silver') || tags.colour.includes('gray') || tags.colour.includes('yellow') || tags.colour.includes('pink') || tags.colour.includes('light')) {
-			popup_content += "Color: <span class=\"colorbox\" title=\""+tags.colour+"\" style=\"color: #333; background-color:"+tags.colour+"\">"+tags.colour+"</span> | ";
+			popup_content += "Color: <span class=\"colorbox\" title=\""+tags.colour+"\" style=\"color: #333; background-color:"+tags.colour+"\">"+tags.colour+"</span>";
 		} else {
-			popup_content += "Color: <span class=\"colorbox\" title=\""+tags.colour+"\" style=\"background-color:"+tags.colour+"\">"+tags.colour+"</span> | ";
+			popup_content += "Color: <span class=\"colorbox\" title=\""+tags.colour+"\" style=\"background-color:"+tags.colour+"\">"+tags.colour+"</span>";
 		}
 		// var tooltip_content = "C";
 	} else {
@@ -265,26 +265,26 @@ function setDotMarker(poi_type, icon, lat, lon, tags, osmid, osmtype) {
 		// var tooltip_content = "";
 	}
 	if (tags.material != undefined) {
-		popup_content += "Material: <span class=\"material "+tags.material+"\">"+tags.material+"</span>";
+		popup_content += "<br/>Material: <span class=\"material "+tags.material+"\">"+tags.material+"</span>";
 		// tooltip_content += "M";
 	} else {
-		popup_content += "Material: 🤷";
+		popup_content += "<br/>Material: 🤷";
 	}
 
 	if (tags.backrest == undefined && tags.amenity == 'bench') {
 		popup_content += "<br/>Backrest: 🤷";
 	} else if (tags.backrest == 'yes' && tags.amenity == 'bench') {
-		popup_content += "<br/>Backrest: ☑️";
+		popup_content += "<br/>Backrest: ✅";
 	} else if (tags.backrest == 'no' && tags.amenity == 'bench') {
 		popup_content += "<br/>Backrest: ❌";
 	}
 
 	if (tags.armrest == undefined && tags.amenity == 'bench') {
-		popup_content += " | Armrests: 🤷";
+		popup_content += "<br/>Armrests: 🤷";
 	} else if (tags.armrest == 'yes' && tags.amenity == 'bench') {
-		popup_content += " | Armrests: ☑️";
+		popup_content += "<br/>Armrests: ✅";
 	} else if (tags.armrest == 'no' && tags.amenity == 'bench') {
-		popup_content += " | Armrests: ❌";
+		popup_content += "<br/>Armrests: ❌";
 	}
 
 	if (tags.backrest == 'no' && tags.direction != undefined && tags.amenity == 'bench') {
@@ -399,21 +399,21 @@ function inscriptionParser(inscription) {
 
 function directionParser(direction) {
 	if (direction >= 337.5 || direction < 22.5) {
-			return "⬆️";
+			return "↑";
 	} else if (direction >= 22.5 && direction < 67.5) {
-			return "↗️";
+			return "↗";
 	} else if (direction >= 67.5 && direction < 112.5) {
-			return "➡️";
+			return "→";
 	} else if (direction >= 112.5 && direction < 157.5) {
-			return "↘️";
+			return "↘";
 	} else if (direction >= 157.5 && direction < 202.5) {
-			return "⬇️";
+			return "↓";
 	} else if (direction >= 202.5 && direction < 247.5) {
-			return "↙️";
+			return "↙";
 	} else if (direction >= 247.5 && direction < 292.5) {
-			return "⬅️";
+			return "←";
 	} else if (direction >= 292.5 && direction < 337.5) {
-			return "↖️";
+			return "↖";
 	}
 }
 
@@ -505,7 +505,7 @@ function setPoiMarker(poi_type, icon_name, lat, lon, tags, osmid, osmtype) {
 	if (tags.backrest == undefined && tags.amenity == 'bench') {
 		popup_content += "<br/>Backrest: 🤷";
 	} else if (tags.backrest == 'yes' && tags.amenity == 'bench') {
-		popup_content += "<br/>Backrest: ☑️";
+		popup_content += "<br/>Backrest: ✅";
 	} else if (tags.backrest == 'no' && tags.amenity == 'bench') {
 		popup_content += "<br/>Backrest: ❌";
 	}
@@ -513,7 +513,7 @@ function setPoiMarker(poi_type, icon_name, lat, lon, tags, osmid, osmtype) {
 	if (tags.armrest == undefined && tags.amenity == 'bench') {
 		popup_content += " | Armrests: 🤷";
 	} else if (tags.armrest == 'yes' && tags.amenity == 'bench') {
-		popup_content += " | Armrests: ☑️";
+		popup_content += " | Armrests: ✅";
 	} else if (tags.armrest == 'no' && tags.amenity == 'bench') {
 		popup_content += " | Armrests: ❌";
 	}
