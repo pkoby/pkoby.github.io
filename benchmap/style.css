@@ -785,27 +785,27 @@ p.thiccbreak {
 }
 .wood {
 	background: linear-gradient(0deg, rgb(170,85,50) 0%, rgb(221,153,100) 100%);
-	color:#333;
+	color:#222;
 	background-image: url(icons/wood.png);
 }
 .metal, .steel {
 	background: linear-gradient(90deg, rgb(153,153,153) 0%, rgb(238,238,238) 100%);
-	color:#333;
+	color:#222;
 	background-image: url(icons/metal.png);
 }
 .plastic {
 	background-color: #ffee66;
-	color:#333;
+	color:#222;
 	background-image: url(icons/plastic.png);
 }
 .concrete, .stone {
 	background-color: lightgray;
-	color:#333;
+	color:#222;
 	background-image: url(icons/concrete.png);
 }
 .granite {
 	background-color: rosybrown;
-	color:#333;
+	color:#222;
 	background-image: url(icons/granite.png);
 }
 
