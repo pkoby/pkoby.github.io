@@ -268,11 +268,11 @@ function setDotMarker(poi_type, icon, lat, lon, tags, osmid, osmtype) {
 		popup_content += "Material: <span class=\"material "+tags.material+"\">"+tags.material+"</span>";
 		// tooltip_content += "M";
 	} else {
-		popup_content += "Material: ¯\\_(ツ)_/¯";
+		popup_content += "Material: ❔";
 	}
 
 	if (tags.backrest == undefined && tags.amenity == 'bench') {
-		popup_content += "<br/>Backrest: ¯\\_(ツ)_/¯";
+		popup_content += "<br/>Backrest: ❔";
 	} else if (tags.backrest == 'yes' && tags.amenity == 'bench') {
 		popup_content += "<br/>Backrest: ✅";
 	} else if (tags.backrest == 'no' && tags.amenity == 'bench') {
@@ -280,7 +280,7 @@ function setDotMarker(poi_type, icon, lat, lon, tags, osmid, osmtype) {
 	}
 
 	if (tags.armrest == undefined && tags.amenity == 'bench') {
-		popup_content += "<br/>Armrests: ¯\\_(ツ)_/¯";
+		popup_content += "<br/>Armrests: ❔";
 	} else if (tags.armrest == 'yes' && tags.amenity == 'bench') {
 		popup_content += "<br/>Armrests: ✅";
 	} else if (tags.armrest == 'no' && tags.amenity == 'bench') {
@@ -499,11 +499,11 @@ function setPoiMarker(poi_type, icon_name, lat, lon, tags, osmid, osmtype) {
 		popup_content += "Material: <span class=\"material "+tags.material+"\">"+tags.material+"</span>";
 		// tooltip_content += "M";
 	} else {
-		popup_content += "Material: ¯\\_(ツ)_/¯";
+		popup_content += "Material: ❔";
 	}
 
 	if (tags.backrest == undefined && tags.amenity == 'bench') {
-		popup_content += "<br/>Backrest: ¯\\_(ツ)_/¯";
+		popup_content += "<br/>Backrest: ❔";
 	} else if (tags.backrest == 'yes' && tags.amenity == 'bench') {
 		popup_content += "<br/>Backrest: ✅";
 	} else if (tags.backrest == 'no' && tags.amenity == 'bench') {
@@ -511,7 +511,7 @@ function setPoiMarker(poi_type, icon_name, lat, lon, tags, osmid, osmtype) {
 	}
 
 	if (tags.armrest == undefined && tags.amenity == 'bench') {
-		popup_content += " | Armrests: ¯\\_(ツ)_/¯";
+		popup_content += " | Armrests: ❔";
 	} else if (tags.armrest == 'yes' && tags.amenity == 'bench') {
 		popup_content += " | Armrests: ✅";
 	} else if (tags.armrest == 'no' && tags.amenity == 'bench') {
