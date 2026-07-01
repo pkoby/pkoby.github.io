@@ -214,13 +214,13 @@ function element_to_map(data) {
 			}
 
 			if (el.tags["species:en"] == undefined) {
-				setMiniMarker("", no_name_icon, el.lat, el.lon, el.tags, el.id, el.type);
+				setMiniMarker("", acer_icon, el.lat, el.lon, el.tags, el.id, el.type);
 			}
 			if (el.tags.species == undefined) {
 				if (el.tags.genus == undefined) {
-					setMiniMarker("", no_genus_icon, el.lat, el.lon, el.tags, el.id, el.type);
+					setMiniMarker("", acer_icon, el.lat, el.lon, el.tags, el.id, el.type);
 				} else {
-					setMiniMarker("", no_species_icon, el.lat, el.lon, el.tags, el.id, el.type);
+					setMiniMarker("", acer_icon, el.lat, el.lon, el.tags, el.id, el.type);
 				}
 			} 
 		}
@@ -280,7 +280,7 @@ function downloadData() {
 
 $(function() {
 	acer_icon = L.icon({
-		iconUrl: 'icons/acer2.svg',
+		iconUrl: 'icons/aframe.svg',
 		iconSize: [30,30],
 		className: 'pointIcon',
 		iconAnchor: [15,30],
