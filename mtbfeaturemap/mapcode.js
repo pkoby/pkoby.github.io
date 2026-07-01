@@ -255,7 +255,7 @@ function downloadData() {
 	$.ajax({
 		url: "https://overpass-api.de/api/interpreter",
 		data: {
-			"data": '[bbox:'+bbox+'][out:json][timeout:25];(nwr["mtb:feature:*"];);out body center; >; out skel qt;'/*nwr[historic=memorial];*/
+			"data": '[bbox:'+bbox+'][out:json][timeout:25];(nwr[~"^mtb:feature"~"^"];);out body center; >; out skel qt;'/*nwr[historic=memorial];*/
 		},
 		success: element_to_map,
 		error: function(xhr, status, errorThrown){
