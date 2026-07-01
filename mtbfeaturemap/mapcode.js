@@ -171,6 +171,7 @@ function setMiniMarker(poi_type, icon, lat, lon, tags, osmid, osmtype) {
 
 function setPoiMarker(poi_type, icon, lat, lon, tags, osmid, osmtype) {
 	var mrk = L.marker([lat, lon], {icon: icon});
+	var popup_content = '';
 	var osmlink = "https://www.openstreetmap.org/"+osmtype+"/"+osmid;
 	var osmedit = "https://www.openstreetmap.org/edit\?"+osmtype+"="+osmid;
 	var josmedit = "http://127.0.0.1:8111/load_object?new_layer=true&objects=n"+osmid;
