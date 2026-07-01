@@ -171,7 +171,7 @@ function setMiniMarker(poi_type, icon, lat, lon, tags, osmid, osmtype) {
 
 function setPoiMarker(poi_type, icon, lat, lon, tags, osmid, osmtype) {
 	var mrk = L.marker([lat, lon], {icon: icon});
-	var popup_content = '';
+	// var popup_content = '';
 	var osmlink = "https://www.openstreetmap.org/"+osmtype+"/"+osmid;
 	var osmedit = "https://www.openstreetmap.org/edit\?"+osmtype+"="+osmid;
 	var josmedit = "http://127.0.0.1:8111/load_object?new_layer=true&objects=n"+osmid;
@@ -179,10 +179,10 @@ function setPoiMarker(poi_type, icon, lat, lon, tags, osmid, osmtype) {
 	// if (tags["species:en"] == undefined) {
 	// }
 
-	popup_content = "<div class='linktext'><a href='"+osmlink+"' title=\"show feature on OSM\" target='_blank'>🗺️</a> | <a href='"+osmedit+"' title=\"edit feature on OSM\" target='_blank'>✏️</a> | <a href='"+josmedit+"' title=\"edit feature in JOSM\" target='_blank'>🖊️</a></div>";
+	// popup_content = "<div class='linktext'><a href='"+osmlink+"' title=\"show feature on OSM\" target='_blank'>🗺️</a> | <a href='"+osmedit+"' title=\"edit feature on OSM\" target='_blank'>✏️</a> | <a href='"+josmedit+"' title=\"edit feature in JOSM\" target='_blank'>🖊️</a></div>";
 
 	// mrk.bindTooltip(tags.name+"<br/><span class='tiny'>LGBTQ+ "+tags.lgbtq+"</span>",{duration: 0,direction: 'right',offset: [20,6]}).openTooltip();
-	mrk.bindPopup(L.popup({autoPanPaddingTopLeft: [0,50]}).setContent(popup_content));
+	// mrk.bindPopup(L.popup({autoPanPaddingTopLeft: [0,50]}).setContent(popup_content));
 	
 	poi_markers.push(mrk);
 	mrk.addTo(poiClusters);
