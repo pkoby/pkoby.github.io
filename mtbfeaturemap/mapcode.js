@@ -209,7 +209,7 @@ function element_to_map(data) {
 			if ((el.tags["mtb:feature"]) != undefined) {
 				setPoiMarker("Broad Leaved", acer_icon, el.lat, el.lon, el.tags, el.id, el.type);
 			} else {
-				setPoiMarker("Unknown Type", other_icon, el.lat, el.lon, el.tags, el.id, el.type);
+				setPoiMarker("Unknown Type", acer_icon, el.lat, el.lon, el.tags, el.id, el.type);
 			}
 
 			if (el.tags["species:en"] == undefined) {
@@ -230,7 +230,7 @@ function element_to_map(data) {
 }
 
 function downloadData() {
-	// var mapHash = new L.Hash(map);
+	var mapHash = new L.Hash(map);
 	if (map.getZoom() < 15) {
 		var new_span = document.createElement('span');
 		new_span.innerText = "Please Zoom In";
