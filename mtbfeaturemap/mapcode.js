@@ -230,7 +230,7 @@ function element_to_map(data) {
 }
 
 function downloadData() {
-	var mapHash = new L.Hash(map);
+	// var mapHash = new L.Hash(map);
 	if (map.getZoom() < 15) {
 		var new_span = document.createElement('span');
 		new_span.innerText = "Please Zoom In";
