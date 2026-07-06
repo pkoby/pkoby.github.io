@@ -1,16 +1,26 @@
 'use strict';
 var saved_lat, saved_lon, bbox, bboxOutline;
 var poi_markers = new Array();
+var poiDots = new L.LayerGroup();
 var poiMinis = new L.LayerGroup();
+var poiMain = new L.LayerGroup();
 var poiClusters = new L.markerClusterGroup({
-	disableClusteringAtZoom: 18,
+	disableClusteringAtZoom: 14,
 	spiderfyOnMaxZoom: false,
 	showCoverageOnHover: true,
 	maxClusterRadius: 50,
-	minClusterRadius: 1,
+	minClusterRadius: 20,
+	// iconCreateFunction: function(cluster) {
+	// 	return L.icon({
+	// 		iconUrl: 'icons/group_icon.svg',
+	// 		iconSize: [32,32],
+	// 		className: 'pointIcon',
+	// 		iconAnchor: [16,16],
+	// 	});
+	// }
 });
 
-var acer_icon;
+let acer_icon;
 	
 
 var CartoDB_Positron = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
@@ -82,16 +92,6 @@ document.getElementById('locater').addEventListener('click', function () {
 
 document.getElementById('loaddata').addEventListener('click', downloadData);
 
-// var toggleLegend  = document.getElementById("openlegend");
-// var legendContent = document.getElementById("legendbox");
-
-// openlegend.addEventListener("click", function() {
-//   legendbox.style.display = (legendbox.dataset.toggled ^= 1) ? "block" : "none";
-//   openlegend.style.opacity = (openlegend.dataset.toggled ^= 1) ? "0.9" : "0.6";
-// });
-
-// new L.Control.Zoom({ position: 'bottomright' }).addTo(map);
-
 var zoomText = L.Control.extend({
 	options: {
 		position: 'bottomleft'
@@ -114,7 +114,7 @@ var loadingText = L.Control.extend({
 		position: 'bottomleft'
 	},
 	onAdd: function (map) {
-		return L.DomUtil.create('div', 'overlayText');
+		return L.DomUtil.create('div', 'overlayText loadingOverlay');
 	},
 	setContent: function (content) {
 		this.getContainer().innerHTML = content;
@@ -142,8 +142,6 @@ map.on('load', function () {
 	}
 });
 
-// map = L.map('bigmap');
-
 saved_lat = localStorage.getItem("pos_lat")
 saved_lon = localStorage.getItem("pos_lon")
 
@@ -158,9 +156,11 @@ var mapHash = new L.Hash(map);
 if (L.Browser.retina) var tp = "lr";
 else var tp = "ls";
 
-// L.control.scale().addTo(map);
 function setMiniMarker(poi_type, icon, lat, lon, tags, osmid, osmtype) {
-	var mrk = L.marker([lat, lon], {icon: icon});
+	var mrk = L.marker([lat, lon], {
+		icon: icon, interactive:false,
+		// rotationAngle: tags.direction-180,
+	});
 	
 	poi_markers.push(mrk);
 	mrk.addTo(poiMinis);
@@ -170,8 +170,10 @@ function setMiniMarker(poi_type, icon, lat, lon, tags, osmid, osmtype) {
 }
 
 function setPoiMarker(poi_type, icon, lat, lon, tags, osmid, osmtype) {
-	var mrk = L.marker([lat, lon], {icon: icon});
-	// var popup_content = '';
+	var mrk = L.marker([lat, lon], {
+		icon: icon_name,
+		// rotationAngle: tags.direction-180,
+	});
 	var osmlink = "https://www.openstreetmap.org/"+osmtype+"/"+osmid;
 	var osmedit = "https://www.openstreetmap.org/edit\?"+osmtype+"="+osmid;
 	var josmedit = "http://127.0.0.1:8111/load_object?new_layer=true&objects=n"+osmid;
@@ -179,18 +181,26 @@ function setPoiMarker(poi_type, icon, lat, lon, tags, osmid, osmtype) {
 	// if (tags["species:en"] == undefined) {
 	// }
 
+	var popup_content = '';
 	// popup_content = "<div class='linktext'><a href='"+osmlink+"' title=\"show feature on OSM\" target='_blank'>🗺️</a> | <a href='"+osmedit+"' title=\"edit feature on OSM\" target='_blank'>✏️</a> | <a href='"+josmedit+"' title=\"edit feature in JOSM\" target='_blank'>🖊️</a></div>";
 
 	// mrk.bindTooltip(tags.name+"<br/><span class='tiny'>LGBTQ+ "+tags.lgbtq+"</span>",{duration: 0,direction: 'right',offset: [20,6]}).openTooltip();
 	// mrk.bindPopup(L.popup({autoPanPaddingTopLeft: [0,50]}).setContent(popup_content));
+	mrk.bindPopup(L.popup({autoPanPaddingTopLeft: [0,50]}).setContent(popup_content));
 	
 	poi_markers.push(mrk);
-	mrk.addTo(poiClusters);
-	poiClusters.addTo(map);
+	// mrk.addTo(poiClusters);
+	mrk.addTo(poiMain);
+	if (map.getZoom() > 18) {
+		poiMain.addTo(map);
+	}
 }
 
 function element_to_map(data) {	
 	poiClusters.clearLayers();
+	poiMain.clearLayers();
+	poiDots.clearLayers();
+	poiMinis.clearLayers();
 	$.each(poi_markers, function(_, mrk) {
 		map.removeLayer(mrk);
 	});
@@ -231,23 +241,14 @@ function element_to_map(data) {
 }
 
 function downloadData() {
-	var mapHash = new L.Hash(map);
 	if (map.getZoom() < 15) {
 		var new_span = document.createElement('span');
 		new_span.innerText = "Please Zoom In";
 		return null;
 	}
-
-	// document.getElementById('tipRight').style.display = 'none';
-	// document.getElementById('arrowRight').style.display = 'none';
-	// document.getElementById('tipLeft').style.display = 'none';
-	// document.getElementById('arrowLeft').style.display = 'none';
 	
 	map.addLayer(loadingOverlay);
 	loadingText.setContent('Loading<img src="icons/loading.gif">');
-
-	// var new_span = document.createElement('span');
-	// new_span.innerText = "Loading...";
 
 	bbox = map.getBounds().getSouth() + "," + map.getBounds().getWest() + "," + map.getBounds().getNorth() +  "," + map.getBounds().getEast();
 
@@ -260,7 +261,7 @@ function downloadData() {
 		},
 		success: element_to_map,
 		error: function(xhr, status, errorThrown){
-			loadingText.setContent('<span id="error">Error '+xhr.status+', '+errorThrown+'; Try&nbsp;Again</span>');
+			loadingText.setContent('<span id="error">'+errorThrown+'; <span class="tryagain">Try&nbsp;Again</span></span>');
 			document.getElementById('error').addEventListener('click', downloadData);
 		},
 	});
@@ -274,8 +275,6 @@ function downloadData() {
 	var northWest = bounds.getNorthWest(),northEast = bounds.getNorthEast(),southWest = bounds.getSouthWest(),southEast = bounds.getSouthEast();
 
 	bboxOutline = L.polygon([[[90, -180],[90, 180],[-90, 180],[-90, -180]],[[northWest.lat,northWest.lng],[northEast.lat,northEast.lng],[southEast.lat,southEast.lng],[southWest.lat,southWest.lng]]],{color: '#aaaaaa', fillColor: '#aaaaaa', fillOpacity: 0.3, weight: 1, dashArray: '1,3',}).addTo(map);
-
-	
 }
 
 $(function() {
@@ -293,32 +292,35 @@ $(function() {
 // 	});
 // }
 
-	map.on('moveend', function () {
-		if (map.getZoom() >= 18) {
-			josmText.setContent('<a href="http://127.0.0.1:8111/load_and_zoom?left='+map.getBounds().getWest()+'&right='+map.getBounds().getEast()+'&top='+map.getBounds().getNorth()+'&bottom='+map.getBounds().getSouth()+'" target=\"\_blank\">Edit area in JOSM</a>');
-		}
-		if (map.getZoom() < 18) {
-			josmText.setContent('');
-		}
-	});
+	// map.on('moveend', function () {
+	// 	if (map.getZoom() >= 18) {
+	// 		josmText.setContent('<a href="http://127.0.0.1:8111/load_and_zoom?left='+map.getBounds().getWest()+'&right='+map.getBounds().getEast()+'&top='+map.getBounds().getNorth()+'&bottom='+map.getBounds().getSouth()+'" target=\"\_blank\">Edit area in JOSM</a>');
+	// 	}
+	// 	if (map.getZoom() < 18) {
+	// 		josmText.setContent('');
+	// 	}
+	// });
 
 	map.on('zoomend', function () {
 		if (map.getZoom() > 17) {
+			map.removeLayer(poiClusters);
+			map.addLayer(poiMain);
 			map.addLayer(poiMinis);
 		}
 		if (map.getZoom() <= 17) {
+			map.addLayer(poiClusters);
+			map.removeLayer(poiMain);
 			map.removeLayer(poiMinis);
 		}
-		if (map.getZoom() >= 15) {
+		if (map.getZoom() >= 14) {
 			map.removeLayer(overlay);
 			zoomText.setContent('');
 		}
-		if (map.getZoom() < 15) {
+		if (map.getZoom() < 14) {
 			map.addLayer(overlay);
 			zoomText.setContent('Please Zoom In');
 		}
 	});
-
 
 	document.querySelector(".leaflet-popup-pane").addEventListener("load", function (event) {
 		var tagName = event.target.tagName,
@@ -329,9 +331,5 @@ $(function() {
 			popup.update();
 		}
 	}, true);
-
-	// document.getElementById('infoButton').addEventListener('click', function () {
-	// 	document.getElementById("info").style.visibility = "visible";
-	// });
 
 });

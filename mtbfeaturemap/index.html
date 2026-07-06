@@ -20,22 +20,6 @@
 		<script src="jquery-1.10.2.min.js"></script>	
 
 		<title>MTB Feature Map</title>
-
-		<script type="text/javascript">
-
-			jQuery(function($) {
-				$(".profile-toggle").click(function() {
-					$("#infoBox").toggleClass("hidden show")
-					console.log('click');
-				});
-			});
-
-			function hideInfo() {
-				if ($("#infoBox").hasClass("show")) {
-					$("#infoBox").toggleClass("hidden show")
-				}
-			}
-		</script>
 	</head>
 	<body>
 		<div id="sidebar">
@@ -70,5 +54,18 @@
 		<script src="L.Control.Locate.min.js" charset="utf-8"></script>
 		<script src="leaflet.markercluster.js"></script>
 		<script src="mapcode.js"></script>
+		<script>
+			function togglelinks() {
+				var div = document.getElementById("linksdiv");
+				var button = document.getElementById("linksbutton");
+				if (button.style.display === "block") {
+					div.style.display = "block";
+					button.style.display = "none";
+				} else {
+					div.style.display = "none";
+					button.style.display = "block";
+				}
+			} 
+		</script>
 	</body>
 </html>
