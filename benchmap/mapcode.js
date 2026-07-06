@@ -1700,7 +1700,6 @@ $(function() {
 		}
 	});
 
-
 	document.querySelector(".leaflet-popup-pane").addEventListener("load", function (event) {
 		var tagName = event.target.tagName,
 		popup = map._popup; // Last open Popup.
