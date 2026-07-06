@@ -904,7 +904,7 @@ function downloadData() {
 		url: "https://overpass-api.de/api/interpreter",
 		// url: "https://overpass.private.coffee/api/interpreter",
 		data: {
-			"data": '{{data:sql,server=https://postpass.geofabrik.de/api/}} SELECT osm_id, geom, tags FROM postpass_point WHERE geom && {{bbox}} AND tags @> '{"amenity": "bench"}'::JSONB' //nwr[leisure=picnic_table];
+			"data": '[bbox:'+bbox+'][out:json][timeout:25];(nwr[amenity=bench];);out body center; >; out skel qt;' //nwr[leisure=picnic_table];
 		},
 		success: element_to_map,
 		error: function(xhr, status, errorThrown){
