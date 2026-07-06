@@ -926,30 +926,30 @@ function downloadData() {
 $(function() {
 	bench_dot = L.icon({
 		iconUrl: 'icons/bench_diamond_dot.svg',
-		iconSize: [10,10],
+		iconSize: [14,14],
 		className: 'pointIcon',
-		iconAnchor: [5,5],
+		iconAnchor: [7,7],
 		popupAnchor: [1,-14],
 	});
 	bench_dot_insc = L.icon({
 		iconUrl: 'icons/bench_square_insc.svg',
-		iconSize: [7,7],
+		iconSize: [10,10],
 		className: 'pointIcon',
-		iconAnchor: [3.5,3.5],
+		iconAnchor: [5,5],
 		popupAnchor: [0,-14],
 	});
 	bench_dot_unk = L.icon({
 		iconUrl: 'icons/bench_triangle_unk.svg',
-		iconSize: [9,9],
+		iconSize: [13,13],
 		className: 'pointIcon',
-		iconAnchor: [4.5,4.5],
+		iconAnchor: [6.5,6.5],
 		popupAnchor: [1,-14],
 	});
 	bench_dot_ob = L.icon({
 		iconUrl: 'icons/bench_dot_ob.svg',
-		iconSize: [8,8],
+		iconSize: [12,12],
 		className: 'pointIcon',
-		iconAnchor: [4,4],
+		iconAnchor: [6,6],
 		popupAnchor: [-1,-14],
 	});
 	// picnic_table_dot = L.icon({
