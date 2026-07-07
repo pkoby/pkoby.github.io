@@ -164,7 +164,7 @@ function setMiniMarker(poi_type, icon, lat, lon, tags, osmid, osmtype) {
 	
 	poi_markers.push(mrk);
 	mrk.addTo(poiMinis);
-	if (map.getZoom() > 17) {
+	if (map.getZoom() > 12) {
 		poiMinis.addTo(map);
 	}
 }
@@ -191,7 +191,7 @@ function setPoiMarker(poi_type, icon, lat, lon, tags, osmid, osmtype) {
 	poi_markers.push(mrk);
 	// mrk.addTo(poiClusters);
 	mrk.addTo(poiMain);
-	if (map.getZoom() > 18) {
+	if (map.getZoom() > 14) {
 		poiMain.addTo(map);
 	}
 }
