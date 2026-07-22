@@ -424,7 +424,7 @@ button {
 }*/
 .leaflet-popup-content {
 	/*border-radius: 0;*/
-	max-width: 300px;
+	/*max-width: 300px;*/
 	/*min-height: 180px;*/
 	text-align: center;
 	color: white;
@@ -749,7 +749,7 @@ hr {
 	display: block;
 	font-size: 1.1em;
 }.return {
-	opacity: 0.2;
+	opacity: 0.1;
 }
 table {
 	border-spacing: 4px;
