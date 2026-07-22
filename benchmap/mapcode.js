@@ -388,13 +388,13 @@ function getOpenbenchPhoto(OBid) {
 }
 
 function inscriptionParser(inscription) {
-	var slashN = inscription.replace(/\\n/g, "<br/>");
-	var slashNspaces = slashN.replace(/ \\n /g, "<br/>");
-	var doubleSlash = slashNspaces.replace(/ \/\/ /g, "<br/><p class='thiccbreak'></p>");
+	var slashN = inscription.replace(/\\n/g, "<span class='return'>↵</span><br/>");
+	var slashNspaces = slashN.replace(/ \\n /g, "<span class='return'>↵</span><br/>");
+	var doubleSlash = slashNspaces.replace(/ \/\/ /g, "<span class='return'>↵</span><br/><p class='thiccbreak'></p>");
 	var semiColon = doubleSlash.replace(/ \; /g, "</div><div class='inscription'>");
 	var tab = semiColon.replace(/ \\t /g, "<pre>\t\t</pre>");
-	var slashEnd = tab.replace(/ \//g, "<br/>");
-	return slashEnd.replace(/ \/ /g,"<br/>");
+	var slashEnd = tab.replace(/ \//g, "<span class='return'>↵</span><br/>");
+	return slashEnd.replace(/ \/ /g,"<span class='return'>↵</span><br/>");
 }
 
 function directionParser(direction) {

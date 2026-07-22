@@ -428,6 +428,7 @@ button {
 	/*min-height: 180px;*/
 	text-align: center;
 	color: white;
+	line-height: 1.5;
 }
 
 .leaflet-popup-content-wrapper {
@@ -747,6 +748,12 @@ hr {
 	margin-bottom: 8px;
 	display: block;
 	font-size: 1.1em;
+}.return {
+	opacity: 0.2;
+}
+table {
+	border-spacing: 4px;
+	border: 0px;
 }
 
 pre {
