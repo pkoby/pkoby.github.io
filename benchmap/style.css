@@ -758,6 +758,7 @@ table {
 
 pre {
 	display: inline;
+	opacity: 0.1;
 }
 
 p.thiccbreak {
