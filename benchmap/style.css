@@ -424,7 +424,7 @@ button {
 }*/
 .leaflet-popup-content {
 	/*border-radius: 0;*/
-	/*max-width: 300px;*/
+	max-width: 350px;
 	/*min-height: 180px;*/
 	text-align: center;
 	color: white;
