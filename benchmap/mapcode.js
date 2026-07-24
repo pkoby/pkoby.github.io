@@ -392,7 +392,7 @@ function inscriptionParser(inscription) {
 	var slashNspaces = slashN.replace(/ \\n /g, "<span class='return'> ↩</span><br/>");
 	var doubleSlash = slashNspaces.replace(/ \/\/ /g, "<span class='return'> ↩</span><br/><p class='thiccbreak'></p>");
 	var semiColon = doubleSlash.replace(/ \; /g, "</div><div class='inscription'>");
-	var tab = semiColon.replace(/ \\t /g, "<pre>\t⇥\t</pre>");
+	var tab = semiColon.replace(/ \\t /g, "<pre>  ⇥  </pre>");
 	var slashEnd = tab.replace(/ \//g, "<span class='return'> ↩</span><br/>");
 	return slashEnd.replace(/ \/ /g,"<span class='return'> ↩</span><br/>");
 }
@@ -1650,19 +1650,19 @@ $(function() {
 		iconUrl: 'icons/bench_dot_ob.svg',
 		iconSize: [6,6],
 		className: 'colourIcon',
-		iconAnchor: [-5,10],
+		iconAnchor: [-3,3],
 	});
 	inscription_icon = L.icon({
 		iconUrl: 'icons/inscription.svg',
 		iconSize: [8,5],
 		className: 'sourceIcon',
-		iconAnchor: [4,-4],
+		iconAnchor: [4,-3],
 	});
 	no_inscription_icon = L.icon({
 		iconUrl: 'icons/no_inscription.svg',
 		iconSize: [8,5],
 		className: 'sourceIcon',
-		iconAnchor: [4,-4],
+		iconAnchor: [4,-3],
 	});
 	unk_inscription_icon = L.icon({
 		iconUrl: 'icons/unk_inscription.svg',
