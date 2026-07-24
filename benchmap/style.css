@@ -748,8 +748,11 @@ hr {
 	margin-bottom: 8px;
 	display: block;
 	font-size: 1.1em;
+	box-sizing: border-box;
 }.return {
 	opacity: 0.1;
+	display: inline-block;
+	white-space: nowrap;
 }
 table {
 	border-spacing: 4px;
