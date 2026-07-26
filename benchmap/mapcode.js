@@ -845,8 +845,7 @@ function element_to_map(data) {
 			}
 			if (el.tags["openbenches:id"] != undefined) {
 				setOBMarker("", openbenches_icon, el.lat, el.lon, el.tags, el.id, el.type);
-			}
-			if ((el.tags.inscription != undefined && el.tags.inscription != 'no' && el.tags.inscription != 'No' && el.tags.inscription != 'NO') || (el.tags["inscription:1"] != undefined && el.tags["inscription:1"] != 'no'&& el.tags["inscription:1"] != 'No'&& el.tags["inscription:1"] != 'NO')) {
+			} else if ((el.tags.inscription != undefined && el.tags.inscription != 'no' && el.tags.inscription != 'No' && el.tags.inscription != 'NO') || (el.tags["inscription:1"] != undefined && el.tags["inscription:1"] != 'no'&& el.tags["inscription:1"] != 'No'&& el.tags["inscription:1"] != 'NO')) {
 				setMiniMarker("", inscription_icon, el.lat, el.lon, el.tags, el.id, el.type);
 			// } else if (el.tags.inscription == 'no') {
 				// setMiniMarker("", no_inscription_icon, el.lat, el.lon, el.tags, el.id, el.type);
@@ -1647,10 +1646,10 @@ $(function() {
 	// 	popupAnchor: [0,-20],
 	// });
 	openbenches_icon = L.icon({
-		iconUrl: 'icons/bench_dot_ob.svg',
-		iconSize: [6,6],
-		className: 'colourIcon',
-		iconAnchor: [-3,3],
+		iconUrl: 'icons/inscription_ob.svg',
+		iconSize: [8,5],
+		className: 'sourceIcon',
+		iconAnchor: [4,-3],
 	});
 	inscription_icon = L.icon({
 		iconUrl: 'icons/inscription.svg',
