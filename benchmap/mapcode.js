@@ -20,10 +20,12 @@ var poiClusters = new L.markerClusterGroup({
 	// }
 });
 
+let counter_total = 0;
 let counter_bench = 0;
 let counter_insc = 0;
 let counter_unk = 0;
 let counter_ob = 0;
+let counter_total_div = document.getElementById("count_bench");
 let counter_bench_div = document.getElementById("count_bench");
 let counter_insc_div = document.getElementById("count_insc");
 let counter_unk_div = document.getElementById("count_unk");
@@ -553,6 +555,7 @@ function setPoiMarker(poi_type, icon_name, lat, lon, tags, osmid, osmtype) {
 }
 
 function element_to_map(data) {
+	counter_total = 0;
 	counter_bench = 0;
 	counter_insc = 0;
 	counter_unk = 0;
@@ -611,15 +614,19 @@ function element_to_map(data) {
 				if (el.tags["openbenches:id"] != undefined) {
 					setDotMarker("", bench_dot_ob, el.lat, el.lon, el.tags, el.id, el.type);
 					counter_ob++;
+					counter_total++;
 				} else if ((el.tags.inscription != undefined && el.tags.inscription != 'no' && el.tags.inscription != 'No' && el.tags.inscription != 'NO') || (el.tags["inscription:1"] != undefined && el.tags["inscription:1"] != 'no'&& el.tags["inscription:1"] != 'No'&& el.tags["inscription:1"] != 'NO')) {
 					setDotMarker("", bench_dot_insc, el.lat, el.lon, el.tags, el.id, el.type);
 					counter_insc++;
+					counter_total++;
 				} else if ((el.tags.inscription != undefined && (el.tags.inscription == 'no' || el.tags.inscription == 'No' || el.tags.inscription == 'NO')) || (el.tags["inscription:1"] != undefined && (el.tags["inscription:1"] == 'no'|| el.tags["inscription:1"] == 'No' || el.tags["inscription:1"] == 'NO'))) {
 					setDotMarker("", bench_dot, el.lat, el.lon, el.tags, el.id, el.type);
 					counter_bench++;
+					counter_total++;
 				} else {
 					setDotMarker("", bench_dot_unk, el.lat, el.lon, el.tags, el.id, el.type);
 					counter_unk++;
+					counter_total++;
 				}
 				if (el.tags.colour != undefined && el.tags.colour.includes('red')) {
 					if ((el.tags.backrest != undefined && el.tags.backrest == 'yes') && (el.tags.armrest != undefined && el.tags.armrest == 'yes')) {
@@ -857,6 +864,9 @@ function element_to_map(data) {
 	map.removeLayer(loadingOverlay);
 	loadingText.setContent('');
 
+	while (counter_total_div.hasChildNodes()) {
+		counter_total_div.removeChild(counter_total_div.lastChild);
+	}
 	while (counter_bench_div.hasChildNodes()) {
 		counter_bench_div.removeChild(counter_bench_div.lastChild);
 	}
@@ -869,16 +879,19 @@ function element_to_map(data) {
 	while (counter_ob_div.hasChildNodes()) {
 		counter_ob_div.removeChild(counter_ob_div.lastChild);
 	}
+	var new_span_total = document.createElement('span');
 	var new_span_bench = document.createElement('span');
 	var new_span_insc = document.createElement('span');
 	var new_span_unk = document.createElement('span');
 	var new_span_ob = document.createElement('span');
 
-	new_span_bench.innerHTML = counter_bench;
-	new_span_insc.innerHTML = counter_insc;
-	new_span_unk.innerHTML = counter_unk;
-	new_span_ob.innerHTML = counter_ob;
+	new_span_total.innerHTML = counter_total;
+	new_span_bench.innerHTML = counter_bench+(100/counter_total*counter_bench)+'%';
+	new_span_insc.innerHTML = counter_insc+(100/counter_total*counter_insc)+'%';
+	new_span_unk.innerHTML = counter_unk+(100/counter_total*counter_unk)+'%';
+	new_span_ob.innerHTML = counter_ob+(100/counter_total*counter_ob)+'%';
 
+	counter_total_div.appendChild(new_span_total);
 	counter_bench_div.appendChild(new_span_bench);
 	counter_insc_div.appendChild(new_span_insc);
 	counter_unk_div.appendChild(new_span_unk);
