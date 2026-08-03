@@ -21,12 +21,12 @@ var poiClusters = new L.markerClusterGroup({
 });
 
 let counter_total = 0;
-let counter_bench = 0;
+let counter_noinsc = 0;
 let counter_insc = 0;
 let counter_unk = 0;
 let counter_ob = 0;
-let counter_total_div = document.getElementById("count_bench");
-let counter_bench_div = document.getElementById("count_bench");
+let counter_total_div = document.getElementById("count_total");
+let counter_noinsc_div = document.getElementById("count_noinsc");
 let counter_insc_div = document.getElementById("count_insc");
 let counter_unk_div = document.getElementById("count_unk");
 let counter_ob_div = document.getElementById("count_ob");
@@ -556,7 +556,7 @@ function setPoiMarker(poi_type, icon_name, lat, lon, tags, osmid, osmtype) {
 
 function element_to_map(data) {
 	counter_total = 0;
-	counter_bench = 0;
+	counter_noinsc = 0;
 	counter_insc = 0;
 	counter_unk = 0;
 	counter_ob = 0;
@@ -621,7 +621,7 @@ function element_to_map(data) {
 					counter_total++;
 				} else if ((el.tags.inscription != undefined && (el.tags.inscription == 'no' || el.tags.inscription == 'No' || el.tags.inscription == 'NO')) || (el.tags["inscription:1"] != undefined && (el.tags["inscription:1"] == 'no'|| el.tags["inscription:1"] == 'No' || el.tags["inscription:1"] == 'NO'))) {
 					setDotMarker("", bench_dot, el.lat, el.lon, el.tags, el.id, el.type);
-					counter_bench++;
+					counter_noinsc++;
 					counter_total++;
 				} else {
 					setDotMarker("", bench_dot_unk, el.lat, el.lon, el.tags, el.id, el.type);
@@ -864,11 +864,20 @@ function element_to_map(data) {
 	map.removeLayer(loadingOverlay);
 	loadingText.setContent('');
 
+	console.log("Total: "+counter_total);
+	var ob_percent = Math.round((100 * counter_ob)/counter_total);
+	var noinsc_percent = Math.round((100 * counter_noinsc)/counter_total);
+	var insc_percent = Math.round((100 * counter_insc)/counter_total);
+	var unk_percent = Math.round((100 * counter_unk)/counter_total);
+
 	while (counter_total_div.hasChildNodes()) {
 		counter_total_div.removeChild(counter_total_div.lastChild);
 	}
-	while (counter_bench_div.hasChildNodes()) {
-		counter_bench_div.removeChild(counter_bench_div.lastChild);
+	while (counter_ob_div.hasChildNodes()) {
+		counter_ob_div.removeChild(counter_ob_div.lastChild);
+	}
+	while (counter_noinsc_div.hasChildNodes()) {
+		counter_noinsc_div.removeChild(counter_noinsc_div.lastChild);
 	}
 	while (counter_insc_div.hasChildNodes()) {
 		counter_insc_div.removeChild(counter_insc_div.lastChild);
@@ -876,26 +885,25 @@ function element_to_map(data) {
 	while (counter_unk_div.hasChildNodes()) {
 		counter_unk_div.removeChild(counter_unk_div.lastChild);
 	}
-	while (counter_ob_div.hasChildNodes()) {
-		counter_ob_div.removeChild(counter_ob_div.lastChild);
-	}
 	var new_span_total = document.createElement('span');
-	var new_span_bench = document.createElement('span');
+	var new_span_ob = document.createElement('span');
+	var new_span_noinsc = document.createElement('span');
 	var new_span_insc = document.createElement('span');
 	var new_span_unk = document.createElement('span');
-	var new_span_ob = document.createElement('span');
+
+	console.log("Total: "+counter_total);
 
 	new_span_total.innerHTML = counter_total;
-	new_span_bench.innerHTML = counter_bench+(100/counter_total*counter_bench)+'%';
-	new_span_insc.innerHTML = counter_insc+(100/counter_total*counter_insc)+'%';
-	new_span_unk.innerHTML = counter_unk+(100/counter_total*counter_unk)+'%';
-	new_span_ob.innerHTML = counter_ob+(100/counter_total*counter_ob)+'%';
+	new_span_ob.innerHTML = counter_ob+" ("+ob_percent+'%)';
+	new_span_noinsc.innerHTML = counter_noinsc+" ("+noinsc_percent+'%)';
+	new_span_insc.innerHTML = counter_insc+" ("+insc_percent+'%)';
+	new_span_unk.innerHTML = counter_unk+" ("+unk_percent+'%)';
 
 	counter_total_div.appendChild(new_span_total);
-	counter_bench_div.appendChild(new_span_bench);
+	counter_ob_div.appendChild(new_span_ob);
+	counter_noinsc_div.appendChild(new_span_noinsc);
 	counter_insc_div.appendChild(new_span_insc);
 	counter_unk_div.appendChild(new_span_unk);
-	counter_ob_div.appendChild(new_span_ob);
 }
 
 function downloadData() {

@@ -77,12 +77,12 @@ button {
 	line-height: 16px;
 }
 #counter_display img {
-	width: 10px;
+	height: 10px;
 	position: relative;
 	top: 1px;
 }
 .counter_span {
-	display: inline-block;
+	display: block;
 	padding: 0 3px 0 3px;
 }
 
@@ -759,7 +759,7 @@ hr {
 	white-space: nowrap;
 }
 table {
-	border-spacing: 4px;
+	border-spacing: 2px;
 	border: 0px;
 }
 
