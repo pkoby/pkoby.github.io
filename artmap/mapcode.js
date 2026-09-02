@@ -27,6 +27,9 @@ var outline_icon,error_icon,wiki_icon,image_icon,mapillary_icon,panoramax_icon,a
 		subdomains: 'abcd',
 		maxZoom: 19,
 	});
+	let FreemapLight=L.maplibreGL({
+		style: 'https://tiles.openfreemap.org/styles/positron',
+	});
 
 	var overlay = L.polygon([
 		[90, -180],
@@ -44,7 +47,7 @@ var outline_icon,error_icon,wiki_icon,image_icon,mapillary_icon,panoramax_icon,a
 
 
 	var map = new L.map('bigmap', {
-		layers: [CartoDB_Voyager],
+		layers: [FreemapLight],
 		maxBounds: [[90,-180],[-90,180]],
 		zoomControl: false,
 	})
@@ -290,7 +293,7 @@ function setPoiMarker(poi_type, icon, lat, lon, tags, osmid, osmtype) {
 	}
 	
 	if (tags.start_date != undefined) {
-		popup_content += "<br>Installed: "+tags.start_date;
+		popup_content += "<br>Created: "+tags.start_date;
 	}
 
 	if (tags.wikipedia != undefined) {
@@ -541,7 +544,11 @@ function dlObjects() {
 		data: {
 			"data": '[bbox:'+bbox+'][out:json][timeout:25];(nwr[tourism=artwork];nwr[memorial=sculpture];nwr[memorial=statue];nwr[memorial=bust];);out body center;'/*nwr[historic=memorial];*/
 		},
-		success: element_to_map
+		success: element_to_map,
+		error: function(xhr, status, errorThrown){
+			loadingText.setContent('<span id="error">Error '+xhr.status+', '+errorThrown+'; Try&nbsp;Again</span>');
+			document.getElementById('error').addEventListener('click', downloadData);
+		},
 	});
 
 	if (map.hasLayer(bboxOutline)) {
