@@ -48,13 +48,11 @@ let bench_dot,bench_dot_insc,bench_dot_unk,bench_dot_ob,
 	openbenches_icon,inscription_icon,no_inscription_icon,unk_inscription_icon;
 
 	var OSMCarto=L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,opacity:0.3,attribution:'&copy;<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'});
-	var CartoDB_Voyager = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-		attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-		subdomains: 'abcd',
-		maxZoom: 20,
-	});
 	var Esri_WorldTopoMap = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
 		attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), and the GIS User Community'
+	});
+	let FreemapLight=L.maplibreGL({
+		style: 'https://tiles.openfreemap.org/styles/positron',
 	});
 
 var overlay = L.polygon([
@@ -73,7 +71,7 @@ var loadingOverlay = L.polygon([
 
 
 var map = new L.map('bigmap', {
-	layers: [CartoDB_Voyager],
+	layers: [FreemapLight],
 	maxBounds: [[90,-180],[-90,180]],
 	zoomControl: false,
 })
@@ -864,7 +862,6 @@ function element_to_map(data) {
 	map.removeLayer(loadingOverlay);
 	loadingText.setContent('');
 
-	console.log("Total: "+counter_total);
 	var ob_percent = Math.round((100 * counter_ob)/counter_total);
 	var noinsc_percent = Math.round((100 * counter_noinsc)/counter_total);
 	var insc_percent = Math.round((100 * counter_insc)/counter_total);
@@ -890,8 +887,6 @@ function element_to_map(data) {
 	var new_span_noinsc = document.createElement('span');
 	var new_span_insc = document.createElement('span');
 	var new_span_unk = document.createElement('span');
-
-	console.log("Total: "+counter_total);
 
 	new_span_total.innerHTML = counter_total;
 	new_span_ob.innerHTML = counter_ob+" ("+ob_percent+'%)';
