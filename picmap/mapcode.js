@@ -74,6 +74,7 @@ var map = new L.map('bigmap', {
 	layers: [FreemapLight],
 	maxBounds: [[90,-180],[-90,180]],
 	zoomControl: false,
+	maxZoom: 20,
 })
 
 map.createPane('clustersPane').style.zIndex = 4000;
