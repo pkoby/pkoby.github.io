@@ -50,6 +50,7 @@ var outline_icon,error_icon,wiki_icon,image_icon,mapillary_icon,panoramax_icon,a
 		layers: [FreemapLight],
 		maxBounds: [[90,-180],[-90,180]],
 		zoomControl: false,
+		maxZoom: 20,
 	})
 	
 	
