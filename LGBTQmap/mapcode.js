@@ -1,29 +1,56 @@
 'use strict';
-var bbox, bboxOutline;
-var poi_markers = new Array();
-var poi_clusters = new L.markerClusterGroup({
-	// disableClusteringAtZoom: 16,
-	spiderfyOnMaxZoom: true,
-	showCoverageOnHover: true,
-	maxClusterRadius: 15,
-	minClusterRadius: 1,
-	// iconCreateFunction: function(cluster) {
-	// 	return L.icon({
-	// 		iconUrl: 'icons/group_icon.svg',
-	// 		iconSize: [32,32],
-	// 		className: 'pointIcon',
-	// 		iconAnchor: [16,16],
-	// 	});
-	// }
+let saved_lat, saved_lon, bbox, bboxOutline;
+const poi_markers = new Array();
+// var poiDots = new L.LayerGroup();
+// var poiMinis = new L.LayerGroup();
+const picLayer = new L.LayerGroup();
+// const cLayer = new L.LayerGroup();
+// const pLayer = new L.LayerGroup();
+// const mLayer = new L.LayerGroup();
+// const iLayer = new L.LayerGroup();
+const noPicLayer = new L.LayerGroup();
+const poiClustersNoPic = new L.markerClusterGroup({
+	disableClusteringAtZoom: 19, spiderfyOnMaxZoom: true, showCoverageOnHover: true, maxClusterRadius: 30, minClusterRadius: 1
+});
+const poiClustersC= new L.markerClusterGroup({
+	disableClusteringAtZoom: 19, spiderfyOnMaxZoom: true, showCoverageOnHover: true, maxClusterRadius: 30, minClusterRadius: 1, iconCreateFunction: function(cluster) {
+		return L.divIcon({ className: 'c-cluster', html: '<div><span>' + cluster.getChildCount() + '</span></div>' });
+	}
+});
+const poiClustersP= new L.markerClusterGroup({
+	disableClusteringAtZoom: 19, spiderfyOnMaxZoom: true, showCoverageOnHover: true, maxClusterRadius: 30, minClusterRadius: 1, iconCreateFunction: function(cluster) {
+		return L.divIcon({ className: 'p-cluster', html: '<div><span>' + cluster.getChildCount() + '</span></div>' });
+	}
+});
+const poiClustersM= new L.markerClusterGroup({
+	disableClusteringAtZoom: 19, spiderfyOnMaxZoom: true, showCoverageOnHover: true, maxClusterRadius: 30, minClusterRadius: 1, iconCreateFunction: function(cluster) {
+		return L.divIcon({ className: 'm-cluster', html: '<div><span>' + cluster.getChildCount() + '</span></div>' });
+	}
+});
+const poiClustersI= new L.markerClusterGroup({
+	disableClusteringAtZoom: 19, spiderfyOnMaxZoom: true, showCoverageOnHover: true, maxClusterRadius: 30, minClusterRadius: 1, iconCreateFunction: function(cluster) {
+		return L.divIcon({ className: 'i-cluster', html: '<div><span>' + cluster.getChildCount() + '</span></div>' });
+	}
+});
+const poiClustersW= new L.markerClusterGroup({
+	disableClusteringAtZoom: 19, spiderfyOnMaxZoom: true, showCoverageOnHover: true, maxClusterRadius: 30, minClusterRadius: 1, iconCreateFunction: function(cluster) {
+		return L.divIcon({ className: 'w-cluster', html: '<div><span>' + cluster.getChildCount() + '</span></div>' });
+	}
 });
 
-var primary_icon,welcome_icon,no_icon,has_source_icon,has_website_icon,no_source_icon,bar_icon,cafe_icon,fitness_icon,gallery_icon,healthcare_icon,heart_icon,library_icon,lodging_icon,memorial_icon,museum_icon,office_icon,pharmacy_icon,placeofworship_icon,pub_icon,restaurant_icon,sauna_icon,shop_icon,theater_icon,vet_icon,other_icon;
-	
-// init map
+let counterPics = 0;
+let counterNoPics = 0;
+let counter_1_div = document.getElementById("count1");
+let counter_2_div = document.getElementById("count2");
 
-	let FreemapDark=L.maplibreGL({
-		style: 'https://tiles.openfreemap.org/styles/dark',
-	});
+let artwork_icon_n,attraction_icon_n,bench_icon_n,bookcase_icon_n,bridge_icon_n,bike_rental_icon_n,castle_icon_n,cave_icon_n,cemetery_icon_n,church_icon_n,defibrillator_icon_n,give_box_icon_n,globe_icon_n,information_icon_n,landmark_icon_n,library_icon_n,memorial_icon_n,monument_icon_n,mosque_icon_n,museum_icon_n,obelisk_icon_n,plaque_icon_n,ruins_icon_n,school_icon_n,shrine_icon_n,statue_icon_n,synagogue_icon_n,dharma_icon_n,viewpoint_icon_n,village_icon_n,waterfall_icon_n,
+	artwork_icon_w,attraction_icon_w,bench_icon_w,bookcase_icon_w,bridge_icon_w,bike_rental_icon_w,castle_icon_w,cave_icon_w,cemetery_icon_w,church_icon_w,defibrillator_icon_w,give_box_icon_w,globe_icon_w,information_icon_w,landmark_icon_w,library_icon_w,memorial_icon_w,monument_icon_w,mosque_icon_w,museum_icon_w,obelisk_icon_w,plaque_icon_w,ruins_icon_w,school_icon_w,shrine_icon_w,statue_icon_w,synagogue_icon_w,dharma_icon_w,viewpoint_icon_w,village_icon_w,waterfall_icon_w,
+	artwork_icon_c,attraction_icon_c,bench_icon_c,bookcase_icon_c,bridge_icon_c,bike_rental_icon_c,castle_icon_c,cave_icon_c,cemetery_icon_c,church_icon_c,defibrillator_icon_c,give_box_icon_c,globe_icon_c,information_icon_c,landmark_icon_c,library_icon_c,memorial_icon_c,monument_icon_c,mosque_icon_c,museum_icon_c,obelisk_icon_c,plaque_icon_c,ruins_icon_c,school_icon_c,shrine_icon_c,statue_icon_c,synagogue_icon_c,dharma_icon_c,viewpoint_icon_c,village_icon_c,waterfall_icon_c,
+	artwork_icon_p,attraction_icon_p,bench_icon_p,bookcase_icon_p,bridge_icon_p,bike_rental_icon_p,castle_icon_p,cave_icon_p,cemetery_icon_p,church_icon_p,defibrillator_icon_p,give_box_icon_p,globe_icon_p,information_icon_p,landmark_icon_p,library_icon_p,memorial_icon_p,monument_icon_p,mosque_icon_p,museum_icon_p,obelisk_icon_p,plaque_icon_p,ruins_icon_p,school_icon_p,shrine_icon_p,statue_icon_p,synagogue_icon_p,dharma_icon_p,viewpoint_icon_p,village_icon_p,waterfall_icon_p,
+	artwork_icon_m,attraction_icon_m,bench_icon_m,bookcase_icon_m,bridge_icon_m,bike_rental_icon_m,castle_icon_m,cave_icon_m,cemetery_icon_m,church_icon_m,defibrillator_icon_m,give_box_icon_m,globe_icon_m,information_icon_m,landmark_icon_m,library_icon_m,memorial_icon_m,monument_icon_m,mosque_icon_m,museum_icon_m,obelisk_icon_m,plaque_icon_m,ruins_icon_m,school_icon_m,shrine_icon_m,statue_icon_m,synagogue_icon_m,dharma_icon_m,viewpoint_icon_m,village_icon_m,waterfall_icon_m,
+	artwork_icon_i,attraction_icon_i,bench_icon_i,bookcase_icon_i,bridge_icon_i,bike_rental_icon_i,castle_icon_i,cave_icon_i,cemetery_icon_i,church_icon_i,defibrillator_icon_i,give_box_icon_i,globe_icon_i,information_icon_i,landmark_icon_i,library_icon_i,memorial_icon_i,monument_icon_i,mosque_icon_i,museum_icon_i,obelisk_icon_i,plaque_icon_i,ruins_icon_i,school_icon_i,shrine_icon_i,statue_icon_i,synagogue_icon_i,dharma_icon_i,viewpoint_icon_i,village_icon_i,waterfall_icon_i;
+
+	// var OSMCarto=L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,opacity:0.3,attribution:'&copy;<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'});
 	let FreemapLight=L.maplibreGL({
 		style: 'https://tiles.openfreemap.org/styles/positron',
 	});
@@ -44,18 +71,15 @@ var loadingOverlay = L.polygon([
 
 
 var map = new L.map('bigmap', {
-	layers: [FreemapDark],
+	layers: [FreemapLight],
 	maxBounds: [[90,-180],[-90,180]],
 	zoomControl: false,
-	center: [51.5,-0.1],
-	zoom: 12,
-	attributionControl: false
 })
 
-let hash=new L.Hash(map);
+map.createPane('clustersPane').style.zIndex = 4000;
+map.createPane('clustersPicPane').style.zIndex = 6000;
 
 var lc = L.control.locate({keepCurrentZoomLevel: true, inView: 'stop', outOfView: 'setView', inViewNotFollowing: 'inView', locateOptions: {enableHighAccuracy: true}}).addTo(map);
-
 
 document.getElementById('zoomin').addEventListener('click', function () {
 	map.zoomIn();
@@ -63,6 +87,61 @@ document.getElementById('zoomin').addEventListener('click', function () {
 document.getElementById('zoomout').addEventListener('click', function () {
 	map.zoomOut();
 });
+
+document.getElementById('pictures').addEventListener('click', togglePictures);
+
+function togglePictures() {
+	while (counter_1_div.hasChildNodes()) {
+		counter_1_div.removeChild(counter_1_div.lastChild);
+	}
+	while (counter_2_div.hasChildNodes()) {
+		counter_2_div.removeChild(counter_2_div.lastChild);
+	}
+	var new_span_pics = document.createElement('span');
+	var new_span_no_pics = document.createElement('span');
+	if (map.hasLayer(noPicLayer)) {
+		map.removeLayer(noPicLayer);
+		map.addLayer(picLayer);
+		// map.addLayer(cLayer);
+		// map.addLayer(pLayer);
+		// map.addLayer(mLayer);
+		// map.addLayer(iLayer);
+	} else {
+		// map.removeLayer(cLayer);
+		// map.removeLayer(pLayer);
+		// map.removeLayer(mLayer);
+		// map.removeLayer(iLayer);
+		map.removeLayer(picLayer);
+		map.addLayer(noPicLayer);
+	}
+	if (map.hasLayer(noPicLayer)) {
+		if (counterPics>999 || counterNoPics>999) {
+			new_span_pics.innerHTML = "<span style='font-size: 5pt;'>"+counterPics+"</span>";
+			new_span_no_pics.innerHTML = "<span style='font-size: 5pt;'>"+counterNoPics+"</span>";
+		} else if (counterPics>99 || counterNoPics>99) {
+			new_span_pics.innerHTML = "<span style='font-size: 7pt;'>"+counterPics+"</span>";
+			new_span_no_pics.innerHTML = "<span style='font-size: 7pt;'>"+counterNoPics+"</span>";
+		} else {
+			new_span_pics.innerHTML = counterPics;
+			new_span_no_pics.innerHTML = counterNoPics;
+		}
+		counter_1_div.appendChild(new_span_pics);
+		counter_2_div.appendChild(new_span_no_pics);
+	} else {
+		if (counterPics>999 || counterNoPics>999) {
+			new_span_pics.innerHTML = "<span style='font-size: 5pt;'>"+counterPics+"</span>";
+			new_span_no_pics.innerHTML = "<span style='font-size: 5pt;'>"+counterNoPics+"</span>";
+		} else if (counterPics>99 || counterNoPics>99) {
+			new_span_pics.innerHTML = "<span style='font-size: 7pt;'>"+counterPics+"</span>";
+			new_span_no_pics.innerHTML = "<span style='font-size: 7pt;'>"+counterNoPics+"</span>";
+		} else {
+			new_span_pics.innerHTML = counterPics;
+			new_span_no_pics.innerHTML = counterNoPics;
+		}
+		counter_1_div.appendChild(new_span_pics);
+		counter_2_div.appendChild(new_span_no_pics);
+	}
+}
 
 var currentLoc = null;
 var state = null;
@@ -95,26 +174,14 @@ document.getElementById('locater').addEventListener('click', function () {
 	}
 });
 
-document.getElementById('background').addEventListener('click', toggleBackground);
-
 document.getElementById('loaddata').addEventListener('click', downloadData);
-
-// var legend = L.control({ position: 'bottomleft' });
-// legend.onAdd = function (map) {
-// 	var div = L.DomUtil.create('div', 'legend'), icons = ['unknown','Bar','Restaurant','Pub','Cafe','Museum','Community Centre','Shop','Place of Worship'], labels = ['Unknown Type','Bar','Restaurant','Pub','Cafe','Museum','Community Centre','Shop','Place of Worship'];
-// 	// div.innerHTML =	'<span>Port of Passage</span><br><i class="points" style="color:">&#8226;</i>Bristol<br><i class="points" style="color:">&#8226;</i>Middlesex<br><i class="points" style="color:">&#8226;</i>London<br><br><span>Date of Indenture</span><br>';
-// 	for (var i = 0; i < icons.length; i++) {
-// 		div.innerHTML += '<img src="' + icons[i]+'.svg" class="legendicon"">'+labels[i]+'<br>';
-// 	}
-// 	return div;
-// };
 
 var zoomText = L.Control.extend({
 	options: {
 		position: 'bottomleft'
 	},
 	onAdd: function (map) {
-		return L.DomUtil.create('div', 'overlayText');
+		return L.DomUtil.create('div', 'overlayText zoomOverlay');
 	},
 	setContent: function (content) {
 		this.getContainer().innerHTML = content;
@@ -123,7 +190,7 @@ var zoomText = L.Control.extend({
 var zoomText =  new zoomText().addTo(map);
 
 document.getElementsByClassName('overlayText')[0].addEventListener('click', function () {
-	map.setZoom(12);
+	map.setZoom(13);
 });
 
 var loadingText = L.Control.extend({
@@ -131,7 +198,7 @@ var loadingText = L.Control.extend({
 		position: 'bottomleft'
 	},
 	onAdd: function (map) {
-		return L.DomUtil.create('div', 'overlayText');
+		return L.DomUtil.create('div', 'overlayText loadingOverlay');
 	},
 	setContent: function (content) {
 		this.getContainer().innerHTML = content;
@@ -139,247 +206,464 @@ var loadingText = L.Control.extend({
 });
 var loadingText =  new loadingText().addTo(map);
 
-	// leafl.addContent('<a href="https://github.com/pkoby/pkoby.github.io/issues" target=\"\_blank\">Report issue on Github</a>');
-L.control.attribution({prefix: '<a href="https://github.com/pkoby/pkoby.github.io/issues" target=\"\_blank\">Report issue on Github</a> | <a href="https://leafletjs.com/">Leaflet</a>'}).addTo(map);
-
-
+var josmText = L.Control.extend({
+	options: {
+		position: 'bottomleft'
+	},
+	onAdd: function (map) {
+		return L.DomUtil.create('div', 'josmtext');
+	},
+	setContent: function (content) {
+		this.getContainer().innerHTML = content;
+	}
+});
+var josmText =  new josmText().addTo(map);
 
 map.on('load', function () {
-	if (map.getZoom() < 12) {
+	if (map.getZoom() < 15) {
 		map.addLayer(overlay);
 		zoomText.setContent('Please Zoom In');
 	}
 });
 
+saved_lat = localStorage.getItem("pos_lat")
+saved_lon = localStorage.getItem("pos_lon")
+
+if (saved_lat != null) {
+	map.setView([saved_lat, saved_lon], 15)
+} else {
+	map.setView([51.5,-0.1], 15);
+}
+
+var mapHash = new L.Hash(map);
+
 if (L.Browser.retina) var tp = "lr";
 else var tp = "ls";
 
-// L.control.scale().addTo(map);
-
-function millToDays(ms) {
-	const millisecondsInYear = 1000 * 60 * 60 * 24 * 365;
-	const millisecondsInMonth = 1000 * 60 * 60 * 24 * 30;
-	const millisecondsInDay = 1000 * 60 * 60 * 24;
-
-	let years = Math.floor(ms / millisecondsInYear);
-	ms = ms % millisecondsInYear;
-	let months = Math.floor(ms / millisecondsInMonth);
-	ms = ms % millisecondsInMonth;
-	let days = Math.floor(ms / millisecondsInDay);
-
-	if (years > 1) {
-		if (months > 1) {
-			if (days > 1) {
-				return "<span class='years'>"+years+" years, "+months+" months, "+days+" days ago</span>";
-			} else if (days == 1) {
-				return "<span class='years'>"+years+" years, "+months+" months, "+days+" day ago</span>";
-			} else {
-				return "<span class='years'>"+years+" years, "+months+" months ago</span>";
-			}
-		} else if (months == 1) {
-			if (days > 1) {
-				return "<span class='years'>"+years+" years, "+months+" month, "+days+" days ago</span>";
-			} else if (days == 1) {
-				return "<span class='years'>"+years+" years, "+months+" month, "+days+" day ago</span>";
-			} else {
-				return "<span class='years'>"+years+" years, "+months+" month ago</span>";
-			}
-		} else {
-			if (days > 1) {
-				return "<span class='years'>"+years+" years, "+days+" days ago</span>";
-			} else if (days == 1) {
-				return "<span class='years'>"+years+" years, "+days+" day ago</span>";
-			} else {
-				return "<span class='years'>"+years+" years ago</span>";
-			}
-		}
-	} else if (years == 1) {
-		if (months > 1) {
-			if (days > 1) {
-				return "<span class='oneyear'>"+years+" year, "+months+" months, "+days+" days ago</span>";
-			} else if (days == 1) {
-				return "<span class='oneyear'>"+years+" year, "+months+" months, "+days+" day ago</span>";
-			} else {
-				return "<span class='oneyear'>"+years+" year, "+months+" months ago</span>";
-			}
-		} else if (months == 1) {
-			if (days > 1) {
-				return "<span class='oneyear'>"+years+" year, "+months+" month, "+days+" days ago</span>";
-			} else if (days == 1) {
-				return "<span class='oneyear'>"+years+" year, "+months+" month, "+days+" day ago</span>";
-			} else {
-				return "<span class='oneyear'>"+years+" year, "+months+" month ago</span>";
-			}
-		} else {
-			if (days > 1) {
-				return "<span class='oneyear'>"+years+" year, "+days+" days ago</span>";
-			} else if (days == 1) {
-				return "<span class='oneyear'>"+years+" year, "+days+" day ago</span>";
-			} else {
-				return "<span class='oneyear'>"+years+" year ago</span>";
-			}
-		}
+function searchImage(qcode) {
+	let qid = qcode;
+	let imageBox = document.querySelector('.image');
+	let newImage = getWDimage(qid);
+	document.getElementById("clicky").outerHTML = '';
+	const newImageSpan = document.createElement('span');
+	const noImageSpan = document.createElement('span');
+	noImageSpan.setAttribute("class","invalid");
+	newImageSpan.innerHTML = "<a href='https://www.wikidata.org/wiki/"+qid+"' target='_blank'><img src='"+newImage+"' alt='"+newImage+"' title='"+newImage+"'><img src='icons/wikidata.svg' class='badge' alt='Wikidata' title='Wikidata'></a>";
+	noImageSpan.innerHTML = "No Image Available";
+	if (newImage != '') {
+		imageBox.append(newImageSpan);
 	} else {
-		if (months > 1) {
-			if (days > 1) {
-				return "<span class='months'>"+months+" months, "+days+" days ago</span>";
-			} else if (days == 1) {
-				return "<span class='months'>"+months+" months, "+days+" day ago</span>";
-			} else {
-				return "<span class='months'>"+months+" months ago</span>";
-			}
-		} else if (months == 1) {
-			if (days > 1) {
-				return "<span class='onemonth'>"+months+" month, "+days+" days ago</span>";
-			} else if (days == 1) {
-				return "<span class='onemonth'>"+months+" month, "+days+" day ago</span>";
-			} else {
-				return "<span class='onemonth'>"+months+" month ago</span>";
-			}
-		} else {
-			if (days > 1) {
-				return "<span class='days'>"+days+" days ago</span>";
-			} else if (days == 1) {
-				return "<span class='days'>"+days+" day ago</span>";
-			} else {
-				return "<span class='days'>less than a day ago</span>";
-			}
-		}
+		imageBox.append(noImageSpan);
 	}
 }
 
-function setPoiMarker(poi_type, icon, lat, lon, tags, osmid, osmtype, timestamp) {
-	var editDate = new Date(timestamp);
-	var today = new Date();
-	var daysSince = today-editDate;
-	var dateStr = millToDays(daysSince);
-	const month = daysSince.toLocaleString('default',{ month:'long' });
-	var mrk = L.marker([lat, lon], {icon: icon});
+function parseWikiFile(tagWiki) {
+	var wiki_tag = tagWiki;
+	var wiki_file_no_special = decodeURI(wiki_tag);
+	var wiki_file_no_spaces = wiki_file_no_special.replace(new RegExp(' ', 'g'), '\_').replace(new RegExp('\%2C', 'g'), '\,');
+	var wiki_file_no_apos = wiki_file_no_special.replace(new RegExp('\'', 'g'), '\&apos\;');
+	return wiki_file_no_apos;
+}
+
+function getWikiImg(tagWiki) {
+	var wiki_tag = tagWiki;
+	if (wiki_tag.includes("File:")) {
+		var wiki_file = wiki_tag.split("File:")[1];
+	} else if (wiki_tag.includes("File%3A")) {
+		var wiki_file = wiki_tag.split("File%3A")[1];
+	} else if (wiki_tag.includes("media/Datei:")) {
+		var wiki_file = wiki_tag.split("media/Datei:")[1];
+	}
+	var wiki_file_no_special = decodeURI(wiki_file);
+	var wiki_file_no_spaces = wiki_file_no_special.replace(new RegExp(' ', 'g'), '\_').replace(new RegExp('\%2C', 'g'), '\,');
+	var wiki_file_no_apos = wiki_file_no_spaces.replace(new RegExp('\'', 'g'), '\&apos\;');
+	var hash = calcMD5(unescape(encodeURIComponent(wiki_file_no_spaces)));
+	var wiki_link = "https://upload.wikimedia.org/wikipedia/commons/"+hash.substring(0,1)+"/"+hash.substring(0,2)+"/"+wiki_file_no_apos;
+	return wiki_link;
+}
+
+function getWikiThumb(tagWiki) {
+	var wiki_tag = tagWiki;
+	if (wiki_tag.includes("File:")) {
+		var wiki_file = wiki_tag.split("File:")[1];
+	} else if (wiki_tag.includes("File%3A")) {
+		var wiki_file = wiki_tag.split("File%3A")[1];
+	} else if (wiki_tag.includes("media/Datei:")) {
+		var wiki_file = wiki_tag.split("media/Datei:")[1];
+	}
+	var wiki_file_no_special = decodeURI(wiki_file);
+	var wiki_file_no_spaces = wiki_file_no_special.replace(new RegExp(' ', 'g'), '\_');
+	var wiki_file_no_apos = wiki_file_no_spaces.replace(new RegExp('\'', 'g'), '\&apos\;');
+	var hash = calcMD5(unescape(encodeURIComponent(wiki_file_no_spaces)));
+	var wiki_link = "https://upload.wikimedia.org/wikipedia/commons/thumb/"+hash.substring(0,1)+"/"+hash.substring(0,2)+"/"+wiki_file_no_apos+"/250px-"+wiki_file_no_apos;
+	return wiki_link;
+}
+
+function getWDimage(qcode) {
+	var wiki_link = '';
+	var qid = qcode;
+	$.ajax({
+		url: 'https://www.wikidata.org/w/api.php?action=wbgetentities&ids='+qid+'&format=json&origin=*',
+		async: false,
+		dataType: 'json',
+		success: function (data) {
+			const jsonString = JSON.stringify(data);
+			if (jsonString.includes('"P18"')) {
+				$.ajax({
+					url: 'https://www.wikidata.org/w/api.php?action=wbgetclaims&property=P18&entity='+qid+'&format=json&origin=*',
+					async: false,
+					dataType: 'json',
+					success: function (data) {
+					// if (data.claims.P18[0].mainsnak.datavalue.value != null) {
+					var imageString = data.claims.P18[0].mainsnak.datavalue.value;
+					// } else if (data.claims.P18.mainsnak.datavalue.value != null) {
+						// var imageString = data.claims.P18.mainsnak.datavalue.value;
+					// }
+					var wiki_file_no_special = decodeURI(imageString);
+					var wiki_file_no_spaces = wiki_file_no_special.replace(new RegExp(' ', 'g'), '\_');
+					var wiki_file_no_apos = wiki_file_no_spaces.replace(new RegExp('\'', 'g'), '\&apos\;');
+					var hash = calcMD5(unescape(encodeURIComponent(wiki_file_no_spaces)));
+					wiki_link = "https://upload.wikimedia.org/wikipedia/commons/thumb/"+hash.substring(0,1)+"/"+hash.substring(0,2)+"/"+wiki_file_no_apos+"/250px-"+wiki_file_no_apos;
+					if (wiki_link.endsWith('.tif')) {
+						wiki_link = wiki_link+'.jpg'
+					}
+					console.log(wiki_link);
+
+					return wiki_link;
+					}
+				});
+				return wiki_link;
+			}
+ 		}
+	});
+	return wiki_link;
+}
+
+function splitLast(str, substring) {
+  const lastIndex = str.lastIndexOf(substring);
+  const before = str.slice(0, lastIndex);
+  const after = str.slice(lastIndex + 1);
+  return [before, after];
+}
+
+function getPxThumb(tagPanoramax) {
+	var px_link = "https://api.panoramax.xyz/api/pictures/"+tagPanoramax+"/thumb.jpg";
+	return px_link
+}
+
+function getPxLink(tagPanoramax) {
+	var px_link = "https://api.panoramax.xyz/#s=fp;s2;p"+tagPanoramax;
+	return px_link;
+}
+
+function getMLLink(tagMapillary) {
+	var ml_link = "https://www.mapillary.com/app/?focus=photo&pKey="+tagMapillary;
+	return ml_link;
+}
+
+function replaceUnderscore(value) {
+	var tagValue = value.replace(new RegExp('\_', 'g'), ' ');
+	return tagValue;
+}
+
+function setPoiMarker(poi_type, icon_name, lat, lon, tags, osmid, osmtype) {
+	var mrk = L.marker([lat, lon], {
+		icon: icon_name,
+	});
+	var wdtag = '';
 	var osmlink = "https://www.openstreetmap.org/"+osmtype+"/"+osmid;
 	var iDedit = "https://www.openstreetmap.org/edit\?editor=id&"+osmtype+"="+osmid;
 	var josmedit = "http://127.0.0.1:8111/load_object?new_layer=true&objects=n"+osmid;
 
-	if (tags.name == undefined) {
-		var popup_content = "<span class='type'>"+poi_type+"</span><hr/>";
-	} else {
-		var popup_content = "<span class='title'>"+tags.name+"</span><br/>";
-		if (poi_type == 'books') {
-			popup_content += "<span class='type'>Bookstore</span><hr/>";
-		} else if (poi_type == 'hairdresser') {
-			popup_content += "<span class='type'>Hairdresser</span><hr/>";
-		} else if (tags.shop != undefined) {
-			popup_content += "<span class='type'>"+poi_type+" Shop</span><hr/>";
+	if (tags["board:title"] != null && tags.tourism == 'information' && tags.information == 'board') {
+		var popup_content = "<span class=\"name\">\""+tags["board:title"]+"\"</span><br/>";
+	} else if (tags.name != null) {
+		if (tags.tourism == 'artwork') {
+			var popup_content = "<span class=\"title\">"+tags.name+"</span><br/>";
+		} else if (tags.amenity == 'public_bookcase' || tags.amenity == 'give_box' || tags.historic == 'memorial') {
+			var popup_content = "<span class=\"name\">\""+tags.name+"\"</span><br/>";
 		} else {
-			popup_content += "<span class='type'>"+poi_type+"</span><hr/>";
+			var popup_content = "<span class=\"name\">"+tags.name+"</span><br/>";
 		}
-	}
-
-	if (tags.lgbtq == 'only') {
-		popup_content += "🌈 <span class='primary'>This location only allows members of the LGBTQ+ community</span><br/>";
-	} else if (tags.lgbtq == 'primary' && tags.historic == 'memorial') {
-		popup_content += "🌈 <span class='primary'>This location commemorates LGBTQ+ people</span><br/>";
-	}  else if (tags.lgbtq == 'primary') {
-		popup_content += "🌈 <span class='primary'>This location caters primarily to the LGBTQ+ community</span><br/>";
-	} else if (tags.lgbtq == 'welcome' || tags.lgbtq == 'friendly') {
-		popup_content += "💗 <span class='welcome'>This location explicitly welcomes members of the LGBTQ+ community</span><br/>";
-	} else if (tags.lgbtq == 'yes') {
-		popup_content += "💗 <span class='welcome'>This location allows members of the LGBTQ+ community</span><br/>";
-	} else if (tags.lgbtq == 'no') {
-		popup_content += "⛔ <span class='no'>This location does not welcome or prohibits members of the LGBTQ+ community</span><br/>";
-	}
-	if (tags["lgbtq:lesbian"] || tags["lgbtq:gay"] || tags["lgbtq:bi"] || tags["lgbtq:trans"] || tags["lgbtq:non_binary"] || tags["lgbtq:queer"] || tags["lgbtq:inter"] || tags["lgbtq:bears"] || tags["lgbtq:cruising"] || tags["lgbtq:men"] || tags["lgbtq:women"]) {
-		popup_content += "<hr/>";
-	}
-	if (tags["lgbtq:lesbian"] == 'primary' || tags["lgbtq:lesbian"] == 'welcome') {
-		popup_content += "<span class='lesbian'>Lesbian specifically welcome</span><br/>";
-	} else if (tags["lgbtq:lesbian"] == 'only') {
-		popup_content += "<span class='lesbian'>Lesbian only</span><br/>";
-	}
-	if (tags["lgbtq:gay"] == 'primary' || tags["lgbtq:gay"] == 'welcome') {
-		popup_content += "<span class='gay'>Gay specifically welcome</span><br/>";
-	} else if (tags["lgbtq:gay"] == 'only') {
-		popup_content += "<span class='gay'>Gay only</span><br/>";
-	}
-	if (tags["lgbtq:bi"] == 'primary' || tags["lgbtq:bi"] == 'welcome') {
-		popup_content += "<span class='bi'>Bi specifically welcome</span><br/>";
-	} else if (tags["lgbtq:bi"] == 'only') {
-		popup_content += "<span class='bi'>Bi only</span><br/>";
-	}
-	if (tags["lgbtq:trans"] == 'primary' || tags["lgbtq:trans"] == 'welcome') {
-		popup_content += "<span class='trans'>Transgender specifically welcome</span><br/>";
-	} else if (tags["lgbtq:trans"] == 'only') {
-		popup_content += "<span class='trans'>Transgender only</span><br/>";
-	}
-	if (tags["lgbtq:non_binary"] == 'primary' || tags["lgbtq:non_binary"] == 'welcome') {
-		popup_content += "<span class='nonbinary'>Non-binary specifically welcome</span><br/>";
-	} else if (tags["lgbtq:non_binary"] == 'only') {
-		popup_content += "<span class='nonbinary'>Non-binary only</span><br/>";
-	}
-	if (tags["lgbtq:queer"] == 'primary' || tags["lgbtq:queer"] == 'welcome') {
-		popup_content += "<span class='queer'>Queer specifically welcome</span><br/>";
-	} else if (tags["lgbtq:queer"] == 'only') {
-		popup_content += "<span class='queer'>Queer only</span><br/>";
-	}
-	if (tags["lgbtq:inter"] == 'primary' || tags["lgbtq:inter"] == 'welcome') {
-		popup_content += "<span class='inter'>Intersex specifically welcome</span><br/>";
-	} else if (tags["lgbtq:inter"] == 'only') {
-		popup_content += "<span class='inter'>Intersex only</span><br/>";
-	}
-	if (tags["lgbtq:bears"] == 'primary' || tags["lgbtq:bears"] == 'welcome') {
-		popup_content += "<span class='bears'>Bears specifically welcome</span><br/>";
-	} else if (tags["lgbtq:bears"] == 'only') {
-		popup_content += "<span class='bears'>Bears only</span><br/>";
-	}
-	if (tags["lgbtq:cruising"] == 'primary' || tags["lgbtq:cruising"] == 'welcome') {
-		popup_content += "<span class='cruising'>Cruising specifically welcome</span><br/>";
-	} else if (tags["lgbtq:cruising"] == 'only') {
-		popup_content += "<span class='cruising'>Cruising only</span><br/>";
-	}
-	if (tags["lgbtq:men"] == 'primary' || tags["lgbtq:men"] == 'welcome') {
-		popup_content += "<span class='men'>Men specifically welcome</span><br/>";
-	} else if (tags["lgbtq:men"] == 'only') {
-		popup_content += "<span class='men'>Men only</span><br/>";
-	}
-	if (tags["lgbtq:women"] == 'primary' || tags["lgbtq:women"] == 'welcome') {
-		popup_content += "<span class='women'>Women specifically welcome</span><br/>";
-	} else if (tags["lgbtq:women"] == 'only') {
-		popup_content += "<span class='women'>Women only</span><br/>";
-	}
-	popup_content += "<hr/>";
-	if (tags["source:lgbtq"]) {
-		if (tags["source:lgbtq"].includes('https')) {
-			popup_content += "<span class='source'>Source: <span class='sourcelink'><a href=\"" + tags["source:lgbtq"] + "\" target=\"_blank\">website</a></span></span>";
-		} else {
-			popup_content += "<span class='source'>Source: " + tags["source:lgbtq"] + "</span>";
-		}
-	} else if (tags.website != undefined) {
-		popup_content += "<span class='source'>Source not tagged&mdash;check <span class='sourcelink'><a href=\"" + tags.website + "\" target=\"_blank\">website</a></span></span>";
 	} else {
-		popup_content += "<span class='source'>Source not tagged</span>";
+		var popup_content = "";
+	}
+	if (tags.tourism == 'artwork') {
+		if (tags.start_date != null) {
+			if (tags.start_date.substring(0,4) < 1978) {
+				if (tags.artwork_type != null) {
+					if (tags.artist_name != null) {
+						popup_content += "<span class=\"type\">Artwork ("+tags.artwork_type+")</span><br/><span>"+tags.start_date+", "+tags.artist_name+"</span><br/>";
+					} else {
+						popup_content += "<span class=\"type\">Artwork ("+tags.artwork_type+")</span><br/><span>"+tags.start_date+"</span><br/>";
+					}
+				} else {
+					if (tags.artist_name != null) {
+						popup_content += "<span class=\"type\">Artwork</span><br/><span>"+tags.start_date+", "+tags.artist_name+"</span><br/>";
+					} else {
+						popup_content += "<span class=\"type\">Artwork</span><br/><span>"+tags.start_date+"</span><br/>";
+					}
+				}
+			} else if (tags.start_date.substring(0,4) >= 1978) {
+				if (tags.artwork_type != null) {
+					if (tags.artist_name != null) {
+						popup_content += "<span class=\"type\">Artwork ("+tags.artwork_type+")</span><br/><span>"+tags.start_date+", "+tags.artist_name+"<br/></span><span class='invalid'>Check <a href='https://commons.wikimedia.org/wiki/Commons:Public_art_and_copyrights_in_the_US' title='Public art and copyrights in the US'>copyright</a>!</span><br/>";
+					} else {
+						popup_content += "<span class=\"type\">Artwork ("+tags.artwork_type+")</span><br/><span>"+tags.start_date+", </span><span class='invalid'>Check <a href='https://commons.wikimedia.org/wiki/Commons:Public_art_and_copyrights_in_the_US' title='Public art and copyrights in the US'>copyright</a>!</span><br/>";
+					}
+				} else {
+					if (tags.artist_name != null) {
+						popup_content += "<span class=\"type\">Artwork</span><br/><span>"+tags.start_date+", "+tags.artist_name+"<br/></span><span class='invalid'>Check <a href='https://commons.wikimedia.org/wiki/Commons:Public_art_and_copyrights_in_the_US' title='Public art and copyrights in the US'>copyright</a>!</span><br/>";
+					} else {
+						popup_content += "<span class=\"type\">Artwork</span><br/><span>"+tags.start_date+", </span><span class='invalid'>Check <a href='https://commons.wikimedia.org/wiki/Commons:Public_art_and_copyrights_in_the_US' title='Public art and copyrights in the US'>copyright</a>!</span><br/>";
+					}
+				}
+			}
+		} else {
+			if (tags.artwork_type != null) {
+				popup_content += "<span class=\"type\">Artwork ("+tags.artwork_type+")</span><br/>";
+			} else {
+				popup_content += "<span class=\"type\">Artwork</span><br/>";
+			}
+			popup_content += "<span class='invalid'>Check creation date & <a href='https://commons.wikimedia.org/wiki/Commons:Public_art_and_copyrights_in_the_US' title='Public art and copyrights in the US'>copyright</a>!</span><br/>";
+		}
+	} else if (tags.tourism == 'attraction') {
+		popup_content += "<span class=\"type\">Attraction</span><br/>";
+	} else if (tags.historic == 'castle' || tags.building == 'castle' || tags.ruins == 'castle') {
+		popup_content += "<span class=\"type\">Castle</span><br/>";
+	} else if (tags.historic == 'tomb') {
+		popup_content += "<span class=\"type\">Tomb</span><br/>";
+	} else if (tags.natural == 'cave_entrance') {
+		popup_content += "<span class=\"type\">Cave</span><br/>";
+	} else if (tags.waterway == 'waterfall') {
+		popup_content += "<span class=\"type\">Waterfall</span><br/>";
+	} else if (tags.tourism == 'information' && tags.information == 'map') {
+		popup_content += "<span class=\"type\">Map</span><br/>";
+	} else if (tags.tourism == 'information' && tags.information == 'board') {
+		popup_content += "<span class=\"type\">Information Board</span><br/>";
+	} else if (tags.historic == 'memorial') {
+		if (tags.memorial != null) {
+			if (tags.memorial == 'war_memorial') {
+				popup_content += "<span class=\"type\">War Memorial</span><br/>";
+			} else {
+				popup_content += "<span class=\"type\">Memorial "+replaceUnderscore(tags.memorial)+"</span><br/>";
+				if (tags["openbenches:id"] != null) {
+					popup_content += "<span class=\"openbenches\"><a href=\"https://openbenches.org/bench/"+tags["openbenches:id"]+"\" title=\"show feature on OpenBenches\" target=\"_blank\">OpenBenches↗</a></span><br/>";
+				}
+			}
+		} else {
+			popup_content += "<span class=\"type\">Memorial</span><br/>";
+		}
+	} else if (tags.historic == 'monument') {
+		popup_content += "<span class=\"type\">Monument</span><br/>";
+	} else if (tags.tourism == 'museum' || tags.building == 'museum') {
+		popup_content += "<span class=\"type\">Museum</span><br/>";
+	} else if (tags.building == 'temple') {
+		popup_content += "<span class=\"type\">Temple Building</span><br/>";
+	} else if (tags.building == 'church') {
+		popup_content += "<span class=\"type\">Church Building</span><br/>";
+	} else if (tags.building == 'synagogue') {
+		popup_content += "<span class=\"type\">Synagogue Building</span><br/>";
+	} else if (tags.building == 'mosque') {
+		popup_content += "<span class=\"type\">Mosque Building</span><br/>";
+	} else if (tags.building == 'school') {
+		popup_content += "<span class=\"type\">School Building</span><br/>";
+	} else if (tags.historic == 'building') {
+		popup_content += "<span class=\"type\">Historic Building</span><br/>";
+	} else if (tags.tourism == 'viewpoint') {
+		popup_content += "<span class=\"type\">Viewpoint</span><br/>";
+	// } else if (tags.historic == 'wayside_shrine') {
+	// 	popup_content += "<span class=\"type\">Wayside Shrine</span><br/>";
+	} else if (tags.historic && tags.historic != 'yes') {
+		popup_content += "<span class=\"type\">"+replaceUnderscore(tags.historic)+"</span><br/>";
+	} else if (tags.emergency == 'defibrillator') {
+		popup_content += "<span class=\"type\"> Defibrillator</span><br/>";
+	} else if (tags.man_made == 'bridge') {
+		popup_content += "<span class=\"type\">Bridge</span><br/>";
+	} else if (tags.amenity) {
+		popup_content += "<span class=\"type\">"+replaceUnderscore(tags.amenity)+"</span><br/>";
+	} else if (tags.natural) {
+		popup_content += "<span class=\"type\">"+tags.natural+"</span><br/>";
+	}
+	//IMAGES
+	if (tags.wikimedia_commons != null && !tags.wikimedia_commons.includes("Category")) {
+		var file = parseWikiFile(tags.wikimedia_commons);
+		var link = getWikiImg(tags.wikimedia_commons);
+		var thumb = getWikiThumb(tags.wikimedia_commons);
+		if (tags.wikimedia_commons.startsWith("File")) {
+			popup_content += "<div class='image'><a href='https://commons.wikimedia.org/wiki/"+file+"' target='_blank'><img src='"+thumb+"' class='mainImage' alt='"+file+"' title='"+file+"'><img class='badge' src='icons/WikimediaCommonsLogo.svg' alt='Wikimedia Commons logo' title='Wikimedia Commons'></a></div>";
+		} else if (tags.wikimedia_commons.includes("//commons.wikimedia.org/wiki/File")) {
+			popup_content += "<div class='image'><span class='invalid' alt='"+tags.wikimedia_commons+"'>(Invalid image tag)</span><br><a href='"+link+"' target='_blank'><img src='"+thumb+"' class='mainImage' alt='"+file+"' title='"+file+"'><img class='badge' src='icons/WikimediaCommonsLogo.svg' alt='Wikimedia Commons logo' title='Wikimedia Commons'></a></div>";
+		} else {
+			popup_content += "<span class='invalid' alt='"+tags.wikimedia_commons+"'>Invalid image tag: <a href='https://commons.wikimedia.org/wiki/"+file+"' target='_blank'>"+tags.wikimedia_commons+"</span>";
+		}
+		if (tags.panoramax != null) {
+			if (tags.panoramax.includes(";")) {
+				var array = tags.panoramax.split(';');
+				var j = tags.panoramax.split(';').length;
+				var link = getPxLink(array[0]);
+				popup_content += "<a href='"+link+"' class='panoramax' target='_blank'><img class='logo' src='icons/PanoramaxLogo.jpg' alt='Panoramax logo' title='Panoramax'> Panoramax</a>";
+			} else {
+				var link = getPxLink(tags.panoramax);
+				popup_content += "<a href='"+link+"' class='panoramax' target='_blank'><img class='logo' src='icons/PanoramaxLogo.jpg' alt='Panoramax logo' title='Panoramax'> Panoramax</a>";
+			}
+			if (tags.mapillary != null) {
+				popup_content += " | <a href='"+getMLLink(tags.mapillary)+"' class='mapillary' target='_blank'><img class='logo' src='icons/MapillaryLogo.svg' alt='Mapillary logo' title='Mapillary'> Mapillary</a><br/>";
+			}
+		} else if (tags.mapillary != null) {
+			popup_content += "<a href='"+getMLLink(tags.mapillary)+"' class='mapillary' target='_blank'><img class='logo' src='icons/MapillaryLogo.svg' alt='Mapillary logo' title='Mapillary'> Mapillary</a><br/>";
+		}
+	} else if (tags.panoramax != null) {
+		if (tags.panoramax.includes(";")) {
+			var array = tags.panoramax.split(';');
+			var j = tags.panoramax.split(';').length;
+			var thumb = getPxThumb(array[0]);
+			var link = getPxLink(array[0]);
+			popup_content += "<div class='image'><a href='"+link+"' target='_blank'><img class='mainImage' src='"+thumb+"' alt='"+thumb+"' title='"+thumb+"'><img class='badge' src='icons/PanoramaxLogo.jpg' alt='Panoramax logo' title='Panoramax'></a><br/></div>";
+			for (let i = 1; i < j; i++) {
+				var thumb = getPxThumb(array[i]);
+				var link = getPxLink(array[i]);
+				popup_content += "<a href='"+link+"' target='_blank'><img class='tiny-pic' src='"+thumb+"' alt='"+thumb+"' title='"+thumb+"'></a>";
+			}
+		} else {
+			var thumb = getPxThumb(tags.panoramax);
+			var link = getPxLink(tags.panoramax);
+			popup_content += "<div class='image'><a href='"+link+"' target='_blank'><img class='mainImage' src='"+thumb+"' alt='"+thumb+"' title='"+thumb+"'><img class='badge' src='icons/PanoramaxLogo.jpg' alt='Panoramax logo' title='Panoramax'></a><br/></div>";
+		}
+		if (tags["panoramax:1"] != null) {
+			var thumb = getPxThumb(tags["panoramax:1"]);
+			var link = getPxLink(tags["panoramax:1"]);
+			popup_content += "<a href='"+link+"' target='_blank'><img class='tiny-pic' src='"+thumb+"' alt='"+thumb+"' title='"+thumb+"'></a>";
+		}
+		if (tags["panoramax:2"] != null) {
+			var thumb = getPxThumb(tags["panoramax:2"]);
+			var link = getPxLink(tags["panoramax:2"]);
+			popup_content += "<a href='"+link+"' target='_blank'><img class='tiny-pic' src='"+thumb+"' alt='"+thumb+"' title='"+thumb+"'></a>";
+		}
+		if (tags["panoramax:3"] != null) {
+			var thumb = getPxThumb(tags["panoramax:3"]);
+			var link = getPxLink(tags["panoramax:3"]);
+			popup_content += "<a href='"+link+"' target='_blank'><img class='tiny-pic' src='"+thumb+"' alt='"+thumb+"' title='"+thumb+"'></a>";
+		}
+		if (tags["panoramax:4"] != null) {
+			var thumb = getPxThumb(tags["panoramax:4"]);
+			var link = getPxLink(tags["panoramax:4"]);
+			popup_content += "<a href='"+link+"' target='_blank'><img class='tiny-pic' src='"+thumb+"' alt='"+thumb+"' title='"+thumb+"'></a>";
+		}
+		if (tags.wikimedia_commons != null && tags.wikimedia_commons.includes("Category")) {
+			var array = tags.wikimedia_commons.split(':');
+			var category = array[1];
+			var category_no_apos = tags.wikimedia_commons.replace(new RegExp('\'', 'g'), '\&apos\;');
+			popup_content += "<span class='category' alt='"+tags.wikimedia_commons+"'><a href='https://commons.wikimedia.org/wiki/"+category_no_apos+"' target='_blank'><img src='icons/WikimediaCommonsLogo.svg' class='tinylogo' alt='Wikimedia Commons logo' title='Wikimedia Commons'> Category: "+category+"</a></span>";//<img class='categoryLogo' src='icons/WikimediaCommonsLogo.svg' title='Wikimedia Commons'> 
+		}
+	} else if (tags.mapillary != null) {
+		popup_content += "<a href='"+getMLLink(tags.mapillary)+"' class='mapillary' target='_blank'><img class='logo' src='icons/MapillaryLogo.svg' title='Mapillary'> Mapillary Image Link</a><br/>";
+		if (tags.wikimedia_commons != null && tags.wikimedia_commons.includes("Category")) {
+			var array = tags.wikimedia_commons.split(':');
+			var category = array[1];
+			var category_no_apos = tags.wikimedia_commons.replace(new RegExp('\'', 'g'), '\&apos\;');
+			popup_content += "<span class='category' alt='"+tags.wikimedia_commons+"'><a href='https://commons.wikimedia.org/wiki/"+category_no_apos+"' target='_blank'><img src='icons/WikimediaCommonsLogo.svg' class='tinylogo' alt='Wikimedia Commons logo' title='Wikimedia Commons'> Category: "+category+"</a></span>";//<img class='categoryLogo' src='icons/WikimediaCommonsLogo.svg' title='Wikimedia Commons'> 
+		}
+	} else if (tags.image != null) {
+		if (tags.image.includes("//static.panoramio.com")) {
+			popup_content += "<span class='invalid' title='"+tags.image+"'>Image tag may be invalid</span><br/>";
+		} else if (tags.image.includes("//commons.wikimedia.org") || tags.image.startsWith("File:") || tags.image.includes("wikipedia.org")) {
+			var link = getWikiImg(tags.image);
+			var thumb = getWikiThumb(tags.image);
+			popup_content += "<a href='"+link+"' target='_blank'><img src='"+thumb+"' class='mainImage' alt='"+thumb+"' title='"+thumb+"'></a><br/><span class='note' title='"+tags.image+"'>Move <span class='code'>image=</span> tag to <a href='"+osmlink+"' title=\"show feature on OSM\" target='_blank'><span class='code'>wikimedia_commons=</span></a></span><br/>";
+		} else if (tags.image.includes("//upload.wikimedia.org")) {
+			var [pre, post] = splitLast(tags.image, '/');
+			popup_content += "<a href='"+tags.image+"' target='_blank'><img src='"+tags.image+"' class='mainImage' alt='"+tags.image+"' title='"+tags.image+"'></a><br/><span class='note' title='"+tags.image+"'>Use <a href='https://commons.wikimedia.org/wiki/File:"+post+"' target='_blank'><span class='code'>File:…</span></a> in <a href='"+osmlink+"' title=\"show feature on OSM\" target='_blank'><span class='code'>wikimedia_commons=</span></a> tag instead of current <span class='code'>image</span> tag</span>";
+		} else if (tags.image.toLowerCase().endsWith(".jpg") || tags.image.toLowerCase().endsWith(".jpg") || tags.image.toLowerCase().endsWith(".jpeg") || tags.image.toLowerCase().endsWith(".png") || tags.image.toLowerCase().endsWith(".gif") || tags.image.toLowerCase().endsWith(".bmp") || tags.image.toLowerCase().endsWith(".webp")) {
+			popup_content += "<a href='"+tags.image+"' target='_blank'><img src='"+tags.image+"' class='mainImage' alt='"+tags.image+"' title='"+tags.image+"'></a><br/>";
+		} else {
+			popup_content += "<span class='invalid' title='"+tags.image+"'>Image tag may be invalid:<br/><a href='"+tags.image+"'><span class='code'>"+tags.image+"</span></a><a href='"+osmlink+"' title=\"edit feature on OSM\" target='_blank'>Edit feature on OSM</a></span><br/>";
+		}
+		if (tags.wikimedia_commons != null && tags.wikimedia_commons.includes("Category")) {
+			var array = tags.wikimedia_commons.split(':');
+			var category = array[1];
+			var category_no_apos = tags.wikimedia_commons.replace(new RegExp('\'', 'g'), '\&apos\;');
+			popup_content += "<span class='category' alt='"+tags.wikimedia_commons+"'><a href='https://commons.wikimedia.org/wiki/"+category_no_apos+"' target='_blank'><img src='icons/WikimediaCommonsLogo.svg' class='tinylogo' alt='Wikimedia Commons logo' title='Wikimedia Commons'> Category: "+category+"</a></span>";//<img class='categoryLogo' src='icons/WikimediaCommonsLogo.svg' title='Wikimedia Commons'> 
+		}
+	} else if (tags.wikimedia_commons != null && tags.wikimedia_commons.includes("Category")) {
+		var array = tags.wikimedia_commons.split(':');
+		var category = array[1];
+		var category_no_apos = tags.wikimedia_commons.replace(new RegExp('\'', 'g'), '\&apos\;');
+		popup_content += "<span class='category' alt='"+tags.wikimedia_commons+"'><a href='https://commons.wikimedia.org/wiki/"+category_no_apos+"' target='_blank'><img src='icons/WikimediaCommonsLogo.svg' class='tinylogo' alt='Wikimedia Commons logo' title='Wikimedia Commons'> Category: "+category+"</a></span>";//<img class='categoryLogo' src='icons/WikimediaCommonsLogo.svg' title='Wikimedia Commons'> 
+		popup_content += "<div class='image'><a id='clicky' onClick='searchImage(\""+tags.wikidata+"\")'><img src='icons/download.svg' class='tinylogo' alt='Download' title='Download'>Check for Wikidata Image</a></div>";// if (tags.wikidata != null) {
+		// 	var wdimage = getWDimage(tags.wikidata);
+		// 	if (wdimage != '') {
+		// 		wdtag = 'yesimage';
+		// 		popup_content += "<div class='image'><a href='https://www.wikidata.org/wiki/"+tags.wikidata+"' target='_blank'><img src='"+wdimage+"' class='mainImage'></a><img class='badge' src='icons/wikidata.svg' title='Default Wikidata Image'></div>";
+		// 	}
+		// }
+	} else if (tags.wikidata != null) {
+		popup_content += "<div class='image'><a id='clicky' onClick='searchImage(\""+tags.wikidata+"\")'><img src='icons/download.svg' class='tinylogo' alt='Download' title='Download'>Check for Wikidata Image</a></div>";
+		// popup_content += "<div class='image'><a href='https://www.wikidata.org/wiki/"+tags.wikidata+"' target='_blank'><img src='"+wdimage+"' class='mainImage'></a><img class='badge' src='icons/wikidata.svg' title='Default Wikidata Image'></div>";
+	} else if (tags.wikidata == null && tags.name != null && tags.amenity != 'bicycle_rental') {
+		var no_apos = tags.name.replace(new RegExp('\'', 'g'), '\&apos\;');
+		popup_content += "<span class='search'><a href='https://www.wikidata.org/w/index.php?search="+no_apos+"' target='_blank'>Search name on Wikidata</a></span>";
 	}
 
-	popup_content += "<div class='linktext'><a href='"+osmlink+"' title=\"show feature on OSM\" target='_blank'>🗺️ OSM</a> | <a href='"+iDedit+"' title=\"edit feature on OSM\" target='_blank'>✏️ iD</a> | <a href='"+josmedit+"' title=\"edit feature in JOSM\" target='_blank'>🖊️ JOSM</a></div>";
-	if (timestamp) {
-		popup_content += "<span class='editdate'>Last updated: "+dateStr+"</span>";
+	popup_content += "<hr><div class='linktext'>";
+	if (tags.wikidata != null) {
+		popup_content += "<a href='https://www.wikidata.org/wiki/"+tags.wikidata+"' target='_blank'><img src='icons/wikidata.svg' alt='Wikidata' title='Wikidata'>&nbsp;Wikidata</a><br/>";
 	}
-
-	// mrk.bindTooltip(tags.name+"<br/><span class='tiny'>LGBTQ+ "+tags.lgbtq+"</span>",{duration: 0,direction: 'right',offset: [20,6]}).openTooltip();
+	popup_content += "<a href='"+osmlink+"' title=\"show feature on OSM\" target='_blank'><img src='icons/OSM.svg' alt='OpenStreetMap' title='OpenStreetMap'>&nbsp;OSM</a>&nbsp;|&nbsp;<a href='"+iDedit+"' title=\"edit feature on OSM\" target='_blank'><img src='icons/ID.svg' alt='iD Editor' title='iD Editor'>&nbsp;iD</a>&nbsp;|&nbsp;<a href='"+josmedit+"' title=\"edit feature in JOSM\" target='_blank'><img src='icons/JOSM.svg' alt='JOSM editor' title='JOSM editor'>&nbsp;JOSM</a></div>";
 	mrk.bindPopup(L.popup({autoPanPaddingTopLeft: [0,50]}).setContent(popup_content));
-	
+	// mrk.bindTooltip(L.tooltip({permanent:true,direction:'top'}).setContent(tooltip_content)).openTooltip;
+
 	poi_markers.push(mrk);
-	mrk.addTo(map);
-	// poi_clusters.addTo(map);
+	if (tags.wikimedia_commons != null && !tags.wikimedia_commons.includes("Category")) {
+		mrk.addTo(poiClustersC);
+	} else if (tags.panoramax != null ) {
+		mrk.addTo(poiClustersP);
+	} else if (tags.mapillary != null) {
+		mrk.addTo(poiClustersM);
+	} else if (tags.image != null) {
+		mrk.addTo(poiClustersI);
+	} else if (tags["openbenches:id"] != null) {
+		mrk.addTo(poiClustersI);
+	} else if (tags.wikidata != null) {
+		mrk.addTo(poiClustersW);
+	} else {
+		mrk.addTo(poiClustersNoPic);
+	}
+	// poiClustersPic.addTo(picLayer);
+	poiClustersC.addTo(picLayer);
+	poiClustersP.addTo(picLayer);
+	poiClustersM.addTo(picLayer);
+	poiClustersI.addTo(picLayer);
+	poiClustersW.addTo(noPicLayer);
+	poiClustersNoPic.addTo(noPicLayer);
+	if (map.hasLayer(noPicLayer)) {
+		noPicLayer.addTo(map);
+	} else {
+		picLayer.addTo(map);
+		// cLayer.addTo(map);
+		// pLayer.addTo(map);
+		// mLayer.addTo(map);
+		// iLayer.addTo(map);
+	}
 }
 
-function element_to_map(data) {	
-	poi_clusters.clearLayers();
+function element_to_map(data) {
+	counterPics = 0;
+	counterNoPics = 0;
+	poiClustersNoPic.clearLayers();
+	// poiClustersPic.clearLayers();
+	poiClustersC.clearLayers();
+	poiClustersP.clearLayers();
+	poiClustersM.clearLayers();
+	poiClustersI.clearLayers();
+	poiClustersW.clearLayers();
 	$.each(poi_markers, function(_, mrk) {
 		map.removeLayer(mrk);
 	});
 
 	$.each(data.elements, function(_, el) {
-		if (el.lat == undefined) {
-			if (el.center == undefined) {
+		if (el.lat == null) {
+			if (el.center == null) {
 				return;
 			} else {
 				el.lat = el.center.lat;
@@ -387,117 +671,677 @@ function element_to_map(data) {
 			}
 		}
 
-		if (el.tags != undefined) {
+		if (el.tags != null) {
 			var mrk;
-			if ('construction:amenity' in el.tags || 'disused:amenity' in el.tags || 'abandoned:amenity' in el.tags || 'construction:tourism' in el.tags || 'disused:tourism' in el.tags || 'abandoned:tourism' in el.tags || 'construction:shop' in el.tags || 'disused:shop' in el.tags || 'abandoned:shop' in el.tags || 'construction:leisure' in el.tags || 'disused:leisure' in el.tags || 'abandoned:leisure' in el.tags) {
-				//Nothing
-			} else if (el.tags.amenity == "place_of_worship") {
-				setPoiMarker("Place of Worship", placeofworship_icon, el.lat, el.lon, el.tags, el.id, el.type, el.timestamp);
-			} else if (el.tags.amenity == "community_centre" || el.tags.amenity == "social_facility" || el.tags.office) {
-				setPoiMarker("Center/Association", office_icon, el.lat, el.lon, el.tags, el.id, el.type, el.timestamp);
-			} else if(el.tags.shop) {
-				setPoiMarker(el.tags.shop, shop_icon, el.lat, el.lon, el.tags, el.id, el.type, el.timestamp);
-			} else if (el.tags.amenity == 'bar' || el.tags.amenity == 'nightclub' || el.tags.amenity == 'swingerclub') {
-				setPoiMarker("Bar/Club", bar_icon, el.lat, el.lon, el.tags, el.id, el.type, el.timestamp);
-			} else if (el.tags.amenity == 'pub') {
-				setPoiMarker("Pub", pub_icon, el.lat, el.lon, el.tags, el.id, el.type, el.timestamp);
-			} else if (el.tags.amenity == 'restaurant' || el.tags.amenity == 'fast_food') {
-				setPoiMarker("Restaurant/Fast Food", restaurant_icon, el.lat, el.lon, el.tags, el.id, el.type, el.timestamp);
-			} else if (el.tags.amenity == 'cafe') {
-				setPoiMarker("Cafe", cafe_icon, el.lat, el.lon, el.tags, el.id, el.type, el.timestamp);
-			} else if (el.tags.leisure == 'fitness_centre') {
-				setPoiMarker("Fitness Centre", fitness_icon, el.lat, el.lon, el.tags, el.id, el.type, el.timestamp);
-			} else if (el.tags.amenity == 'theatre' || el.tags.amenity == 'cinema') {
-				setPoiMarker("Theater/Cinema", theater_icon, el.lat, el.lon, el.tags, el.id, el.type, el.timestamp);
-			} else if (el.tags.amenity == 'library') {
-				setPoiMarker("Library", library_icon, el.lat, el.lon, el.tags, el.id, el.type, el.timestamp);
-			// } else if (el.tags.amenity == 'pharmacy') {
-			// 	setPoiMarker("Pharmacy", pharmacy_icon, el.lat, el.lon, el.tags, el.id, el.type, el.timestamp);
-			} else if (el.tags.amenity == 'veterinary') {
-				setPoiMarker("Veterinarian", vet_icon, el.lat, el.lon, el.tags, el.id, el.type, el.timestamp);
-			} else if (el.tags.tourism == 'museum') {
-				setPoiMarker("Museum", museum_icon, el.lat, el.lon, el.tags, el.id, el.type, el.timestamp);
-			} else if (el.tags.tourism == 'hotel' || el.tags.tourism == 'guest_house' || el.tags.tourism == 'hostel' || el.tags.tourism == 'motel') {
-				setPoiMarker("Lodging", lodging_icon, el.lat, el.lon, el.tags, el.id, el.type, el.timestamp);
-			} else if (el.tags.amenity == 'love_hotel') {
-				setPoiMarker("Love Hotel", heart_icon, el.lat, el.lon, el.tags, el.id, el.type, el.timestamp);
-			} else if (el.tags.leisure == 'sauna') {
-				setPoiMarker("Sauna/Steam Baths", sauna_icon, el.lat, el.lon, el.tags, el.id, el.type, el.timestamp);
-			} else if (el.tags.historic == 'memorial') {
-				setPoiMarker("Memorial", memorial_icon, el.lat, el.lon, el.tags, el.id, el.type, el.timestamp);
-			} else if (el.tags.tourism == 'gallery') {
-				setPoiMarker("Gallery", gallery_icon, el.lat, el.lon, el.tags, el.id, el.type, el.timestamp);
-			} else if (el.tags.amenity == 'arts_centre') {
-				setPoiMarker("Arts Centre", gallery_icon, el.lat, el.lon, el.tags, el.id, el.type, el.timestamp);
-			} else if (el.tags.amenity == 'clinic' || el.tags.amenity == 'doctors' || el.tags.amenity == 'hospital' || el.tags.healthcare == 'clinic' || el.tags.healthcare == 'doctor' || el.tags.healthcare == 'hospital') {
-				setPoiMarker("Healthcare", healthcare_icon, el.lat, el.lon, el.tags, el.id, el.type, el.timestamp);
-			} else if(el.tags.amenity) {
-				setPoiMarker(el.tags.amenity, other_icon, el.lat, el.lon, el.tags, el.id, el.type, el.timestamp);
+			
+		//WIKIMEDIA COMMMONS
+			if (el.tags.wikimedia_commons != null && !el.tags.wikimedia_commons.includes("Category")) {
+				if (el.tags.tourism == 'artwork') {
+					if (el.tags.artwork_type == 'statue') {
+						setPoiMarker("", statue_icon_c, el.lat, el.lon, el.tags, el.id, el.type);
+					} else {
+						setPoiMarker("", artwork_icon_c, el.lat, el.lon, el.tags, el.id, el.type);
+					}
+					counterPics++;
+				} else if (el.tags.tourism == 'attraction') {
+					setPoiMarker("", attraction_icon_c, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.historic == 'castle' || el.tags.building == 'castle' || el.tags.ruins == 'castle') {
+					setPoiMarker("", castle_icon_c, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.natural == 'cave_entrance') {
+					setPoiMarker("", cave_icon_c, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.waterway == 'waterfall') {
+					setPoiMarker("", waterfall_icon_c, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.historic == 'tomb') {
+					setPoiMarker("", cemetery_icon_c, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.historic == 'ruins') {
+					setPoiMarker("", ruins_icon_c, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.tourism == 'information' && el.tags.information == 'map') {
+					setPoiMarker("", globe_icon_c, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.tourism == 'information' && el.tags.information == 'board') {
+					setPoiMarker("", information_icon_c, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.historic == 'memorial') {
+					if (el.tags.memorial == 'statue') {
+						setPoiMarker("", statue_icon_c, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if (el.tags.memorial == 'obelisk') {
+						setPoiMarker("", obelisk_icon_c, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if (el.tags.memorial == 'plaque') {
+						setPoiMarker("", plaque_icon_c, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if (el.tags.memorial == 'bench') {
+						if (el.tags["openbenches:id"] == null) {
+							setPoiMarker("", bench_icon_c, el.lat, el.lon, el.tags, el.id, el.type);
+						}
+					} else {
+						setPoiMarker("", memorial_icon_c, el.lat, el.lon, el.tags, el.id, el.type);
+					}
+					counterPics++;
+				} else if (el.tags.historic == 'monument') {
+					setPoiMarker("", monument_icon_c, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.tourism == 'museum' || el.tags.building == 'museum') {
+					setPoiMarker("", museum_icon_c, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.building == 'temple' && el.tags.religion == 'dharma') {
+					setPoiMarker("", dharma_icon_c, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.building == 'church') {
+					setPoiMarker("", church_icon_c, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.building == 'synagogue') {
+					setPoiMarker("", synagogue_icon_c, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.building == 'mosque') {
+					setPoiMarker("", mosque_icon_c, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.building == 'school') {
+					setPoiMarker("", school_icon_c, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.historic == 'building' || el.tags.historic == 'manor' || el.tags.historic == 'house') {
+					setPoiMarker("", village_icon_c, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.historic == 'wayside_shrine') {
+					setPoiMarker("", shrine_icon_c, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.tourism == 'viewpoint') {
+					setPoiMarker("", viewpoint_icon_c, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.amenity == 'library') {
+					setPoiMarker("", library_icon_c, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.amenity == 'public_bookcase') {
+					setPoiMarker("", bookcase_icon_c, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.amenity == 'give_box') {
+					setPoiMarker("", give_box_icon_c, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.amenity == 'bicycle_rental') {
+					setPoiMarker("", bike_rental_icon_c, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.emergency == 'defibrillator') {
+					setPoiMarker("", defibrillator_icon_c, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.man_made == 'bridge') {
+					setPoiMarker("", bridge_icon_c, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else {
+					setPoiMarker("", landmark_icon_c, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				}
+		//PANORAMAX
+			} else if (el.tags.panoramax != null) {
+				if (el.tags.tourism == 'artwork') {
+					if (el.tags.artwork_type == 'statue') {
+						setPoiMarker("", statue_icon_p, el.lat, el.lon, el.tags, el.id, el.type);
+					} else {
+						setPoiMarker("", artwork_icon_p, el.lat, el.lon, el.tags, el.id, el.type);
+					}
+					counterPics++;
+				} else if (el.tags.tourism == 'attraction') {
+					setPoiMarker("", attraction_icon_p, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.historic == 'castle' || el.tags.building == 'castle' || el.tags.ruins == 'castle') {
+					setPoiMarker("", castle_icon_p, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.natural == 'cave_entrance') {
+					setPoiMarker("", cave_icon_p, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.waterway == 'waterfall') {
+					setPoiMarker("", waterfall_icon_p, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.historic == 'tomb') {
+					setPoiMarker("", cemetery_icon_p, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.historic == 'ruins') {
+					setPoiMarker("", ruins_icon_p, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.tourism == 'information' && el.tags.information == 'map') {
+					setPoiMarker("", globe_icon_p, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.tourism == 'information' && el.tags.information == 'board') {
+					setPoiMarker("", information_icon_p, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.historic == 'memorial') {
+					if (el.tags.memorial == 'statue') {
+						setPoiMarker("", statue_icon_p, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if (el.tags.memorial == 'obelisk') {
+						setPoiMarker("", obelisk_icon_p, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if (el.tags.memorial == 'plaque') {
+						setPoiMarker("", plaque_icon_p, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if (el.tags.memorial == 'bench') {
+						if (el.tags["openbenches:id"] == null) {
+							setPoiMarker("", bench_icon_p, el.lat, el.lon, el.tags, el.id, el.type);
+						}
+					} else {
+						setPoiMarker("", memorial_icon_p, el.lat, el.lon, el.tags, el.id, el.type);
+					}
+					counterPics++;
+				} else if (el.tags.historic == 'monument') {
+					setPoiMarker("", monument_icon_p, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.tourism == 'museum' || el.tags.building == 'museum') {
+					setPoiMarker("", museum_icon_p, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.building == 'temple' && el.tags.religion == 'dharma') {
+					setPoiMarker("", dharma_icon_p, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.building == 'church') {
+					setPoiMarker("", church_icon_p, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.building == 'synagogue') {
+					setPoiMarker("", synagogue_icon_p, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.building == 'mosque') {
+					setPoiMarker("", mosque_icon_p, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.building == 'school') {
+					setPoiMarker("", school_icon_p, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.historic == 'building' || el.tags.historic == 'manor' || el.tags.historic == 'house') {
+					setPoiMarker("", village_icon_p, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.historic == 'wayside_shrine') {
+					setPoiMarker("", shrine_icon_p, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.tourism == 'viewpoint') {
+					setPoiMarker("", viewpoint_icon_p, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.amenity == 'library') {
+					setPoiMarker("", library_icon_p, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.amenity == 'public_bookcase') {
+					setPoiMarker("", bookcase_icon_p, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.amenity == 'give_box') {
+					setPoiMarker("", give_box_icon_p, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.amenity == 'bicycle_rental') {
+					setPoiMarker("", bike_rental_icon_p, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.emergency == 'defibrillator') {
+					setPoiMarker("", defibrillator_icon_p, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.man_made == 'bridge') {
+					setPoiMarker("", bridge_icon_p, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else {
+					setPoiMarker("", landmark_icon_p, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				}
+		// MAPILLARY
+			} else if (el.tags.mapillary != null) {
+				if (el.tags.tourism == 'artwork') {
+					if (el.tags.artwork_type == 'statue') {
+						setPoiMarker("", statue_icon_m, el.lat, el.lon, el.tags, el.id, el.type);
+					} else {
+						setPoiMarker("", artwork_icon_m, el.lat, el.lon, el.tags, el.id, el.type);
+					}
+					counterPics++;
+				} else if (el.tags.tourism == 'attraction') {
+					setPoiMarker("", attraction_icon_m, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.historic == 'castle' || el.tags.building == 'castle' || el.tags.ruins == 'castle') {
+					setPoiMarker("", castle_icon_m, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.natural == 'cave_entrance') {
+					setPoiMarker("", cave_icon_m, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.waterway == 'waterfall') {
+					setPoiMarker("", waterfall_icon_m, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.historic == 'tomb') {
+					setPoiMarker("", cemetery_icon_m, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.historic == 'ruins') {
+					setPoiMarker("", ruins_icon_m, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.tourism == 'information' && el.tags.information == 'map') {
+					setPoiMarker("", globe_icon_m, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.tourism == 'information' && el.tags.information == 'board') {
+					setPoiMarker("", information_icon_m, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.historic == 'memorial') {
+					if (el.tags.memorial == 'statue') {
+						setPoiMarker("", statue_icon_m, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if (el.tags.memorial == 'obelisk') {
+						setPoiMarker("", obelisk_icon_m, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if (el.tags.memorial == 'plaque') {
+						setPoiMarker("", plaque_icon_m, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if (el.tags.memorial == 'bench') {
+						if (el.tags["openbenches:id"] == null) {
+							setPoiMarker("", bench_icon_m, el.lat, el.lon, el.tags, el.id, el.type);
+						}
+					} else {
+						setPoiMarker("", memorial_icon_m, el.lat, el.lon, el.tags, el.id, el.type);
+					}
+					counterPics++;
+				} else if (el.tags.historic == 'monument') {
+					setPoiMarker("", monument_icon_m, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.tourism == 'museum' || el.tags.building == 'museum') {
+					setPoiMarker("", museum_icon_m, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.building == 'temple' && el.tags.religion == 'dharma') {
+					setPoiMarker("", dharma_icon_m, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.building == 'church') {
+					setPoiMarker("", church_icon_m, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.building == 'synagogue') {
+					setPoiMarker("", synagogue_icon_m, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.building == 'mosque') {
+					setPoiMarker("", mosque_icon_m, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.building == 'school') {
+					setPoiMarker("", school_icon_m, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.historic == 'building' || el.tags.historic == 'manor' || el.tags.historic == 'house') {
+					setPoiMarker("", village_icon_m, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.historic == 'wayside_shrine') {
+					setPoiMarker("", shrine_icon_m, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.tourism == 'viewpoint') {
+					setPoiMarker("", viewpoint_icon_m, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.amenity == 'library') {
+					setPoiMarker("", library_icon_m, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.amenity == 'public_bookcase') {
+					setPoiMarker("", bookcase_icon_m, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.amenity == 'give_box') {
+					setPoiMarker("", give_box_icon_m, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.amenity == 'bicycle_rental') {
+					setPoiMarker("", bike_rental_icon_m, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.emergency == 'defibrillator') {
+					setPoiMarker("", defibrillator_icon_m, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.man_made == 'bridge') {
+					setPoiMarker("", bridge_icon_m, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else {
+					setPoiMarker("", landmark_icon_m, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				}
+		//IMAGE
+			} else if (el.tags.image != null) {
+				if (el.tags.tourism == 'artwork') {
+					if (el.tags.artwork_type == 'statue') {
+						setPoiMarker("", statue_icon_i, el.lat, el.lon, el.tags, el.id, el.type);
+					} else {
+						setPoiMarker("", artwork_icon_i, el.lat, el.lon, el.tags, el.id, el.type);
+					}
+					counterPics++;
+				} else if (el.tags.tourism == 'attraction') {
+					setPoiMarker("", attraction_icon_i, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.historic == 'castle' || el.tags.building == 'castle' || el.tags.ruins == 'castle') {
+					setPoiMarker("", castle_icon_i, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.natural == 'cave_entrance') {
+					setPoiMarker("", cave_icon_i, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.waterway == 'waterfall') {
+					setPoiMarker("", waterfall_icon_i, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.historic == 'tomb') {
+					setPoiMarker("", cemetery_icon_i, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.historic == 'ruins') {
+					setPoiMarker("", ruins_icon_i, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.tourism == 'information' && el.tags.information == 'map') {
+					setPoiMarker("", globe_icon_i, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.tourism == 'information' && el.tags.information == 'board') {
+					setPoiMarker("", information_icon_i, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.historic == 'memorial') {
+					if (el.tags.memorial == 'statue') {
+						setPoiMarker("", statue_icon_i, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if (el.tags.memorial == 'obelisk') {
+						setPoiMarker("", obelisk_icon_i, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if (el.tags.memorial == 'plaque') {
+						setPoiMarker("", plaque_icon_i, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if (el.tags.memorial == 'bench') {
+						if (el.tags["openbenches:id"] == null) {
+							setPoiMarker("", bench_icon_i, el.lat, el.lon, el.tags, el.id, el.type);
+						}
+					} else {
+						setPoiMarker("", memorial_icon_i, el.lat, el.lon, el.tags, el.id, el.type);
+					}
+					counterPics++;
+				} else if (el.tags.historic == 'monument') {
+					setPoiMarker("", monument_icon_i, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.tourism == 'museum' || el.tags.building == 'museum') {
+					setPoiMarker("", museum_icon_i, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.building == 'temple' && el.tags.religion == 'dharma') {
+					setPoiMarker("", dharma_icon_i, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.building == 'church') {
+					setPoiMarker("", church_icon_i, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.building == 'synagogue') {
+					setPoiMarker("", synagogue_icon_i, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.building == 'mosque') {
+					setPoiMarker("", mosque_icon_i, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.building == 'school') {
+					setPoiMarker("", school_icon_i, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.historic == 'building' || el.tags.historic == 'manor' || el.tags.historic == 'house') {
+					setPoiMarker("", village_icon_i, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.historic == 'wayside_shrine') {
+					setPoiMarker("", shrine_icon_i, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.tourism == 'viewpoint') {
+					setPoiMarker("", viewpoint_icon_i, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.amenity == 'library') {
+					setPoiMarker("", library_icon_i, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.amenity == 'public_bookcase') {
+					setPoiMarker("", bookcase_icon_i, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.amenity == 'give_box') {
+					setPoiMarker("", give_box_icon_i, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.amenity == 'bicycle_rental') {
+					setPoiMarker("", bike_rental_icon_i, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.emergency == 'defibrillator') {
+					setPoiMarker("", defibrillator_icon_i, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else if (el.tags.man_made == 'bridge') {
+					setPoiMarker("", bridge_icon_i, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				} else {
+					setPoiMarker("", landmark_icon_i, el.lat, el.lon, el.tags, el.id, el.type);
+					counterPics++;
+				}
+			} else if (el.tags.memorial == 'bench' && el.tags["openbenches:id"] != null) {
+				setPoiMarker("", bench_icon_i, el.lat, el.lon, el.tags, el.id, el.type); 
+				counterPics++;
+		//WIKIDATA
+			} else if (el.tags.wikidata != null) { //&& getWDimage(el.tags.wikidata) != ''
+				if (el.tags.tourism == 'artwork' && el.tags.start_date != null && el.tags.start_date.substring(0,4) < 1978) {
+					if (el.tags.artwork_type == 'statue') {
+						setPoiMarker("", statue_icon_w, el.lat, el.lon, el.tags, el.id, el.type);
+					} else {
+						setPoiMarker("", artwork_icon_w, el.lat, el.lon, el.tags, el.id, el.type);
+					}
+					counterNoPics++;
+				} else if (el.tags.tourism == 'attraction') {
+					setPoiMarker("", attraction_icon_w, el.lat, el.lon, el.tags, el.id, el.type);
+					counterNoPics++;
+				} else if (el.tags.historic == 'castle' || el.tags.building == 'castle' || el.tags.ruins == 'castle') {
+					setPoiMarker("", castle_icon_w, el.lat, el.lon, el.tags, el.id, el.type);
+					counterNoPics++;
+				} else if (el.tags.natural == 'cave_entrance') {
+					setPoiMarker("", cave_icon_w, el.lat, el.lon, el.tags, el.id, el.type);
+					counterNoPics++;
+				} else if (el.tags.waterway == 'waterfall') {
+					setPoiMarker("", waterfall_icon_w, el.lat, el.lon, el.tags, el.id, el.type);
+					counterNoPics++;
+				} else if (el.tags.historic == 'tomb') {
+					setPoiMarker("", cemetery_icon_w, el.lat, el.lon, el.tags, el.id, el.type);
+					counterNoPics++;
+				} else if (el.tags.historic == 'ruins') {
+					setPoiMarker("", ruins_icon_w, el.lat, el.lon, el.tags, el.id, el.type);
+					counterNoPics++;
+				} else if (el.tags.tourism == 'information' && el.tags.information == 'map') {
+					setPoiMarker("", globe_icon_w, el.lat, el.lon, el.tags, el.id, el.type);
+					counterNoPics++;
+				} else if (el.tags.tourism == 'information' && el.tags.information == 'board') {
+					setPoiMarker("", information_icon_w, el.lat, el.lon, el.tags, el.id, el.type);
+					counterNoPics++;
+				} else if (el.tags.historic == 'memorial') {
+					if (el.tags.memorial == 'statue') {
+						setPoiMarker("", statue_icon_w, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if (el.tags.memorial == 'obelisk') {
+						setPoiMarker("", obelisk_icon_w, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if (el.tags.memorial == 'plaque') {
+						setPoiMarker("", plaque_icon_w, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if (el.tags.memorial == 'bench') {
+						if (el.tags["openbenches:id"] == null) {
+							setPoiMarker("", bench_icon_w, el.lat, el.lon, el.tags, el.id, el.type);
+						}
+					} else {
+						setPoiMarker("", memorial_icon_w, el.lat, el.lon, el.tags, el.id, el.type);
+					}
+					counterNoPics++;
+				} else if (el.tags.historic == 'monument') {
+					setPoiMarker("", monument_icon_w, el.lat, el.lon, el.tags, el.id, el.type);
+					counterNoPics++;
+				} else if (el.tags.tourism == 'museum' || el.tags.building == 'museum') {
+					setPoiMarker("", museum_icon_w, el.lat, el.lon, el.tags, el.id, el.type);
+					counterNoPics++;
+				} else if (el.tags.building == 'temple' && el.tags.religion == 'dharma') {
+					setPoiMarker("", dharma_icon_w, el.lat, el.lon, el.tags, el.id, el.type);
+					counterNoPics++;
+				} else if (el.tags.building == 'church') {
+					setPoiMarker("", church_icon_w, el.lat, el.lon, el.tags, el.id, el.type);
+					counterNoPics++;
+				} else if (el.tags.building == 'synagogue') {
+					setPoiMarker("", synagogue_icon_w, el.lat, el.lon, el.tags, el.id, el.type);
+					counterNoPics++;
+				} else if (el.tags.building == 'mosque') {
+					setPoiMarker("", mosque_icon_w, el.lat, el.lon, el.tags, el.id, el.type);
+					counterNoPics++;
+				} else if (el.tags.building == 'school') {
+					setPoiMarker("", school_icon_w, el.lat, el.lon, el.tags, el.id, el.type);
+					counterNoPics++;
+				} else if (el.tags.historic == 'building' || el.tags.historic == 'manor' || el.tags.historic == 'house') {
+					setPoiMarker("", village_icon_w, el.lat, el.lon, el.tags, el.id, el.type);
+					counterNoPics++;
+				} else if (el.tags.historic == 'wayside_shrine') {
+					setPoiMarker("", shrine_icon_w, el.lat, el.lon, el.tags, el.id, el.type);
+					counterNoPics++;
+				} else if (el.tags.tourism == 'viewpoint') {
+					setPoiMarker("", viewpoint_icon_w, el.lat, el.lon, el.tags, el.id, el.type);
+					counterNoPics++;
+				} else if (el.tags.amenity == 'library') {
+					setPoiMarker("", library_icon_w, el.lat, el.lon, el.tags, el.id, el.type);
+					counterNoPics++;
+				} else if (el.tags.amenity == 'public_bookcase') {
+					setPoiMarker("", bookcase_icon_w, el.lat, el.lon, el.tags, el.id, el.type);
+					counterNoPics++;
+				} else if (el.tags.amenity == 'give_box') {
+					setPoiMarker("", give_box_icon_w, el.lat, el.lon, el.tags, el.id, el.type);
+					counterNoPics++;
+				} else if (el.tags.amenity == 'bicycle_rental') {
+					setPoiMarker("", bike_rental_icon_w, el.lat, el.lon, el.tags, el.id, el.type);
+					counterNoPics++;
+				} else if (el.tags.emergency == 'defibrillator') {
+					setPoiMarker("", defibrillator_icon_w, el.lat, el.lon, el.tags, el.id, el.type);
+					counterNoPics++;
+				} else if (el.tags.man_made == 'bridge') {
+					setPoiMarker("", bridge_icon_w, el.lat, el.lon, el.tags, el.id, el.type);
+					counterNoPics++;
+				} else if (el.tags.tourism != 'artwork') {
+					setPoiMarker("", landmark_icon_w, el.lat, el.lon, el.tags, el.id, el.type);
+					counterNoPics++;
+				}
 			} else {
-				setPoiMarker("Other/Unknown", other_icon, el.lat, el.lon, el.tags, el.id, el.type, el.timestamp);
+				if (el.tags.tourism == 'artwork' && el.tags.start_date != null && el.tags.start_date.substring(0,4) < 1978) {
+					if (el.tags.artwork_type == 'statue') {
+						setPoiMarker("", statue_icon_n, el.lat, el.lon, el.tags, el.id, el.type);
+					} else {
+						setPoiMarker("", artwork_icon_n, el.lat, el.lon, el.tags, el.id, el.type);
+					}
+					counterNoPics++;
+				} else if (el.tags.tourism == 'attraction') {
+					setPoiMarker("", attraction_icon_n, el.lat, el.lon, el.tags, el.id, el.type);
+					counterNoPics++;
+				} else if (el.tags.historic == 'castle' || el.tags.building == 'castle' || el.tags.ruins == 'castle') {
+					setPoiMarker("", castle_icon_n, el.lat, el.lon, el.tags, el.id, el.type);
+					counterNoPics++;
+				} else if (el.tags.natural == 'cave_entrance') {
+					setPoiMarker("", cave_icon_n, el.lat, el.lon, el.tags, el.id, el.type);
+					counterNoPics++;
+				} else if (el.tags.waterway == 'waterfall') {
+					setPoiMarker("", waterfall_icon_n, el.lat, el.lon, el.tags, el.id, el.type);
+					counterNoPics++;
+				} else if (el.tags.historic == 'tomb') {
+					setPoiMarker("", cemetery_icon_n, el.lat, el.lon, el.tags, el.id, el.type);
+					counterNoPics++;
+				} else if (el.tags.historic == 'ruins') {
+					setPoiMarker("", ruins_icon_n, el.lat, el.lon, el.tags, el.id, el.type);
+					counterNoPics++;
+				} else if (el.tags.tourism == 'information' && el.tags.information == 'map') {
+					setPoiMarker("", globe_icon_n, el.lat, el.lon, el.tags, el.id, el.type);
+					counterNoPics++;
+				} else if (el.tags.tourism == 'information' && el.tags.information == 'board') {
+					setPoiMarker("", information_icon_n, el.lat, el.lon, el.tags, el.id, el.type);
+					counterNoPics++;
+				} else if (el.tags.historic == 'memorial') {
+					if (el.tags.memorial == 'statue') {
+						setPoiMarker("", statue_icon_n, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if (el.tags.memorial == 'obelisk') {
+						setPoiMarker("", obelisk_icon_n, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if (el.tags.memorial == 'plaque') {
+						setPoiMarker("", plaque_icon_n, el.lat, el.lon, el.tags, el.id, el.type);
+					} else if (el.tags.memorial == 'bench') {
+						if (el.tags["openbenches:id"] == null) {
+							setPoiMarker("", bench_icon_n, el.lat, el.lon, el.tags, el.id, el.type);
+						}
+					} else {
+						setPoiMarker("", memorial_icon_n, el.lat, el.lon, el.tags, el.id, el.type);
+					}
+					counterNoPics++;
+				} else if (el.tags.historic == 'monument') {
+					setPoiMarker("", monument_icon_n, el.lat, el.lon, el.tags, el.id, el.type);
+					counterNoPics++;
+				} else if (el.tags.tourism == 'museum' || el.tags.building == 'museum') {
+					setPoiMarker("", museum_icon_n, el.lat, el.lon, el.tags, el.id, el.type);
+					counterNoPics++;
+				} else if (el.tags.building == 'temple' && el.tags.religion == 'dharma') {
+					setPoiMarker("", dharma_icon_n, el.lat, el.lon, el.tags, el.id, el.type);
+					counterNoPics++;
+				} else if (el.tags.building == 'church') {
+					setPoiMarker("", church_icon_n, el.lat, el.lon, el.tags, el.id, el.type);
+					counterNoPics++;
+				} else if (el.tags.building == 'synagogue') {
+					setPoiMarker("", synagogue_icon_n, el.lat, el.lon, el.tags, el.id, el.type);
+					counterNoPics++;
+				} else if (el.tags.building == 'mosque') {
+					setPoiMarker("", mosque_icon_n, el.lat, el.lon, el.tags, el.id, el.type);
+					counterNoPics++;
+				} else if (el.tags.building == 'school') {
+					setPoiMarker("", school_icon_n, el.lat, el.lon, el.tags, el.id, el.type);
+					counterNoPics++;
+				} else if (el.tags.historic == 'building' || el.tags.historic == 'manor' || el.tags.historic == 'house') {
+					setPoiMarker("", village_icon_n, el.lat, el.lon, el.tags, el.id, el.type);
+					counterNoPics++;
+				} else if (el.tags.historic == 'wayside_shrine') {
+					setPoiMarker("", shrine_icon_n, el.lat, el.lon, el.tags, el.id, el.type);
+					counterNoPics++;
+				} else if (el.tags.tourism == 'viewpoint') {
+					setPoiMarker("", viewpoint_icon_n, el.lat, el.lon, el.tags, el.id, el.type);
+					counterNoPics++;
+				} else if (el.tags.amenity == 'library') {
+					setPoiMarker("", library_icon_n, el.lat, el.lon, el.tags, el.id, el.type);
+					counterNoPics++;
+				} else if (el.tags.amenity == 'public_bookcase') {
+					setPoiMarker("", bookcase_icon_n, el.lat, el.lon, el.tags, el.id, el.type);
+					counterNoPics++;
+				} else if (el.tags.amenity == 'give_box') {
+					setPoiMarker("", give_box_icon_n, el.lat, el.lon, el.tags, el.id, el.type);
+					counterNoPics++;
+				} else if (el.tags.amenity == 'bicycle_rental') {
+					setPoiMarker("", bike_rental_icon_n, el.lat, el.lon, el.tags, el.id, el.type);
+					counterNoPics++;
+				} else if (el.tags.emergency == 'defibrillator') {
+					setPoiMarker("", defibrillator_icon_n, el.lat, el.lon, el.tags, el.id, el.type);
+					counterNoPics++;
+				} else if (el.tags.man_made == 'bridge') {
+					setPoiMarker("", bridge_icon_n, el.lat, el.lon, el.tags, el.id, el.type);
+					counterNoPics++;
+				} else if (el.tags.tourism != 'artwork') {
+					setPoiMarker("", landmark_icon_n, el.lat, el.lon, el.tags, el.id, el.type);
+					counterNoPics++;
+				}
 			}
-
-			if ('construction:amenity' in el.tags || 'disused:amenity' in el.tags || 'abandoned:amenity' in el.tags || 'construction:tourism' in el.tags || 'disused:tourism' in el.tags || 'abandoned:tourism' in el.tags || 'construction:shop' in el.tags || 'disused:shop' in el.tags || 'abandoned:shop' in el.tags || 'construction:leisure' in el.tags || 'disused:leisure' in el.tags || 'abandoned:leisure' in el.tags) {
-				//Nothing
-			} else if (el.tags.lgbtq == 'primary' || el.tags.lgbtq == 'only') {
-				setPoiMarker("", primary_icon, el.lat, el.lon, el.tags, el.id, el.type, el.timestamp);
-			} else if (el.tags.lgbtq == 'welcome' || el.tags.lgbtq == 'friendly' || el.tags.lgbtq == 'yes') {
-				setPoiMarker("", welcome_icon, el.lat, el.lon, el.tags, el.id, el.type, el.timestamp);
-			} else if (el.tags.lgbtq == 'no') {
-				setPoiMarker("", no_icon, el.lat, el.lon, el.tags, el.id, el.type, el.timestamp);
-			}
-
-			// if ('construction:amenity' in el.tags || 'disused:amenity' in el.tags || 'abandoned:amenity' in el.tags || 'construction:tourism' in el.tags || 'disused:tourism' in el.tags || 'abandoned:tourism' in el.tags || 'construction:shop' in el.tags || 'disused:shop' in el.tags || 'abandoned:shop' in el.tags || 'construction:leisure' in el.tags || 'disused:leisure' in el.tags || 'abandoned:leisure' in el.tags) {
-			// 	//Nothing
-			// } else if (el.tags["source:lgbtq"]) {
-			// 	setPoiMarker("", has_source_icon, el.lat, el.lon, el.tags, el.id, el.type, el.timestamp);
-			// } else if (el.tags.website) {
-			// 	setPoiMarker("", has_website_icon, el.lat, el.lon, el.tags, el.id, el.type, el.timestamp);
-			// } else {
-			// 	setPoiMarker("", no_source_icon, el.lat, el.lon, el.tags, el.id, el.type, el.timestamp);
-			// }
-			// } else {
-			// 	setPoiMarker("", error_icon, el.lat, el.lon, el.tags, el.id, el.type, el.timestamp);
-			// 		error_counter++;
-			// 	}
 		}
 	});
-	// legend.addTo(map);
 	map.removeLayer(loadingOverlay);
 	loadingText.setContent('');
+
+	while (counter_1_div.hasChildNodes()) {
+		counter_1_div.removeChild(counter_1_div.lastChild);
+	}
+	while (counter_2_div.hasChildNodes()) {
+		counter_2_div.removeChild(counter_2_div.lastChild);
+	}
+	var new_span_pics = document.createElement('span');
+	var new_span_no_pics = document.createElement('span');
+	if (map.hasLayer(picLayer)) {
+		if (counterPics>999 || counterNoPics>999) {
+			new_span_pics.innerHTML = "<span style='font-size: 5pt;'>"+counterPics+"</span>";
+			new_span_no_pics.innerHTML = "<span style='font-size: 5pt;'>"+counterNoPics+"</span>";
+		} else if (counterPics>99 || counterNoPics>99) {
+			new_span_pics.innerHTML = "<span style='font-size: 7pt;'>"+counterPics+"</span>";
+			new_span_no_pics.innerHTML = "<span style='font-size: 7pt;'>"+counterNoPics+"</span>";
+		} else {
+			new_span_pics.innerHTML = counterPics;
+			new_span_no_pics.innerHTML = counterNoPics;
+		}
+		counter_1_div.appendChild(new_span_pics);
+		counter_2_div.appendChild(new_span_no_pics);
+	} else {
+		if (counterPics>999 || counterNoPics>999) {
+			new_span_pics.innerHTML = "<span style='font-size: 5pt;'>"+counterPics+"</span>";
+			new_span_no_pics.innerHTML = "<span style='font-size: 5pt;'>"+counterNoPics+"</span>";
+		} else if (counterPics>99 || counterNoPics>99) {
+			new_span_pics.innerHTML = "<span style='font-size: 7pt;'>"+counterPics+"</span>";
+			new_span_no_pics.innerHTML = "<span style='font-size: 7pt;'>"+counterNoPics+"</span>";
+		} else {
+			new_span_pics.innerHTML = counterPics;
+			new_span_no_pics.innerHTML = counterNoPics;
+		}
+		counter_1_div.appendChild(new_span_pics);
+		counter_2_div.appendChild(new_span_no_pics);
+	}
 }
 
 function downloadData() {
-	// var mapHash = new L.Hash(map);
-	if (map.getZoom() < 12) {
+	if (map.getZoom() < 13) {
 		var new_span = document.createElement('span');
 		new_span.innerText = "Please Zoom In";
 		return null;
 	}
-
-	document.getElementById('tipRight').style.display = 'none';
-	document.getElementById('arrowRight').style.display = 'none';
-	document.getElementById('tipRightBottom').style.display = 'none';
-	document.getElementById('arrowRightBottom').style.display = 'none';
 	
 	map.addLayer(loadingOverlay);
 	loadingText.setContent('Loading<img src="icons/loading.gif">');
-
-	// var new_span = document.createElement('span');
-	// new_span.innerText = "Loading...";
 
 	bbox = map.getBounds().getSouth() + "," + map.getBounds().getWest() + "," + map.getBounds().getNorth() +  "," + map.getBounds().getEast();
 
 	localStorage.setItem("pos_lat", map.getCenter().lat)
 	localStorage.setItem("pos_lon", map.getCenter().lng)
 	$.ajax({
-		url: "https://overpass.private.coffee/api/interpreter",
+		url: "https://overpass-api.de/api/interpreter",
+		// url: "https://overpass.private.coffee/api/interpreter",
 		data: {
-			"data": '[bbox:'+bbox+'][out:json][timeout:25];(nwr[lgbtq];);out meta center; >; out skel qt;'/*nwr[historic=memorial];*/
+			"data": '[bbox:'+bbox+'][out:json][timeout:25];(nwr["tourism"="information"]["information"~"board|map"];nwr["tourism"~"attraction|viewpoint|museum|artwork"];nwr["historic"]["historic"!~"district|cemetery|place|milestone"][!"demolished:building"];nwr["building"~"temple|church|synagogue|mosque"];nwr["amenity"~"^library$|bicycle_rental|public_bookcase|give_box"];nwr["emergency"="defibrillator"];nwr["man_made"="bridge"]["name"];nwr["natural"="cave_entrance"];nwr["waterway"="waterfall"];);out body center; >; out skel qt;'
 		},
 		success: element_to_map,
 		error: function(xhr, status, errorThrown){
-			loadingText.setContent('<span id="error">Error '+xhr.status+', '+errorThrown+'; Try&nbsp;Again</span>');
+			loadingText.setContent('<span id="error">'+errorThrown+'; <span class="tryagain">Try&nbsp;Again</span></span>'); //Error '+xhr.status+', 
 			document.getElementById('error').addEventListener('click', downloadData);
 		},
 	});
@@ -509,248 +1353,270 @@ function downloadData() {
 	var bounds = map.getBounds();
 	var northWest = bounds.getNorthWest(),northEast = bounds.getNorthEast(),southWest = bounds.getSouthWest(),southEast = bounds.getSouthEast();
 
-	bboxOutline = L.polygon([[[90, -180],[90, 180],[-90, 180],[-90, -180]],[[northWest.lat,northWest.lng],[northEast.lat,northEast.lng],[southEast.lat,southEast.lng],[southWest.lat,southWest.lng]]],{color: '#333', fillColor: '#333', fillOpacity: 0.5, weight: 1, dashArray: '1,3',}).addTo(map);
+	bboxOutline = L.polygon([[[90, -180],[90, 180],[-90, 180],[-90, -180]],[[northWest.lat,northWest.lng],[northEast.lat,northEast.lng],[southEast.lat,southEast.lng],[southWest.lat,southWest.lng]]],{color: '#aaaaaa', fillColor: '#aaaaaa', fillOpacity: 0.3, weight: 1, dashArray: '1,3',}).addTo(map);
 }
-
-function toggleBackground() {
-	if (map.hasLayer(FreemapDark)) {
-		map.removeLayer(FreemapDark);
-		map.addLayer(FreemapLight);	
-	} else if (map.hasLayer(FreemapLight)) {
-		map.removeLayer(FreemapLight);
-		map.addLayer(FreemapDark);	
-	}
-}
-
 
 $(function() {
-	primary_icon = L.divIcon({
-		html: '🌈',
-		iconSize: [26,26],
-		className: 'welcomeIcon',
-		iconAnchor: [25,25],
-		popupAnchor: [0,-24],
-	});
-	welcome_icon = L.divIcon({
-		html: '💗',
-		iconSize: [26,26],
-		className: 'welcomeIcon',
-		iconAnchor: [25,25],
-		popupAnchor: [0,-24],
-	});
-	no_icon = L.divIcon({
-		html: '⛔',
-		iconSize: [26,26],
-		className: 'welcomeIcon',
-		iconAnchor: [25,25],
-		popupAnchor: [0,-24],
-	});
-	has_source_icon = L.icon({
-		iconUrl: 'icons/circle_blue.svg',
-		iconSize: [6,6],
-		className: 'sourceIcon',
-		iconAnchor: [-12,-9],
-	});
-	has_website_icon = L.icon({
-		iconUrl: 'icons/circle_orange.svg',
-		iconSize: [6,6],
-		className: 'sourceIcon',
-		iconAnchor: [-12,-9],
-	});
-	no_source_icon = L.icon({
-		iconUrl: 'icons/circle_red.svg',
-		iconSize: [6,6],
-		className: 'sourceIcon',
-		iconAnchor: [-12,-9],
-	});
-	bar_icon = L.icon({
-		iconUrl: 'icons/bar.svg',
-		iconSize: [26,26],
-		className: 'pointIcon',
-		iconAnchor: [15,18],
-		popupAnchor: [0,-24],
-	});
-	cafe_icon = L.icon({
-		iconUrl: 'icons/cafe.svg',
-		iconSize: [26,26],
-		className: 'pointIcon',
-		iconAnchor: [15,18],
-		popupAnchor: [0,-24],
-	});
-	fitness_icon = L.icon({
-		iconUrl: 'icons/fitness-centre.svg',
-		iconSize: [26,26],
-		className: 'pointIcon',
-		iconAnchor: [15,18],
-		popupAnchor: [0,-24],
-	});
-	gallery_icon = L.icon({
-		iconUrl: 'icons/gallery.svg',
-		iconSize: [26,26],
-		className: 'pointIcon',
-		iconAnchor: [15,18],
-		popupAnchor: [0,-24],
-	});
-	healthcare_icon = L.icon({
-		iconUrl: 'icons/clinic.svg',
-		iconSize: [26,26],
-		className: 'pointIcon',
-		iconAnchor: [15,18],
-		popupAnchor: [0,-24],
-	});
-	heart_icon = L.icon({
-		iconUrl: 'icons/heart.svg',
-		iconSize: [26,26],
-		className: 'pointIcon',
-		iconAnchor: [15,18],
-		popupAnchor: [0,-24],
-	});
-	library_icon = L.icon({
-		iconUrl: 'icons/library.svg',
-		iconSize: [26,26],
-		className: 'pointIcon',
-		iconAnchor: [15,18],
-		popupAnchor: [0,-24],
-	});
-	lodging_icon = L.icon({
-		iconUrl: 'icons/lodging.svg',
-		iconSize: [26,26],
-		className: 'pointIcon',
-		iconAnchor: [15,18],
-		popupAnchor: [0,-24],
-	});
-	memorial_icon = L.icon({
-		iconUrl: 'icons/memorial.svg',
-		iconSize: [26,26],
-		className: 'pointIcon',
-		iconAnchor: [15,18],
-		popupAnchor: [0,-24],
-	});
-	museum_icon = L.icon({
-		iconUrl: 'icons/museum.svg',
-		iconSize: [26,26],
-		className: 'pointIcon',
-		iconAnchor: [15,18],
-		popupAnchor: [0,-24],
-	});
-	office_icon = L.icon({
-		iconUrl: 'icons/office.svg',
-		iconSize: [26,26],
-		className: 'pointIcon',
-		iconAnchor: [15,18],
-		popupAnchor: [0,-24],
-	});
-	pharmacy_icon = L.icon({
-		iconUrl: 'icons/pharmacy.svg',
-		iconSize: [26,26],
-		className: 'pointIcon',
-		iconAnchor: [15,18],
-		popupAnchor: [0,-24],
-	});
-	placeofworship_icon = L.icon({
-		iconUrl: 'icons/placeofworship.svg',
-		iconSize: [26,26],
-		className: 'pointIcon',
-		iconAnchor: [15,18],
-		popupAnchor: [0,-24],
-	});
-	pub_icon = L.icon({
-		iconUrl: 'icons/pub.svg',
-		iconSize: [26,26],
-		className: 'pointIcon',
-		iconAnchor: [15,18],
-		popupAnchor: [0,-24],
-	});
-	restaurant_icon = L.icon({
-		iconUrl: 'icons/restaurant.svg',
-		iconSize: [26,26],
-		className: 'pointIcon',
-		iconAnchor: [15,18],
-		popupAnchor: [0,-24],
-	});
-	sauna_icon = L.icon({
-		iconUrl: 'icons/sauna.svg',
-		iconSize: [26,26],
-		className: 'pointIcon',
-		iconAnchor: [15,18],
-		popupAnchor: [0,-24],
-	});
-	shop_icon = L.icon({
-		iconUrl: 'icons/shop.svg',
-		iconSize: [26,26],
-		className: 'pointIcon',
-		iconAnchor: [15,18],
-		popupAnchor: [0,-24],
-	});
-	theater_icon = L.icon({
-		iconUrl: 'icons/theater.svg',
-		iconSize: [26,26],
-		className: 'pointIcon',
-		iconAnchor: [15,18],
-		popupAnchor: [0,-24],
-	});
-	vet_icon = L.icon({
-		iconUrl: 'icons/vet.svg',
-		iconSize: [26,26],
-		className: 'pointIcon',
-		iconAnchor: [15,18],
-		popupAnchor: [0,-24],
-	});
-	other_icon = L.icon({
-		iconUrl: 'icons/flag.svg',
-		iconSize: [26,26],
-		className: 'pointIcon',
-		iconAnchor: [15,18],
-		popupAnchor: [0,-24],
-	});
+// Artwork
+	artwork_icon_n = L.icon({iconUrl:'icons/artwork.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor: [0,-16]});
+	artwork_icon_w = L.icon({iconUrl:'icons/artwork_rust.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor: [0,-16]});
+	artwork_icon_c = L.icon({iconUrl:'icons/artwork_red.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor: [0,-16]});
+	artwork_icon_p = L.icon({iconUrl:'icons/artwork_blue.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor: [0,-16]});
+	artwork_icon_m = L.icon({iconUrl:'icons/artwork_green.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	artwork_icon_i = L.icon({iconUrl:'icons/artwork_purple.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+//Attraction
+	attraction_icon_n = L.icon({iconUrl:'icons/camera.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	attraction_icon_w = L.icon({iconUrl:'icons/camera_rust.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	attraction_icon_c = L.icon({iconUrl:'icons/camera_red.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	attraction_icon_p = L.icon({iconUrl:'icons/camera_blue.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	attraction_icon_m = L.icon({iconUrl:'icons/camera_green.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	attraction_icon_i = L.icon({iconUrl:'icons/camera_purple.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
 
+	bench_icon_n = L.icon({iconUrl:'icons/memorial_bench.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	bench_icon_w = L.icon({iconUrl:'icons/memorial_bench_rust.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	bench_icon_c = L.icon({iconUrl:'icons/memorial_bench_red.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	bench_icon_p = L.icon({iconUrl:'icons/memorial_bench_blue.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	bench_icon_m = L.icon({iconUrl:'icons/memorial_bench_green.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	bench_icon_i = L.icon({iconUrl:'icons/memorial_bench_purple.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
 
+	bike_rental_icon_n = L.icon({iconUrl:'icons/bicycle_rental.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	bike_rental_icon_w = L.icon({iconUrl:'icons/bicycle_rental_rust.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	bike_rental_icon_c = L.icon({iconUrl:'icons/bicycle_rental_red.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	bike_rental_icon_p = L.icon({iconUrl:'icons/bicycle_rental_blue.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	bike_rental_icon_m = L.icon({iconUrl:'icons/bicycle_rental_green.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	bike_rental_icon_i = L.icon({iconUrl:'icons/bicycle_rental_purple.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
 
-// function go_to_current_pos() {
-// 	navigator.geolocation.getCurrentPosition(function(pos) {
-// 		map.setView([pos.coords.latitude, pos.coords.longitude], 12);
-// 	});
-// }
+	bookcase_icon_n = L.icon({iconUrl:'icons/bookcase.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	bookcase_icon_w = L.icon({iconUrl:'icons/bookcase_rust.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	bookcase_icon_c = L.icon({iconUrl:'icons/bookcase_red.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	bookcase_icon_p = L.icon({iconUrl:'icons/bookcase_blue.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	bookcase_icon_m = L.icon({iconUrl:'icons/bookcase_green.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	bookcase_icon_i = L.icon({iconUrl:'icons/bookcase_purple.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+
+	bridge_icon_n = L.icon({iconUrl:'icons/bridge.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	bridge_icon_w = L.icon({iconUrl:'icons/bridge_rust.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	bridge_icon_c = L.icon({iconUrl:'icons/bridge_red.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	bridge_icon_p = L.icon({iconUrl:'icons/bridge_blue.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	bridge_icon_m = L.icon({iconUrl:'icons/bridge_green.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	bridge_icon_i = L.icon({iconUrl:'icons/bridge_purple.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+//Castle
+	castle_icon_n = L.icon({iconUrl:'icons/castle.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	castle_icon_w = L.icon({iconUrl:'icons/castle_rust.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	castle_icon_c = L.icon({iconUrl:'icons/castle_red.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	castle_icon_p = L.icon({iconUrl:'icons/castle_blue.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	castle_icon_m = L.icon({iconUrl:'icons/castle_green.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	castle_icon_i = L.icon({iconUrl:'icons/castle_purple.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+
+	cave_icon_n = L.icon({iconUrl:'icons/cave.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	cave_icon_w = L.icon({iconUrl:'icons/cave_rust.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	cave_icon_c = L.icon({iconUrl:'icons/cave_red.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	cave_icon_p = L.icon({iconUrl:'icons/cave_blue.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	cave_icon_m = L.icon({iconUrl:'icons/cave_green.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	cave_icon_i = L.icon({iconUrl:'icons/cave_purple.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+
+	cemetery_icon_n = L.icon({iconUrl:'icons/cemetery.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	cemetery_icon_w = L.icon({iconUrl:'icons/cemetery_rust.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	cemetery_icon_c = L.icon({iconUrl:'icons/cemetery_red.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	cemetery_icon_p = L.icon({iconUrl:'icons/cemetery_blue.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	cemetery_icon_m = L.icon({iconUrl:'icons/cemetery_green.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	cemetery_icon_i = L.icon({iconUrl:'icons/cemetery_purple.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+
+	church_icon_n = L.icon({iconUrl:'icons/cross.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	church_icon_w = L.icon({iconUrl:'icons/cross_rust.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	church_icon_c = L.icon({iconUrl:'icons/cross_red.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	church_icon_p = L.icon({iconUrl:'icons/cross_blue.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	church_icon_m = L.icon({iconUrl:'icons/cross_green.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	church_icon_i = L.icon({iconUrl:'icons/cross_purple.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+
+	defibrillator_icon_n = L.icon({iconUrl:'icons/defibrillator.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	defibrillator_icon_w = L.icon({iconUrl:'icons/defibrillator_rust.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	defibrillator_icon_c = L.icon({iconUrl:'icons/defibrillator_red.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	defibrillator_icon_p = L.icon({iconUrl:'icons/defibrillator_blue.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	defibrillator_icon_m = L.icon({iconUrl:'icons/defibrillator_green.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	defibrillator_icon_i = L.icon({iconUrl:'icons/defibrillator_purple.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+
+	give_box_icon_n = L.icon({iconUrl:'icons/give_box.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	give_box_icon_w = L.icon({iconUrl:'icons/give_box_rust.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	give_box_icon_c = L.icon({iconUrl:'icons/give_box_red.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	give_box_icon_p = L.icon({iconUrl:'icons/give_box_blue.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	give_box_icon_m = L.icon({iconUrl:'icons/give_box_green.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	give_box_icon_i = L.icon({iconUrl:'icons/give_box_purple.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+
+	globe_icon_n = L.icon({iconUrl:'icons/globe.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	globe_icon_w = L.icon({iconUrl:'icons/globe_rust.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	globe_icon_c = L.icon({iconUrl:'icons/globe_red.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	globe_icon_p = L.icon({iconUrl:'icons/globe_blue.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	globe_icon_m = L.icon({iconUrl:'icons/globe_green.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	globe_icon_i = L.icon({iconUrl:'icons/globe_purple.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+
+	information_icon_n = L.icon({iconUrl:'icons/info_board.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	information_icon_w = L.icon({iconUrl:'icons/info_board_rust.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	information_icon_c = L.icon({iconUrl:'icons/info_board_red.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	information_icon_p = L.icon({iconUrl:'icons/info_board_blue.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	information_icon_m = L.icon({iconUrl:'icons/info_board_green.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	information_icon_i = L.icon({iconUrl:'icons/info_board_purple.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+
+	landmark_icon_n = L.icon({iconUrl:'icons/landmark.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	landmark_icon_w = L.icon({iconUrl:'icons/landmark_rust.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	landmark_icon_c = L.icon({iconUrl:'icons/landmark_red.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	landmark_icon_p = L.icon({iconUrl:'icons/landmark_blue.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	landmark_icon_m = L.icon({iconUrl:'icons/landmark_green.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	landmark_icon_i = L.icon({iconUrl:'icons/landmark_purple.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+
+	library_icon_n = L.icon({iconUrl:'icons/books.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	library_icon_w = L.icon({iconUrl:'icons/books_rust.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	library_icon_c = L.icon({iconUrl:'icons/books_red.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	library_icon_p = L.icon({iconUrl:'icons/books_blue.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	library_icon_m = L.icon({iconUrl:'icons/books_green.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	library_icon_i = L.icon({iconUrl:'icons/books_purple.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+
+	memorial_icon_n = L.icon({iconUrl:'icons/memorial.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	memorial_icon_w = L.icon({iconUrl:'icons/memorial_rust.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	memorial_icon_c = L.icon({iconUrl:'icons/memorial_red.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	memorial_icon_p = L.icon({iconUrl:'icons/memorial_blue.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	memorial_icon_m = L.icon({iconUrl:'icons/memorial_green.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	memorial_icon_i = L.icon({iconUrl:'icons/memorial_purple.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+
+	monument_icon_n = L.icon({iconUrl:'icons/monument.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	monument_icon_w = L.icon({iconUrl:'icons/monument_rust.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	monument_icon_c = L.icon({iconUrl:'icons/monument_red.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	monument_icon_p = L.icon({iconUrl:'icons/monument_blue.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	monument_icon_m = L.icon({iconUrl:'icons/monument_green.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	monument_icon_i = L.icon({iconUrl:'icons/monument_purple.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+
+	mosque_icon_n = L.icon({iconUrl:'icons/star_and_crescent.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	mosque_icon_w = L.icon({iconUrl:'icons/star_and_crescent_rust.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	mosque_icon_c = L.icon({iconUrl:'icons/star_and_crescent_red.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	mosque_icon_p = L.icon({iconUrl:'icons/star_and_crescent_blue.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	mosque_icon_m = L.icon({iconUrl:'icons/star_and_crescent_green.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	mosque_icon_i = L.icon({iconUrl:'icons/star_and_crescent_purple.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+
+	museum_icon_n = L.icon({iconUrl:'icons/museum.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	museum_icon_w = L.icon({iconUrl:'icons/museum_rust.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	museum_icon_c = L.icon({iconUrl:'icons/museum_red.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	museum_icon_p = L.icon({iconUrl:'icons/museum_blue.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	museum_icon_m = L.icon({iconUrl:'icons/museum_green.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	museum_icon_i = L.icon({iconUrl:'icons/museum_purple.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+
+	obelisk_icon_n = L.icon({iconUrl:'icons/obelisk.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	obelisk_icon_w = L.icon({iconUrl:'icons/obelisk_rust.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	obelisk_icon_c = L.icon({iconUrl:'icons/obelisk_red.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	obelisk_icon_p = L.icon({iconUrl:'icons/obelisk_blue.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	obelisk_icon_m = L.icon({iconUrl:'icons/obelisk_green.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	obelisk_icon_i = L.icon({iconUrl:'icons/obelisk_purple.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+
+	// pow_icon_n = L.icon({iconUrl:'icons/pow.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	// pow_icon_w = L.icon({iconUrl:'icons/pow_rust.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	// pow_icon_c = L.icon({iconUrl:'icons/pow_red.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	// pow_icon_p = L.icon({iconUrl:'icons/pow_blue.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	// pow_icon_m = L.icon({iconUrl:'icons/pow_green.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	// pow_icon_i = L.icon({iconUrl:'icons/pow_purple.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+
+	plaque_icon_n = L.icon({iconUrl:'icons/plaque.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	plaque_icon_w = L.icon({iconUrl:'icons/plaque_rust.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	plaque_icon_c = L.icon({iconUrl:'icons/plaque_red.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	plaque_icon_p = L.icon({iconUrl:'icons/plaque_blue.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	plaque_icon_m = L.icon({iconUrl:'icons/plaque_green.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	plaque_icon_i = L.icon({iconUrl:'icons/plaque_purple.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+
+	ruins_icon_n = L.icon({iconUrl:'icons/ruins.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	ruins_icon_w = L.icon({iconUrl:'icons/ruins_rust.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	ruins_icon_c = L.icon({iconUrl:'icons/ruins_red.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	ruins_icon_p = L.icon({iconUrl:'icons/ruins_blue.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	ruins_icon_m = L.icon({iconUrl:'icons/ruins_green.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	ruins_icon_i = L.icon({iconUrl:'icons/ruins_purple.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+
+	school_icon_n = L.icon({iconUrl:'icons/apple.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	school_icon_w = L.icon({iconUrl:'icons/apple_rust.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	school_icon_c = L.icon({iconUrl:'icons/apple_red.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	school_icon_p = L.icon({iconUrl:'icons/apple_blue.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	school_icon_m = L.icon({iconUrl:'icons/apple_green.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	school_icon_i = L.icon({iconUrl:'icons/apple_purple.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+
+	shrine_icon_n = L.icon({iconUrl:'icons/shrine.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	shrine_icon_w = L.icon({iconUrl:'icons/shrine_rust.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	shrine_icon_c = L.icon({iconUrl:'icons/shrine_red.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	shrine_icon_p = L.icon({iconUrl:'icons/shrine_blue.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	shrine_icon_m = L.icon({iconUrl:'icons/shrine_green.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	shrine_icon_i = L.icon({iconUrl:'icons/shrine_purple.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+
+	statue_icon_n = L.icon({iconUrl:'icons/statue.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	statue_icon_w = L.icon({iconUrl:'icons/statue_rust.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	statue_icon_c = L.icon({iconUrl:'icons/statue_red.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	statue_icon_p = L.icon({iconUrl:'icons/statue_blue.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	statue_icon_m = L.icon({iconUrl:'icons/statue_green.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	statue_icon_i = L.icon({iconUrl:'icons/statue_purple.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+
+	synagogue_icon_n = L.icon({iconUrl:'icons/star_of_david.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	synagogue_icon_w = L.icon({iconUrl:'icons/star_of_david_rust.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	synagogue_icon_c = L.icon({iconUrl:'icons/star_of_david_red.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	synagogue_icon_p = L.icon({iconUrl:'icons/star_of_david_blue.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	synagogue_icon_m = L.icon({iconUrl:'icons/star_of_david_green.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	synagogue_icon_i = L.icon({iconUrl:'icons/star_of_david_purple.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+
+	dharma_icon_n = L.icon({iconUrl:'icons/dharma.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	dharma_icon_w = L.icon({iconUrl:'icons/dharma_rust.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	dharma_icon_c = L.icon({iconUrl:'icons/dharma_red.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	dharma_icon_p = L.icon({iconUrl:'icons/dharma_blue.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	dharma_icon_m = L.icon({iconUrl:'icons/dharma_green.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	dharma_icon_i = L.icon({iconUrl:'icons/dharma_purple.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+
+	viewpoint_icon_n = L.icon({iconUrl:'icons/viewpoint.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	viewpoint_icon_w = L.icon({iconUrl:'icons/viewpoint_rust.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	viewpoint_icon_c = L.icon({iconUrl:'icons/viewpoint_red.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	viewpoint_icon_p = L.icon({iconUrl:'icons/viewpoint_blue.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	viewpoint_icon_m = L.icon({iconUrl:'icons/viewpoint_green.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	viewpoint_icon_i = L.icon({iconUrl:'icons/viewpoint_purple.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+
+	village_icon_n = L.icon({iconUrl:'icons/village.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	village_icon_w = L.icon({iconUrl:'icons/village_rust.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	village_icon_c = L.icon({iconUrl:'icons/village_red.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	village_icon_p = L.icon({iconUrl:'icons/village_blue.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	village_icon_m = L.icon({iconUrl:'icons/village_green.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	village_icon_i = L.icon({iconUrl:'icons/village_purple.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+
+	waterfall_icon_n = L.icon({iconUrl:'icons/waterfall.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	waterfall_icon_w = L.icon({iconUrl:'icons/waterfall_rust.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	waterfall_icon_c = L.icon({iconUrl:'icons/waterfall_red.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	waterfall_icon_p = L.icon({iconUrl:'icons/waterfall_blue.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	waterfall_icon_m = L.icon({iconUrl:'icons/waterfall_green.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+	waterfall_icon_i = L.icon({iconUrl:'icons/waterfall_purple.svg',iconSize:[18,18],className:'pointIcon',iconAnchor:[9,9],popupAnchor:[0,-16]});
+
+	// map.on('moveend', function () {
+	// 	if (map.getZoom() >= 19) {
+	// 		josmText.setContent('<a href="http://127.0.0.1:8111/load_and_zoom?left='+map.getBounds().getWest()+'&right='+map.getBounds().getEast()+'&top='+map.getBounds().getNorth()+'&bottom='+map.getBounds().getSouth()+'" target=\"\_blank\">Edit area in JOSM</a>');
+	// 	}
+	// 	if (map.getZoom() < 19) {
+	// 		josmText.setContent('');
+	// 	}
+	// });
 	map.on('zoomend', function () {
-		// if (map.getZoom() > 18) {
-		// 	map.addLayer(FreemapLight);
-		// 	map.removeLayer(Stamen_TonerBackground);
-		// 	map.removeLayer(CartoDB_FreemapLightOnlyLabels);
+		// if (map.getZoom() > 16) {
+		// 	// map.removeLayer(poiClusters);
+		// 	// map.addLayer(poiMain);
+		// 	// map.addLayer(picLayer);
 		// }
-		// if (map.getZoom() <= 18) {
-		// 	map.removeLayer(FreemapLight);
-		// 	map.addLayer(Stamen_TonerBackground);
-		// 	map.addLayer(CartoDB_FreemapLightOnlyLabels);
+		// if (map.getZoom() <= 16) {
+		// 	// map.addLayer(poiClusters);
+		// 	// map.removeLayer(poiMain);
+		// 	// map.removeLayer(picLayer);
 		// }
-		if (map.getZoom() >= 12) {
+		if (map.getZoom() >= 13) {
 			map.removeLayer(overlay);
 			zoomText.setContent('');
-			document.getElementById('loaddata').style.visibility = "visible";
-			document.getElementById('arrowRight').style.visibility = "visible";
-			document.getElementById('tipRight').style.visibility = "visible";
 		}
-		if (map.getZoom() < 12) {
+		if (map.getZoom() < 13) {
 			map.addLayer(overlay);
 			zoomText.setContent('Please Zoom In');
-			document.getElementById('loaddata').style.visibility = "hidden";
-			document.getElementById('arrowRight').style.visibility = "hidden";
-			document.getElementById('tipRight').style.visibility = "hidden";
 		}
 	});
 
-
 	document.querySelector(".leaflet-popup-pane").addEventListener("load", function (event) {
-		var tagName = event.target.tagName,
-		popup = map._popup; // Last open Popup.
-
-		if (tagName === "IMG" && popup && !popup._updated) {
-			popup._updated = true; // Assumes only 1 image per Popup.
+		var tagName = $(event.target).attr("class"),
+		popup = map._popup;
+		if (tagName === "mainImage" && popup && !popup._updated) {
+			popup._updated = true;
 			popup.update();
 		}
 	}, true);
-
-	// document.getElementById('infoButton').addEventListener('click', function () {
-	// 	document.getElementById("info").style.visibility = "visible";
-	// });
-
 });
