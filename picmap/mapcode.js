@@ -51,10 +51,8 @@ let artwork_icon_n,attraction_icon_n,bench_icon_n,bookcase_icon_n,bridge_icon_n,
 	artwork_icon_i,attraction_icon_i,bench_icon_i,bookcase_icon_i,bridge_icon_i,bike_rental_icon_i,castle_icon_i,cave_icon_i,cemetery_icon_i,church_icon_i,defibrillator_icon_i,give_box_icon_i,globe_icon_i,information_icon_i,landmark_icon_i,library_icon_i,memorial_icon_i,monument_icon_i,mosque_icon_i,museum_icon_i,obelisk_icon_i,plaque_icon_i,ruins_icon_i,school_icon_i,shrine_icon_i,statue_icon_i,synagogue_icon_i,dharma_icon_i,viewpoint_icon_i,village_icon_i,waterfall_icon_i;
 
 	// var OSMCarto=L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,opacity:0.3,attribution:'&copy;<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'});
-	var CartoDB_Positron = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-		attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-		subdomains: 'abcd',
-		maxZoom: 20
+	let FreemapLight=L.maplibreGL({
+		style: 'https://tiles.openfreemap.org/styles/positron',
 	});
 
 var overlay = L.polygon([
@@ -73,7 +71,7 @@ var loadingOverlay = L.polygon([
 
 
 var map = new L.map('bigmap', {
-	layers: [CartoDB_Positron],
+	layers: [FreemapLight],
 	maxBounds: [[90,-180],[-90,180]],
 	zoomControl: false,
 })
@@ -449,6 +447,9 @@ function setPoiMarker(poi_type, icon_name, lat, lon, tags, osmid, osmtype) {
 				popup_content += "<span class=\"type\">War Memorial</span><br/>";
 			} else {
 				popup_content += "<span class=\"type\">Memorial "+replaceUnderscore(tags.memorial)+"</span><br/>";
+				if (tags["openbenches:id"] != null) {
+					popup_content += "<span class=\"openbenches\"><a href=\"https://openbenches.org/bench/"+tags["openbenches:id"]+"\" title=\"show feature on OpenBenches\" target=\"_blank\">OpenBenches↗</a></span><br/>";
+				}
 			}
 		} else {
 			popup_content += "<span class=\"type\">Memorial</span><br/>";
@@ -621,6 +622,8 @@ function setPoiMarker(poi_type, icon_name, lat, lon, tags, osmid, osmtype) {
 		mrk.addTo(poiClustersM);
 	} else if (tags.image != null) {
 		mrk.addTo(poiClustersI);
+	} else if (tags["openbenches:id"] != null) {
+		mrk.addTo(poiClustersI);
 	} else if (tags.wikidata != null) {
 		mrk.addTo(poiClustersW);
 	} else {
@@ -712,7 +715,9 @@ function element_to_map(data) {
 					} else if (el.tags.memorial == 'plaque') {
 						setPoiMarker("", plaque_icon_c, el.lat, el.lon, el.tags, el.id, el.type);
 					} else if (el.tags.memorial == 'bench') {
-						setPoiMarker("", bench_icon_c, el.lat, el.lon, el.tags, el.id, el.type);
+						if (el.tags["openbenches:id"] == null) {
+							setPoiMarker("", bench_icon_c, el.lat, el.lon, el.tags, el.id, el.type);
+						}
 					} else {
 						setPoiMarker("", memorial_icon_c, el.lat, el.lon, el.tags, el.id, el.type);
 					}
@@ -810,7 +815,9 @@ function element_to_map(data) {
 					} else if (el.tags.memorial == 'plaque') {
 						setPoiMarker("", plaque_icon_p, el.lat, el.lon, el.tags, el.id, el.type);
 					} else if (el.tags.memorial == 'bench') {
-						setPoiMarker("", bench_icon_p, el.lat, el.lon, el.tags, el.id, el.type);
+						if (el.tags["openbenches:id"] == null) {
+							setPoiMarker("", bench_icon_p, el.lat, el.lon, el.tags, el.id, el.type);
+						}
 					} else {
 						setPoiMarker("", memorial_icon_p, el.lat, el.lon, el.tags, el.id, el.type);
 					}
@@ -908,7 +915,9 @@ function element_to_map(data) {
 					} else if (el.tags.memorial == 'plaque') {
 						setPoiMarker("", plaque_icon_m, el.lat, el.lon, el.tags, el.id, el.type);
 					} else if (el.tags.memorial == 'bench') {
-						setPoiMarker("", bench_icon_m, el.lat, el.lon, el.tags, el.id, el.type);
+						if (el.tags["openbenches:id"] == null) {
+							setPoiMarker("", bench_icon_m, el.lat, el.lon, el.tags, el.id, el.type);
+						}
 					} else {
 						setPoiMarker("", memorial_icon_m, el.lat, el.lon, el.tags, el.id, el.type);
 					}
@@ -1006,7 +1015,9 @@ function element_to_map(data) {
 					} else if (el.tags.memorial == 'plaque') {
 						setPoiMarker("", plaque_icon_i, el.lat, el.lon, el.tags, el.id, el.type);
 					} else if (el.tags.memorial == 'bench') {
-						setPoiMarker("", bench_icon_i, el.lat, el.lon, el.tags, el.id, el.type);
+						if (el.tags["openbenches:id"] == null) {
+							setPoiMarker("", bench_icon_i, el.lat, el.lon, el.tags, el.id, el.type);
+						}
 					} else {
 						setPoiMarker("", memorial_icon_i, el.lat, el.lon, el.tags, el.id, el.type);
 					}
@@ -1063,6 +1074,9 @@ function element_to_map(data) {
 					setPoiMarker("", landmark_icon_i, el.lat, el.lon, el.tags, el.id, el.type);
 					counterPics++;
 				}
+			} else if (el.tags.memorial == 'bench' && el.tags["openbenches:id"] != null) {
+				setPoiMarker("", bench_icon_i, el.lat, el.lon, el.tags, el.id, el.type); 
+				counterPics++;
 		//WIKIDATA
 			} else if (el.tags.wikidata != null) { //&& getWDimage(el.tags.wikidata) != ''
 				if (el.tags.tourism == 'artwork' && el.tags.start_date != null && el.tags.start_date.substring(0,4) < 1978) {
@@ -1104,7 +1118,9 @@ function element_to_map(data) {
 					} else if (el.tags.memorial == 'plaque') {
 						setPoiMarker("", plaque_icon_w, el.lat, el.lon, el.tags, el.id, el.type);
 					} else if (el.tags.memorial == 'bench') {
-						setPoiMarker("", bench_icon_w, el.lat, el.lon, el.tags, el.id, el.type);
+						if (el.tags["openbenches:id"] == null) {
+							setPoiMarker("", bench_icon_w, el.lat, el.lon, el.tags, el.id, el.type);
+						}
 					} else {
 						setPoiMarker("", memorial_icon_w, el.lat, el.lon, el.tags, el.id, el.type);
 					}
@@ -1201,7 +1217,9 @@ function element_to_map(data) {
 					} else if (el.tags.memorial == 'plaque') {
 						setPoiMarker("", plaque_icon_n, el.lat, el.lon, el.tags, el.id, el.type);
 					} else if (el.tags.memorial == 'bench') {
-						setPoiMarker("", bench_icon_n, el.lat, el.lon, el.tags, el.id, el.type);
+						if (el.tags["openbenches:id"] == null) {
+							setPoiMarker("", bench_icon_n, el.lat, el.lon, el.tags, el.id, el.type);
+						}
 					} else {
 						setPoiMarker("", memorial_icon_n, el.lat, el.lon, el.tags, el.id, el.type);
 					}
