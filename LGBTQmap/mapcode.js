@@ -20,22 +20,13 @@ var poi_clusters = new L.markerClusterGroup({
 var primary_icon,welcome_icon,no_icon,has_source_icon,has_website_icon,no_source_icon,bar_icon,cafe_icon,fitness_icon,gallery_icon,healthcare_icon,heart_icon,library_icon,lodging_icon,memorial_icon,museum_icon,office_icon,pharmacy_icon,placeofworship_icon,pub_icon,restaurant_icon,sauna_icon,shop_icon,theater_icon,vet_icon,other_icon;
 	
 // init map
-let Positron = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
-	attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
-	subdomains: 'abcd',
-	minZoom: 6,
-	maxZoom: 20,
-	opacity:0.8,
-	detectRetina: true,
-});
 
-let CartoDB_DarkMatter = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-	subdomains: 'abcd',
-	minZoom: 6,
-	maxZoom: 19,
-	detectRetina: true,
-});
+	let FreemapDark=L.maplibreGL({
+		style: 'https://tiles.openfreemap.org/styles/dark',
+	});
+	let FreemapLight=L.maplibreGL({
+		style: 'https://tiles.openfreemap.org/styles/positron',
+	});
 
 var overlay = L.polygon([
 	[90, -180],
@@ -53,7 +44,7 @@ var loadingOverlay = L.polygon([
 
 
 var map = new L.map('bigmap', {
-	layers: [CartoDB_DarkMatter],
+	layers: [FreemapDark],
 	maxBounds: [[90,-180],[-90,180]],
 	zoomControl: false,
 	center: [51.5,-0.1],
@@ -500,12 +491,15 @@ function downloadData() {
 	localStorage.setItem("pos_lat", map.getCenter().lat)
 	localStorage.setItem("pos_lon", map.getCenter().lng)
 	$.ajax({
-		url: "https://overpass-api.de/api/interpreter",
+		url: "https://overpass.private.coffee/api/interpreter",
 		data: {
 			"data": '[bbox:'+bbox+'][out:json][timeout:25];(nwr[lgbtq];);out meta center; >; out skel qt;'/*nwr[historic=memorial];*/
 		},
 		success: element_to_map,
-		error: error_function,
+		error: function(xhr, status, errorThrown){
+			loadingText.setContent('<span id="error">Error '+xhr.status+', '+errorThrown+'; Try&nbsp;Again</span>');
+			document.getElementById('error').addEventListener('click', downloadData);
+		},
 	});
 
 	if (map.hasLayer(bboxOutline)) {
@@ -519,17 +513,13 @@ function downloadData() {
 }
 
 function toggleBackground() {
-	if (map.hasLayer(CartoDB_DarkMatter)) {
-		map.removeLayer(CartoDB_DarkMatter);
-		map.addLayer(Positron);	
-	} else if (map.hasLayer(Positron)) {
-		map.removeLayer(Positron);
-		map.addLayer(CartoDB_DarkMatter);	
+	if (map.hasLayer(FreemapDark)) {
+		map.removeLayer(FreemapDark);
+		map.addLayer(FreemapLight);	
+	} else if (map.hasLayer(FreemapLight)) {
+		map.removeLayer(FreemapLight);
+		map.addLayer(FreemapDark);	
 	}
-}
-
-function error_function() {
-	loadingText.setContent('Error, try again')
 }
 
 
@@ -723,14 +713,14 @@ $(function() {
 // }
 	map.on('zoomend', function () {
 		// if (map.getZoom() > 18) {
-		// 	map.addLayer(Positron);
+		// 	map.addLayer(FreemapLight);
 		// 	map.removeLayer(Stamen_TonerBackground);
-		// 	map.removeLayer(CartoDB_PositronOnlyLabels);
+		// 	map.removeLayer(CartoDB_FreemapLightOnlyLabels);
 		// }
 		// if (map.getZoom() <= 18) {
-		// 	map.removeLayer(Positron);
+		// 	map.removeLayer(FreemapLight);
 		// 	map.addLayer(Stamen_TonerBackground);
-		// 	map.addLayer(CartoDB_PositronOnlyLabels);
+		// 	map.addLayer(CartoDB_FreemapLightOnlyLabels);
 		// }
 		if (map.getZoom() >= 12) {
 			map.removeLayer(overlay);
