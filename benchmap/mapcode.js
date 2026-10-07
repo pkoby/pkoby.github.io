@@ -255,8 +255,10 @@ function setDotMarker(poi_type, icon, lat, lon, tags, osmid, osmtype) {
 	// }
 
 	if (tags.colour != undefined) {
-		if (tags.colour.includes('white') || tags.colour.includes('silver') || tags.colour.includes('gray') || tags.colour.includes('yellow') || tags.colour.includes('pink') || tags.colour.includes('light')) {
+		if (tags.colour.includes('white') || tags.colour.includes('silver') || tags.colour.includes('gray') || tags.colour.includes('yellow') || tags.colour.includes('pink') || tags.colour.includes('tan') || tags.colour.includes('light')) {
 			popup_content += "Color: <span class=\"colorbox\" title=\""+tags.colour+"\" style=\"color: #333; background-color:"+tags.colour+"\">"+tags.colour+"</span><br/>";
+		} else if (tags.colour == 'brown') {
+			popup_content += "Color: <span class=\"colorbox\" title=\""+tags.colour+"\" style=\"background-color:#803300\">"+tags.colour+"</span><br/>";
 		} else {
 			popup_content += "Color: <span class=\"colorbox\" title=\""+tags.colour+"\" style=\"background-color:"+tags.colour+"\">"+tags.colour+"</span><br/>";
 		}
@@ -486,8 +488,10 @@ function setPoiMarker(poi_type, icon_name, lat, lon, tags, osmid, osmtype) {
 	// }
 
 	if (tags.colour != undefined) {
-		if (tags.colour.includes('white') || tags.colour.includes('silver') || tags.colour.includes('gray') || tags.colour.includes('yellow') || tags.colour.includes('pink') || tags.colour.includes('light')) {
+		if (tags.colour.includes('white') || tags.colour.includes('silver') || tags.colour.includes('gray') || tags.colour.includes('yellow') || tags.colour.includes('pink') || tags.colour.includes('tan') || tags.colour.includes('light')) {
 			popup_content += "Color: <span class=\"colorbox\" title=\""+tags.colour+"\" style=\"color: #333; background-color:"+tags.colour+"\">"+tags.colour+"</span><br/>";
+		} else if (tags.colour == 'brown') {
+			popup_content += "Color: <span class=\"colorbox\" title=\""+tags.colour+"\" style=\"background-color:#803300\">"+tags.colour+"</span><br/>";
 		} else {
 			popup_content += "Color: <span class=\"colorbox\" title=\""+tags.colour+"\" style=\"background-color:"+tags.colour+"\">"+tags.colour+"</span><br/>";
 		}
