@@ -3,6 +3,10 @@
 		src: local(roboto-medium), url('Roboto-Medium.ttf') format('opentype');
 }
 @font-face {
+		font-family: roboto-bold;
+		src: local(roboto-bold), url('Roboto-Bold.ttf') format('opentype');
+}
+@font-face {
 		font-family: fontin;
 		src: local(Fontin Regular), url('Fontin-Regular.otf') format('opentype');
 }
@@ -14,7 +18,7 @@
 * {
 	padding:0;
 	margin:0;
-	font-family: roboto-medium, sans-serif;
+	font-family: fontin, sans-serif;
 }
 
 a {
@@ -71,15 +75,19 @@ button {
 	border-radius: 8px;
 	padding: 10px;
 	z-index: 10000;
-	font-family: roboto-medium;
-	font-size: 8pt;
+	font-family: fontin !important;
+	font-size: 9pt;
 	color: #222;
 	line-height: 16px;
 }
 #counter_display img {
-	height: 10px;
+	/*height: 10px;*/
 	position: relative;
-	top: 1px;
+	top: 2px;
+}
+.counter_title {
+	font-family: fontin-bold;
+	font-size: 10pt;
 }
 .counter_span {
 	display: block;
